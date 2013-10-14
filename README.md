@@ -12,6 +12,7 @@ TMT
 ## Verantwortlichkeiten
 #### Komponenten:
 - Gamestates (Simulation, Weltraum, Planet, Atmosphähre)
+- Missionen
 - Gui
 - Grafik
 - Sound

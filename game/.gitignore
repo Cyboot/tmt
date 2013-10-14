@@ -1,0 +1,14 @@
+#java gitignore #
+
+# no files in bin folder #
+bin/*
+
+# some file types #
+*.class
+*.log
+
+# local files #
+local.cfg
+
+# INCLUDE lib and doc folder (even if jars)#
+!lib/*

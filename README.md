@@ -1,10 +1,17 @@
-tmt
+TMT
 ===
+
+## Open Tasks
+- Struktur reviewen/anpassen
+- Verantwortlichkeiten verteilen
+- Terminplan festlegen
+- Aufgaben verteilen
+- Anfangen ;-)
 
 
 ## Verantwortlichkeiten
 #### Komponenten:
-- Gamestates (Simulation, Weltraum, Planet, Atmosph‰hre)
+- Gamestates (Simulation, Weltraum, Planet, Atmosph√§hre)
 - Gui
 - Grafik
 - Sound
@@ -19,6 +26,6 @@ tmt
 #### Meta:
 - Paket/Klassenstruktur
 - Artwork
-- Stabilit‰t (Performance, Portabilit‰t)
+- Stabilit√§t (Performance, Portabilit√§t)
 - git supervisor
 - "storytelling"

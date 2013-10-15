@@ -19,17 +19,19 @@ jeder jeweils ca. 6-8 Primär-/Sekundär-Verantwortlichkeiten
 #### Komponenten
 |                       | Primär        | Sekundär      |
 |:----------------------|:-------------:|:-------------:|
-| Missionen             |               | tm            |
+| Missionen             | tm            | TA            |
 | Gui                   | Mi            | TA            |
-| Grafik                | tm            | TA            |
-| Sound                 | tm            |               |
-| Steuerung             | TA            |               |
-| Map- & Mapgenerierung | tm,TA         | Mi            |
+| Grafik                | tm            | Mi            |
+| Sound                 | tm            | -             |
+| Steuerung             | TA            | Mi            |
+| Map- & Mapgenerierung | TA            | tm            |
 | Achievments           | TA            | tm            |
-| Gameengine            | tm,Mi         |               |
-| Server Kommunikation  |               | Mi            |
+| Gameengine            | tm            | Mi            |
+| Server Kommunikation  | tm            | Mi            |
 | Statistiken           | TA            | Mi            |
-| Raumschiff            |               | tm,TA         |
+| Raumschiff            | tm            | TA            |
+| Ressourcen            | Mi            | TA            |
+| Entity & NPC          | tm            | Mi            |
 
 
 #### Spielimplementierung
@@ -37,15 +39,15 @@ jeder jeweils ca. 6-8 Primär-/Sekundär-Verantwortlichkeiten
 |:----------------------|:-------------:|:-------------:|
 | Weltraum              | tm            | TA            |
 | Wirtschaft/Simulation | Mi            | TA            |
-| Atmosphäre            | tm            |               |
-| Planet                | TA            | tm,Mi         |
+| Atmosphäre            | tm            | Mi            |
+| Planet                | TA            | Mi            |
 
 
-#### Meta:
-|                       | Primä         | Sekundär      |
+#### Meta
+|                       | Primär        | Sekundär      |
 |:----------------------|:-------------:|:-------------:|
-| Paket/Klassenstruktur | tm            |               |
-| Artwork               |               | tm            |
-| Stabilität/Perfor/Port|               | Mi            |
-| "git supervisor"      |               | tm            |
-| "storytelling"        |               | tm,TA         |
+| Paket/Klassenstruktur | tm            | Mi            |
+| Artwork               | TA            | tm            |
+| Stabilität/Perfor/Port| TA            | -             |
+| "git supervisor"      | tm            | -             |
+| "storytelling"        | tm            | TA            |

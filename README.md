@@ -11,41 +11,41 @@ TMT
 
 ## Verantwortlichkeiten
 tm = Tim, 
-TA   = Tarek,
+TA = Tarek,
 Mi = Milos
 
-jeder jeweils ca. 6-8 Primär/Sekundär Verantwortlichkeiten
+jeder jeweils ca. 6-8 Primär-/Sekundär-Verantwortlichkeiten
 
 #### Komponenten
-| 			 			| Primär 		| Sekundär 		|
+|  			| Primär 	| Sekundär	|
 |:----------------------|:-------------:|:-------------:|
-| Missionen				|   			| tm			|
-| Gui					|   			|				|
-| Grafik				| tm			|   			|
-| Sound					| tm			|   			|
-| Steuerung				|				|				|
-| Map- & Mapgenerierung	| tm			|				|
-| Achievments			|				| tm			|
-| Gameengine			| tm 			|   			|
-| Server Kommunikation	|				|				|
-| Statistiken			|				|				|
-| Raumschiff			|				| tm			|
+| Missionen		|   		| tm		|
+| Gui			|   		| TA		|
+| Grafik		| tm		| TA  		|
+| Sound			| tm		|   		|
+| Steuerung		| TA		|		|
+| Map- & Mapgenerierung	| tm,TA		|		|
+| Achievments		| TA		| tm		|
+| Gameengine		| tm 		|   		|
+| Server Kommunikation	|		|		|
+| Statistiken		| TA		| 		|
+| Raumschiff		|		| tm,TA		|
 
 
 #### Spielimplementierung
-| 			 			| Primär 		| Sekundär 		|
+| 			| Primär 	| Sekundär	|
 |:----------------------|:-------------:|:-------------:|
-| Weltraum				| tm  			|  				|
-| Wirtschaft/Simulation	|   			|  				|
-| Atmosphäre			| tm  			|  				|
-| Planet				|   			| tm			|
+| Weltraum		| tm  		| TA		|
+| Wirtschaft/Simulation	| 		| TA		|
+| Atmosphäre		| tm		|		|
+| Planet		| TA  		| tm		|
 
 
 #### Meta:
-| 			 			| Primär 		| Sekundär 		|
+| 			| Primär 	| Sekundär	|
 |:----------------------|:-------------:|:-------------:|
-| Paket/Klassenstruktur	| tm			|				|
-| Artwork				|				| tm			|
-| Stabilität/Perform/Port|				|				|
-| "git supervisor"		|				| tm			|
-| "storytelling"		|				| tm			|
+| Paket/Klassenstruktur	| tm		|		|
+| Artwork		|		| tm		|
+| Stabilität/Perform/Port|		|		|
+| "git supervisor"	|		| tm		|
+| "storytelling"	|		| tm,TA		|

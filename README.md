@@ -10,23 +10,42 @@ TMT
 
 
 ## Verantwortlichkeiten
-#### Komponenten:
-- Gamestates (Simulation, Weltraum, Planet, Atmosphähre)
-- Missionen
-- Gui
-- Grafik
-- Sound
-- Steuerung
-- Map & Mapgenerierung
-- Achievments
-- Gameengine
-- Server Kommunikation
-- Statistiken
+tm = Tim, 
+TA   = Tarek,
+Mi = Milos
+
+jeder jeweils ca. 6-8 Primär/Sekundär Verantwortlichkeiten
+
+#### Komponenten
+| 			 			| Primär 		| Sekundär 		|
+|:----------------------|:-------------:|:-------------:|
+| Missionen				|   			| tm			|
+| Gui					|   			|				|
+| Grafik				| tm			|   			|
+| Sound					| tm			|   			|
+| Steuerung				|				|				|
+| Map- & Mapgenerierung	| tm			|				|
+| Achievments			|				| tm			|
+| Gameengine			| tm 			|   			|
+| Server Kommunikation	|				|				|
+| Statistiken			|				|				|
+| Raumschiff			|				| tm			|
+
+
+#### Spielimplementierung
+| 			 			| Primär 		| Sekundär 		|
+|:----------------------|:-------------:|:-------------:|
+| Weltraum				| tm  			|  				|
+| Wirtschaft/Simulation	|   			|  				|
+| Atmosphäre			| tm  			|  				|
+| Planet				|   			| tm			|
 
 
 #### Meta:
-- Paket/Klassenstruktur
-- Artwork
-- Stabilität (Performance, Portabilität)
-- git supervisor
-- "storytelling"
+| 			 			| Primär 		| Sekundär 		|
+|:----------------------|:-------------:|:-------------:|
+| Paket/Klassenstruktur	| tm			|				|
+| Artwork				|				| tm			|
+| Stabilität/Perform/Port|				|				|
+| "git supervisor"		|				| tm			|
+| "storytelling"		|				| tm			|

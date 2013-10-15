@@ -20,15 +20,15 @@ jeder jeweils ca. 6-8 Primär-/Sekundär-Verantwortlichkeiten
 |  			| Primär 	| Sekundär	|
 |:----------------------|:-------------:|:-------------:|
 | Missionen		|   		| tm		|
-| Gui			|   		| TA		|
+| Gui			|   Mi		| TA		|
 | Grafik		| tm		| TA  		|
 | Sound			| tm		|   		|
 | Steuerung		| TA		|		|
-| Map- & Mapgenerierung	| tm,TA		|		|
+| Map- & Mapgenerierung	| tm,TA		|	Mi|
 | Achievments		| TA		| tm		|
-| Gameengine		| tm 		|   		|
-| Server Kommunikation	|		|		|
-| Statistiken		| TA		| 		|
+| Gameengine		| tm,Mi 		|   		|
+| Server Kommunikation	|		|	Mi	|
+| Statistiken		| TA		| Mi		|
 | Raumschiff		|		| tm,TA		|
 
 
@@ -36,9 +36,9 @@ jeder jeweils ca. 6-8 Primär-/Sekundär-Verantwortlichkeiten
 | 			| Primär 	| Sekundär	|
 |:----------------------|:-------------:|:-------------:|
 | Weltraum		| tm  		| TA		|
-| Wirtschaft/Simulation	| 		| TA		|
+| Wirtschaft/Simulation	| Mi		| TA		|
 | Atmosphäre		| tm		|		|
-| Planet		| TA  		| tm		|
+| Planet		| TA  		| tm,Mi		|
 
 
 #### Meta:
@@ -46,6 +46,6 @@ jeder jeweils ca. 6-8 Primär-/Sekundär-Verantwortlichkeiten
 |:----------------------|:-------------:|:-------------:|
 | Paket/Klassenstruktur	| tm		|		|
 | Artwork		|		| tm		|
-| Stabilität/Perform/Port|		|		|
+| Stabilität/Perform/Port|		|	Mi	|
 | "git supervisor"	|		| tm		|
 | "storytelling"	|		| tm,TA		|

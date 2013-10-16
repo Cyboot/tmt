@@ -2,16 +2,20 @@ package net.tmt.game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.gamestate.AbstractGamestate;
+import net.tmt.gamestate.DummyGamestate;
 import net.tmt.gfx.Graphics;
+import net.tmt.gfx.Sprite;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public class GameEngine {
 	private final FPS				fps			= new FPS();
@@ -22,7 +26,8 @@ public class GameEngine {
 	public static int				HEIGHT		= 600;
 
 	public void start() throws LWJGLException {
-		init();
+		initGL();
+		initNonGL();
 
 		while (!Display.isCloseRequested()) {
 			fps.update();
@@ -44,12 +49,25 @@ public class GameEngine {
 			a.update(delta);
 	}
 
-	private void init() throws LWJGLException {
+	private void initNonGL() {
+		try {
+			Sprite.init();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		gamestates.add(new DummyGamestate());
+	}
+
+	private void initGL() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 		Display.setVSyncEnabled(true);
 		Display.create();
 
+		glEnable(GL11.GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
+
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();

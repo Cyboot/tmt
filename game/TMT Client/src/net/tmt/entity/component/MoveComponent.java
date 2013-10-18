@@ -4,32 +4,33 @@ import net.tmt.util.Vector2d;
 
 
 public class MoveComponent extends Component {
-	public static String	IS_ACCELERATING	= "IS_ACCELERATING";
-	public static String	IS_ROTATE_LEFT	= "IS_ROTATE_LEFT";
-	public static String	IS_ROTATE_RIGHT	= "IS_ROTATE_RIGHT";
-	private double			ROTATION_SPEED	= 30;
+	public static String		IS_ACCELERATING	= "IS_ACCELERATING";
+	public static String		IS_ROTATE_LEFT	= "IS_ROTATE_LEFT";
+	public static String		IS_ROTATE_RIGHT	= "IS_ROTATE_RIGHT";
 
-	private double			rotationAngle	= 0;
-	private double			accl			= 0.05;
-	private double			deaccl			= 0.99;
-	private double			speed;
+	private static final double	ROTATION_SPEED	= 180;
 
-	private Vector2d		dir;
-	private Vector2d		pos;
+	private double				rotationAngle	= 0;
+	private double				accl			= 0;
+	private double				deaccl			= 0;
+	private double				speed;
+	private Vector2d			dir;
+	private Vector2d			pos;
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		super.update(caller, delta);
 
-		double dx = Math.sin(rotationAngle) * speed;
-		double dy = -Math.cos(rotationAngle) * speed;
-		dir.x = dx;
-		dir.y = dy;
-
-		speed *= 1 - deaccl * delta;
 		if (caller.isSet(IS_ACCELERATING)) {
 			speed += accl;
 		}
+		speed *= 1 - deaccl * delta;
+
+		double dx = Math.sin(Math.toRadians(rotationAngle)) * speed;
+		double dy = -Math.cos(Math.toRadians(rotationAngle)) * speed;
+		dir.x = dx;
+		dir.y = dy;
+
 		if (caller.isSet(IS_ROTATE_LEFT)) {
 			rotationAngle -= ROTATION_SPEED * delta;
 		}

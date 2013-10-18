@@ -16,7 +16,6 @@ public class RenderComponent extends Component {
 		if (sprite != null)
 			g.drawSprite(pos, sprite);
 
-		g.fillRect(pos.x, pos.y, 50, 50);
 	}
 
 	public void setSprite(final Sprite sprite) {

@@ -3,12 +3,21 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl/lwjgl_util.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/TMT%20Client/lib/lwjgl/lwjgl-docs-2.9.0.zip!/javadoc"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/TMT%20Client/lib/lwjgl/lwjgl-docs-2.9.0.zip!/javadoc"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/slick-util/slick-util.jar" sourcepath="lib/slick-util/slick-util-src.zip"/>
+	<classpathentry kind="lib" path="lib/slick/slick-util.jar" sourcepath="lib/slick/slick-util-src.zip"/>
+	<classpathentry kind="lib" path="lib/slick/slick.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/TMT%20Client/lib/slick/slick-javadoc.zip!/javadoc"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

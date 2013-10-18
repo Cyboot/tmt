@@ -3,7 +3,14 @@ package net.tmt.gfx;
 import static org.lwjgl.opengl.GL11.*;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
+import org.newdawn.slick.opengl.Texture;
+
 public class Graphics {
+	private static final float	LINE_WIDTH	= 1;
+	private Texture				whiteTexture;
+	private ReadableColor		color		= Color.PURPLE;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -17,6 +24,7 @@ public class Graphics {
 			y -= heightHALF;
 		}
 
+		glColor4d(1, 1, 1, 1);
 		glPushMatrix();
 		{
 			glTranslated(x, y, 0);
@@ -40,8 +48,77 @@ public class Graphics {
 			}
 		}
 		glPopMatrix();
-
-
 	}
 
+	public void setColor(final ReadableColor cyan) {
+		this.color = cyan;
+	}
+
+
+	public void drawRect(final int x, final int y, final int with, final int height) {
+		whiteTexture.bind();
+
+		glLineWidth(LINE_WIDTH);
+		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
+		glPushMatrix();
+		{
+			glTranslated(x, y, 0);
+			{
+				glBegin(GL_LINE_STRIP);
+				{
+					glVertex2d(0, height);
+					glVertex2d(0, 0);
+					glVertex2d(with, 0);
+					glVertex2d(with, height);
+					glVertex2d(0, height);
+				}
+				glEnd();
+			}
+		}
+		glPopMatrix();
+	}
+
+	public void fillRect(final int x, final int y, final int with, final int height) {
+		whiteTexture.bind();
+
+		glLineWidth(LINE_WIDTH);
+		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
+		glPushMatrix();
+		{
+			glTranslated(x, y, 0);
+			{
+				glBegin(GL_QUADS);
+				{
+					glVertex2d(0, height);
+					glVertex2d(0, 0);
+					glVertex2d(with, 0);
+					glVertex2d(with, height);
+				}
+				glEnd();
+			}
+		}
+		glPopMatrix();
+	}
+
+	public void drawCircle(final int centerX, final int centerY, final int radius) {
+		// TODO implement drawCircle
+		throw new RuntimeException("Not yet implemented");
+	}
+
+	public void fillCircle(final int centerX, final int centerY, final int radius) {
+		// TODO implement drawCircle
+		throw new RuntimeException("Not yet implemented");
+	}
+
+
+	private static Graphics	instance;
+
+	public static void init() {
+		instance = new Graphics();
+		instance.whiteTexture = new Sprite("white").getTexture();
+	}
+
+	public static Graphics getInstance() {
+		return instance;
+	}
 }

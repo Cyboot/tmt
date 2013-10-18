@@ -19,6 +19,8 @@ public class DummyGamestate extends AbstractGamestate {
 	@Override
 	public void render(final Graphics g) {
 		g.drawSprite(new Vector2d(100, 100), sprite);
+
+		g.drawSprite(new Vector2d(500, 100), new Sprite("ship_64"));
 	}
 
 }

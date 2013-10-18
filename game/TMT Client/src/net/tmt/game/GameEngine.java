@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 public class GameEngine {
 	private final FPS				fps			= new FPS();
 	private List<AbstractGamestate>	gamestates	= new ArrayList<>();
-	private Graphics				graphics	= new Graphics();
+	private Graphics				graphics;
 
 	public static int				WIDTH		= 800;
 	public static int				HEIGHT		= 600;
@@ -56,6 +56,8 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Graphics.init();
+		graphics = Graphics.getInstance();
 
 		gamestates.add(new DummyGamestate());
 	}

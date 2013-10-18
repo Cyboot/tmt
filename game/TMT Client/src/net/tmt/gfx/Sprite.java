@@ -62,11 +62,16 @@ public class Sprite {
 	}
 
 
+	/**
+	 * load all Images in Imagesfolder
+	 * 
+	 * @throws IOException
+	 */
 	public static void init() throws IOException {
 		File folder = new File("res" + File.separator + "img");
 
 		for (final File file : folder.listFiles()) {
-			if (!file.isDirectory()) {
+			if (!file.isDirectory() && file.getName().contains(".png")) {
 				FileInputStream fileIN = new FileInputStream(file);
 				textureMap.put(file.getName(), TextureLoader.getTexture("PNG", fileIN));
 			}

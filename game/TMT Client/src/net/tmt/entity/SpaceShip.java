@@ -11,10 +11,10 @@ public class SpaceShip extends AbstractEntity2D {
 	private static double	DEACCL	= 0.4;
 
 	public SpaceShip() {
-		super(new Vector2d(100, 100));
+		super(new Vector2d(300, 300));
 
 		addComponent(new MoveComponent.Builder().pos(pos).dir(new Vector2d()).accl(ACCL).deaccl(DEACCL).build());
-		setSprite(new Sprite("ship_64"));
+		setSprite(new Sprite("ship_back_64"));
 	}
 
 	@Override

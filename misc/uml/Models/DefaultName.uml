@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA">
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="DefaultName">
+    <packagedElement xmi:type="uml:Interface" xmi:id="_iakIYDftEeOXuvyzVWGCMQ" name="Interface1"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_lmwXkDftEeOXuvyzVWGCMQ" name="entity.component">
+      <packagedElement xmi:type="uml:Class" xmi:id="_gsKF0DftEeOXuvyzVWGCMQ" name="AbstractComponent">
+        <ownedOperation xmi:id="_x8lr0DftEeOXuvyzVWGCMQ" name="update">
+          <ownedParameter xmi:id="_ejYwkDfvEeOXuvyzVWGCMQ" name="caller"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_0W7nUDftEeOXuvyzVWGCMQ" name="render">
+          <ownedParameter xmi:id="_xDAGgDfvEeOXuvyzVWGCMQ" name="caller"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ALCHgDfuEeOXuvyzVWGCMQ" name="MoveComponent">
+        <generalization xmi:id="_Kjcs0DfuEeOXuvyzVWGCMQ" general="_gsKF0DftEeOXuvyzVWGCMQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_EcRTMDfuEeOXuvyzVWGCMQ" name="RenderComponent">
+        <generalization xmi:id="_LOBT0DfuEeOXuvyzVWGCMQ" general="_gsKF0DftEeOXuvyzVWGCMQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_GKmdQDfuEeOXuvyzVWGCMQ" name="ShootComponent">
+        <generalization xmi:id="_LqoXUDfuEeOXuvyzVWGCMQ" general="_gsKF0DftEeOXuvyzVWGCMQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_4YcqEDfvEeOXuvyzVWGCMQ" name="ComponentDispacher">
+        <ownedAttribute xmi:id="_S6FVsDfwEeOXuvyzVWGCMQ" name="abstractComponent" type="_gsKF0DftEeOXuvyzVWGCMQ" aggregation="composite" association="_S6JAEDfwEeOXuvyzVWGCMQ">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_S6FVsTfwEeOXuvyzVWGCMQ" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_S6FVsjfwEeOXuvyzVWGCMQ" value="1"/>
+        </ownedAttribute>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_qZBMsDftEeOXuvyzVWGCMQ" name="entity">
+      <packagedElement xmi:type="uml:Class" xmi:id="_bdEKwDftEeOXuvyzVWGCMQ" name="AbstractEntity">
+        <ownedAttribute xmi:id="_fVq0ADftEeOXuvyzVWGCMQ" name="components"/>
+        <ownedAttribute xmi:id="_3VrQYDftEeOXuvyzVWGCMQ" name="abstractComponent" type="_4YcqEDfvEeOXuvyzVWGCMQ" aggregation="composite" association="_3WLmsDftEeOXuvyzVWGCMQ">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3VrQYTftEeOXuvyzVWGCMQ" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3VrQYjftEeOXuvyzVWGCMQ" value="1"/>
+        </ownedAttribute>
+        <ownedOperation xmi:id="_vbYTUDftEeOXuvyzVWGCMQ" name="addComponent"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_pxaaIDftEeOXuvyzVWGCMQ" name="Spaceship">
+        <generalization xmi:id="_QHngADfuEeOXuvyzVWGCMQ" general="_bdEKwDftEeOXuvyzVWGCMQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_3WLmsDftEeOXuvyzVWGCMQ" name="A_&lt;abstractEntity>_&lt;abstractComponent>" memberEnd="_3WLmsTftEeOXuvyzVWGCMQ _3VrQYDftEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_3WLmsTftEeOXuvyzVWGCMQ" name="abstractEntity" type="_bdEKwDftEeOXuvyzVWGCMQ" association="_3WLmsDftEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3WLmsjftEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3WLmszftEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_SjBygDfuEeOXuvyzVWGCMQ" name="A_&lt;spaceship>_&lt;moveComponent>" memberEnd="_SjBygTfuEeOXuvyzVWGCMQ _SjByhDfuEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_SjBygTfuEeOXuvyzVWGCMQ" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_SjBygDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SjBygjfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SjBygzfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_SjByhDfuEeOXuvyzVWGCMQ" name="moveComponent" type="_ALCHgDfuEeOXuvyzVWGCMQ" association="_SjBygDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_SjByhTfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_SjByhjfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_UEgzYDfuEeOXuvyzVWGCMQ" name="A_&lt;spaceship>_&lt;renderComponent>" memberEnd="_UEgzYTfuEeOXuvyzVWGCMQ _UEgzZDfuEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_UEgzYTfuEeOXuvyzVWGCMQ" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_UEgzYDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UEgzYjfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UEgzYzfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_UEgzZDfuEeOXuvyzVWGCMQ" name="renderComponent" type="_EcRTMDfuEeOXuvyzVWGCMQ" association="_UEgzYDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UEgzZTfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UEgzZjfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_UfKIADfuEeOXuvyzVWGCMQ" name="A_&lt;spaceship>_&lt;shootComponent>" memberEnd="_UfKIATfuEeOXuvyzVWGCMQ _UfKIBDfuEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_UfKIATfuEeOXuvyzVWGCMQ" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_UfKIADfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UfKIAjfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UfKIAzfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_UfKIBDfuEeOXuvyzVWGCMQ" name="shootComponent" type="_GKmdQDfuEeOXuvyzVWGCMQ" association="_UfKIADfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UfKIBTfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UfKIBjfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_bMOc8DfuEeOXuvyzVWGCMQ" name="A_&lt;spaceship>_&lt;moveComponent>_2" memberEnd="_bMOc8TfuEeOXuvyzVWGCMQ _bMOc9DfuEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_bMOc8TfuEeOXuvyzVWGCMQ" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_bMOc8DfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bMOc8jfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bMOc8zfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_bMOc9DfuEeOXuvyzVWGCMQ" name="moveComponent" type="_ALCHgDfuEeOXuvyzVWGCMQ" aggregation="shared" association="_bMOc8DfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bMOc9TfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bMOc9jfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_daiuoDfuEeOXuvyzVWGCMQ" name="A_&lt;spaceship>_&lt;renderComponent>_2" memberEnd="_daiuoTfuEeOXuvyzVWGCMQ _daiupDfuEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_daiuoTfuEeOXuvyzVWGCMQ" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_daiuoDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_daiuojfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_daiuozfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_daiupDfuEeOXuvyzVWGCMQ" name="renderComponent" type="_EcRTMDfuEeOXuvyzVWGCMQ" aggregation="shared" association="_daiuoDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_daiupTfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_daiupjfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_etzGQDfuEeOXuvyzVWGCMQ" name="A_&lt;spaceship>_&lt;shootComponent>_2" memberEnd="_etzGQTfuEeOXuvyzVWGCMQ _etzGRDfuEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_etzGQTfuEeOXuvyzVWGCMQ" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_etzGQDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_etzGQjfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_etzGQzfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_etzGRDfuEeOXuvyzVWGCMQ" name="shootComponent" type="_GKmdQDfuEeOXuvyzVWGCMQ" aggregation="shared" association="_etzGQDfuEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_etzGRTfuEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_etzGRjfuEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Eu30MDfwEeOXuvyzVWGCMQ" name="A_&lt;componentDispacher>_&lt;abstractComponent>" memberEnd="_Eu30MTfwEeOXuvyzVWGCMQ _Eu30NDfwEeOXuvyzVWGCMQ" navigableOwnedEnd="_Eu30MTfwEeOXuvyzVWGCMQ _Eu30NDfwEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_Eu30MTfwEeOXuvyzVWGCMQ" name="componentDispacher" type="_4YcqEDfvEeOXuvyzVWGCMQ" association="_Eu30MDfwEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Eu30MjfwEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Eu30MzfwEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_Eu30NDfwEeOXuvyzVWGCMQ" name="abstractComponent" type="_gsKF0DftEeOXuvyzVWGCMQ" association="_Eu30MDfwEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Eu30NTfwEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Eu30NjfwEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_S6JAEDfwEeOXuvyzVWGCMQ" name="A_&lt;componentDispacher>_&lt;abstractComponent>_2" memberEnd="_S6JAETfwEeOXuvyzVWGCMQ _S6FVsDfwEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_S6JAETfwEeOXuvyzVWGCMQ" name="componentDispacher" type="_4YcqEDfvEeOXuvyzVWGCMQ" association="_S6JAEDfwEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_S6JAEjfwEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_S6JAEzfwEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_W4lyoDfwEeOXuvyzVWGCMQ" name="sendValue()" memberEnd="_W4lyoTfwEeOXuvyzVWGCMQ _W4lypDfwEeOXuvyzVWGCMQ" navigableOwnedEnd="_W4lypDfwEeOXuvyzVWGCMQ">
+      <ownedEnd xmi:id="_W4lyoTfwEeOXuvyzVWGCMQ" name="abstractComponent" type="_gsKF0DftEeOXuvyzVWGCMQ" association="_W4lyoDfwEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_W4lyojfwEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_W4lyozfwEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_W4lypDfwEeOXuvyzVWGCMQ" name="componentDispacher" type="_4YcqEDfvEeOXuvyzVWGCMQ" association="_W4lyoDfwEeOXuvyzVWGCMQ">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_W4lypTfwEeOXuvyzVWGCMQ" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_W4lypjfwEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

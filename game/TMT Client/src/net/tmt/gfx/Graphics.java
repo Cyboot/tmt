@@ -55,7 +55,7 @@ public class Graphics {
 	}
 
 
-	public void drawRect(final int x, final int y, final int with, final int height) {
+	public void drawRect(final double x, final double y, final double with, final double height) {
 		whiteTexture.bind();
 
 		glLineWidth(LINE_WIDTH);
@@ -78,7 +78,7 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void fillRect(final int x, final int y, final int with, final int height) {
+	public void fillRect(final double x, final double y, final double with, final double height) {
 		whiteTexture.bind();
 
 		glLineWidth(LINE_WIDTH);
@@ -100,12 +100,12 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void drawCircle(final int centerX, final int centerY, final int radius) {
+	public void drawCircle(final double centerX, final double centerY, final double radius) {
 		// TODO implement drawCircle
 		throw new RuntimeException("Not yet implemented");
 	}
 
-	public void fillCircle(final int centerX, final int centerY, final int radius) {
+	public void fillCircle(final double centerX, final double centerY, final double radius) {
 		// TODO implement drawCircle
 		throw new RuntimeException("Not yet implemented");
 	}

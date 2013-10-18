@@ -29,6 +29,12 @@ public class Vector2d {
 		return this;
 	}
 
+	public Vector2d add(final Vector2d other) {
+		this.x += other.x;
+		this.y += other.y;
+		return this;
+	}
+
 	public Vector2d copy() {
 		return new Vector2d(x, y);
 	}

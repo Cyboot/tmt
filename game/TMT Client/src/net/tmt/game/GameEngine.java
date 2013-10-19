@@ -2,6 +2,7 @@ package net.tmt.game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gamestate.DummyGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.util.ConfigUtil;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -22,10 +24,11 @@ public class GameEngine {
 	private List<AbstractGamestate>	gamestates	= new ArrayList<>();
 	private Graphics				graphics;
 
-	public static int				WIDTH		= 800;
-	public static int				HEIGHT		= 600;
+	public static int				WIDTH;
+	public static int				HEIGHT;
 
 	public void start() throws LWJGLException {
+		initConfig();
 		initGL();
 		initNonGL();
 
@@ -44,6 +47,18 @@ public class GameEngine {
 
 	}
 
+	private void initConfig() {
+		try {
+			ConfigUtil.init("res/cfg/global.cfg"); // init global configs
+			ConfigUtil.init("res/cfg/local.cfg"); // override with local configs
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		WIDTH = ConfigUtil.getInt("display.width");
+		HEIGHT = ConfigUtil.getInt("display.height");
+	}
+
 	private void update(final double delta) {
 		for (AbstractGamestate a : gamestates)
 			a.update(delta);
@@ -60,10 +75,12 @@ public class GameEngine {
 		graphics = Graphics.getInstance();
 
 		gamestates.add(new DummyGamestate());
+
 	}
 
 	private void initGL() throws LWJGLException {
 		Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+		Display.setLocation(ConfigUtil.getInt("display.offsetX"), ConfigUtil.getInt("display.offsetY"));
 		Display.setVSyncEnabled(true);
 		Display.create();
 

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.lwjgl.util.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -17,6 +18,7 @@ public class Sprite {
 	private double								width;
 	private double								height;
 	private boolean								centered	= true;
+	private Color								blendColor	= new Color(255, 255, 255, 255);
 
 
 	public Sprite(final String imgname) {
@@ -80,5 +82,13 @@ public class Sprite {
 
 	public double getRotation() {
 		return rotation;
+	}
+
+	public Color getBlendColor() {
+		return blendColor;
+	}
+
+	public void setBlendColor(final Color blendColor) {
+		this.blendColor = blendColor;
 	}
 }

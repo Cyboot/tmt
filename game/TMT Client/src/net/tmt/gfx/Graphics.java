@@ -24,7 +24,9 @@ public class Graphics {
 			y -= heightHALF;
 		}
 
-		glColor4d(1, 1, 1, 1);
+		Color c = sprite.getBlendColor();
+		glColor4d(c.getRed() / 255., c.getGreen() / 255., c.getBlue() / 255., c.getAlpha() / 255.);
+
 		glPushMatrix();
 		{
 			glTranslated(x, y, 0);

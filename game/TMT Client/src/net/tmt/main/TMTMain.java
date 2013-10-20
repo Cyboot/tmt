@@ -12,6 +12,12 @@ public class TMTMain {
 	public static void main(final String[] args) throws LWJGLException {
 		checkOS();
 		new GameEngine().start();
+		// MapController mc = MapController.getInstance();
+		// SpaceMap sm = mc.getSpaceMap(new Vector2d(0, 0));
+		// sm = mc.getSpaceMap(new Vector2d(300, 300));
+		// sm = mc.getSpaceMap(new Vector2d(600, 600));
+		// sm = mc.getSpaceMap(new Vector2d(-1000, -1000));
+		// sm.debugPrint();
 	}
 
 	/**

@@ -41,8 +41,8 @@ public class MapController {
 	}
 
 	private Coordinate pos2chunk(final Vector2d pos) {
-		int newX = (int) (pos.x > 0 ? Math.ceil(pos.x) : Math.floor(pos.x));
-		int newY = (int) (pos.y > 0 ? Math.ceil(pos.y) : Math.floor(pos.y));
+		int newX = (int) Math.ceil((pos.x / Chunk.SIZE) - .5);
+		int newY = (int) Math.ceil((pos.y / Chunk.SIZE) - .5);
 		return new Coordinate(newX, newY);
 	}
 }

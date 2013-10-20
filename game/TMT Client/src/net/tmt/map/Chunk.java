@@ -6,11 +6,9 @@ public class Chunk {
 	public static final int	SIZE	= 100;
 
 	public int				terrain;
-	public Coordinate		coord;
 
-	public Chunk(final int terrain, final Coordinate coord) {
+	public Chunk(final int terrain) {
 		this.terrain = terrain;
-		this.coord = coord;
 	}
 
 }

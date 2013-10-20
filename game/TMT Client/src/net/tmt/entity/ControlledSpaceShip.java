@@ -6,14 +6,14 @@ import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
 
-public class SpaceShip extends AbstractEntity2D {
-	private static double	ACCL	= 0.05;
-	private static double	DEACCL	= 0.4;
+public class ControlledSpaceShip extends Entity2D {
+	private static double	ACCL		= 10;
+	private static double	FRICTION	= 0.4;
 
-	public SpaceShip() {
+	public ControlledSpaceShip() {
 		super(new Vector2d(300, 300));
 
-		addComponent(new MoveComponent.Builder().pos(pos).dir(new Vector2d()).accl(ACCL).deaccl(DEACCL).build());
+		addComponent(new MoveComponent.Builder().pos(pos).accl(ACCL).friction(FRICTION).build());
 		setSprite(new Sprite("ship_back_64"));
 	}
 
@@ -26,6 +26,8 @@ public class SpaceShip extends AbstractEntity2D {
 
 		if (Controls.pressed(Controls.UP))
 			sendValueToComponent(MoveComponent.IS_ACCELERATING, true);
+		if (Controls.pressed(Controls.DOWN))
+			sendValueToComponent(MoveComponent.IS_DEACCELERATING, true);
 
 		super.update(delta);
 	}

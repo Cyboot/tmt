@@ -1,6 +1,6 @@
 package net.tmt.gamestate;
 
-import net.tmt.entity.SpaceShip;
+import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
@@ -9,14 +9,15 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class DummyGamestate extends AbstractGamestate {
-	private Sprite		sprite_ship1;
-	private Sprite		sprite_ship2;
-	private Sprite		sprite_ship3;
-	private Sprite		sprite_ship4;
-	private Sprite		sprite_ship5;
-	private SpaceShip	ship	= new SpaceShip();
+	private Sprite				sprite_ship1;
+	private Sprite				sprite_ship2;
+	private Sprite				sprite_ship3;
+	private Sprite				sprite_ship4;
+	private Sprite				sprite_ship5;
 
-	private World		world	= World.getInstance();
+	private ControlledSpaceShip	ship	= new ControlledSpaceShip();
+
+	private World				world	= World.getInstance();
 
 	public DummyGamestate() {
 		sprite_ship1 = new Sprite("ship_double_64");

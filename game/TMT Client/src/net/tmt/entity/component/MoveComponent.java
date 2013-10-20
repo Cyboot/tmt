@@ -4,18 +4,20 @@ import net.tmt.util.Vector2d;
 
 
 public class MoveComponent extends Component {
-	public static String		IS_ACCELERATING	= "IS_ACCELERATING";
-	public static String		IS_ROTATE_LEFT	= "IS_ROTATE_LEFT";
-	public static String		IS_ROTATE_RIGHT	= "IS_ROTATE_RIGHT";
+	public static String		IS_ACCELERATING		= "IS_ACCELERATING";
+	public static String		IS_DEACCELERATING	= "IS_DEACCELERATING";
+	public static String		IS_ROTATE_LEFT		= "IS_ROTATE_LEFT";
+	public static String		IS_ROTATE_RIGHT		= "IS_ROTATE_RIGHT";
+	public static String		SPEED				= "SPEED";
 
-	private static final double	ROTATION_SPEED	= 180;
+	private static final double	ROTATION_SPEED		= 180;
 
-	private double				rotationAngle	= 0;
-	private double				accl			= 0;
-	private double				deaccl			= 0;
+	private double				rotationAngle		= 0;
+	private double				accl				= 0;
+	private double				friction			= 0;
 	private double				speed;
-	private Vector2d			dir;
-	private Vector2d			pos;
+	private Vector2d			dir					= new Vector2d();
+	private Vector2d			pos					= new Vector2d();
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
@@ -24,12 +26,17 @@ public class MoveComponent extends Component {
 		if (caller.isSet(IS_ACCELERATING)) {
 			speed += accl;
 		}
-		speed *= 1 - deaccl * delta;
+		if (caller.isSet(IS_DEACCELERATING)) {
+			speed -= accl;
+		}
+		speed *= 1 - friction * delta;
+		if (caller.isSet(SPEED)) {
+			speed = (double) caller.getValue(SPEED);
+		}
 
-		double dx = Math.sin(Math.toRadians(rotationAngle)) * speed;
-		double dy = -Math.cos(Math.toRadians(rotationAngle)) * speed;
-		dir.x = dx;
-		dir.y = dy;
+
+		dir.x = Math.sin(Math.toRadians(rotationAngle)) * speed * delta;
+		dir.y = -Math.cos(Math.toRadians(rotationAngle)) * speed * delta;
 
 		if (caller.isSet(IS_ROTATE_LEFT)) {
 			rotationAngle -= ROTATION_SPEED * delta;
@@ -51,6 +58,7 @@ public class MoveComponent extends Component {
 
 		public Builder dir(final Vector2d dir) {
 			move.dir = dir;
+			move.rotationAngle = Math.toDegrees(dir.getRotation());
 			return this;
 		}
 
@@ -59,13 +67,18 @@ public class MoveComponent extends Component {
 			return this;
 		}
 
+		public Builder speed(final double speed) {
+			move.speed = speed;
+			return this;
+		}
+
 		public Builder accl(final double accl) {
 			move.accl = accl;
 			return this;
 		}
 
-		public Builder deaccl(final double deaccl) {
-			move.deaccl = deaccl;
+		public Builder friction(final double friction) {
+			move.friction = friction;
 			return this;
 		}
 

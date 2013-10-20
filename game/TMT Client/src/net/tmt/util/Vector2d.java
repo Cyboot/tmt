@@ -82,6 +82,24 @@ public class Vector2d {
 		return this;
 	}
 
+	public double length() {
+		return distanceTo(0, 0);
+	}
+
+	/**
+	 * 
+	 * @return angle of vector in radians
+	 */
+	public double getRotation() {
+		double skalar = -y;
+		double nenner = length();
+
+		if (x > 0)
+			return Math.acos(skalar / nenner);
+		else
+			return Math.PI * 2 - Math.acos(skalar / nenner);
+	}
+
 	public static Vector2d randomNormalized() {
 		double x = Math.random() * 2 - 1;
 		double y = Math.random() * 2 - 1;

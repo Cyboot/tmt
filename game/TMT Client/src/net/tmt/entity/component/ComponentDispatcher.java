@@ -5,18 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.tmt.game.Renderable;
+import net.tmt.game.Updateable;
 import net.tmt.gfx.Graphics;
 
-public class ComponentDispatcher {
-	protected List<Component>	components	= new ArrayList<>();
-	protected Map<String, Object>		valueMap	= new HashMap<>();
-	protected Map<String, Object>		dispatchMap	= new HashMap<>();
+public class ComponentDispatcher implements Renderable, Updateable {
+	protected List<Component>		components	= new ArrayList<>();
+	protected Map<String, Object>	valueMap	= new HashMap<>();
+	protected Map<String, Object>	dispatchMap	= new HashMap<>();
 
+	@Override
 	public void update(final double delta) {
 		for (Component c : components)
 			c.update(this, delta);
 	}
 
+	@Override
 	public void render(final Graphics g) {
 		for (Component c : components)
 			c.render(this, g);

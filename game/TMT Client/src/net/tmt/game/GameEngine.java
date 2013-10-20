@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.gamestate.AbstractGamestate;
-import net.tmt.gamestate.DummyGamestate;
+import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.ConfigUtil;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -32,14 +33,16 @@ public class GameEngine {
 		initGL();
 		initNonGL();
 
-		while (!Display.isCloseRequested()) {
+		while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			fps.update();
 
 			int delta = fps.getDelta();
 			Display.setTitle("Delta: " + delta);
 
-			update(delta / 1000.);
-			render();
+			if (delta < 100) {
+				update(delta / 1000.);
+				render();
+			}
 
 			Display.update();
 			Display.sync(100);
@@ -74,7 +77,7 @@ public class GameEngine {
 		Graphics.init();
 		graphics = Graphics.getInstance();
 
-		gamestates.add(new DummyGamestate());
+		gamestates.add(new SpaceGamestate());
 
 	}
 

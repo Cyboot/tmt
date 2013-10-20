@@ -11,13 +11,16 @@ import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
-	private ControlledSpaceShip	ship		= new ControlledSpaceShip();
+	private static SpaceGamestate	instance	= new SpaceGamestate();
 
-	private World				world		= World.getInstance();
-	private List<Entity2D>		entities	= new ArrayList<>();
+	private ControlledSpaceShip		ship		= new ControlledSpaceShip();
 
-	public SpaceGamestate() {
+	private World					world		= World.getInstance();
+	private List<Entity2D>			entities	= new ArrayList<>();
+
+	private SpaceGamestate() {
 		entities.add(new NPCSpaceShip(new Vector2d(), 30));
+		world.setPlayer(ship);
 	}
 
 	@Override
@@ -40,4 +43,11 @@ public class SpaceGamestate extends AbstractGamestate {
 		ship.render(g);
 	}
 
+	public ControlledSpaceShip getShip() {
+		return ship;
+	}
+
+	public static SpaceGamestate getInstance() {
+		return instance;
+	}
 }

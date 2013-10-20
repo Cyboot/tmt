@@ -2,6 +2,8 @@ package net.tmt.entity;
 
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.game.Controls;
+import net.tmt.game.GameEngine;
+import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
@@ -11,7 +13,7 @@ public class ControlledSpaceShip extends Entity2D {
 	private static double	FRICTION	= 0.4;
 
 	public ControlledSpaceShip() {
-		super(new Vector2d(300, 300));
+		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 
 		addComponent(new MoveComponent.Builder().pos(pos).accl(ACCL).friction(FRICTION).build());
 		setSprite(new Sprite("ship_back_64"));
@@ -30,6 +32,12 @@ public class ControlledSpaceShip extends Entity2D {
 			sendValueToComponent(MoveComponent.IS_DEACCELERATING, true);
 
 		super.update(delta);
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		// TODO Auto-generated method stub
+		super.render(g);
 	}
 
 }

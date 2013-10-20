@@ -12,6 +12,7 @@ public class Graphics {
 	private static final float	LINE_WIDTH	= 1;
 	private Texture				whiteTexture;
 	private ReadableColor		color		= Color.PURPLE;
+	private boolean				onGui;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -20,9 +21,9 @@ public class Graphics {
 		double heightHALF = sprite.getHeight() / 2;
 		double x = pos.x;
 		double y = pos.y;
-		if (sprite.isCentered()) {
-			x -= widthHALF;
-			y -= heightHALF;
+		if (!sprite.isCentered()) {
+			x += widthHALF;
+			y += heightHALF;
 		}
 
 		Color c = sprite.getBlendColor();
@@ -30,6 +31,7 @@ public class Graphics {
 
 		glPushMatrix();
 		{
+			applyOffset();
 			glTranslated(x, y, 0);
 			glRotated(sprite.getRotation(), 0, 0, 1);
 			{
@@ -53,18 +55,25 @@ public class Graphics {
 		glPopMatrix();
 	}
 
+	private void applyOffset() {
+		// ignore offset if onGui == true
+		if (!onGui)
+			glTranslated(-World.getInstance().getOffset().x, -World.getInstance().getOffset().y, 0);
+		onGui = false;
+	}
+
 	public void setColor(final ReadableColor cyan) {
 		this.color = cyan;
 	}
 
 
 	public void drawRect(final double x, final double y, final double with, final double height) {
-		whiteTexture.bind();
+		applyColor();
 
 		glLineWidth(LINE_WIDTH);
-		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
 		glPushMatrix();
 		{
+			applyOffset();
 			glTranslated(x, y, 0);
 			{
 				glBegin(GL_LINE_STRIP);
@@ -82,12 +91,12 @@ public class Graphics {
 	}
 
 	public void fillRect(final double x, final double y, final double with, final double height) {
-		whiteTexture.bind();
+		applyColor();
 
 		glLineWidth(LINE_WIDTH);
-		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
 		glPushMatrix();
 		{
+			applyOffset();
 			glTranslated(x, y, 0);
 			{
 				glBegin(GL_QUADS);
@@ -104,8 +113,23 @@ public class Graphics {
 	}
 
 	public void drawCircle(final double centerX, final double centerY, final double radius) {
-		// TODO implement drawCircle
-		throw new RuntimeException("Not yet implemented");
+		// TODO better performance for cicles
+		applyColor();
+		int sides = 32;
+
+		glPushMatrix();
+		{
+			applyOffset();
+			glTranslated(centerX, centerY, 0);
+			glBegin(GL_LINE_LOOP);
+			for (int a = 0; a < 360; a += 360 / sides) {
+				double heading = Math.toRadians(a);
+
+				glVertex2d(Math.cos(heading) * radius, Math.sin(heading) * radius);
+			}
+			glEnd();
+		}
+		glPopMatrix();
 	}
 
 	public void fillCircle(final double centerX, final double centerY, final float radius) {
@@ -115,15 +139,36 @@ public class Graphics {
 		if (offset.distanceTo(centerX, centerY) > 2000)
 			return;
 
-		whiteTexture.bind();
-		glPointSize(radius);
-		glColor3d(1, 1, 1);
+		applyColor();
 
-		glBegin(GL_POINTS);
+		glPointSize(radius);
+
+		glPushMatrix();
 		{
-			glVertex2d(centerX, centerY);
+			applyOffset();
+			glBegin(GL_POINTS);
+			{
+				glVertex2d(centerX, centerY);
+			}
+			glEnd();
 		}
-		glEnd();
+		glPopMatrix();
+	}
+
+	private void applyColor() {
+		whiteTexture.bind();
+		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
+	}
+
+	/**
+	 * Render absolut to screen dimension, not relative to World (ignore
+	 * World-offset) An Example would be the Gui.
+	 * 
+	 * @return
+	 */
+	public Graphics gui() {
+		onGui = true;
+		return this;
 	}
 
 

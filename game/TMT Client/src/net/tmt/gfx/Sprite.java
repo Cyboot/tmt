@@ -38,8 +38,9 @@ public class Sprite {
 		return centered;
 	}
 
-	public void setCentered(final boolean centered) {
+	public Sprite setCentered(final boolean centered) {
 		this.centered = centered;
+		return this;
 	}
 
 	public double getWidth() {
@@ -59,8 +60,9 @@ public class Sprite {
 		rotation %= 360;
 	}
 
-	public void setRotation(final double rotation) {
+	public Sprite setRotation(final double rotation) {
 		this.rotation = rotation;
+		return this;
 	}
 
 
@@ -88,7 +90,8 @@ public class Sprite {
 		return blendColor;
 	}
 
-	public void setBlendColor(final Color blendColor) {
+	public Sprite setBlendColor(final Color blendColor) {
 		this.blendColor = blendColor;
+		return this;
 	}
 }

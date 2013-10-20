@@ -27,6 +27,7 @@ public class ConfigUtil {
 
 		String line = null;
 		try {
+			int lineNr = 1;
 			while ((line = br.readLine()) != null) {
 				// ignore comments and white lines
 				if (line.startsWith("#") || line.trim().isEmpty())
@@ -34,11 +35,12 @@ public class ConfigUtil {
 
 				// syntax error
 				if (!line.contains(":") || line.split(":").length != 2)
-					throw new RuntimeException("config file corrupted");
+					throw new RuntimeException("config file corrupted at line #" + lineNr);
 
 				String key = line.split(":")[0].trim().toLowerCase();
-				String value = line.split(":")[1].trim().toLowerCase();
+				String value = line.split(":")[1].trim();
 
+				lineNr++;
 				valuePairs.put(key, value);
 			}
 		} catch (IOException e) {

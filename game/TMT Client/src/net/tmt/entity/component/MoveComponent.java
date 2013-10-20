@@ -11,6 +11,7 @@ public class MoveComponent extends Component {
 	public static String		SPEED				= "SPEED";
 
 	private static final double	ROTATION_SPEED		= 180;
+	private static final double	MIN_SPEED			= 10;
 
 	private double				rotationAngle		= 0;
 	private double				accl				= 0;
@@ -32,6 +33,9 @@ public class MoveComponent extends Component {
 		speed *= 1 - friction * delta;
 		if (caller.isSet(SPEED)) {
 			speed = (double) caller.getValue(SPEED);
+		}
+		if (speed < MIN_SPEED && !caller.isSet(IS_ACCELERATING) && !caller.isSet(IS_DEACCELERATING)) {
+			speed = 0;
 		}
 
 

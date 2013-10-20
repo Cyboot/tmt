@@ -18,7 +18,6 @@ public class NPCSpaceShip extends Entity2D {
 	@Override
 	public void update(final double delta) {
 		super.update(delta);
-		System.out.println(pos);
 	}
 
 	@Override

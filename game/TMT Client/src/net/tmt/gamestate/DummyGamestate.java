@@ -3,6 +3,7 @@ package net.tmt.gamestate;
 import net.tmt.entity.SpaceShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -15,6 +16,8 @@ public class DummyGamestate extends AbstractGamestate {
 	private Sprite		sprite_ship5;
 	private SpaceShip	ship	= new SpaceShip();
 
+	private World		world	= World.getInstance();
+
 	public DummyGamestate() {
 		sprite_ship1 = new Sprite("ship_double_64");
 		sprite_ship2 = new Sprite("ship_back_64");
@@ -25,6 +28,8 @@ public class DummyGamestate extends AbstractGamestate {
 
 	@Override
 	public void update(final double delta) {
+		world.update(delta);
+
 		sprite_ship1.rotate(delta * 36);
 		sprite_ship2.rotate(delta * 36);
 		sprite_ship3.rotate(delta * 36);
@@ -36,6 +41,8 @@ public class DummyGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
+		world.render(g);
+
 		ship.render(g);
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));

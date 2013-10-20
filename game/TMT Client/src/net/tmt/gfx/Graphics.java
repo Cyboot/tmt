@@ -1,6 +1,7 @@
 package net.tmt.gfx;
 
 import static org.lwjgl.opengl.GL11.*;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -107,9 +108,22 @@ public class Graphics {
 		throw new RuntimeException("Not yet implemented");
 	}
 
-	public void fillCircle(final double centerX, final double centerY, final double radius) {
-		// TODO implement drawCircle
-		throw new RuntimeException("Not yet implemented");
+	public void fillCircle(final double centerX, final double centerY, final float radius) {
+		Vector2d offset = World.getInstance().getOffset();
+
+		// FIXME: better solution to check if on display
+		if (offset.distanceTo(centerX, centerY) > 2000)
+			return;
+
+		whiteTexture.bind();
+		glPointSize(radius);
+		glColor3d(1, 1, 1);
+
+		glBegin(GL_POINTS);
+		{
+			glVertex2d(centerX, centerY);
+		}
+		glEnd();
 	}
 
 

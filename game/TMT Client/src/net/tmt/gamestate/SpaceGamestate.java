@@ -30,7 +30,8 @@ public class SpaceGamestate extends AbstractGamestate {
 			double y = RandomUtil.doubleRange(-1000, 1000);
 			entities.add(new NPCCargoShip(new Vector2d(x, y)));
 		}
-		entities.add(new NPCTransporterShip(new Vector2d(500, 500)));
+		entities.add(new NPCTransporterShip(new Vector2d(800, 200), NPCTransporterShip.TYPE_1));
+		entities.add(new NPCTransporterShip(new Vector2d(500, 500), NPCTransporterShip.TYPE_2));
 
 		world.setPlayer(ship);
 	}

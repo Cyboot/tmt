@@ -17,6 +17,9 @@ public class TMTMain {
 		// sm = mc.getSpaceMap(new Vector2d(300, 300));
 		// sm = mc.getSpaceMap(new Vector2d(600, 600));
 		// sm = mc.getSpaceMap(new Vector2d(-1000, -1000));
+		// sm = mc.getSpaceMap(new Vector2d(600, 900));
+		// sm = mc.getSpaceMap(new Vector2d(900, 900));
+		// sm = mc.getSpaceMap(new Vector2d(900, 900));
 		// sm.debugPrint();
 	}
 

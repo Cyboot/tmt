@@ -11,6 +11,7 @@ public abstract class Map {
 	public static final int								TERRAIN_VOID		= 100;
 	public static final int								TERRAIN_ASTEROIDS	= 101;
 	public static final int								TERRAIN_DEBRIS		= 102;
+	public static final int								TERRAIN_PLANET		= 103;
 	/* planety stuff */
 	public static final int								TERRAIN_GRASS		= 200;
 	public static final int								TERRAIN_WATER		= 201;
@@ -41,23 +42,34 @@ public abstract class Map {
 		minY = Math.min(minY, coord.y);
 	}
 
-	public void addChunk(final int terrain, final Coordinate coord) {
+	public void addChunk(final int terrain, final Coordinate coord, final int planetId) {
 		if (!chunks.containsKey(coord.x)) {
 			HashMap<Integer, Chunk> inner = new HashMap<Integer, Chunk>();
 			chunks.put(coord.x, inner);
 		}
-		chunks.get(coord.x).put(coord.y, new Chunk(terrain));
+		chunks.get(coord.x).put(coord.y, new Chunk(terrain, planetId));
 		updateBoudaries(coord);
 	}
 
+	public Chunk getChunk(final Coordinate coord) {
+		return chunks.get(coord.x).get(coord.y);
+	}
+
 	public void debugPrint() {
+		System.out.println("Space map:");
+		String pi = "";
 		for (int x = minX; x <= maxX; x++) {
 			for (int y = minY; y <= maxY; y++) {
 				if (chunks.containsKey(x)) {
 					if (chunks.get(x).containsKey(y)) {
-						String s = Integer.toString(((chunks.get(x).get(y))).terrain);
+						Chunk chunk = chunks.get(x).get(y);
+						String s = Integer.toString(chunk.terrain);
 						char c = s.charAt(s.length() - 1);
 						System.out.print(c);
+						if ((chunks.get(x).get(y)).terrain == Map.TERRAIN_PLANET) {
+							Planet tmpp = MapController.getInstance().getPlanet(chunk.planetId);
+							pi += "> Planet #" + tmpp.getId() + " (" + x + "/" + y + "): <info>\n";
+						}
 					} else {
 						System.out.print('•');
 					}
@@ -67,5 +79,7 @@ public abstract class Map {
 			}
 			System.out.println();
 		}
+
+		System.out.println("\nPlanet info:" + pi);
 	}
 }

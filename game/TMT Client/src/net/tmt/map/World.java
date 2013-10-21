@@ -10,7 +10,7 @@ import net.tmt.game.GameEngine;
 import net.tmt.game.Renderable;
 import net.tmt.game.Updateable;
 import net.tmt.gfx.Graphics;
-import net.tmt.util.RandumUtil;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -46,8 +46,8 @@ public class World implements Renderable, Updateable {
 
 		for (int x = -MAX_MAP_SIZE; x < MAX_MAP_SIZE; x += DISTANCE) {
 			for (int y = -MAX_MAP_SIZE; y < MAX_MAP_SIZE; y += DISTANCE) {
-				double vx = x + RandumUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
-				double vy = y + RandumUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
+				double vx = x + RandomUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
+				double vy = y + RandomUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
 
 				stars.add(new Vector2d(vx, vy));
 			}

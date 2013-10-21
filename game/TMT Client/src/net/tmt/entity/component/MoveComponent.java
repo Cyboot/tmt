@@ -39,6 +39,9 @@ public class MoveComponent extends Component {
 	public void update(final ComponentDispatcher caller, final double delta) {
 		super.update(caller, delta);
 
+		if (caller.isSet(ROTATION_SPEED)) {
+			rotationSpeed = (double) caller.getValue(ROTATION_SPEED);
+		}
 		if (caller.isSet(SPEED)) {
 			speed = (double) caller.getValue(SPEED);
 		}
@@ -76,6 +79,10 @@ public class MoveComponent extends Component {
 
 	@Override
 	public void dispatch(final ComponentDispatcher caller) {
+		if (caller.isSet(ROTATION_SPEED)) {
+			rotationSpeed = (double) caller.getValue(ROTATION_SPEED);
+		}
+
 		caller.dispatch(ROTATION_ANGLE, rotationAngle);
 		caller.dispatch(ROTATION_SPEED, rotationSpeed);
 		caller.dispatch(POSITION, pos);

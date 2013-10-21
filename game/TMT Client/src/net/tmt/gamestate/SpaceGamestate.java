@@ -5,9 +5,11 @@ import java.util.List;
 
 import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.npc.NPCSpaceShip;
+import net.tmt.entity.npc.NPCCargoShip;
+import net.tmt.entity.npc.NPCTransporterShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.World;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
@@ -19,9 +21,17 @@ public class SpaceGamestate extends AbstractGamestate {
 	private List<Entity2D>			entities	= new ArrayList<>();
 
 	private SpaceGamestate() {
-		entities.add(new NPCSpaceShip(new Vector2d()));
-		entities.add(new NPCSpaceShip(new Vector2d(1000, 500)));
-		entities.add(new NPCSpaceShip(new Vector2d(500, 500)));
+		entities.add(new NPCCargoShip(new Vector2d()));
+		entities.add(new NPCCargoShip(new Vector2d(1000, 500)));
+		entities.add(new NPCCargoShip(new Vector2d(500, 500)));
+
+		for (int i = 0; i < 10; i++) {
+			double x = RandomUtil.doubleRange(-1000, 1000);
+			double y = RandomUtil.doubleRange(-1000, 1000);
+			entities.add(new NPCCargoShip(new Vector2d(x, y)));
+		}
+		entities.add(new NPCTransporterShip(new Vector2d(500, 500)));
+
 		world.setPlayer(ship);
 	}
 

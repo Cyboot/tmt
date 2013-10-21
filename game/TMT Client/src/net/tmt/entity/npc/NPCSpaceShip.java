@@ -4,24 +4,25 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.Move2TargetComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.gfx.Graphics;
-import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
-public class NPCSpaceShip extends Entity2D {
-	private World		world			= World.getInstance();
+abstract class NPCSpaceShip extends Entity2D {
+	private World		world	= World.getInstance();
 
-	private double		roationSpeed	= 50;
-	private double		speed			= 100;
+	protected double	speed;
+	protected double	roationSpeed;
 	private Entity2D	target;
 
-	public NPCSpaceShip(final Vector2d pos) {
+	public NPCSpaceShip(final Vector2d pos, final double speed, final double rotationSpeed) {
 		super(pos);
+
+		this.speed = speed;
+		this.roationSpeed = rotationSpeed;
 
 		addComponent(new MoveComponent.Builder().pos(pos).speed(speed).rotationSpeed(roationSpeed).build());
 		addComponent(new Move2TargetComponent());
 
-		setSprite(new Sprite("ship_ends_64", 32, 32));
 	}
 
 	@Override

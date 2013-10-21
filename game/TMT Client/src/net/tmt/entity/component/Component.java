@@ -10,4 +10,13 @@ public abstract class Component {
 
 	public void render(final ComponentDispatcher caller, final Graphics g) {
 	}
+
+	/**
+	 * Dispatch all values for the first time
+	 * 
+	 * @param caller
+	 */
+	public void dispatch(final ComponentDispatcher caller) {
+
+	}
 }

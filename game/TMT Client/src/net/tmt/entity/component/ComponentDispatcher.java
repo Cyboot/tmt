@@ -10,9 +10,9 @@ import net.tmt.game.Updateable;
 import net.tmt.gfx.Graphics;
 
 public class ComponentDispatcher implements Renderable, Updateable {
-	protected List<Component>		components	= new ArrayList<>();
-	protected Map<String, Object>	valueMap	= new HashMap<>();
-	protected Map<String, Object>	dispatchMap	= new HashMap<>();
+	private List<Component>		components	= new ArrayList<>();
+	private Map<String, Object>	valueMap	= new HashMap<>();
+	private Map<String, Object>	dispatchMap	= new HashMap<>();
 
 	@Override
 	public void update(final double delta) {
@@ -29,6 +29,7 @@ public class ComponentDispatcher implements Renderable, Updateable {
 
 	public void addComponent(final Component component) {
 		components.add(component);
+		component.dispatch(this);
 	}
 
 	public void sendValueToComponents(final String name, final Object value) {
@@ -39,12 +40,15 @@ public class ComponentDispatcher implements Renderable, Updateable {
 		return components;
 	}
 
+	public void clearValue(final String name) {
+		dispatchMap.remove(name);
+	}
 
-	public void dispatch(final String name, final double value) {
+	public void dispatch(final String name, final Object value) {
 		dispatchMap.put(name, value);
 	}
 
-	protected Object getValue(final String name) {
+	public Object getValue(final String name) {
 		Object result = valueMap.get(name);
 
 		return result == null ? dispatchMap.get(name) : result;

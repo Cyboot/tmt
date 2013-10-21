@@ -8,10 +8,22 @@ public class RenderComponent extends Component {
 	private Sprite		sprite;
 	private Vector2d	pos;
 
+	public RenderComponent() {
+	}
+
+
+	public RenderComponent(final Sprite sprite, final Vector2d pos) {
+		this.sprite = sprite;
+		this.pos = pos;
+	}
+
+
 	@Override
 	public void render(final ComponentDispatcher caller, final Graphics g) {
 		super.render(caller, g);
-		sprite.setRotation((double) caller.getValue(ROTATION_ANGLE));
+
+		if (caller.isSet(ROTATION_ANGLE))
+			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE));
 
 		if (sprite != null)
 			g.drawSprite(pos, sprite);

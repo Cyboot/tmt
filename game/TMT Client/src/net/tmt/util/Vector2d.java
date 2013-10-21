@@ -35,6 +35,12 @@ public class Vector2d {
 		return this;
 	}
 
+	public Vector2d sub(final Vector2d other) {
+		this.x -= other.x;
+		this.y -= other.y;
+		return this;
+	}
+
 	public Vector2d copy() {
 		return new Vector2d(x, y);
 	}
@@ -87,6 +93,7 @@ public class Vector2d {
 	}
 
 	/**
+	 * Rotation to up-vector (0 - 2*Pi)
 	 * 
 	 * @return angle of vector in radians
 	 */
@@ -98,6 +105,19 @@ public class Vector2d {
 			return Math.acos(skalar / nenner);
 		else
 			return Math.PI * 2 - Math.acos(skalar / nenner);
+	}
+
+	/**
+	 * Angle of the two vectors
+	 * 
+	 * @param other
+	 * @return
+	 */
+	public double angleTo(final Vector2d other) {
+		double angle1 = this.getRotation();
+		double angle2 = other.getRotation();
+
+		return angle1 - angle2;
 	}
 
 	public static Vector2d randomNormalized() {

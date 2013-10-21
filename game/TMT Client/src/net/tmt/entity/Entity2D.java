@@ -30,12 +30,16 @@ public abstract class Entity2D implements Renderable, Updateable {
 		compDispatcher.update(delta);
 	}
 
-	protected void sendValueToComponent(final String name, final Object value) {
+	protected void dispatchValue(final String name, final Object value) {
 		compDispatcher.sendValueToComponents(name, value);
 	}
 
 	protected void addComponent(final Component component) {
 		compDispatcher.addComponent(component);
+	}
+
+	protected Object getValue(final String name) {
+		return compDispatcher.getValue(name);
 	}
 
 	@Override

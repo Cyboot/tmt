@@ -19,7 +19,9 @@ public class SpaceGamestate extends AbstractGamestate {
 	private List<Entity2D>			entities	= new ArrayList<>();
 
 	private SpaceGamestate() {
-		entities.add(new NPCSpaceShip(new Vector2d(), 30));
+		entities.add(new NPCSpaceShip(new Vector2d()));
+		entities.add(new NPCSpaceShip(new Vector2d(1000, 500)));
+		entities.add(new NPCSpaceShip(new Vector2d(500, 500)));
 		world.setPlayer(ship);
 	}
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.ControlledSpaceShip;
+import net.tmt.entity.Entity2D;
+import net.tmt.entity.Waypoint;
 import net.tmt.game.GameEngine;
 import net.tmt.game.Renderable;
 import net.tmt.game.Updateable;
@@ -14,7 +16,7 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class World implements Renderable, Updateable {
-	private static final double	RATIO	= 2.5;
+	private static final double	RATIO		= 2.5;
 	private double				MOVE_DIFF_WIDTH;
 	private double				MOVE_DIFF_HEIGHT;
 	private double				MOVE_MAX_WIDTH;
@@ -22,11 +24,12 @@ public class World implements Renderable, Updateable {
 
 	private static World		instance;
 
-	private Vector2d			tmp		= new Vector2d();
-	private Vector2d			offset	= new Vector2d();
+	private Vector2d			tmp			= new Vector2d();
+	private Vector2d			offset		= new Vector2d();
 
 	// DEBUG:
-	private List<Vector2d>		stars	= new ArrayList<>();
+	private List<Vector2d>		stars		= new ArrayList<>();
+	private List<Entity2D>		waypoints	= new ArrayList<>();
 
 	private ControlledSpaceShip	player;
 
@@ -49,6 +52,10 @@ public class World implements Renderable, Updateable {
 				stars.add(new Vector2d(vx, vy));
 			}
 		}
+
+		waypoints.add(new Waypoint(new Vector2d(200, 600)));
+		waypoints.add(new Waypoint(new Vector2d(900, 400)));
+		waypoints.add(new Waypoint(new Vector2d(100, 200)));
 	}
 
 	@Override
@@ -89,6 +96,9 @@ public class World implements Renderable, Updateable {
 		for (Vector2d v : stars) {
 			g.fillCircle(v.x, v.y, 1);
 		}
+
+		for (Entity2D e : waypoints)
+			e.render(g);
 	}
 
 	public Vector2d getOffset() {
@@ -111,5 +121,20 @@ public class World implements Renderable, Updateable {
 
 	public void setPlayer(final ControlledSpaceShip ship) {
 		this.player = ship;
+	}
+
+	/**
+	 * get the next waypoint in list (looping)
+	 * 
+	 * @param waypoint
+	 *            current waypoint
+	 * @return
+	 */
+	public Entity2D getNextWaypoint(final Entity2D waypoint) {
+		int indexOf = 0;
+		indexOf = waypoint == null ? -1 : waypoints.indexOf(waypoint);
+		indexOf = ++indexOf % waypoints.size();
+
+		return waypoints.get(indexOf);
 	}
 }

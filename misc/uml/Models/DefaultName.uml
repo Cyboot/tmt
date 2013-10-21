@@ -3,7 +3,7 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="DefaultName">
     <packagedElement xmi:type="uml:Interface" xmi:id="_iakIYDftEeOXuvyzVWGCMQ" name="Interface1"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_lmwXkDftEeOXuvyzVWGCMQ" name="entity.component">
-      <packagedElement xmi:type="uml:Class" xmi:id="_gsKF0DftEeOXuvyzVWGCMQ" name="AbstractComponent">
+      <packagedElement xmi:type="uml:Class" xmi:id="_gsKF0DftEeOXuvyzVWGCMQ" name="Component">
         <ownedOperation xmi:id="_x8lr0DftEeOXuvyzVWGCMQ" name="update">
           <ownedParameter xmi:id="_ejYwkDfvEeOXuvyzVWGCMQ" name="caller"/>
         </ownedOperation>
@@ -25,16 +25,26 @@
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_S6FVsTfwEeOXuvyzVWGCMQ" value="1"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_S6FVsjfwEeOXuvyzVWGCMQ" value="1"/>
         </ownedAttribute>
+        <ownedOperation xmi:id="_4NWsADpuEeOrKccJD1onVg" name="getValue">
+          <ownedParameter xmi:id="_7k7r0DpuEeOrKccJD1onVg" name="name"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="__CIygDpuEeOrKccJD1onVg" name="dispatch">
+          <ownedParameter xmi:id="_Cf8WIDpvEeOrKccJD1onVg" name="name"/>
+          <ownedParameter xmi:id="_D7GFgDpvEeOrKccJD1onVg" name="value"/>
+        </ownedOperation>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_qZBMsDftEeOXuvyzVWGCMQ" name="entity">
-      <packagedElement xmi:type="uml:Class" xmi:id="_bdEKwDftEeOXuvyzVWGCMQ" name="AbstractEntity">
+      <packagedElement xmi:type="uml:Class" xmi:id="_bdEKwDftEeOXuvyzVWGCMQ" name="Entity2D">
         <ownedAttribute xmi:id="_fVq0ADftEeOXuvyzVWGCMQ" name="components"/>
         <ownedAttribute xmi:id="_3VrQYDftEeOXuvyzVWGCMQ" name="abstractComponent" type="_4YcqEDfvEeOXuvyzVWGCMQ" aggregation="composite" association="_3WLmsDftEeOXuvyzVWGCMQ">
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3VrQYTftEeOXuvyzVWGCMQ" value="1"/>
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3VrQYjftEeOXuvyzVWGCMQ" value="1"/>
         </ownedAttribute>
         <ownedOperation xmi:id="_vbYTUDftEeOXuvyzVWGCMQ" name="addComponent"/>
+        <ownedOperation xmi:id="_Rk0qkDpvEeOrKccJD1onVg" name="getValue">
+          <ownedParameter xmi:id="_TJY0oDpvEeOrKccJD1onVg" name="name"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_pxaaIDftEeOXuvyzVWGCMQ" name="Spaceship">
         <generalization xmi:id="_QHngADfuEeOXuvyzVWGCMQ" general="_bdEKwDftEeOXuvyzVWGCMQ"/>
@@ -122,7 +132,7 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_S6JAEzfwEeOXuvyzVWGCMQ" value="1"/>
       </ownedEnd>
     </packagedElement>
-    <packagedElement xmi:type="uml:Association" xmi:id="_W4lyoDfwEeOXuvyzVWGCMQ" name="sendValue()" memberEnd="_W4lyoTfwEeOXuvyzVWGCMQ _W4lypDfwEeOXuvyzVWGCMQ" navigableOwnedEnd="_W4lypDfwEeOXuvyzVWGCMQ">
+    <packagedElement xmi:type="uml:Association" xmi:id="_W4lyoDfwEeOXuvyzVWGCMQ" name="dispatch(name,value)" memberEnd="_W4lyoTfwEeOXuvyzVWGCMQ _W4lypDfwEeOXuvyzVWGCMQ" navigableOwnedEnd="_W4lypDfwEeOXuvyzVWGCMQ">
       <ownedEnd xmi:id="_W4lyoTfwEeOXuvyzVWGCMQ" name="abstractComponent" type="_gsKF0DftEeOXuvyzVWGCMQ" association="_W4lyoDfwEeOXuvyzVWGCMQ">
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_W4lyojfwEeOXuvyzVWGCMQ" value="1"/>
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_W4lyozfwEeOXuvyzVWGCMQ" value="1"/>
@@ -130,6 +140,26 @@
       <ownedEnd xmi:id="_W4lypDfwEeOXuvyzVWGCMQ" name="componentDispacher" type="_4YcqEDfvEeOXuvyzVWGCMQ" association="_W4lyoDfwEeOXuvyzVWGCMQ">
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_W4lypTfwEeOXuvyzVWGCMQ" value="1"/>
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_W4lypjfwEeOXuvyzVWGCMQ" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Une_wDpuEeOrKccJD1onVg" name="getValue(name)" memberEnd="_Unfm0DpuEeOrKccJD1onVg _Unfm0zpuEeOrKccJD1onVg" navigableOwnedEnd="_Unfm0zpuEeOrKccJD1onVg">
+      <ownedEnd xmi:id="_Unfm0DpuEeOrKccJD1onVg" name="abstractEntity" type="_bdEKwDftEeOXuvyzVWGCMQ" association="_Une_wDpuEeOrKccJD1onVg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Unfm0TpuEeOrKccJD1onVg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Unfm0jpuEeOrKccJD1onVg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_Unfm0zpuEeOrKccJD1onVg" name="spaceship" type="_pxaaIDftEeOXuvyzVWGCMQ" association="_Une_wDpuEeOrKccJD1onVg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Unfm1DpuEeOrKccJD1onVg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Unfm1TpuEeOrKccJD1onVg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_hqMBEDpuEeOrKccJD1onVg" name="getValue(name)" memberEnd="_hqMBETpuEeOrKccJD1onVg _hqMBFDpuEeOrKccJD1onVg" navigableOwnedEnd="_hqMBFDpuEeOrKccJD1onVg">
+      <ownedEnd xmi:id="_hqMBETpuEeOrKccJD1onVg" name="spaceship" type="_bdEKwDftEeOXuvyzVWGCMQ" association="_hqMBEDpuEeOrKccJD1onVg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hqMBEjpuEeOrKccJD1onVg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hqMBEzpuEeOrKccJD1onVg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_hqMBFDpuEeOrKccJD1onVg" name="abstractEntity" type="_4YcqEDfvEeOXuvyzVWGCMQ" association="_hqMBEDpuEeOrKccJD1onVg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_hqMBFTpuEeOrKccJD1onVg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_hqMBFjpuEeOrKccJD1onVg" value="1"/>
       </ownedEnd>
     </packagedElement>
   </packagedElement>

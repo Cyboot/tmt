@@ -23,6 +23,18 @@ public class MapController {
 		return instance;
 	}
 
+	public int addPlanet(final Coordinate coord) {
+		int pid = planets.size();
+		int terrain = (int) Math.random() * 5 + Map.TYPE_PLANET;
+		Planet p = new Planet(planets.size(), coord, terrain);
+		planets.add(p);
+		return pid;
+	}
+
+	public Planet getPlanet(final int id) {
+		return planets.get(id);
+	}
+
 	private Map getMap(final Vector2d position, final Map map) {
 		Coordinate currChunk = pos2chunk(position);
 		if (spaceMap.existsAround(currChunk, MapController.PRELOAD_RADIUS)) {

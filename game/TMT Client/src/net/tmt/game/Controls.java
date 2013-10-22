@@ -9,6 +9,7 @@ public class Controls {
 	public static final int	RIGHT	= 1;
 	public static final int	UP		= 2;
 	public static final int	DOWN	= 3;
+	public static final int	FIRE	= 4;
 
 
 	public static boolean pressed(final int key) {
@@ -26,6 +27,9 @@ public class Controls {
 			break;
 		case DOWN:
 			pressed = Keyboard.isKeyDown(KEY_DOWN) || Keyboard.isKeyDown(KEY_S);
+			break;
+		case FIRE:
+			pressed = Keyboard.isKeyDown(KEY_SPACE);
 			break;
 		}
 

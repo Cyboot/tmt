@@ -120,6 +120,21 @@ public class Vector2d {
 		return angle1 - angle2;
 	}
 
+	/**
+	 * normalised Vector generated from given angle
+	 * 
+	 * @param roation
+	 * @return
+	 */
+	public static Vector2d fromAngle(final double roation) {
+		Vector2d result = new Vector2d();
+
+		result.x = Math.sin(roation);
+		result.y = -Math.cos(roation);
+
+		return result.normalize();
+	}
+
 	public static Vector2d randomNormalized() {
 		double x = Math.random() * 2 - 1;
 		double y = Math.random() * 2 - 1;

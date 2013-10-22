@@ -9,9 +9,11 @@ import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.opengl.Texture;
 
 public class Graphics {
-	private static final float	LINE_WIDTH	= 1;
+	private static final int	DEFAULT_LINE_WIDTH	= 1;
+
+	private float				lineWidth			= DEFAULT_LINE_WIDTH;
 	private Texture				whiteTexture;
-	private ReadableColor		color		= Color.PURPLE;
+	private ReadableColor		color				= Color.PURPLE;
 	private boolean				onGui;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
@@ -60,17 +62,23 @@ public class Graphics {
 		if (!onGui)
 			glTranslated(-World.getInstance().getOffset().x, -World.getInstance().getOffset().y, 0);
 		onGui = false;
+
+		// reset lineWidth to default width
+		lineWidth = DEFAULT_LINE_WIDTH;
 	}
 
 	public void setColor(final ReadableColor cyan) {
 		this.color = cyan;
 	}
 
+	public void setLineWidth(final int width) {
+		lineWidth = width;
+	}
 
 	public void drawRect(final double x, final double y, final double with, final double height) {
 		applyColor();
 
-		glLineWidth(LINE_WIDTH);
+		glLineWidth(lineWidth);
 		glPushMatrix();
 		{
 			applyOffset();
@@ -93,7 +101,7 @@ public class Graphics {
 	public void fillRect(final double x, final double y, final double with, final double height) {
 		applyColor();
 
-		glLineWidth(LINE_WIDTH);
+		glLineWidth(lineWidth);
 		glPushMatrix();
 		{
 			applyOffset();
@@ -128,6 +136,25 @@ public class Graphics {
 				glVertex2d(Math.cos(heading) * radius, Math.sin(heading) * radius);
 			}
 			glEnd();
+		}
+		glPopMatrix();
+	}
+
+	public void drawLine(final double x1, final double y1, final double x2, final double y2) {
+		applyColor();
+
+		glLineWidth(lineWidth);
+		glPushMatrix();
+		{
+			applyOffset();
+			{
+				glBegin(GL_LINES);
+				{
+					glVertex2d(x1, y1);
+					glVertex2d(x2, y2);
+				}
+				glEnd();
+			}
 		}
 		glPopMatrix();
 	}

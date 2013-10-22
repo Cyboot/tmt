@@ -13,12 +13,13 @@ import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
-	private static SpaceGamestate	instance	= new SpaceGamestate();
+	private static SpaceGamestate	instance		= new SpaceGamestate();
 
-	private ControlledSpaceShip		ship		= new ControlledSpaceShip();
+	private ControlledSpaceShip		ship			= new ControlledSpaceShip();
 
-	private World					world		= World.getInstance();
-	private List<Entity2D>			entities	= new ArrayList<>();
+	private World					world			= World.getInstance();
+	private List<Entity2D>			entities		= new ArrayList<>();
+	private List<Entity2D>			entitiesToAdd	= new ArrayList<>();
 
 	private SpaceGamestate() {
 		entities.add(new NPCCargoShip(new Vector2d()));
@@ -42,6 +43,8 @@ public class SpaceGamestate extends AbstractGamestate {
 
 		for (Entity2D e : entities)
 			e.update(delta);
+		entities.addAll(entitiesToAdd);
+		entitiesToAdd.clear();
 
 		ship.update(delta);
 	}
@@ -62,5 +65,9 @@ public class SpaceGamestate extends AbstractGamestate {
 
 	public static SpaceGamestate getInstance() {
 		return instance;
+	}
+
+	public void addEntity(final Entity2D entity) {
+		entitiesToAdd.add(entity);
 	}
 }

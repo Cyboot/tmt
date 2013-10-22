@@ -74,6 +74,7 @@ public class MoveComponent extends Component {
 
 
 		caller.dispatch(ROTATION_ANGLE, rotationAngle);
+		caller.dispatch(DIR, dir);
 		pos.add(dir);
 	}
 

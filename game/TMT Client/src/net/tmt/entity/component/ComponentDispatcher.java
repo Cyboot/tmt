@@ -5,14 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.tmt.entity.Entity2D;
 import net.tmt.game.Renderable;
 import net.tmt.game.Updateable;
 import net.tmt.gfx.Graphics;
 
 public class ComponentDispatcher implements Renderable, Updateable {
+	private Entity2D			owner;
 	private List<Component>		components	= new ArrayList<>();
 	private Map<String, Object>	valueMap	= new HashMap<>();
 	private Map<String, Object>	dispatchMap	= new HashMap<>();
+
+	public ComponentDispatcher(final Entity2D owner) {
+		this.owner = owner;
+	}
 
 	@Override
 	public void update(final double delta) {
@@ -56,5 +62,9 @@ public class ComponentDispatcher implements Renderable, Updateable {
 
 	protected boolean isSet(final String name) {
 		return valueMap.containsKey(name) || dispatchMap.containsKey(name);
+	}
+
+	protected Entity2D getOwner() {
+		return owner;
 	}
 }

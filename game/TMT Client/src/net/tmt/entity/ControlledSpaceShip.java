@@ -2,8 +2,8 @@ package net.tmt.entity;
 
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.game.Controls;
+import net.tmt.game.EntityManager;
 import net.tmt.game.GameEngine;
-import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
@@ -31,7 +31,7 @@ public class ControlledSpaceShip extends Entity2D {
 	}
 
 	@Override
-	public void update(final double delta) {
+	public void update(final double delta, final EntityManager caller) {
 		if (Controls.pressed(Controls.LEFT))
 			dispatchValue(MoveComponent.IS_ROTATE_LEFT, true);
 		if (Controls.pressed(Controls.RIGHT))
@@ -67,10 +67,9 @@ public class ControlledSpaceShip extends Entity2D {
 
 		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.FIRE)) {
 			timerShoot.reset();
-			SpaceGamestate.getInstance().addEntity(
-					new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor));
+			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor));
 		}
 
-		super.update(delta);
+		super.update(delta, caller);
 	}
 }

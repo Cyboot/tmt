@@ -3,6 +3,7 @@ package net.tmt.entity.npc;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.Move2TargetComponent;
 import net.tmt.entity.component.MoveComponent;
+import net.tmt.game.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
@@ -26,13 +27,13 @@ abstract class NPCSpaceShip extends Entity2D {
 	}
 
 	@Override
-	public void update(final double delta) {
+	public void update(final double delta, EntityManager caller) {
 		if ((boolean) getValue(Move2TargetComponent.TARGET_REACHED)) {
 			target = world.getNextWaypoint(target);
 			dispatchValue(Move2TargetComponent.SET_TARGET, target.getPos());
 		}
 
-		super.update(delta);
+		super.update(delta, caller);
 	}
 
 	@Override

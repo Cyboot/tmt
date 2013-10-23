@@ -64,7 +64,7 @@ public class Graphics {
 		onGui = false;
 
 		// reset lineWidth to default width
-		lineWidth = DEFAULT_LINE_WIDTH;
+		// lineWidth = DEFAULT_LINE_WIDTH;
 	}
 
 	public void setColor(final ReadableColor cyan) {

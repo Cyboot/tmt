@@ -1,5 +1,6 @@
 package net.tmt.entity;
 
+import net.tmt.entity.component.DecayComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
@@ -7,7 +8,8 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.ReadableColor;
 
 public class LaserShoot extends Entity2D {
-	private double			speed	= 1000;
+	private double			speed		= 1000;
+	private double			lifetime	= 3;
 	private ReadableColor	color;
 
 	public LaserShoot(final Vector2d pos, final double roation, final ReadableColor cyan) {
@@ -17,6 +19,7 @@ public class LaserShoot extends Entity2D {
 
 		Vector2d dir = Vector2d.fromAngle(Math.toRadians(roation));
 		addComponent(new MoveComponent.Builder().pos(pos).speed(speed).dir(dir).build());
+		addComponent(new DecayComponent(lifetime));
 	}
 
 	@Override

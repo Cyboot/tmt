@@ -5,18 +5,16 @@ import java.util.List;
 
 import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.Star;
 import net.tmt.entity.Waypoint;
+import net.tmt.game.EntityManager;
 import net.tmt.game.GameEngine;
-import net.tmt.game.Renderable;
 import net.tmt.game.Updateable;
-import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
-public class World implements Renderable, Updateable {
-	private static final double	RATIO		= 2.5;
+public class World implements Updateable {
+	private static final double	RATIO		= 1.8;
 	private double				MOVE_DIFF_WIDTH;
 	private double				MOVE_DIFF_HEIGHT;
 	private double				MOVE_MAX_WIDTH;
@@ -24,16 +22,19 @@ public class World implements Renderable, Updateable {
 
 	private static World		instance;
 
+	private EntityManager		entityManager;
+
 	private Vector2d			tmp			= new Vector2d();
 	private Vector2d			offset		= new Vector2d();
 
 	// DEBUG:
-	private List<Vector2d>		stars		= new ArrayList<>();
 	private List<Entity2D>		waypoints	= new ArrayList<>();
 
 	private ControlledSpaceShip	player;
 
-	public World() {
+	public World(final EntityManager entityManager) {
+		this.entityManager = entityManager;
+
 		// TODO: quick & dirty: Worldoffset
 		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
 		MOVE_DIFF_WIDTH = (GameEngine.WIDTH / 2 - MOVE_MAX_WIDTH) * RATIO;
@@ -49,21 +50,26 @@ public class World implements Renderable, Updateable {
 				double vx = x + RandomUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
 				double vy = y + RandomUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
 
-				stars.add(new Vector2d(vx, vy));
+				this.entityManager.addEntity(new Star(new Vector2d(vx, vy)), EntityManager.LAYER_0_FAR_BACK);
 			}
 		}
 
-		waypoints.add(new Waypoint(new Vector2d(200, 600)));
-		waypoints.add(new Waypoint(new Vector2d(900, 400)));
-		waypoints.add(new Waypoint(new Vector2d(100, 200)));
+		addWaypoint(new Waypoint(new Vector2d(200, 600)));
+		addWaypoint(new Waypoint(new Vector2d(900, 400)));
+		addWaypoint(new Waypoint(new Vector2d(100, 200)));
+	}
+
+	private void addWaypoint(final Waypoint waypoint) {
+		waypoints.add(waypoint);
+		entityManager.addEntity(waypoint, EntityManager.LAYER_1_BACK);
 	}
 
 	@Override
 	public void update(final double delta) {
-		centerAroundShip();
+		centerAroundShip(delta * 1000);
 	}
 
-	private void centerAroundShip() {
+	private void centerAroundShip(final double delta) {
 		double dx = getOffsetCentered().x - player.getPos().x;
 		double dy = getOffsetCentered().y - player.getPos().y;
 
@@ -73,9 +79,9 @@ public class World implements Renderable, Updateable {
 			factor = Math.pow(factor, 3);
 
 			if (dx > 0)
-				offset.x -= factor * dxInner;
+				offset.x -= factor * dxInner * delta;
 			else
-				offset.x += factor * dxInner;
+				offset.x += factor * dxInner * delta;
 		}
 
 		if (dy > MOVE_MAX_HEIGTH || dy < -MOVE_MAX_HEIGTH) {
@@ -84,21 +90,10 @@ public class World implements Renderable, Updateable {
 			factor = Math.pow(factor, 3);
 
 			if (dy > 0)
-				offset.y -= factor * dyInner;
+				offset.y -= factor * dyInner * delta;
 			else
-				offset.y += factor * dyInner;
+				offset.y += factor * dyInner * delta;
 		}
-	}
-
-	@Override
-	public void render(final Graphics g) {
-		g.setColor(Color.WHITE);
-		for (Vector2d v : stars) {
-			g.fillCircle(v.x, v.y, 1);
-		}
-
-		for (Entity2D e : waypoints)
-			e.render(g);
 	}
 
 	public Vector2d getOffset() {
@@ -111,12 +106,12 @@ public class World implements Renderable, Updateable {
 		return tmp;
 	}
 
-	public static void init() {
-		instance = new World();
-	}
-
 	public static World getInstance() {
 		return instance;
+	}
+
+	public static void init(final EntityManager entityManager) {
+		instance = new World(entityManager);
 	}
 
 	public void setPlayer(final ControlledSpaceShip ship) {
@@ -137,4 +132,9 @@ public class World implements Renderable, Updateable {
 
 		return waypoints.get(indexOf);
 	}
+
+	public void setEntityManager(final EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
 }

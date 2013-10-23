@@ -37,13 +37,11 @@ public class DummyGamestate extends AbstractGamestate {
 		sprite_ship4.rotate(delta * 36);
 		sprite_ship5.rotate(delta * 36);
 
-		ship.update(delta);
+		ship.update(delta, null);
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		world.render(g);
-
 		ship.render(g);
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));

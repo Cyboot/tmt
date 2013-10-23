@@ -11,7 +11,6 @@ import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
-import net.tmt.map.World;
 import net.tmt.util.ConfigUtil;
 import net.tmt.util.DebugUtil;
 
@@ -76,7 +75,6 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		World.init();
 		Graphics.init();
 		graphics = Graphics.getInstance();
 

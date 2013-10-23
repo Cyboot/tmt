@@ -1,6 +1,7 @@
 package net.tmt.entity;
 
 import net.tmt.entity.component.MoveComponent;
+import net.tmt.entity.component.ShieldComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.EntityManager;
 import net.tmt.game.GameEngine;
@@ -28,10 +29,16 @@ public class ControlledSpaceShip extends Entity2D {
 		addComponent(new MoveComponent.Builder().pos(pos).accl(ACCL).friction(FRICTION).rotationSpeed(ROTATION_SPEED)
 				.build());
 		setSprite(new Sprite("ship_back_64"));
+		addComponent(new ShieldComponent(pos, 80, ShieldComponent.COLOR_YELLOW));
 	}
 
 	@Override
 	public void update(final double delta, final EntityManager caller) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))
+			dispatchValue(ShieldComponent.SET_ACTIVE, true);
+		else
+			dispatchValue(ShieldComponent.SET_ACTIVE, false);
+
 		if (Controls.pressed(Controls.LEFT))
 			dispatchValue(MoveComponent.IS_ROTATE_LEFT, true);
 		if (Controls.pressed(Controls.RIGHT))

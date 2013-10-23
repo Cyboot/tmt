@@ -14,4 +14,7 @@ public class RandomUtil {
 		return (int) (rand * (max - min) + min);
 	}
 
+	public static boolean randBoolean() {
+		return Math.random() > 0.5;
+	}
 }

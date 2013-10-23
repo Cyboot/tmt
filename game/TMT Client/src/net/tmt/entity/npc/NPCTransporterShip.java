@@ -1,6 +1,10 @@
 package net.tmt.entity.npc;
 
+import net.tmt.entity.component.ShieldComponent;
+import net.tmt.game.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.util.CountdownTimer;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class NPCTransporterShip extends NPCSpaceShip {
@@ -9,6 +13,10 @@ public class NPCTransporterShip extends NPCSpaceShip {
 
 	private static final double	ROTATION_SPEED	= 30;
 	private static final double	SPEED			= 50;
+
+	private boolean				shieldToggle	= RandomUtil.randBoolean();
+	private CountdownTimer		timerShield		= new CountdownTimer(RandomUtil.doubleRange(5, 10),
+														RandomUtil.doubleRange(0, 10));
 
 	public NPCTransporterShip(final Vector2d pos, final int type) {
 		super(pos, SPEED, ROTATION_SPEED);
@@ -21,6 +29,18 @@ public class NPCTransporterShip extends NPCSpaceShip {
 			setSprite(new Sprite("ship_transporter2"));
 			break;
 		}
+		addComponent(new ShieldComponent(pos, 320, ShieldComponent.COLOR_BLUE));
 	}
 
+	@Override
+	public void update(final double delta, final EntityManager caller) {
+		if (timerShield.isTimeleft(delta)) {
+			shieldToggle = !shieldToggle;
+		}
+
+		dispatchValue(ShieldComponent.SET_ACTIVE, shieldToggle);
+
+
+		super.update(delta, caller);
+	}
 }

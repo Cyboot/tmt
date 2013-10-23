@@ -1,1 +1,6 @@
+# ignore bin folder
 /bin
+
+# ignore sonar files
+/.sonar
+sonar-project.properties

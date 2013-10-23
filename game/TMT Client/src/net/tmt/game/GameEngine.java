@@ -41,7 +41,7 @@ public class GameEngine {
 			int delta = fps.getDelta();
 			Display.setTitle("Delta: " + delta);
 
-			if (delta < 100) {
+			if (Math.abs(delta) < 100) {
 				update(delta / 1000.);
 				render();
 			}

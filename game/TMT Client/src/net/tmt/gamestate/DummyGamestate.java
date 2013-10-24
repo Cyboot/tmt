@@ -1,6 +1,5 @@
 package net.tmt.gamestate;
 
-import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.gui.SimulatorGui;
@@ -12,19 +11,13 @@ import org.lwjgl.util.Color;
 public class DummyGamestate extends AbstractGamestate {
 	private static DummyGamestate	instance	= new DummyGamestate();
 
-	public static DummyGamestate getInstance() {
-		return instance;
-	}
+	private Sprite					sprite_ship1;
+	private Sprite					sprite_ship2;
+	private Sprite					sprite_ship3;
+	private Sprite					sprite_ship4;
+	private Sprite					sprite_ship5;
 
-	private Sprite				sprite_ship1;
-	private Sprite				sprite_ship2;
-	private Sprite				sprite_ship3;
-	private Sprite				sprite_ship4;
-	private Sprite				sprite_ship5;
-
-	private ControlledSpaceShip	ship	= new ControlledSpaceShip();
-
-	private World				world	= World.getInstance();
+	private World					world		= World.getInstance();
 
 	public DummyGamestate() {
 		sprite_ship1 = new Sprite("ship_double_64");
@@ -45,14 +38,11 @@ public class DummyGamestate extends AbstractGamestate {
 		sprite_ship3.rotate(delta * 36);
 		sprite_ship4.rotate(delta * 36);
 		sprite_ship5.rotate(delta * 36);
-
-		ship.update(delta, null);
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		guiManager.setGui(SimulatorGui.getInstance());
-		ship.render(g);
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));
 		sprite_ship2.setBlendColor(new Color(175, 255, 175, 255));
@@ -65,5 +55,9 @@ public class DummyGamestate extends AbstractGamestate {
 		g.drawSprite(new Vector2d(300, 100), sprite_ship3);
 		g.drawSprite(new Vector2d(400, 100), sprite_ship4);
 		g.drawSprite(new Vector2d(500, 100), sprite_ship5);
+	}
+
+	public static DummyGamestate getInstance() {
+		return instance;
 	}
 }

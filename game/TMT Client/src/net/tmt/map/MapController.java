@@ -36,7 +36,7 @@ public class MapController {
 	}
 
 	private Map getMap(final Vector2d position, final Map map) {
-		Coordinate currChunk = pos2chunk(position);
+		Coordinate currChunk = pos2chunk(position, map);
 		if (spaceMap.existsAround(currChunk, MapController.PRELOAD_RADIUS)) {
 			return map;
 		} else {
@@ -52,9 +52,9 @@ public class MapController {
 		return (PlanetMap) getMap(position, planets.get(planetId).getMap());
 	}
 
-	private Coordinate pos2chunk(final Vector2d pos) {
-		int newX = (int) Math.ceil((pos.x / Chunk.SIZE) - .5);
-		int newY = (int) Math.ceil((pos.y / Chunk.SIZE) - .5);
+	public Coordinate pos2chunk(final Vector2d pos, final Map map) {
+		int newX = (int) Math.ceil((pos.x / map.chunkSize) - .5);
+		int newY = (int) Math.ceil((pos.y / map.chunkSize) - .5);
 		return new Coordinate(newX, newY);
 	}
 }

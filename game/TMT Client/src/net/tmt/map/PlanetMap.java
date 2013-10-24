@@ -4,6 +4,7 @@ public class PlanetMap extends Map {
 
 	public PlanetMap(final int base) {
 		type = Map.TYPE_PLANET;
+		chunkSize = 300;
 		baseTerrain = base;
 	}
 

@@ -6,7 +6,11 @@ public class Generator {
 		for (int x = coord.x - radius; x <= coord.x + radius; x++) {
 			for (int y = coord.y - radius; y <= coord.y + radius; y++) {
 				// for every chunk in radius
-				boolean exists = map.chunks.containsKey(coord);
+				boolean exists = false;
+				boolean hash_exists = map.chunks.containsKey(coord);
+				if (hash_exists) {
+					exists = map.chunks.get(coord).equals(new Coordinate(x, y));
+				}
 				if (!exists) {
 					// TODO: don't just add random terrain ;)
 					int terrain = map.baseTerrain;

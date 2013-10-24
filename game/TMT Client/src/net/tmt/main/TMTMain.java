@@ -14,12 +14,7 @@ public class TMTMain {
 		new GameEngine().start();
 		// MapController mc = MapController.getInstance();
 		// SpaceMap sm = mc.getSpaceMap(new Vector2d(0, 0));
-		// sm = mc.getSpaceMap(new Vector2d(300, 300));
-		// sm = mc.getSpaceMap(new Vector2d(600, 600));
-		// sm = mc.getSpaceMap(new Vector2d(-1000, -1000));
-		// sm = mc.getSpaceMap(new Vector2d(600, 900));
-		// sm = mc.getSpaceMap(new Vector2d(900, 900));
-		// sm = mc.getSpaceMap(new Vector2d(900, 900));
+		// sm = mc.getSpaceMap(new Vector2d(40000, -40000));
 		// sm.debugPrint();
 	}
 

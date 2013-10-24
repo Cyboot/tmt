@@ -4,20 +4,23 @@ import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
+import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
 public class DummyGamestate extends AbstractGamestate {
+	private CountdownTimer		timerPause	= new CountdownTimer(2);
+
 	private Sprite				sprite_ship1;
 	private Sprite				sprite_ship2;
 	private Sprite				sprite_ship3;
 	private Sprite				sprite_ship4;
 	private Sprite				sprite_ship5;
 
-	private ControlledSpaceShip	ship	= new ControlledSpaceShip();
+	private ControlledSpaceShip	ship		= new ControlledSpaceShip();
 
-	private World				world	= World.getInstance();
+	private World				world		= World.getInstance();
 
 	public DummyGamestate() {
 		sprite_ship1 = new Sprite("ship_double_64");
@@ -38,6 +41,14 @@ public class DummyGamestate extends AbstractGamestate {
 		sprite_ship5.rotate(delta * 36);
 
 		ship.update(delta, null);
+
+		if (timerPause.isTimeleft(delta)) {
+			if (getState() == ACTIVE) {
+				gameManager.background(this);
+				gameManager.start(SpaceGamestate.getInstance());
+			} else
+				gameManager.start(this);
+		}
 	}
 
 	@Override

@@ -7,9 +7,9 @@ import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.Star;
 import net.tmt.entity.Waypoint;
-import net.tmt.game.EntityManager;
 import net.tmt.game.GameEngine;
-import net.tmt.game.Updateable;
+import net.tmt.game.interfaces.Updateable;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 

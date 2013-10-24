@@ -3,7 +3,7 @@ package net.tmt.entity.npc;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.Move2TargetComponent;
 import net.tmt.entity.component.MoveComponent;
-import net.tmt.game.EntityManager;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;

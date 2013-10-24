@@ -1,4 +1,4 @@
-package net.tmt.game;
+package net.tmt.game.interfaces;
 
 import net.tmt.gfx.Graphics;
 

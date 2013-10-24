@@ -9,6 +9,9 @@ import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gamestate.DummyGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
+import net.tmt.gui.GuiManager;
+
+import org.lwjgl.input.Keyboard;
 
 /**
  * Manages the Gamestates. (pause/resume, active/inactive/background Gamestates)
@@ -25,18 +28,21 @@ public class GameManager implements Updateable, Renderable {
 	/** the active and visible Gamestate */
 	private AbstractGamestate		activeGamestate;
 
+	private GuiManager				guiManager;
 
 	public static GameManager init() {
 		instance = new GameManager();
+		instance.guiManager = GuiManager.init();
 
 		instance.start(SpaceGamestate.getInstance());
-		instance.background(new DummyGamestate());
+		instance.background(DummyGamestate.getInstance());
 		return instance;
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		activeGamestate.render(g);
+		guiManager.render(g);
 	}
 
 	@Override
@@ -45,6 +51,17 @@ public class GameManager implements Updateable, Renderable {
 
 		for (AbstractGamestate a : backgroundGamestates)
 			a.update(delta);
+
+		guiManager.update(delta);
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
+			background(DummyGamestate.getInstance());
+			start(SpaceGamestate.getInstance());
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
+			background(SpaceGamestate.getInstance());
+			start(DummyGamestate.getInstance());
+		}
 	}
 
 	/**
@@ -55,7 +72,7 @@ public class GameManager implements Updateable, Renderable {
 	 * @throws IllegalArgumentException
 	 *             if no such Gamestate/class was paused before
 	 */
-	public void resume(final Class<AbstractGamestate> clazz) {
+	public void resume(final Class<? extends AbstractGamestate> clazz) {
 		for (AbstractGamestate a : inactivedGamestates) {
 			if (a.getClass().equals(clazz)) {
 				activeGamestate = a;

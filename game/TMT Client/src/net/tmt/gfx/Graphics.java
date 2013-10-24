@@ -193,7 +193,7 @@ public class Graphics {
 	 * 
 	 * @return
 	 */
-	public Graphics gui() {
+	public Graphics onGui() {
 		onGui = true;
 		return this;
 	}

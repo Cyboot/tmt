@@ -3,14 +3,18 @@ package net.tmt.gamestate;
 import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.gui.SimulatorGui;
 import net.tmt.map.World;
-import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
 public class DummyGamestate extends AbstractGamestate {
-	private CountdownTimer		timerPause	= new CountdownTimer(2);
+	private static DummyGamestate	instance	= new DummyGamestate();
+
+	public static DummyGamestate getInstance() {
+		return instance;
+	}
 
 	private Sprite				sprite_ship1;
 	private Sprite				sprite_ship2;
@@ -18,9 +22,9 @@ public class DummyGamestate extends AbstractGamestate {
 	private Sprite				sprite_ship4;
 	private Sprite				sprite_ship5;
 
-	private ControlledSpaceShip	ship		= new ControlledSpaceShip();
+	private ControlledSpaceShip	ship	= new ControlledSpaceShip();
 
-	private World				world		= World.getInstance();
+	private World				world	= World.getInstance();
 
 	public DummyGamestate() {
 		sprite_ship1 = new Sprite("ship_double_64");
@@ -28,6 +32,8 @@ public class DummyGamestate extends AbstractGamestate {
 		sprite_ship3 = new Sprite("ship_round_64");
 		sprite_ship4 = new Sprite("ship_ends_64");
 		sprite_ship5 = new Sprite("ship_cyclon_64");
+
+		onResume(-1);
 	}
 
 	@Override
@@ -41,18 +47,11 @@ public class DummyGamestate extends AbstractGamestate {
 		sprite_ship5.rotate(delta * 36);
 
 		ship.update(delta, null);
-
-		if (timerPause.isTimeleft(delta)) {
-			if (getState() == ACTIVE) {
-				gameManager.background(this);
-				gameManager.start(SpaceGamestate.getInstance());
-			} else
-				gameManager.start(this);
-		}
 	}
 
 	@Override
 	public void render(final Graphics g) {
+		guiManager.setGui(SimulatorGui.getInstance());
 		ship.render(g);
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));
@@ -67,5 +66,4 @@ public class DummyGamestate extends AbstractGamestate {
 		g.drawSprite(new Vector2d(400, 100), sprite_ship4);
 		g.drawSprite(new Vector2d(500, 100), sprite_ship5);
 	}
-
 }

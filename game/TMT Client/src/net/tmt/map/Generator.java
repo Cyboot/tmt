@@ -14,12 +14,10 @@ public class Generator {
 				if (!exists) {
 					// TODO: don't just add random terrain ;)
 					int terrain = map.baseTerrain;
-					int planetId = -1;
 					if (Math.random() > 0.8) {
 						if (map.type == Map.TYPE_SPACE) {
 							if (Math.random() > 0.9) {
 								terrain = Map.TERRAIN_PLANET;
-								planetId = MapController.getInstance().addPlanet(new Coordinate(x, y));
 							} else {
 								terrain = Map.TERRAIN_ASTEROIDS;
 							}
@@ -28,7 +26,7 @@ public class Generator {
 							terrain = Map.TERRAIN_WATER;
 						}
 					}
-					map.addChunk(terrain, new Coordinate(x, y), planetId);
+					map.addChunk(terrain, new Coordinate(x, y), map.chunkSize);
 				}
 			}
 		}

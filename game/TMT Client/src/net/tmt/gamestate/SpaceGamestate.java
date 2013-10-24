@@ -51,6 +51,7 @@ public class SpaceGamestate extends AbstractGamestate {
 	@Override
 	public void render(final Graphics g) {
 		guiManager.setGui(SpaceGui.getInstance());
+		world.render(g);
 		entityManager.render(g);
 	}
 

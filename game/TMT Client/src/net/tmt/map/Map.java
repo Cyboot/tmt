@@ -25,10 +25,10 @@ public abstract class Map {
 	public int								chunkSize;
 	protected HashMap<Coordinate, Chunk>	chunks				= new HashMap<Coordinate, Chunk>();
 
-	private int								maxX				= Integer.MIN_VALUE;
-	private int								minX				= Integer.MAX_VALUE;
-	private int								maxY				= Integer.MIN_VALUE;
-	private int								minY				= Integer.MAX_VALUE;
+	public int								maxX				= Integer.MIN_VALUE;
+	public int								minX				= Integer.MAX_VALUE;
+	public int								maxY				= Integer.MIN_VALUE;
+	public int								minY				= Integer.MAX_VALUE;
 
 	public boolean existsAround(final Coordinate coord, final int radius) {
 		// TODO: find some sort of boundary solution to avoid looping through
@@ -48,8 +48,33 @@ public abstract class Map {
 		updateBoudaries(coord);
 	}
 
+	public void putChunk(final Coordinate coord, final Chunk c) {
+		chunks.put(coord, c);
+	}
+
 	public Chunk getChunk(final Coordinate coord) {
 		return chunks.get(coord);
+	}
+
+	public HashMap<Coordinate, Chunk> getChunks() {
+		return chunks;
+	}
+
+	public SpaceMap subSpaceMap(final Coordinate coord, final int r) {
+		return (SpaceMap) subMap(coord, r, new SpaceMap());
+	}
+
+	public PlanetMap subPlanetMapMap(final Coordinate coord, final int r, final int planetId) {
+		return (PlanetMap) subMap(coord, r, new PlanetMap(planetId));
+	}
+
+	private Map subMap(final Coordinate coord, final int r, final Map m) {
+		for (int i = coord.x - r; i <= coord.x + r; i++) {
+			for (int j = coord.y - r; j <= coord.y + r; j++) {
+				m.putChunk(coord, chunks.get(coord));
+			}
+		}
+		return m;
 	}
 
 	public void debugPrint() {

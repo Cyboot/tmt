@@ -8,13 +8,15 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.Star;
 import net.tmt.entity.Waypoint;
 import net.tmt.game.GameEngine;
+import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
-public class World implements Updateable {
-	private static final double	RATIO		= 1.8;
+public class World implements Updateable, Renderable {
+	private static final double	RATIO			= 1.8;
 	private double				MOVE_DIFF_WIDTH;
 	private double				MOVE_DIFF_HEIGHT;
 	private double				MOVE_MAX_WIDTH;
@@ -23,12 +25,13 @@ public class World implements Updateable {
 	private static World		instance;
 
 	private EntityManager		entityManager;
+	private MapController		mapController	= MapController.getInstance();
 
-	private Vector2d			tmp			= new Vector2d();
-	private Vector2d			offset		= new Vector2d();
+	private Vector2d			tmp				= new Vector2d();
+	private Vector2d			offset			= new Vector2d();
 
 	// DEBUG:
-	private List<Entity2D>		waypoints	= new ArrayList<>();
+	private List<Entity2D>		waypoints		= new ArrayList<>();
 
 	private ControlledSpaceShip	player;
 
@@ -135,6 +138,20 @@ public class World implements Updateable {
 
 	public void setEntityManager(final EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		// TODO: use submap
+		SpaceMap sm = mapController.getSpaceMap(player.getPos());
+		for (int x = sm.minX; x <= sm.maxX; x++) {
+			for (int y = sm.minY; y <= sm.maxY; y++) {
+				Coordinate coord = new Coordinate(x, y);
+				if (sm.chunks.containsKey(coord)) {
+					g.drawRect(x * sm.chunkSize, y * sm.chunkSize, sm.chunkSize, sm.chunkSize);
+				}
+			}
+		}
 	}
 
 }

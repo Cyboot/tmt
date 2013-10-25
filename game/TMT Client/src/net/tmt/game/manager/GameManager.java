@@ -37,11 +37,11 @@ public class GameManager implements Updateable, Renderable {
 		instance = new GameManager();
 		instance.guiManager = GuiManager.init();
 
-		instance.background(new SpaceGamestate());
-		instance.background(new SimulatorGamestate());
-		instance.background(new PlanetGamestate());
-		instance.background(new EconomyGamestate());
-		instance.background(new DummyGamestate());
+		instance.pause(new SpaceGamestate());
+		instance.pause(new SimulatorGamestate());
+		instance.pause(new PlanetGamestate());
+		instance.pause(new EconomyGamestate());
+		instance.pause(new DummyGamestate());
 
 		instance.resume(SpaceGamestate.class);
 		return instance;
@@ -69,8 +69,8 @@ public class GameManager implements Updateable, Renderable {
 	 * DEBUG: switch gamestates via F-Keys
 	 */
 	private void debugSwitchGamestes() {
-		// pause if right CTRL is additonally pressed (background otherwise)
-		boolean pauseGamestate = Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+		// background if right CTRL is additonally pressed (pause otherwise)
+		boolean backgroundGamestate = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL);
 
 		boolean f1_down = Keyboard.isKeyDown(Keyboard.KEY_F1);
 		boolean f2_down = Keyboard.isKeyDown(Keyboard.KEY_F2);
@@ -82,10 +82,10 @@ public class GameManager implements Updateable, Renderable {
 
 		// start the gamestate according to the pressed F-Key
 		if (f1_down || f2_down || f3_down || f4_down || f5_down) {
-			if (pauseGamestate)
-				pause(getActiveGamestate());
-			else
+			if (backgroundGamestate)
 				background(getActiveGamestate());
+			else
+				pause(getActiveGamestate());
 
 			if (f1_down)
 				clazz = SpaceGamestate.class;
@@ -195,5 +195,9 @@ public class GameManager implements Updateable, Renderable {
 
 	public static GameManager getInstance() {
 		return instance;
+	}
+
+	public List<AbstractGamestate> getBackgroundGamestates() {
+		return backgroundGamestates;
 	}
 }

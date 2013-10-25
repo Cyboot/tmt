@@ -35,7 +35,7 @@ public class DummyGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
-		guiManager.setGui(DummyGui.getInstance());
+		guiManager.setGui(DummyGui.class);
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));
 		sprite_ship2.setBlendColor(new Color(175, 255, 175, 255));

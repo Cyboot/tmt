@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.tmt.game.manager.GameManager;
+import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.ConfigUtil;
@@ -46,17 +47,32 @@ public class GameEngine {
 			fps.updateAfter();
 
 			if (timerMs.isTimeleft(delta / 1000.)) {
-				timerMs.reset();
-				long lastMs = fps.getElapsedTime();
-
-				String name = gameManager.getActiveGamestate().getClass().getSimpleName();
-				Display.setTitle(name + " @ " + lastMs + " ms");
+				updateTitle();
 			}
 
 			Display.update();
 			Display.sync(100);
 		}
 
+	}
+
+	/** Updates the title of the window with gameinfos */
+	private void updateTitle() {
+		timerMs.reset();
+		long lastMs = fps.getElapsedTime();
+
+		String activeClass = gameManager.getActiveGamestate().getClass().getSimpleName();
+		String backgroundClasses = "";
+		if (!gameManager.getBackgroundGamestates().isEmpty()) {
+			backgroundClasses = " (";
+
+			for (AbstractGamestate a : gameManager.getBackgroundGamestates())
+				backgroundClasses += a.getClass().getSimpleName() + " | ";
+
+			backgroundClasses = backgroundClasses.substring(0, backgroundClasses.length() - 3) + ")";
+		}
+
+		Display.setTitle(activeClass + "    @ " + lastMs + " ms  " + backgroundClasses);
 	}
 
 	private void initConfig() {

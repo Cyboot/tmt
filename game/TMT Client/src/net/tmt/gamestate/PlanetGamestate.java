@@ -17,7 +17,7 @@ public class PlanetGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
-		guiManager.setGui(PlanetGui.getInstance());
+		guiManager.setGui(PlanetGui.class);
 
 		g.setColor(grassColor);
 		g.onGui().fillRect(0, 0, GameEngine.WIDTH, GameEngine.HEIGHT);

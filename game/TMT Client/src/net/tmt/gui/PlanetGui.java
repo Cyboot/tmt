@@ -6,7 +6,6 @@ import net.tmt.gfx.Graphics;
 import org.lwjgl.util.Color;
 
 public class PlanetGui extends Gui {
-	private static PlanetGui	instance	= new PlanetGui();
 
 	@Override
 	public void update(final double delta) {
@@ -18,7 +17,7 @@ public class PlanetGui extends Gui {
 		int width = GameEngine.WIDTH;
 		int height = GameEngine.HEIGHT;
 
-		g.setColor(Color.ORANGE);
+		g.setColor(Color.BLACK);
 
 		// ressource
 		g.setLineWidth(2);
@@ -50,9 +49,5 @@ public class PlanetGui extends Gui {
 
 		// information window
 		g.onGui().drawRect(width * 0.75f, height * 0.75f, width * 0.25f, height * 0.25f);
-	}
-
-	public static PlanetGui getInstance() {
-		return instance;
 	}
 }

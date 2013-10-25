@@ -12,7 +12,6 @@ public class EconomyGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
-		guiManager.setGui(EconomyGui.getInstance());
+		guiManager.setGui(EconomyGui.class);
 	}
-
 }

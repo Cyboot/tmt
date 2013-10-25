@@ -12,6 +12,6 @@ public class SimulatorGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
-		guiManager.setGui(SimulatorGui.getInstance());
+		guiManager.setGui(SimulatorGui.class);
 	}
 }

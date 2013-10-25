@@ -6,7 +6,6 @@ import net.tmt.gfx.Graphics;
 import org.lwjgl.util.Color;
 
 public class SimulatorGui extends Gui {
-	private static SimulatorGui	instance	= new SimulatorGui();
 
 	@Override
 	public void update(final double delta) {
@@ -35,9 +34,5 @@ public class SimulatorGui extends Gui {
 
 		// right
 		g.onGui().fillRect(width / 8 * 6, height / 2 - height / 64, width / 8, height / 128);
-	}
-
-	public static SimulatorGui getInstance() {
-		return instance;
 	}
 }

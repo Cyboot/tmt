@@ -22,8 +22,8 @@ public class Coordinate {
 	public int hashCode() {
 		BigInteger big = new BigInteger(Integer.toString(x));
 		BigInteger bigY = new BigInteger(Integer.toString(y));
-		big.shiftLeft(32);
-		big.add(bigY);
+		big = big.shiftLeft(32);
+		big = big.add(bigY);
 		return big.hashCode();
 	}
 }

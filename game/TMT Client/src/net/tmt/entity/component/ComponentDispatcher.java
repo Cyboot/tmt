@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.game.Renderable;
-import net.tmt.game.Updateable;
+import net.tmt.game.interfaces.Renderable;
+import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
 
 public class ComponentDispatcher implements Renderable, Updateable {

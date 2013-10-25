@@ -4,11 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.tmt.gamestate.AbstractGamestate;
-import net.tmt.gamestate.SpaceGamestate;
+import net.tmt.game.manager.GameManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.ConfigUtil;
@@ -22,12 +19,12 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class GameEngine {
-	private final FPS				fps			= new FPS();
-	private List<AbstractGamestate>	gamestates	= new ArrayList<>();
-	private Graphics				graphics;
+	private final FPS	fps	= new FPS();
+	private GameManager	gameManager;
+	private Graphics	graphics;
 
-	public static int				WIDTH;
-	public static int				HEIGHT;
+	public static int	WIDTH;
+	public static int	HEIGHT;
 
 	public void start() throws LWJGLException {
 		initConfig();
@@ -64,8 +61,7 @@ public class GameEngine {
 	}
 
 	private void update(final double delta) {
-		for (AbstractGamestate a : gamestates)
-			a.update(delta);
+		gameManager.update(delta);
 	}
 
 	private void initNonGL() {
@@ -75,10 +71,9 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Graphics.init();
-		graphics = Graphics.getInstance();
+		graphics = Graphics.init();
 
-		gamestates.add(SpaceGamestate.getInstance());
+		gameManager = GameManager.init();
 
 		try {
 			DebugUtil.setUser(ConfigUtil.getString("debug.User"));
@@ -106,8 +101,7 @@ public class GameEngine {
 	private void render() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (AbstractGamestate a : gamestates)
-			a.render(graphics);
+		gameManager.render(graphics);
 	}
 
 	private static class FPS {

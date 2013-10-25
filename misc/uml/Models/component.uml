@@ -4,25 +4,17 @@
     <packagedElement xmi:type="uml:Component" xmi:id="idComponent" name="DefaultNameComponent">
       <nestedClassifier xmi:type="uml:Interface" xmi:id="_IsDv0DTtEeOv98tnUvWggg" name=""/>
       <packagedElement xmi:type="uml:Package" xmi:id="_LZcYkDTsEeOv98tnUvWggg" name="Game - Java">
-        <packagedElement xmi:type="uml:Component" xmi:id="_b8bCsDTsEeOv98tnUvWggg" name="GameState" clientDependency="_EIEnQDTtEeOv98tnUvWggg _gCjVIDTtEeOv98tnUvWggg _oduKoDTtEeOv98tnUvWggg _rAg3gDTtEeOv98tnUvWggg _V63BgDTvEeOv98tnUvWggg">
+        <packagedElement xmi:type="uml:Component" xmi:id="_b8bCsDTsEeOv98tnUvWggg" name="GameState" clientDependency="_EIEnQDTtEeOv98tnUvWggg _gCjVIDTtEeOv98tnUvWggg _oduKoDTtEeOv98tnUvWggg _rAg3gDTtEeOv98tnUvWggg _V63BgDTvEeOv98tnUvWggg _Ju3DQzyFEeOexbgmJ0NpVw">
           <nestedClassifier xmi:type="uml:Component" xmi:id="_a8iysDTvEeOv98tnUvWggg" name="Weltraum 2D"/>
           <nestedClassifier xmi:type="uml:Component" xmi:id="_kd2w4DTvEeOv98tnUvWggg" name="Planet"/>
           <nestedClassifier xmi:type="uml:Component" xmi:id="_qqw_EDTvEeOv98tnUvWggg" name="Wirtschaft"/>
           <nestedClassifier xmi:type="uml:Component" xmi:id="_wCDM0DTvEeOv98tnUvWggg" name="Atmosphäre 3D"/>
           <realization xmi:id="_oduKoDTtEeOv98tnUvWggg" name="ComponentRealization1" supplier="_iAj58DTtEeOv98tnUvWggg" client="_b8bCsDTsEeOv98tnUvWggg" realizingClassifier="_iAj58DTtEeOv98tnUvWggg"/>
-          <realization xmi:id="_V63BgDTvEeOv98tnUvWggg" name="ComponentRealization2" supplier="_SMFCoDTvEeOv98tnUvWggg" client="_b8bCsDTsEeOv98tnUvWggg" realizingClassifier="_SMFCoDTvEeOv98tnUvWggg"/>
+          <realization xmi:id="_Ju3DQzyFEeOexbgmJ0NpVw" name="ComponentRealization2" supplier="_Ci_5gDyFEeOexbgmJ0NpVw" client="_b8bCsDTsEeOv98tnUvWggg" realizingClassifier="_Ci_5gDyFEeOexbgmJ0NpVw"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Component" xmi:id="_dmuoYDTsEeOv98tnUvWggg" name="Steuerung"/>
         <packagedElement xmi:type="uml:Component" xmi:id="_iHxKoDTsEeOv98tnUvWggg" name="Grafik"/>
         <packagedElement xmi:type="uml:Component" xmi:id="_o-FiMDTsEeOv98tnUvWggg" name="Sound"/>
-        <packagedElement xmi:type="uml:Component" xmi:id="_q6lEEDTsEeOv98tnUvWggg" name="Map" clientDependency="_Bqo7gDTtEeOv98tnUvWggg _Dc90wDTtEeOv98tnUvWggg _E4D5wDTtEeOv98tnUvWggg">
-          <realization xmi:id="_Bqo7gDTtEeOv98tnUvWggg" name="ComponentRealization1" supplier="_9zYWEDTsEeOv98tnUvWggg" client="_q6lEEDTsEeOv98tnUvWggg" realizingClassifier="_9zYWEDTsEeOv98tnUvWggg"/>
-          <realization xmi:id="_Dc90wDTtEeOv98tnUvWggg" name="ComponentRealization2" supplier="_xrkPsDTsEeOv98tnUvWggg" client="_q6lEEDTsEeOv98tnUvWggg" realizingClassifier="_xrkPsDTsEeOv98tnUvWggg"/>
-          <realization xmi:id="_E4D5wDTtEeOv98tnUvWggg" name="ComponentRealization3" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_q6lEEDTsEeOv98tnUvWggg" realizingClassifier="_b8bCsDTsEeOv98tnUvWggg"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Component" xmi:id="_xrkPsDTsEeOv98tnUvWggg" name="MapGenerator" clientDependency="_304XUTTsEeOv98tnUvWggg _CuIY0DTtEeOv98tnUvWggg">
-          <realization xmi:id="_304XUTTsEeOv98tnUvWggg" name="ComponentRealization1" supplier="_q6lEEDTsEeOv98tnUvWggg" client="_xrkPsDTsEeOv98tnUvWggg" realizingClassifier="_q6lEEDTsEeOv98tnUvWggg"/>
-        </packagedElement>
         <packagedElement xmi:type="uml:Component" xmi:id="_9zYWEDTsEeOv98tnUvWggg" name="NPC" clientDependency="_A3HM0DTtEeOv98tnUvWggg"/>
         <packagedElement xmi:type="uml:Component" xmi:id="_HeRHADTtEeOv98tnUvWggg" name="Server Interface" clientDependency="_Ni3twDTtEeOv98tnUvWggg _gwKpEDTtEeOv98tnUvWggg _ygMVIDTtEeOv98tnUvWggg _AtGfwDTuEeOv98tnUvWggg _B-10cDTuEeOv98tnUvWggg">
           <packagedElement xmi:type="uml:Usage" xmi:id="_Ni3twDTtEeOv98tnUvWggg" name="Usage1" supplier="_IsDv0DTtEeOv98tnUvWggg" client="_HeRHADTtEeOv98tnUvWggg"/>
@@ -31,10 +23,13 @@
           <realization xmi:id="_B-10cDTuEeOv98tnUvWggg" name="ComponentRealization3" supplier="_O5bRADTtEeOv98tnUvWggg" client="_HeRHADTtEeOv98tnUvWggg" realizingClassifier="_O5bRADTtEeOv98tnUvWggg"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Component" xmi:id="_iAj58DTtEeOv98tnUvWggg" name="Entity" clientDependency="_motJwDTtEeOv98tnUvWggg _nUaZMDTtEeOv98tnUvWggg _rirwcDTtEeOv98tnUvWggg">
+          <nestedClassifier xmi:type="uml:Component" xmi:id="_PmJmwDyFEeOexbgmJ0NpVw" name="Component"/>
           <realization xmi:id="_motJwDTtEeOv98tnUvWggg" name="ComponentRealization1" supplier="_9zYWEDTsEeOv98tnUvWggg" client="_iAj58DTtEeOv98tnUvWggg" realizingClassifier="_9zYWEDTsEeOv98tnUvWggg"/>
           <realization xmi:id="_rirwcDTtEeOv98tnUvWggg" name="ComponentRealization2" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_iAj58DTtEeOv98tnUvWggg" realizingClassifier="_b8bCsDTsEeOv98tnUvWggg"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Component" xmi:id="_wCvbQDTtEeOv98tnUvWggg" name="Achievments"/>
+        <packagedElement xmi:type="uml:Component" xmi:id="_wCvbQDTtEeOv98tnUvWggg" name="Achievments" clientDependency="_wU4GwzyFEeOexbgmJ0NpVw">
+          <realization xmi:id="_wU4GwzyFEeOexbgmJ0NpVw" name="ComponentRealization1" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_wCvbQDTtEeOv98tnUvWggg" realizingClassifier="_b8bCsDTsEeOv98tnUvWggg"/>
+        </packagedElement>
         <packagedElement xmi:type="uml:Component" xmi:id="_P7LMcDTuEeOv98tnUvWggg" name="API (Minispiele)"/>
         <packagedElement xmi:type="uml:Component" xmi:id="_d2ZKIDTuEeOv98tnUvWggg" name="Util"/>
         <packagedElement xmi:type="uml:Package" xmi:id="_6RcOcDTuEeOv98tnUvWggg" name="GUI">
@@ -46,6 +41,22 @@
           <packagedElement xmi:type="uml:Component" xmi:id="_oF5rEDTuEeOv98tnUvWggg" name="Tutorial"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Component" xmi:id="_SMFCoDTvEeOv98tnUvWggg" name="GameEngine" clientDependency="_VP1ukDTvEeOv98tnUvWggg"/>
+        <packagedElement xmi:type="uml:Component" xmi:id="_Ci_5gDyFEeOexbgmJ0NpVw" name="GameManager" clientDependency="_V63BgDTvEeOv98tnUvWggg _FVt4wzyFEeOexbgmJ0NpVw _IurYoDyFEeOexbgmJ0NpVw">
+          <realization xmi:id="_V63BgDTvEeOv98tnUvWggg" name="ComponentRealization2" supplier="_SMFCoDTvEeOv98tnUvWggg" client="_b8bCsDTsEeOv98tnUvWggg _Ci_5gDyFEeOexbgmJ0NpVw" realizingClassifier="_SMFCoDTvEeOv98tnUvWggg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_eYnVgjyFEeOexbgmJ0NpVw" name="World">
+          <packagedElement xmi:type="uml:Component" xmi:id="_q6lEEDTsEeOv98tnUvWggg" name="Map" clientDependency="_Bqo7gDTtEeOv98tnUvWggg _Dc90wDTtEeOv98tnUvWggg _E4D5wDTtEeOv98tnUvWggg _tsDqYzyFEeOexbgmJ0NpVw">
+            <realization xmi:id="_Bqo7gDTtEeOv98tnUvWggg" name="ComponentRealization1" supplier="_9zYWEDTsEeOv98tnUvWggg" client="_q6lEEDTsEeOv98tnUvWggg" realizingClassifier="_9zYWEDTsEeOv98tnUvWggg"/>
+            <realization xmi:id="_Dc90wDTtEeOv98tnUvWggg" name="ComponentRealization2" supplier="_xrkPsDTsEeOv98tnUvWggg" client="_q6lEEDTsEeOv98tnUvWggg" realizingClassifier="_xrkPsDTsEeOv98tnUvWggg"/>
+            <realization xmi:id="_tsDqYzyFEeOexbgmJ0NpVw" name="ComponentRealization3" supplier="_qXMnYjyFEeOexbgmJ0NpVw" client="_q6lEEDTsEeOv98tnUvWggg" realizingClassifier="_qXMnYjyFEeOexbgmJ0NpVw"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Component" xmi:id="_xrkPsDTsEeOv98tnUvWggg" name="MapGenerator" clientDependency="_304XUTTsEeOv98tnUvWggg _CuIY0DTtEeOv98tnUvWggg">
+            <realization xmi:id="_304XUTTsEeOv98tnUvWggg" name="ComponentRealization1" supplier="_q6lEEDTsEeOv98tnUvWggg" client="_xrkPsDTsEeOv98tnUvWggg" realizingClassifier="_q6lEEDTsEeOv98tnUvWggg"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Component" xmi:id="_qXMnYjyFEeOexbgmJ0NpVw" name="World" clientDependency="_E4D5wDTtEeOv98tnUvWggg _s5OfQDyFEeOexbgmJ0NpVw">
+            <realization xmi:id="_E4D5wDTtEeOv98tnUvWggg" name="ComponentRealization3" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_q6lEEDTsEeOv98tnUvWggg _qXMnYjyFEeOexbgmJ0NpVw" realizingClassifier="_b8bCsDTsEeOv98tnUvWggg"/>
+          </packagedElement>
+        </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_QHv6wDTsEeOv98tnUvWggg" name="GameServer - Java">
         <packagedElement xmi:type="uml:Component" xmi:id="_O5bRADTtEeOv98tnUvWggg" name="Server" clientDependency="_Q9VpgDTtEeOv98tnUvWggg _SFLbUDTtEeOv98tnUvWggg _-AehcDTtEeOv98tnUvWggg">
@@ -73,6 +84,9 @@
       <packagedElement xmi:type="uml:Dependency" xmi:id="_-AehcDTtEeOv98tnUvWggg" name="Dependency8" supplier="_1Ixg8DTtEeOv98tnUvWggg" client="_O5bRADTtEeOv98tnUvWggg"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_AtGfwDTuEeOv98tnUvWggg" name="Dependency9" supplier="_O5bRADTtEeOv98tnUvWggg" client="_HeRHADTtEeOv98tnUvWggg"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_VP1ukDTvEeOv98tnUvWggg" name="Dependency10" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_SMFCoDTvEeOv98tnUvWggg"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_FVt4wzyFEeOexbgmJ0NpVw" name="Dependency11" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_Ci_5gDyFEeOexbgmJ0NpVw"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_IurYoDyFEeOexbgmJ0NpVw" name="Dependency12" supplier="_b8bCsDTsEeOv98tnUvWggg" client="_Ci_5gDyFEeOexbgmJ0NpVw"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_s5OfQDyFEeOexbgmJ0NpVw" name="Dependency13" supplier="_q6lEEDTsEeOv98tnUvWggg" client="_qXMnYjyFEeOexbgmJ0NpVw"/>
     </packagedElement>
   </packagedElement>
 </uml:Model>

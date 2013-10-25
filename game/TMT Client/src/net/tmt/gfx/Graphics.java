@@ -193,7 +193,7 @@ public class Graphics {
 	 * 
 	 * @return
 	 */
-	public Graphics gui() {
+	public Graphics onGui() {
 		onGui = true;
 		return this;
 	}
@@ -201,9 +201,10 @@ public class Graphics {
 
 	private static Graphics	instance;
 
-	public static void init() {
+	public static Graphics init() {
 		instance = new Graphics();
 		instance.whiteTexture = new Sprite("white").getTexture();
+		return instance;
 	}
 
 	public static Graphics getInstance() {

@@ -6,16 +6,18 @@ public class Generator {
 		for (int x = coord.x - radius; x <= coord.x + radius; x++) {
 			for (int y = coord.y - radius; y <= coord.y + radius; y++) {
 				// for every chunk in radius
-				boolean exists = map.chunks.containsKey(coord);
+				boolean exists = false;
+				boolean hash_exists = map.chunks.containsKey(coord);
+				if (hash_exists) {
+					exists = map.chunks.get(coord).equals(new Coordinate(x, y));
+				}
 				if (!exists) {
 					// TODO: don't just add random terrain ;)
 					int terrain = map.baseTerrain;
-					int planetId = -1;
 					if (Math.random() > 0.8) {
 						if (map.type == Map.TYPE_SPACE) {
 							if (Math.random() > 0.9) {
 								terrain = Map.TERRAIN_PLANET;
-								planetId = MapController.getInstance().addPlanet(new Coordinate(x, y));
 							} else {
 								terrain = Map.TERRAIN_ASTEROIDS;
 							}
@@ -24,7 +26,7 @@ public class Generator {
 							terrain = Map.TERRAIN_WATER;
 						}
 					}
-					map.addChunk(terrain, new Coordinate(x, y), planetId);
+					map.addChunk(terrain, new Coordinate(x, y), map.chunkSize);
 				}
 			}
 		}

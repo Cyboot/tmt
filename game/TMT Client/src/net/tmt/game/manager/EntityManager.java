@@ -1,4 +1,4 @@
-package net.tmt.game;
+package net.tmt.game.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.interfaces.Renderable;
+import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
 
 /**

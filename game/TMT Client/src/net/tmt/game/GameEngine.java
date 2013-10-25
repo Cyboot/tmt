@@ -9,6 +9,7 @@ import net.tmt.game.manager.GameManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.ConfigUtil;
+import net.tmt.util.CountdownTimer;
 import net.tmt.util.DebugUtil;
 
 import org.lwjgl.LWJGLException;
@@ -19,12 +20,14 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class GameEngine {
-	private final FPS	fps	= new FPS();
-	private GameManager	gameManager;
-	private Graphics	graphics;
+	private final FPS		fps		= new FPS();
+	private GameManager		gameManager;
+	private Graphics		graphics;
 
-	public static int	WIDTH;
-	public static int	HEIGHT;
+	private CountdownTimer	timerMs	= new CountdownTimer(1);
+
+	public static int		WIDTH;
+	public static int		HEIGHT;
 
 	public void start() throws LWJGLException {
 		initConfig();
@@ -32,14 +35,22 @@ public class GameEngine {
 		initNonGL();
 
 		while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-			fps.update();
+			fps.updateBefore();
 
-			int delta = fps.getDelta();
-			Display.setTitle("Delta: " + delta);
+			long delta = fps.getDelta();
 
 			if (Math.abs(delta) < 100) {
 				update(delta / 1000.);
 				render();
+			}
+			fps.updateAfter();
+
+			if (timerMs.isTimeleft(delta / 1000.)) {
+				timerMs.reset();
+				long lastMs = fps.getElapsedTime();
+
+				String name = gameManager.getActiveGamestate().getClass().getSimpleName();
+				Display.setTitle(name + " @ " + lastMs + " ms");
 			}
 
 			Display.update();
@@ -104,22 +115,44 @@ public class GameEngine {
 		gameManager.render(graphics);
 	}
 
+	/**
+	 * calculates the Delta/FPS
+	 * 
+	 */
 	private static class FPS {
 		private long	lastFrame;
-		private int		delta;
+		private long	delta;
+		private long	elapsedTime;
 
 		private long getTime() {
 			return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 		}
 
-		public void update() {
+		/**
+		 * call after update() and render()
+		 */
+		public void updateAfter() {
+			elapsedTime = (int) (getTime() - lastFrame);
+		}
+
+		/**
+		 * call immediatly in while() loop
+		 */
+		public void updateBefore() {
 			long time = getTime();
-			delta = (int) (time - lastFrame);
+			delta = (time - lastFrame);
 			lastFrame = time;
 		}
 
-		public int getDelta() {
+		public long getDelta() {
 			return delta;
+		}
+
+		/**
+		 * @return time elapsed of the update() and render()-methods
+		 */
+		public long getElapsedTime() {
+			return elapsedTime;
 		}
 	}
 

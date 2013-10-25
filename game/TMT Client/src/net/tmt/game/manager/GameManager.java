@@ -132,6 +132,9 @@ public class GameManager implements Updateable, Renderable {
 
 			activeGamestate = toResume;
 			activeGamestate.setState(AbstractGamestate.ACTIVE);
+
+			inactivedGamestates.remove(activeGamestate);
+			backgroundGamestates.remove(activeGamestate);
 		} else
 			throw new IllegalArgumentException("Cannot resume '" + clazz + "' because it was not paused before!");
 	}

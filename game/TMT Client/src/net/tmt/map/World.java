@@ -15,6 +15,8 @@ import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.util.Color;
+
 public class World implements Updateable, Renderable {
 	private static final double	RATIO			= 1.8;
 	private double				MOVE_DIFF_WIDTH;
@@ -142,6 +144,8 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void render(final Graphics g) {
+		g.setColor(Color.GREY);
+
 		// TODO: use submap
 		SpaceMap sm = mapController.getSpaceMap(player.getPos());
 		for (int x = sm.minX; x <= sm.maxX; x++) {

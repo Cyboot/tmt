@@ -7,6 +7,9 @@ import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gamestate.DummyGamestate;
+import net.tmt.gamestate.EconomyGamestate;
+import net.tmt.gamestate.PlanetGamestate;
+import net.tmt.gamestate.SimulatorGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.GuiManager;
@@ -34,8 +37,13 @@ public class GameManager implements Updateable, Renderable {
 		instance = new GameManager();
 		instance.guiManager = GuiManager.init();
 
-		instance.start(SpaceGamestate.getInstance());
-		instance.background(DummyGamestate.getInstance());
+		instance.background(new SpaceGamestate());
+		instance.background(new SimulatorGamestate());
+		instance.background(new PlanetGamestate());
+		instance.background(new EconomyGamestate());
+		instance.background(new DummyGamestate());
+
+		instance.resume(SpaceGamestate.class);
 		return instance;
 	}
 
@@ -54,18 +62,49 @@ public class GameManager implements Updateable, Renderable {
 
 		guiManager.update(delta);
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
-			background(DummyGamestate.getInstance());
-			start(SpaceGamestate.getInstance());
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
-			background(SpaceGamestate.getInstance());
-			start(DummyGamestate.getInstance());
+		debugSwitchGamestes();
+	}
+
+	/**
+	 * DEBUG: switch gamestates via F-Keys
+	 */
+	private void debugSwitchGamestes() {
+		// pause if right CTRL is additonally pressed (background otherwise)
+		boolean pauseGamestate = Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+
+		boolean f1_down = Keyboard.isKeyDown(Keyboard.KEY_F1);
+		boolean f2_down = Keyboard.isKeyDown(Keyboard.KEY_F2);
+		boolean f3_down = Keyboard.isKeyDown(Keyboard.KEY_F3);
+		boolean f4_down = Keyboard.isKeyDown(Keyboard.KEY_F4);
+		boolean f5_down = Keyboard.isKeyDown(Keyboard.KEY_F5);
+
+		Class<? extends AbstractGamestate> clazz = null;
+
+		// start the gamestate according to the pressed F-Key
+		if (f1_down || f2_down || f3_down || f4_down || f5_down) {
+			if (pauseGamestate)
+				pause(getActiveGamestate());
+			else
+				background(getActiveGamestate());
+
+			if (f1_down)
+				clazz = SpaceGamestate.class;
+			if (f2_down)
+				clazz = SimulatorGamestate.class;
+			if (f3_down)
+				clazz = PlanetGamestate.class;
+			if (f4_down)
+				clazz = EconomyGamestate.class;
+			if (f5_down)
+				clazz = DummyGamestate.class;
+
+			resume(clazz);
 		}
 	}
 
 	/**
-	 * Resumes the Gamestate for the given class.
+	 * Resumes the Gamestate for the given class. the previous Gamestate will be
+	 * send to background
 	 * 
 	 * @param clazz
 	 *            of the Gamestate to continue
@@ -73,14 +112,28 @@ public class GameManager implements Updateable, Renderable {
 	 *             if no such Gamestate/class was paused before
 	 */
 	public void resume(final Class<? extends AbstractGamestate> clazz) {
+		AbstractGamestate toResume = null;
+
 		for (AbstractGamestate a : inactivedGamestates) {
 			if (a.getClass().equals(clazz)) {
-				activeGamestate = a;
-				a.setState(AbstractGamestate.ACTIVE);
-				return;
+				toResume = a;
+				break;
 			}
 		}
-		throw new IllegalArgumentException("Cannot resume '" + clazz + "' because it was not paused before!");
+		for (AbstractGamestate a : backgroundGamestates) {
+			if (a.getClass().equals(clazz)) {
+				toResume = a;
+				break;
+			}
+		}
+		if (toResume != null) {
+			if (activeGamestate != null)
+				background(activeGamestate);
+
+			activeGamestate = toResume;
+			activeGamestate.setState(AbstractGamestate.ACTIVE);
+		} else
+			throw new IllegalArgumentException("Cannot resume '" + clazz + "' because it was not paused before!");
 	}
 
 	/**
@@ -133,17 +186,8 @@ public class GameManager implements Updateable, Renderable {
 			activeGamestate = null;
 	}
 
-	/**
-	 * starts the given Gamestate as the one active Gamestate
-	 * 
-	 * @param gamestate
-	 */
-	public void start(final AbstractGamestate gamestate) {
-		gamestate.setState(AbstractGamestate.ACTIVE);
-		inactivedGamestates.remove(gamestate);
-		backgroundGamestates.remove(gamestate);
-
-		activeGamestate = gamestate;
+	public AbstractGamestate getActiveGamestate() {
+		return activeGamestate;
 	}
 
 	public static GameManager getInstance() {

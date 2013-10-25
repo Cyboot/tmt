@@ -89,7 +89,7 @@ public class EntityManager implements Updateable, Renderable {
 				entityMap.get(key).removeAll(list);
 				list.clear();
 			}
-			dirtyAdd = false;
+			dirtyRemove = false;
 		}
 	}
 

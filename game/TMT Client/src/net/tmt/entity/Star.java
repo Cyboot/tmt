@@ -1,5 +1,6 @@
 package net.tmt.entity;
 
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
@@ -12,6 +13,10 @@ public class Star extends Entity2D {
 		super(pos);
 
 		removeAllComponents();
+	}
+
+	@Override
+	public void update(final double delta, final EntityManager caller) {
 	}
 
 	@Override

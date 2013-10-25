@@ -8,11 +8,6 @@ import org.lwjgl.util.Color;
 public class SimulatorGui extends Gui {
 	private static SimulatorGui	instance	= new SimulatorGui();
 
-
-	public static SimulatorGui getInstance() {
-		return instance;
-	}
-
 	@Override
 	public void update(final double delta) {
 
@@ -29,4 +24,7 @@ public class SimulatorGui extends Gui {
 		g.onGui().drawCircle(width / 2, height / 2, 200);
 	}
 
+	public static SimulatorGui getInstance() {
+		return instance;
+	}
 }

@@ -30,7 +30,7 @@ public class World implements Updateable, Renderable {
 	private Vector2d			tmp				= new Vector2d();
 	private Vector2d			offset			= new Vector2d();
 
-	// DEBUG:
+	// DEBUG waypoints in World
 	private List<Entity2D>		waypoints		= new ArrayList<>();
 
 	private ControlledSpaceShip	player;

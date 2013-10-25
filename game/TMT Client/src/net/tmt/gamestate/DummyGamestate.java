@@ -2,7 +2,7 @@ package net.tmt.gamestate;
 
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
-import net.tmt.gui.SimulatorGui;
+import net.tmt.gui.DummyGui;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -35,7 +35,7 @@ public class DummyGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
-		guiManager.setGui(SimulatorGui.getInstance());
+		guiManager.setGui(DummyGui.getInstance());
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));
 		sprite_ship2.setBlendColor(new Color(175, 255, 175, 255));

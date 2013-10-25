@@ -20,8 +20,21 @@ public class SimulatorGui extends Gui {
 
 		g.setColor(Color.YELLOW);
 
+		// circle
 		g.onGui().drawCircle(width / 2, height / 2, 100);
 		g.onGui().drawCircle(width / 2, height / 2, 200);
+
+		g.onGui().fillCircle(width / 2, height / 2, 4);
+
+		// left
+		g.onGui().fillRect(width / 8, height / 2 - height / 64, width / 8, height / 128);
+		g.onGui().fillRect(width / 8, height / 2 - height / 64 + 30, width / 16, height / 128);
+		g.onGui().fillRect(width / 8, height / 2 - height / 64 + 60, width / 16, height / 128);
+		g.onGui().fillRect(width / 8, height / 2 - height / 64 + 90, width / 16, height / 128);
+		g.onGui().fillRect(width / 8, height / 2 - height / 64 + 120, width / 16, height / 128);
+
+		// right
+		g.onGui().fillRect(width / 8 * 6, height / 2 - height / 64, width / 8, height / 128);
 	}
 
 	public static SimulatorGui getInstance() {

@@ -16,11 +16,7 @@ public class Generator {
 					int terrain = map.baseTerrain;
 					if (Math.random() > 0.8) {
 						if (map.type == Map.TYPE_SPACE) {
-							if (Math.random() > 0.9) {
-								terrain = Map.TERRAIN_PLANET;
-							} else {
-								terrain = Map.TERRAIN_ASTEROIDS;
-							}
+							terrain = Map.TERRAIN_ASTEROIDS;
 						}
 						if (map.type == Map.TYPE_PLANET) {
 							terrain = Map.TERRAIN_WATER;

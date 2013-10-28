@@ -148,8 +148,7 @@ public class World implements Updateable, Renderable {
 	public void render(final Graphics g) {
 		g.setColor(Color.GREY);
 
-		// TODO: use submap
-		SpaceMap sm = mapController.getSpaceMap(player.getPos());
+		SpaceMap sm = mapController.getSubSpaceMap(player.getPos(), 1);
 		for (int x = sm.minX; x <= sm.maxX; x++) {
 			for (int y = sm.minY; y <= sm.maxY; y++) {
 				Coordinate coord = new Coordinate(x, y);

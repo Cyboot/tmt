@@ -2,13 +2,16 @@ package net.tmt.map;
 
 import java.util.ArrayList;
 
+import net.tmt.entity.Entity2D;
+
 
 public class Chunk {
 
 	public int					terrain;
 	public int					size;
 	public Coordinate			position;
-	private ArrayList<Object>	objects	= new ArrayList<Object>();
+	// FIXME: "store" entities in the chunks they're located in
+	private ArrayList<Entity2D>	entities	= new ArrayList<Entity2D>();
 
 	public Chunk(final Coordinate position, final int terrain, final int size) {
 		this.position = position;
@@ -16,12 +19,12 @@ public class Chunk {
 		this.size = size;
 	}
 
-	public void addObject(final Object o) {
-		objects.add(o);
+	public void addEntity(final Entity2D o) {
+		entities.add(o);
 	}
 
-	public ArrayList<Object> getObjects() {
-		return objects;
+	public ArrayList<Entity2D> getEntities() {
+		return entities;
 	}
 
 }

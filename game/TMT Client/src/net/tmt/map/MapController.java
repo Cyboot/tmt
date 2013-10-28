@@ -35,21 +35,33 @@ public class MapController {
 		return planets.get(id);
 	}
 
-	private Map getMap(final Vector2d position, final Map map) {
-		Coordinate currChunk = pos2chunk(position, map);
-		if (spaceMap.existsAround(currChunk, MapController.PRELOAD_RADIUS)) {
+	private Map getMap(final Coordinate coord, final Map map) {
+		if (map.existsAround(coord, MapController.PRELOAD_RADIUS)) {
 			return map;
 		} else {
-			return Generator.generateAround(currChunk, map, MapController.PRELOAD_RADIUS);
+			return Generator.generateAround(coord, map, MapController.PRELOAD_RADIUS);
 		}
 	}
 
 	public SpaceMap getSpaceMap(final Vector2d position) {
-		return (SpaceMap) getMap(position, spaceMap);
+		Coordinate coord = pos2chunk(position, spaceMap);
+		return (SpaceMap) getMap(coord, spaceMap);
+	}
+
+	public SpaceMap getSubSpaceMap(final Vector2d position, final int r) {
+		Coordinate coord = pos2chunk(position, spaceMap);
+		return getMap(coord, spaceMap).subSpaceMap(coord, r);
 	}
 
 	public PlanetMap getPlanetMap(final int planetId, final Vector2d position) {
-		return (PlanetMap) getMap(position, planets.get(planetId).getMap());
+		Coordinate coord = pos2chunk(position, planets.get(planetId).getMap());
+		return (PlanetMap) getMap(coord, planets.get(planetId).getMap());
+	}
+
+	public PlanetMap getSubPlanetMap(final int planetId, final Vector2d position, final int r) {
+		Map map = planets.get(planetId).getMap();
+		Coordinate coord = pos2chunk(position, map);
+		return getMap(coord, map).subPlanetMapMap(coord, r, planetId);
 	}
 
 	public Coordinate pos2chunk(final Vector2d pos, final Map map) {

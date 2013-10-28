@@ -2,6 +2,8 @@ package net.tmt.map;
 
 import java.util.HashMap;
 
+import net.tmt.entity.Entity2D;
+
 
 public abstract class Map {
 
@@ -11,7 +13,6 @@ public abstract class Map {
 	public static final int					TERRAIN_VOID		= 100;
 	public static final int					TERRAIN_ASTEROIDS	= 101;
 	public static final int					TERRAIN_DEBRIS		= 102;
-	public static final int					TERRAIN_PLANET		= 103;
 	/* planety stuff */
 	public static final int					TERRAIN_GRASS		= 200;
 	public static final int					TERRAIN_WATER		= 201;
@@ -52,6 +53,13 @@ public abstract class Map {
 		chunks.put(coord, c);
 	}
 
+	public void addEntity(final Entity2D e) {
+		MapController mc = MapController.getInstance();
+		Coordinate coord = mc.pos2chunk(e.getPos(), this);
+		Generator.generateAround(coord, this, 0);
+		chunks.get(coord).addEntity(e);
+	}
+
 	public Chunk getChunk(final Coordinate coord) {
 		return chunks.get(coord);
 	}
@@ -69,9 +77,11 @@ public abstract class Map {
 	}
 
 	private Map subMap(final Coordinate coord, final int r, final Map m) {
-		for (int i = coord.x - r; i <= coord.x + r; i++) {
-			for (int j = coord.y - r; j <= coord.y + r; j++) {
-				m.putChunk(coord, chunks.get(coord));
+		for (int x = coord.x - r; x <= coord.x + r; x++) {
+			for (int y = coord.y - r; y <= coord.y + r; y++) {
+				Coordinate currCoord = new Coordinate(x, y);
+				Chunk oldChunk = this.chunks.get(currCoord);
+				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize);
 			}
 		}
 		return m;

@@ -29,7 +29,7 @@ public class NPCTransporterShip extends NPCSpaceShip {
 			setSprite(new Sprite("ship_transporter2"));
 			break;
 		}
-		addComponent(new ShieldComponent(pos, 320, ShieldComponent.COLOR_BLUE));
+		addComponent(new ShieldComponent(320, ShieldComponent.COLOR_BLUE));
 	}
 
 	@Override

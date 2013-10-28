@@ -2,7 +2,6 @@ package net.tmt.entity.component;
 
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
-import net.tmt.util.Vector2d;
 
 public class ShieldComponent extends Component {
 	public static final int		COLOR_BLUE		= 0;
@@ -11,12 +10,10 @@ public class ShieldComponent extends Component {
 	public static final String	SET_ACTIVE		= "SET_ACTIVE";
 
 	private Sprite				sprite;
-	private Vector2d			pos;
-
 	private boolean				isActive		= false;
 
 
-	public ShieldComponent(final Vector2d pos, final int shieldSize, final int colorKey) {
+	public ShieldComponent(final int shieldSize, final int colorKey) {
 		switch (colorKey) {
 		case COLOR_BLUE:
 			this.sprite = new Sprite("shield_blue_256", shieldSize, shieldSize);
@@ -25,7 +22,6 @@ public class ShieldComponent extends Component {
 			this.sprite = new Sprite("shield_yellow_256", shieldSize, shieldSize);
 			break;
 		}
-		this.pos = pos;
 	}
 
 	@Override

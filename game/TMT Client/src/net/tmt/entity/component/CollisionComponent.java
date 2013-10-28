@@ -1,20 +1,21 @@
 package net.tmt.entity.component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.gfx.Graphics;
-import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
 public class CollisionComponent extends Component {
-	public static final String	COLLISION	= "COLLISION";
+	public static final String	IS_COLLISION			= "COLLISION";
+	public static final String	COLLISION_ENTITIES	= "COLLISION_ENTITIES";
 
 	private double				radius;
-	private Vector2d			pos;
 	private Entity2D			ignoredEntity;
 	private boolean				isCollision;
+	private List<Entity2D>		collisonEntities	= new ArrayList<>();
 
 	public CollisionComponent(final double radius, final Entity2D ignoredEntity) {
 		this.radius = radius;
@@ -40,6 +41,7 @@ public class CollisionComponent extends Component {
 		List<Entity2D> entities = caller.getEntityManager().getCollidableEntities();
 
 		isCollision = false;
+		collisonEntities.clear();
 		for (Entity2D e : entities) {
 			// don't collide with yourself and ignored Entity
 			if (e == owner || e == ignoredEntity || owner == e.getOwner())
@@ -50,18 +52,14 @@ public class CollisionComponent extends Component {
 			double dist = pos.distanceTo(e.getPos());
 			if (dist < radius2 + radius) {
 				isCollision = true;
+				collisonEntities.add(e);
 			}
 		}
-		caller.dispatch(COLLISION, isCollision);
+		caller.dispatch(IS_COLLISION, isCollision);
+		caller.dispatch(COLLISION_ENTITIES, collisonEntities);
 	}
 
 	public double getRadius() {
 		return radius;
-	}
-
-	@Override
-	public void initialDispatch(final ComponentDispatcher caller) {
-		super.initialDispatch(caller);
-		pos = owner.getPos();
 	}
 }

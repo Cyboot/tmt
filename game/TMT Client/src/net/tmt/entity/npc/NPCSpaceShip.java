@@ -1,9 +1,9 @@
 package net.tmt.entity.npc;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.Move2TargetComponent;
 import net.tmt.entity.component.MoveComponent;
+import net.tmt.entity.component.util.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.World;
@@ -24,7 +24,8 @@ abstract class NPCSpaceShip extends Entity2D {
 
 		addComponent(new MoveComponent.Builder().pos(pos).speed(speed).rotationSpeed(roationSpeed).build());
 		addComponent(new Move2TargetComponent());
-		addComponent(new CollisionComponent(radius));
+
+		ComponentFactory.addDefaultCollision(this, radius, 100);
 	}
 
 	@Override

@@ -9,7 +9,6 @@ public class MoveComponent extends Component {
 	public static final String	IS_ROTATE_LEFT		= "IS_ROTATE_LEFT";
 	public static final String	IS_ROTATE_RIGHT		= "IS_ROTATE_RIGHT";
 	public static final String	SPEED				= "SPEED";
-	public static final String	POSITION			= "POSITION";
 	public static final String	DIR					= "DIR";
 	public static final String	ROTATION_SPEED		= "ROTATION_SPEED";
 
@@ -21,17 +20,15 @@ public class MoveComponent extends Component {
 	private double				friction			= 0;
 	private double				speed;
 	private Vector2d			dir					= new Vector2d();
-	private Vector2d			pos					= new Vector2d();
 
 	private MoveComponent() {
 	}
 
 
-	public MoveComponent(final double accl, final double friction, final double speed, final Vector2d pos) {
+	public MoveComponent(final double accl, final double friction, final double speed) {
 		this.accl = accl;
 		this.friction = friction;
 		this.speed = speed;
-		this.pos = pos;
 	}
 
 
@@ -86,7 +83,6 @@ public class MoveComponent extends Component {
 
 		caller.dispatch(ROTATION_ANGLE, rotationAngle);
 		caller.dispatch(ROTATION_SPEED, rotationSpeed);
-		caller.dispatch(POSITION, pos);
 		caller.dispatch(DIR, dir);
 	}
 

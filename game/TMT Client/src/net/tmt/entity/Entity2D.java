@@ -17,7 +17,6 @@ public abstract class Entity2D implements Renderable {
 	private boolean				isCollisable	= false;
 	protected Vector2d			pos;
 	protected Entity2D			owner;
-	protected int				radius;
 
 	private ComponentDispatcher	compDispatcher	= new ComponentDispatcher(this);
 
@@ -39,7 +38,7 @@ public abstract class Entity2D implements Renderable {
 		compDispatcher.sendValueToComponents(name, value);
 	}
 
-	protected void addComponent(final Component component) {
+	public void addComponent(final Component component) {
 		if (component instanceof CollisionComponent)
 			isCollisable = true;
 

@@ -5,8 +5,7 @@ import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
 public class RenderComponent extends Component {
-	private Sprite		sprite;
-	private Vector2d	pos;
+	private Sprite	sprite;
 
 	public RenderComponent() {
 	}

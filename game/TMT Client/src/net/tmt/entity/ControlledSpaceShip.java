@@ -1,8 +1,8 @@
 package net.tmt.entity;
 
-import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.ShieldComponent;
+import net.tmt.entity.component.util.ComponentFactory;
 import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
 import net.tmt.game.manager.EntityManager;
@@ -26,12 +26,13 @@ public class ControlledSpaceShip extends Entity2D {
 
 	public ControlledSpaceShip() {
 		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
+		setSprite(new Sprite("ship_back_64"));
 
 		addComponent(new MoveComponent.Builder().pos(pos).accl(ACCL).friction(FRICTION).rotationSpeed(ROTATION_SPEED)
 				.build());
-		setSprite(new Sprite("ship_back_64"));
-		addComponent(new ShieldComponent(pos, 80, ShieldComponent.COLOR_YELLOW));
-		addComponent(new CollisionComponent(32));
+
+		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
+		ComponentFactory.addDefaultCollision(this, 32, 1000000);
 	}
 
 	@Override

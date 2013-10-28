@@ -11,7 +11,6 @@ public class Move2TargetComponent extends Component {
 
 	private Vector2d			target_diff		= new Vector2d();
 	private Vector2d			target;
-	private Vector2d			pos;
 	private double				rotationSpeed;
 	private double				rotation;
 	private double				angleToTarget;
@@ -60,7 +59,7 @@ public class Move2TargetComponent extends Component {
 
 	@Override
 	public void initialDispatch(final ComponentDispatcher caller) {
-		pos = (Vector2d) caller.getValue(MoveComponent.POSITION);
+		super.initialDispatch(caller);
 		rotationSpeed = (double) caller.getValue(MoveComponent.ROTATION_SPEED);
 
 		caller.dispatch(TARGET_REACHED, true);

@@ -4,6 +4,7 @@ package net.tmt.map;
 public class Planet {
 
 	private int			id;
+	@SuppressWarnings("unused")
 	private Coordinate	coord;
 	private PlanetMap	map;
 

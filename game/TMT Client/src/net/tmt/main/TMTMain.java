@@ -1,8 +1,6 @@
 package net.tmt.main;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import net.tmt.game.GameEngine;
 
@@ -18,32 +16,8 @@ public class TMTMain {
 	 * check and finds the natives for the running OS
 	 */
 	private static void checkOS() {
-		/*
-		 * Set lwjgl library path so that LWJGL finds the natives depending on
-		 * the OS.
-		 */
 		String osName = System.getProperty("os.name");
-		// Get .jar dir. new File(".") and property "user.dir" will not work if
-		// .jar is called from
-		// a different directory, e.g. java -jar /someOtherDirectory/myApp.jar
 		String nativeDir = "";
-		try {
-			nativeDir = new File(TMTMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
-		} catch (URISyntaxException uriEx) {
-			try {
-				// Try to resort to current dir. May still fail later due to bad
-				// start dir.
-				uriEx.printStackTrace();
-				nativeDir = new File(".").getCanonicalPath();
-			} catch (IOException ioEx) {
-				// Completely failed
-				ioEx.printStackTrace();
-				System.out.println("Failed to locate native library directory. " + "Error:\n" + ioEx.toString());
-				System.exit(-1);
-			}
-		}
-		// Append library subdir
-		nativeDir += File.separator + "lib" + File.separator + "lwjgl" + File.separator + "native" + File.separator;
 		if (osName.startsWith("Windows")) {
 			nativeDir += "windows";
 		} else if (osName.startsWith("Linux") || osName.startsWith("FreeBSD")) {
@@ -54,18 +28,18 @@ public class TMTMain {
 			nativeDir += "solaris";
 		} else {
 			System.out.println("Unsupported OS: " + osName + ". Exiting.");
-			try {
-				System.in.read();
-			} catch (IOException ex) {
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException ex1) {
-					ex1.printStackTrace();
-				}
-			}
-			System.exit(-1);
 		}
 
-		System.setProperty("org.lwjgl.librarypath", nativeDir);
+		String path = TMTMain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		if (path.startsWith("/"))
+			path = path.substring(1);
+
+		path = path.replace("/", File.separator);
+		path = path.replace("%20", " ");
+		System.out.println("Path: " + path);
+
+		path += nativeDir;
+
+		System.setProperty("org.lwjgl.librarypath", path);
 	}
 }

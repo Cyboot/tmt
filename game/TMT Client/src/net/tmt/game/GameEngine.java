@@ -77,8 +77,8 @@ public class GameEngine {
 
 	private void initConfig() {
 		try {
-			ConfigUtil.init("res/cfg/global.cfg"); // init global configs
-			ConfigUtil.init("res/cfg/local.cfg"); // override with local configs
+			ConfigUtil.init("/cfg/global.cfg"); // init global configs
+			ConfigUtil.init("/cfg/local.cfg"); // override with local configs
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

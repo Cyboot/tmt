@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project TMT Client with libraries in sub-folder">
+	<property name="repo.dir" value="../../"/>
+	<property name="version" value="v0.1"/>
+
+	
+    <property name="build.dir" value="${repo.dir}/build"/>
+    <property name="project.dir" value="${repo.dir}/game/TMT Client"/>
+    
+    <target name="create_run_jar">
+        <jar destfile="${build.dir}/TMT_${version}.jar">
+            <manifest>
+                <attribute name="Main-Class" value="net.tmt.main.TMTMain"/>
+                <attribute name="Class-Path" value=". lib/lwjgl_util.jar lib/lwjgl.jar lib/slick-util.jar lib/slick.jar"/>
+            </manifest>
+            <fileset dir="${project.dir}/bin"/>
+        </jar>
+        <delete dir="${build.dir}/lib"/>
+        <mkdir dir="${build.dir}/lib"/>
+        <copy file="${project.dir}/lib/lwjgl/lwjgl_util.jar" todir="C:/Users/Not/git/tmt/build/lib"/>
+        <copy file="${project.dir}/lib/lwjgl/lwjgl.jar" todir="C:/Users/Not/git/tmt/build/lib"/>
+        <copy file="${project.dir}/lib/slick/slick-util.jar" todir="C:/Users/Not/git/tmt/build/lib"/>
+        <copy file="${project.dir}/lib/slick/slick.jar" todir="C:/Users/Not/git/tmt/build/lib"/>
+        
+        <delete dir="${build.dir}/res"/>
+        <copy todir="${build.dir}/res" >  
+       	 	<fileset dir="${project.dir}/res" includes="**"/>  
+ 		</copy>
+        <delete dir="${build.dir}/lib/native"/>
+        <copy todir="${build.dir}/lib/native" >  
+       	 	<fileset dir="${project.dir}/lib/native" includes="**"/>  
+ 		</copy>
+    </target>
+</project>

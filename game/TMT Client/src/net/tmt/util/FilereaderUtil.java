@@ -32,5 +32,4 @@ public class FilereaderUtil {
 		}
 		return str.toString();
 	}
-
 }

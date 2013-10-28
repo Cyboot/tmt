@@ -2,6 +2,7 @@ package net.tmt.game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -77,8 +78,10 @@ public class GameEngine {
 
 	private void initConfig() {
 		try {
-			ConfigUtil.init("/cfg/global.cfg"); // init global configs
-			ConfigUtil.init("/cfg/local.cfg"); // override with local configs
+			String globalCFG = "res" + File.separator + "cfg" + File.separator + "global.cfg";
+			String localCFG = "res" + File.separator + "cfg" + File.separator + "local.cfg";
+			ConfigUtil.init(globalCFG); // init global configs
+			ConfigUtil.init(localCFG); // override with local configs
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -30,16 +30,10 @@ public class TMTMain {
 			System.out.println("Unsupported OS: " + osName + ". Exiting.");
 		}
 
-		String path = TMTMain.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		if (path.startsWith("/"))
-			path = path.substring(1);
+		File nativeFile = new File("lib" + File.separator + "native" + File.separator + nativeDir);
 
-		path = path.replace("/", File.separator);
-		path = path.replace("%20", " ");
-		System.out.println("Path: " + path);
+		System.out.println("LWJGL-Path: " + nativeFile.getAbsolutePath());
 
-		path += nativeDir;
-
-		System.setProperty("org.lwjgl.librarypath", path);
+		System.setProperty("org.lwjgl.librarypath", nativeFile.getAbsolutePath());
 	}
 }

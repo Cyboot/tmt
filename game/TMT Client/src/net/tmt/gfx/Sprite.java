@@ -67,7 +67,7 @@ public class Sprite {
 
 
 	/**
-	 * load all Images in Imagesfolder
+	 * load all Images from Imagesfolder
 	 * 
 	 * @throws IOException
 	 */

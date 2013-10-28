@@ -1,13 +1,12 @@
 package net.tmt.util;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.tmt.main.TMTMain;
 
 public class ConfigUtil {
 	private static Map<String, String>	valuePairs;
@@ -24,7 +23,7 @@ public class ConfigUtil {
 		if (valuePairs == null)
 			valuePairs = new HashMap<>();
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(TMTMain.class.getResourceAsStream(file)));
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
 		String line = null;
 		try {

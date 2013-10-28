@@ -23,13 +23,9 @@ public class SpaceGamestate extends AbstractGamestate {
 		world.setPlayer(player);
 
 		// add default Entities
-		entityManager.addEntity(new NPCCargoShip(new Vector2d()));
-		entityManager.addEntity(new NPCCargoShip(new Vector2d(1000, 500)));
-		entityManager.addEntity(new NPCCargoShip(new Vector2d(500, 500)));
-
-		for (int i = 0; i < 10; i++) {
-			double x = RandomUtil.doubleRange(-1000, 1000);
-			double y = RandomUtil.doubleRange(-1000, 1000);
+		for (int i = 0; i < 15; i++) {
+			double x = RandomUtil.doubleRange(-1000, 2000);
+			double y = RandomUtil.doubleRange(-1000, 2000);
 			entityManager.addEntity(new NPCCargoShip(new Vector2d(x, y)));
 		}
 		entityManager.addEntity(new NPCTransporterShip(new Vector2d(800, 200), NPCTransporterShip.TYPE_1));

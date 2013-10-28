@@ -59,7 +59,7 @@ public class Move2TargetComponent extends Component {
 	}
 
 	@Override
-	public void dispatch(final ComponentDispatcher caller) {
+	public void initialDispatch(final ComponentDispatcher caller) {
 		pos = (Vector2d) caller.getValue(MoveComponent.POSITION);
 		rotationSpeed = (double) caller.getValue(MoveComponent.ROTATION_SPEED);
 

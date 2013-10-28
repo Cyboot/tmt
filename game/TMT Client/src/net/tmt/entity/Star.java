@@ -16,7 +16,7 @@ public class Star extends Entity2D {
 	}
 
 	@Override
-	public void update(final double delta, final EntityManager caller) {
+	public void update(final EntityManager caller, final double delta) {
 	}
 
 	@Override

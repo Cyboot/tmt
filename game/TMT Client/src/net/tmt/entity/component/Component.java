@@ -1,8 +1,10 @@
 package net.tmt.entity.component;
 
+import net.tmt.entity.Entity2D;
 import net.tmt.gfx.Graphics;
 
 public abstract class Component {
+	protected Entity2D		owner;
 	public static String	ROTATION_ANGLE	= "ROTATION_ANGLE";
 
 	public void update(final ComponentDispatcher caller, final double delta) {
@@ -16,7 +18,7 @@ public abstract class Component {
 	 * 
 	 * @param caller
 	 */
-	public void dispatch(final ComponentDispatcher caller) {
-
+	public void initialDispatch(final ComponentDispatcher caller) {
+		owner = caller.getOwner();
 	}
 }

@@ -1,5 +1,6 @@
 package net.tmt.entity;
 
+import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
 import net.tmt.entity.component.RenderComponent;
@@ -10,8 +11,12 @@ import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
 public abstract class Entity2D implements Renderable {
+	private static long			currentID		= 1;
+	private long				id;
 	private boolean				isAlive			= true;
+	private boolean				isCollisable	= false;
 	protected Vector2d			pos;
+	protected Entity2D			owner;
 	protected int				radius;
 
 	private ComponentDispatcher	compDispatcher	= new ComponentDispatcher(this);
@@ -21,12 +26,13 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	public Entity2D(final Vector2d pos) {
+		id = currentID++;
 		this.pos = pos;
 		compDispatcher.addComponent(new RenderComponent.Builder().pos(pos).sprite(null).build());
 	}
 
-	public void update(final double delta, EntityManager caller) {
-		compDispatcher.update(delta);
+	public void update(final EntityManager caller, final double delta) {
+		compDispatcher.update(caller, delta);
 	}
 
 	protected void dispatchValue(final String name, final Object value) {
@@ -34,6 +40,9 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	protected void addComponent(final Component component) {
+		if (component instanceof CollisionComponent)
+			isCollisable = true;
+
 		compDispatcher.addComponent(component);
 	}
 
@@ -67,6 +76,7 @@ public abstract class Entity2D implements Renderable {
 	 */
 	protected void removeAllComponents() {
 		compDispatcher = new ComponentDispatcher(this);
+		isCollisable = false;
 	}
 
 	public void setSprite(final Sprite sprite) {
@@ -74,5 +84,27 @@ public abstract class Entity2D implements Renderable {
 			if (c instanceof RenderComponent)
 				((RenderComponent) c).setSprite(sprite);
 		}
+	}
+
+	public boolean isCollisable() {
+		return isCollisable;
+	}
+
+	public <T extends Component> T getComponent(final Class<T> clazz) {
+		return compDispatcher.getComponent(clazz);
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public Entity2D getOwner() {
+		return owner;
+	}
+
+	@Override
+	public String toString() {
+		String str = getClass().getSimpleName() + " #" + id + " (" + pos.toString() + ")";
+		return str;
 	}
 }

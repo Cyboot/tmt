@@ -12,7 +12,7 @@ public class NPCCargoShip extends NPCSpaceShip {
 	private static final double	SPEED			= 100;
 
 	public NPCCargoShip(final Vector2d pos) {
-		super(pos, SPEED, ROTATION_SPEED);
+		super(pos, SPEED, ROTATION_SPEED, 16);
 
 		// random Blendcolor
 		Color blendColor = new Color(RandomUtil.intRange(175, 255), RandomUtil.intRange(175, 255), RandomUtil.intRange(

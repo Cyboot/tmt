@@ -52,7 +52,7 @@ public class EntityManager implements Updateable, Renderable {
 
 			for (Entity2D e : list) {
 				if (e.isAlive()) {
-					e.update(delta, this);
+					e.update(this, delta);
 				} else {
 					addremove.remove(e, key);
 				}
@@ -65,7 +65,7 @@ public class EntityManager implements Updateable, Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		renderLayer(LAYER_0_FAR_BACK, g);
+		// renderLayer(LAYER_0_FAR_BACK, g);
 		renderLayer(LAYER_1_BACK, g);
 		renderLayer(LAYER_2_MEDIUM, g);
 		renderLayer(LAYER_3_FRONT, g);
@@ -95,6 +95,10 @@ public class EntityManager implements Updateable, Renderable {
 	 */
 	public void addEntity(final Entity2D entity, final int layer) {
 		addremove.add(entity, layer);
+	}
+
+	public List<Entity2D> getCollidableEntities() {
+		return collidableEntities;
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class NPCTransporterShip extends NPCSpaceShip {
 														RandomUtil.doubleRange(0, 10));
 
 	public NPCTransporterShip(final Vector2d pos, final int type) {
-		super(pos, SPEED, ROTATION_SPEED);
+		super(pos, SPEED, ROTATION_SPEED, 128);
 
 		switch (type) {
 		case TYPE_1:
@@ -33,7 +33,7 @@ public class NPCTransporterShip extends NPCSpaceShip {
 	}
 
 	@Override
-	public void update(final double delta, final EntityManager caller) {
+	public void update(final EntityManager caller, final double delta) {
 		if (timerShield.isTimeleft(delta)) {
 			shieldToggle = !shieldToggle;
 		}
@@ -41,6 +41,6 @@ public class NPCTransporterShip extends NPCSpaceShip {
 		dispatchValue(ShieldComponent.SET_ACTIVE, shieldToggle);
 
 
-		super.update(delta, caller);
+		super.update(caller, delta);
 	}
 }

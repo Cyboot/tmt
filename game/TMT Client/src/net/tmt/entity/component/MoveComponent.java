@@ -79,7 +79,7 @@ public class MoveComponent extends Component {
 	}
 
 	@Override
-	public void dispatch(final ComponentDispatcher caller) {
+	public void initialDispatch(final ComponentDispatcher caller) {
 		if (caller.isSet(ROTATION_SPEED)) {
 			rotationSpeed = (double) caller.getValue(ROTATION_SPEED);
 		}
@@ -113,8 +113,8 @@ public class MoveComponent extends Component {
 			return this;
 		}
 
-		public Builder rotationSpeed(final double rotation_speed) {
-			move.rotationSpeed = rotation_speed;
+		public Builder rotationSpeed(final double rotationSpeed) {
+			move.rotationSpeed = rotationSpeed;
 			return this;
 		}
 

@@ -59,9 +59,11 @@ public class World implements Updateable, Renderable {
 			}
 		}
 
-		addWaypoint(new Waypoint(new Vector2d(200, 600)));
-		addWaypoint(new Waypoint(new Vector2d(900, 400)));
-		addWaypoint(new Waypoint(new Vector2d(100, 200)));
+		addWaypoint(new Waypoint(new Vector2d(200, 800)));
+		addWaypoint(new Waypoint(new Vector2d(700, 400)));
+		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
+		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
+		addWaypoint(new Waypoint(new Vector2d(500, 100)));
 	}
 
 	private void addWaypoint(final Waypoint waypoint) {
@@ -132,7 +134,7 @@ public class World implements Updateable, Renderable {
 	 */
 	public Entity2D getNextWaypoint(final Entity2D waypoint) {
 		int indexOf = 0;
-		indexOf = waypoint == null ? -1 : waypoints.indexOf(waypoint);
+		indexOf = waypoint == null ? RandomUtil.intRange(-1, waypoints.size()) : waypoints.indexOf(waypoint);
 		indexOf = ++indexOf % waypoints.size();
 
 		return waypoints.get(indexOf);

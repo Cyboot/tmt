@@ -1,5 +1,6 @@
 package net.tmt.entity;
 
+import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.ShieldComponent;
 import net.tmt.game.Controls;
@@ -30,10 +31,11 @@ public class ControlledSpaceShip extends Entity2D {
 				.build());
 		setSprite(new Sprite("ship_back_64"));
 		addComponent(new ShieldComponent(pos, 80, ShieldComponent.COLOR_YELLOW));
+		addComponent(new CollisionComponent(32));
 	}
 
 	@Override
-	public void update(final double delta, final EntityManager caller) {
+	public void update(final EntityManager caller, final double delta) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))
 			dispatchValue(ShieldComponent.SET_ACTIVE, true);
 		else
@@ -74,9 +76,10 @@ public class ControlledSpaceShip extends Entity2D {
 
 		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.FIRE)) {
 			timerShoot.reset();
-			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor));
+			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor,
+					this));
 		}
 
-		super.update(delta, caller);
+		super.update(caller, delta);
 	}
 }

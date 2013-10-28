@@ -7,21 +7,25 @@ import java.util.Map;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
-import net.tmt.game.interfaces.Updateable;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 
-public class ComponentDispatcher implements Renderable, Updateable {
+public class ComponentDispatcher implements Renderable {
 	private Entity2D			owner;
+	private EntityManager		entityManager;
+
 	private List<Component>		components	= new ArrayList<>();
+
 	private Map<String, Object>	valueMap	= new HashMap<>();
 	private Map<String, Object>	dispatchMap	= new HashMap<>();
+
 
 	public ComponentDispatcher(final Entity2D owner) {
 		this.owner = owner;
 	}
 
-	@Override
-	public void update(final double delta) {
+	public void update(final EntityManager caller, final double delta) {
+		entityManager = caller;
 		for (Component c : components)
 			c.update(this, delta);
 	}
@@ -35,7 +39,7 @@ public class ComponentDispatcher implements Renderable, Updateable {
 
 	public void addComponent(final Component component) {
 		components.add(component);
-		component.dispatch(this);
+		component.initialDispatch(this);
 	}
 
 	public void sendValueToComponents(final String name, final Object value) {
@@ -66,5 +70,18 @@ public class ComponentDispatcher implements Renderable, Updateable {
 
 	protected Entity2D getOwner() {
 		return owner;
+	}
+
+	protected EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Component> T getComponent(final Class<T> clazz) {
+		for (Component c : components) {
+			if (c.getClass().equals(clazz))
+				return (T) c;
+		}
+		return null;
 	}
 }

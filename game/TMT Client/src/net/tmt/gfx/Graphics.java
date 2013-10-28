@@ -29,13 +29,14 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 public class Graphics {
-	private static final int	DEFAULT_LINE_WIDTH	= 1;
+	private static final int		DEFAULT_LINE_WIDTH	= 1;
 
-	private float				lineWidth			= DEFAULT_LINE_WIDTH;
-	private Texture				whiteTexture;
-	private ReadableColor		color				= Color.PURPLE;
-	private boolean				onGui;
-	private TrueTypeFont		font;
+	private float					lineWidth			= DEFAULT_LINE_WIDTH;
+	private Texture					whiteTexture;
+	private ReadableColor			color				= Color.PURPLE;
+	private boolean					onGui;
+	private TrueTypeFont			font;
+	private org.newdawn.slick.Color	slickColor;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -88,8 +89,10 @@ public class Graphics {
 		// lineWidth = DEFAULT_LINE_WIDTH;
 	}
 
-	public void setColor(final ReadableColor cyan) {
-		this.color = cyan;
+	public void setColor(final ReadableColor color) {
+		this.color = color;
+		this.slickColor = new org.newdawn.slick.Color(color.getRed() / 255f, color.getGreen() / 255f,
+				color.getBlue() / 255f, color.getAlpha() / 255f);
 	}
 
 	public void setLineWidth(final int width) {
@@ -203,9 +206,8 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void drawString(final float centerX, final float centerY, final String text,
-			final org.newdawn.slick.Color color) {
-		font.drawString(centerX, centerY, text, color);
+	public void drawString(final float centerX, final float centerY, final String text) {
+		font.drawString(centerX, centerY, text, slickColor);
 	}
 
 	public void setUpFont(final String name, final int type, final int size) {

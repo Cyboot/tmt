@@ -6,14 +6,14 @@ import net.tmt.util.Vector2d;
 
 public class MapController {
 
-	private static final int		PRELOAD_RADIUS	= 3;	// in chunks
+	private static final int		PRELOAD_RADIUS	= 3;						// in
+																				// chunks
 	private static MapController	instance		= null;
 	private SpaceMap				spaceMap;
-	private ArrayList<Planet>		planets;
+	private ArrayList<Planet>		planets			= new ArrayList<Planet>();
 
 	private MapController() {
 		spaceMap = new SpaceMap();
-		planets = new ArrayList<Planet>();
 	}
 
 	public static MapController getInstance() {
@@ -28,6 +28,9 @@ public class MapController {
 		int terrain = (int) Math.random() * 5 + Map.TYPE_PLANET;
 		Planet p = new Planet(planets.size(), coord, terrain);
 		planets.add(p);
+		// FIXME: debug code below
+		this.getSpaceMap(new Vector2d(0, 0));
+		spaceMap.getChunk(coord).addMapObject(new Planet(pid, coord, terrain));
 		return pid;
 	}
 
@@ -41,6 +44,10 @@ public class MapController {
 		} else {
 			return Generator.generateAround(coord, map, MapController.PRELOAD_RADIUS);
 		}
+	}
+
+	public SpaceMap getSpaceMap() {
+		return spaceMap;
 	}
 
 	public SpaceMap getSpaceMap(final Vector2d position) {
@@ -65,8 +72,22 @@ public class MapController {
 	}
 
 	public Coordinate pos2chunk(final Vector2d pos, final Map map) {
-		int newX = (int) Math.ceil((pos.x / map.chunkSize) - .5);
-		int newY = (int) Math.ceil((pos.y / map.chunkSize) - .5);
+		return pos2chunk(pos, map.chunkSize);
+	}
+
+	public Coordinate pos2chunk(final Vector2d pos, final int chunkSize) {
+		int newX = (int) Math.ceil((pos.x / chunkSize) - .5);
+		int newY = (int) Math.ceil((pos.y / chunkSize) - .5);
 		return new Coordinate(newX, newY);
+	}
+
+	public Vector2d chunkCenter2pos(final Coordinate coord, final Map map) {
+		return chunkCenter2pos(coord, map.chunkSize);
+	}
+
+	public Vector2d chunkCenter2pos(final Coordinate coord, final int chunkSize) {
+		double newX = coord.x * chunkSize;
+		double newY = coord.y * chunkSize;
+		return new Vector2d(newX, newY);
 	}
 }

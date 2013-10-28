@@ -1,5 +1,6 @@
 package net.tmt.map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.tmt.entity.Entity2D;
@@ -49,6 +50,12 @@ public abstract class Map {
 		updateBoudaries(coord);
 	}
 
+	public void addChunk(final int terrain, final Coordinate coord, final int size, final ArrayList<Entity2D> entities,
+			final ArrayList<Object> mapObjects) {
+		chunks.put(coord, new Chunk(coord, terrain, size, entities, mapObjects));
+		updateBoudaries(coord);
+	}
+
 	public void putChunk(final Coordinate coord, final Chunk c) {
 		chunks.put(coord, c);
 	}
@@ -79,9 +86,12 @@ public abstract class Map {
 	private Map subMap(final Coordinate coord, final int r, final Map m) {
 		for (int x = coord.x - r; x <= coord.x + r; x++) {
 			for (int y = coord.y - r; y <= coord.y + r; y++) {
+				// TODO: why can't I just use the old chunk and add it to the
+				// new map?!
 				Coordinate currCoord = new Coordinate(x, y);
 				Chunk oldChunk = this.chunks.get(currCoord);
-				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize);
+				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getEntities(),
+						oldChunk.getMapObjects());
 			}
 		}
 		return m;

@@ -64,6 +64,8 @@ public class World implements Updateable, Renderable {
 		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
 		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
 		addWaypoint(new Waypoint(new Vector2d(500, 100)));
+
+		MapController.getInstance().addPlanet(new Coordinate(0, 0));
 	}
 
 	private void addWaypoint(final Waypoint waypoint) {
@@ -154,9 +156,13 @@ public class World implements Updateable, Renderable {
 				Coordinate coord = new Coordinate(x, y);
 				if (sm.chunks.containsKey(coord)) {
 					g.drawRect(x * sm.chunkSize, y * sm.chunkSize, sm.chunkSize, sm.chunkSize);
+					ArrayList<Object> objects = mapController.getSpaceMap().getChunk(coord).getMapObjects();
+					for (Object o : objects) {
+						if (o instanceof Planet)
+							((Planet) o).render(g);
+					}
 				}
 			}
 		}
 	}
-
 }

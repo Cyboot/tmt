@@ -1,11 +1,31 @@
 package net.tmt.gfx;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.GL_POINTS;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glColor4d;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glPointSize;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glTexCoord2d;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+
+import java.awt.Font;
+
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 public class Graphics {
@@ -15,6 +35,7 @@ public class Graphics {
 	private Texture				whiteTexture;
 	private ReadableColor		color				= Color.PURPLE;
 	private boolean				onGui;
+	private TrueTypeFont		font;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -182,6 +203,16 @@ public class Graphics {
 		glPopMatrix();
 	}
 
+	public void drawString(final float centerX, final float centerY, final String text,
+			final org.newdawn.slick.Color color) {
+		font.drawString(centerX, centerY, text, color);
+	}
+
+	public void setUpFont(final String name, final int type, final int size) {
+		font = new TrueTypeFont(new Font(name, type, size), false);
+
+	}
+
 	private void applyColor() {
 		whiteTexture.bind();
 		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
@@ -204,6 +235,7 @@ public class Graphics {
 	public static Graphics init() {
 		instance = new Graphics();
 		instance.whiteTexture = new Sprite("white").getTexture();
+		instance.setUpFont("Times New Roman", Font.BOLD, 18);
 		return instance;
 	}
 

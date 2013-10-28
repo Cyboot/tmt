@@ -22,6 +22,7 @@ public class SpaceGui extends Gui {
 		// ressource
 		g.setLineWidth(2);
 		g.onGui().drawRect(0, 0, width * 0.3f, height * 0.05f);
+		g.onGui().drawString(0, 0, "Test", org.newdawn.slick.Color.white);
 
 		// minimap
 		g.onGui().drawRect(width * 0.85f, 0, width * 0.15f, height * 0.25f);

@@ -26,4 +26,9 @@ public class Coordinate {
 		big = big.add(bigY);
 		return big.hashCode();
 	}
+
+	@Override
+	public String toString() {
+		return "Coord= " + x + ":" + y;
+	}
 }

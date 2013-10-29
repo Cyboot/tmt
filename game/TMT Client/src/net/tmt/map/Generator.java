@@ -3,15 +3,17 @@ package net.tmt.map;
 public class Generator {
 
 	public static Map generateAround(final Coordinate coord, final Map map, final int radius) {
+		Coordinate coordTmp = new Coordinate(coord.x, coord.y);
+
+		// for every chunk in radius
 		for (int x = coord.x - radius; x <= coord.x + radius; x++) {
 			for (int y = coord.y - radius; y <= coord.y + radius; y++) {
-				// for every chunk in radius
-				boolean exists = false;
-				boolean hash_exists = map.chunks.containsKey(coord);
-				if (hash_exists) {
-					exists = map.chunks.get(coord).equals(new Coordinate(x, y));
-				}
-				if (!exists) {
+				coordTmp.x = x;
+				coordTmp.y = y;
+				Chunk chunk = map.getChunk(coordTmp);
+
+				// chunk == null --> generate new chunk
+				if (chunk == null) {
 					// TODO: don't just add random terrain ;)
 					int terrain = map.baseTerrain;
 					if (Math.random() > 0.8) {

@@ -14,6 +14,8 @@ public class MapController {
 
 	private MapController() {
 		spaceMap = new SpaceMap();
+		// FIXME: debug code below
+		this.getSpaceMap(new Vector2d(0, 0));
 	}
 
 	public static MapController getInstance() {
@@ -26,11 +28,11 @@ public class MapController {
 	public int addPlanet(final Coordinate coord) {
 		int pid = planets.size();
 		int terrain = (int) Math.random() * 5 + Map.TYPE_PLANET;
+
 		Planet p = new Planet(planets.size(), coord, terrain);
 		planets.add(p);
-		// FIXME: debug code below
-		this.getSpaceMap(new Vector2d(0, 0));
-		spaceMap.getChunk(coord).addMapObject(new Planet(pid, coord, terrain));
+		spaceMap.getChunk(coord).addMapObject(p);
+
 		return pid;
 	}
 

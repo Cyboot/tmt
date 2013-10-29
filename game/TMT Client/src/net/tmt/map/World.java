@@ -151,10 +151,11 @@ public class World implements Updateable, Renderable {
 		g.setColor(Color.GREY);
 
 		// TODO: move this code inside Mapcontroller
+		Coordinate coord = new Coordinate(0, 0);
 		SpaceMap sm = mapController.getSubSpaceMap(getOffsetCentered(), 1);
 		for (int x = sm.minX; x <= sm.maxX; x++) {
 			for (int y = sm.minY; y <= sm.maxY; y++) {
-				Coordinate coord = new Coordinate(x, y);
+				coord.set(x, y);
 				if (sm.chunks.containsKey(coord)) {
 					g.drawRect(x * sm.chunkSize, y * sm.chunkSize, sm.chunkSize, sm.chunkSize);
 					ArrayList<Object> objects = mapController.getSpaceMap().getChunk(coord).getMapObjects();

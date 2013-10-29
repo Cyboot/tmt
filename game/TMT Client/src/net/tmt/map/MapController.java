@@ -28,11 +28,11 @@ public class MapController {
 	public int addPlanet(final Coordinate coord) {
 		int pid = planets.size();
 		int terrain = (int) Math.random() * 5 + Map.TYPE_PLANET;
-
+		
 		Planet p = new Planet(planets.size(), coord, terrain);
 		planets.add(p);
 		spaceMap.getChunk(coord).addMapObject(p);
-
+		
 		return pid;
 	}
 

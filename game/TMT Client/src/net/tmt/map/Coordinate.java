@@ -27,6 +27,11 @@ public class Coordinate {
 		return big.hashCode();
 	}
 
+	public void set(final int x, final int y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	@Override
 	public String toString() {
 		return "Coord= " + x + ":" + y;

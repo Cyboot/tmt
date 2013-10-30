@@ -5,7 +5,9 @@ import java.text.DecimalFormat;
 
 public class Vector2d {
 	/** Use this static Vector for temporary usage */
-	public static Vector2d	tmp	= new Vector2d();
+	public static Vector2d	tmp1	= new Vector2d();
+	/** Use this static Vector for temporary usage */
+	public static Vector2d	tmp2	= new Vector2d();
 
 	public double			x, y;
 

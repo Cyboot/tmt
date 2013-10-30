@@ -1,9 +1,9 @@
 package net.tmt.entity;
 
 import net.tmt.entity.component.MoveComponent;
+import net.tmt.entity.component.OnHoverComponent;
 import net.tmt.entity.component.ShieldComponent;
 import net.tmt.entity.component.util.ComponentFactory;
-import net.tmt.entity.component.util.OnHoverComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
 import net.tmt.game.manager.EntityManager;
@@ -34,7 +34,7 @@ public class ControlledSpaceShip extends Entity2D {
 
 		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
 
-		addComponent(new OnHoverComponent(pos));
+		addComponent(new OnHoverComponent());
 
 		ComponentFactory.addDefaultCollision(this, 32, 1000000);
 	}

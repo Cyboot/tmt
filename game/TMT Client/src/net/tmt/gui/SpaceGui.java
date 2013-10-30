@@ -118,10 +118,10 @@ public class SpaceGui extends Gui {
 		g.onGui().drawRect(width * 0.75f, height * 0.75f, width * 0.25f, height * 0.25f);
 
 		if (GuiManager.getInstance().getGuiValue().containsKey("onHover")) {
-			g.onGui().drawString(width * 0.75f, height * 0.75f,
+			g.onGui().drawString(width * 0.75f + 5, height * 0.75f,
 					(String) GuiManager.getInstance().getGuiValue().get("onHover"));
 		} else {
-			g.onGui().drawString(width * 0.75f, height * 0.75f, "overwrite");
+			g.onGui().drawString(width * 0.75f + 5, height * 0.75f, "overwrite");
 		}
 		GuiManager.getInstance().getGuiValue().remove("onHover");
 

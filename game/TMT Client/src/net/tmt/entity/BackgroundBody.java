@@ -48,7 +48,7 @@ public class BackgroundBody extends Entity2D {
 		double x = pos.x - World.getInstance().getOffset().x;
 		double y = pos.y - World.getInstance().getOffset().y;
 
-		g.onGui().drawSprite(Vector2d.tmp.set(x / 16, y / 16), sprite);
+		g.onGui().drawSprite(Vector2d.tmp1.set(x / 16, y / 16), sprite);
 		// g.setColor(color);
 		// g.onGui().fillCircle(x / 16, y / 16, SIZE);
 	}

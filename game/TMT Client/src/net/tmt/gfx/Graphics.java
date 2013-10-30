@@ -17,8 +17,8 @@ public class Graphics {
 
 	private float					lineWidth			= DEFAULT_LINE_WIDTH;
 	private ReadableColor			color				= Color.PURPLE;
-	private boolean					onGui;
 	private TrueTypeFont			font;
+	private boolean					onGui;
 	private org.newdawn.slick.Color	slickColor;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
@@ -177,7 +177,7 @@ public class Graphics {
 		sprite.setHeight(radius);
 		sprite.setBlendColor((Color) color);
 
-		drawSprite(Vector2d.tmp.set(x, y), sprite);
+		drawSprite(Vector2d.tmp1.set(x, y), sprite);
 	}
 
 	public void drawPoint(final double centerX, final double centerY, final float size) {
@@ -204,12 +204,11 @@ public class Graphics {
 	}
 
 	public void drawString(final float centerX, final float centerY, final String text) {
-		font.drawString(centerX, centerY, text, slickColor);
+		Fonts.font_12.drawString(centerX, centerY, text, slickColor);
 	}
 
-	public void setUpFont(final String name, final int type, final int size) {
-		font = new TrueTypeFont(new Font(name, type, size), false);
-
+	public void setFont(final TrueTypeFont font) {
+		this.font = font;
 	}
 
 	private void applyColor() {
@@ -236,7 +235,12 @@ public class Graphics {
 		Textures.whiteTexture = new Sprite("white").getTexture();
 		Textures.circle_fill_16 = new Sprite("circle_16").setCentered(false);
 		Textures.circle_fill_256 = new Sprite("circle_256").setCentered(false);
-		instance.setUpFont("Times New Roman", Font.BOLD, 18);
+		Fonts.font_12 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 12), false);
+		Fonts.font_14 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 14), false);
+		Fonts.font_16 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 16), false);
+		Fonts.font_18 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 18), false);
+
+		instance.font = Fonts.font_12;
 		return instance;
 	}
 
@@ -244,8 +248,14 @@ public class Graphics {
 		return instance;
 	}
 
+	public static class Fonts {
+		static TrueTypeFont	font_12;
+		static TrueTypeFont	font_14;
+		static TrueTypeFont	font_16;
+		static TrueTypeFont	font_18;
+	}
 
-	static class Textures {
+	private static class Textures {
 		static Texture	whiteTexture;
 		static Sprite	circle_fill_16;
 		static Sprite	circle_fill_256;

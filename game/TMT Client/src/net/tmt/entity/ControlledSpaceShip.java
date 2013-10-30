@@ -8,7 +8,6 @@ import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
-import net.tmt.gui.GuiManager;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -85,10 +84,6 @@ public class ControlledSpaceShip extends Entity2D {
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor,
 					this));
 		}
-
-
-		// debug zweccken
-		GuiManager.getInstance().sendValueToGuiElements("coordShip", (int) pos.x + "/" + (int) pos.y);
 
 		super.update(caller, delta);
 	}

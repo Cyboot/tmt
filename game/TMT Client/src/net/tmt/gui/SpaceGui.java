@@ -3,7 +3,6 @@ package net.tmt.gui;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
 public class SpaceGui extends Gui {
@@ -77,11 +76,7 @@ public class SpaceGui extends Gui {
 		g.setLineWidth(2);
 		g.onGui().drawRect(0, 0, width * 0.3f, height * 0.05f);
 		g.setColor(Color.WHITE);
-		g.onGui().drawString(
-				0,
-				0,
-				"(" + Mouse.getX() + "/" + Mouse.getY() + ")   "
-						+ (String) GuiManager.getInstance().getGuiValue().get("coordShip"));
+		g.onGui().drawString(0, 0, "test");
 
 
 	}

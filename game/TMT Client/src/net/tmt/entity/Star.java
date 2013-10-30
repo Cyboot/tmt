@@ -22,6 +22,6 @@ public class Star extends Entity2D {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillCircle(pos.x, pos.y, SIZE);
+		g.drawPoint(pos.x, pos.y, SIZE);
 	}
 }

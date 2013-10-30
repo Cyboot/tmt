@@ -1,11 +1,15 @@
 package net.tmt.util;
 
-public class DebugUtil {
-	public static final int	USER_MILOS	= 0;
-	public static final int	USER_TAREK	= 1;
-	public static final int	USER_TIM	= 2;
+import org.lwjgl.input.Keyboard;
 
-	private static int		user		= -1;
+public class DebugUtil {
+	public static final int	USER_MILOS		= 0;
+	public static final int	USER_TAREK		= 1;
+	public static final int	USER_TIM		= 2;
+
+	private static int		user			= -1;
+
+	public static boolean	renderCollision	= false;
 
 	public static void setUser(final String user) {
 		switch (user) {
@@ -18,6 +22,16 @@ public class DebugUtil {
 		case "Tarek":
 			DebugUtil.user = USER_TAREK;
 			break;
+		}
+	}
+
+	public static void update() {
+		while (Keyboard.next()) {
+			boolean pressed = Keyboard.getEventKeyState();
+
+			if (Keyboard.getEventKey() == Keyboard.KEY_F9 && pressed) {
+				renderCollision = !renderCollision;
+			}
 		}
 	}
 

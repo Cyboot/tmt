@@ -180,6 +180,29 @@ public class Graphics {
 		drawSprite(Vector2d.tmp.set(x, y), sprite);
 	}
 
+	public void drawPoint(final double centerX, final double centerY, final float size) {
+		Vector2d offset = World.getInstance().getOffset();
+
+		// FIXME: better solution to check if on display
+		if (!onGui && offset.distanceTo(centerX, centerY) > 2000)
+			return;
+
+		applyColor();
+
+		glPointSize(size);
+
+		glPushMatrix();
+		{
+			applyOffset();
+			glBegin(GL_POINTS);
+			{
+				glVertex2d(centerX, centerY);
+			}
+			glEnd();
+		}
+		glPopMatrix();
+	}
+
 	public void drawString(final float centerX, final float centerY, final String text) {
 		font.drawString(centerX, centerY, text, slickColor);
 	}

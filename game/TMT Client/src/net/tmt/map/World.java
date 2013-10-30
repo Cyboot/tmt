@@ -3,6 +3,7 @@ package net.tmt.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.tmt.entity.BackgroundBody;
 import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.Star;
@@ -48,7 +49,18 @@ public class World implements Updateable, Renderable {
 		MOVE_DIFF_HEIGHT = (GameEngine.HEIGHT / 2 - MOVE_MAX_HEIGTH) * RATIO;
 
 		final int DISTANCE = 200;
-		final int MAX_MAP_SIZE = 20 * 1000;
+		final int DISTANCE_BACK = 200 * 48;
+		final int MAX_MAP_SIZE = 10 * 1000;
+
+		this.entityManager.addEntity(new BackgroundBody(new Vector2d(0, 0)), EntityManager.LAYER_0_FAR_BACK);
+		for (int x = -MAX_MAP_SIZE * 2; x < MAX_MAP_SIZE * 2; x += DISTANCE_BACK) {
+			for (int y = -MAX_MAP_SIZE * 2; y < MAX_MAP_SIZE * 2; y += DISTANCE_BACK) {
+				double vx = x + RandomUtil.doubleRange(-DISTANCE_BACK / 4, DISTANCE_BACK / 4);
+				double vy = y + RandomUtil.doubleRange(-DISTANCE_BACK / 4, DISTANCE_BACK / 4);
+
+				this.entityManager.addEntity(new BackgroundBody(new Vector2d(vx, vy)), EntityManager.LAYER_0_FAR_BACK);
+			}
+		}
 
 		for (int x = -MAX_MAP_SIZE; x < MAX_MAP_SIZE; x += DISTANCE) {
 			for (int y = -MAX_MAP_SIZE; y < MAX_MAP_SIZE; y += DISTANCE) {
@@ -58,6 +70,7 @@ public class World implements Updateable, Renderable {
 				this.entityManager.addEntity(new Star(new Vector2d(vx, vy)), EntityManager.LAYER_0_FAR_BACK);
 			}
 		}
+
 
 		addWaypoint(new Waypoint(new Vector2d(200, 800)));
 		addWaypoint(new Waypoint(new Vector2d(700, 400)));

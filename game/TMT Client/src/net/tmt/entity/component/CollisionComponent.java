@@ -5,11 +5,12 @@ import java.util.List;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.gfx.Graphics;
+import net.tmt.util.DebugUtil;
 
 import org.lwjgl.util.Color;
 
 public class CollisionComponent extends Component {
-	public static final String	IS_COLLISION			= "COLLISION";
+	public static final String	IS_COLLISION		= "COLLISION";
 	public static final String	COLLISION_ENTITIES	= "COLLISION_ENTITIES";
 
 	private double				radius;
@@ -28,6 +29,9 @@ public class CollisionComponent extends Component {
 
 	@Override
 	public void render(final ComponentDispatcher caller, final Graphics g) {
+		if (!DebugUtil.renderCollision)
+			return;
+
 		if (isCollision)
 			g.setColor(Color.YELLOW);
 		else

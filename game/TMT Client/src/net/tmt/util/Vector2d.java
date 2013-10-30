@@ -4,7 +4,10 @@ package net.tmt.util;
 import java.text.DecimalFormat;
 
 public class Vector2d {
-	public double	x, y;
+	/** Use this static Vector for temporary usage */
+	public static Vector2d	tmp	= new Vector2d();
+
+	public double			x, y;
 
 	public Vector2d() {
 		this(0, 0);
@@ -45,14 +48,16 @@ public class Vector2d {
 		return new Vector2d(x, y);
 	}
 
-	public void set(final Vector2d position) {
+	public Vector2d set(final Vector2d position) {
 		x = position.x;
 		y = position.y;
+		return this;
 	}
 
-	public void set(final double x, final double y) {
+	public Vector2d set(final double x, final double y) {
 		this.x = x;
 		this.y = y;
+		return this;
 	}
 
 	public double distanceTo(final Vector2d other) {

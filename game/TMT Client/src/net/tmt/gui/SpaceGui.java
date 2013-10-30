@@ -42,27 +42,22 @@ public class SpaceGui extends Gui {
 	}
 
 	private void updateMap(final double delta) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void updateSideBar(final double delta) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void updateMissions(final double delta) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void updateLog(final double delta) {
-		// TODO Auto-generated method stub
 
 	}
 
 	private void updateWeapons(final double delta) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -72,7 +67,6 @@ public class SpaceGui extends Gui {
 	}
 
 	private void updateInfoWindow(final double delta) {
-		// TODO Auto-generated method stub
 
 	}
 

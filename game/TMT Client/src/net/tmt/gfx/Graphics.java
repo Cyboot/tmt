@@ -1,22 +1,6 @@
 package net.tmt.gfx;
 
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
-import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
-import static org.lwjgl.opengl.GL11.GL_POINTS;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3d;
-import static org.lwjgl.opengl.GL11.glColor4d;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLineWidth;
-import static org.lwjgl.opengl.GL11.glPointSize;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glTexCoord2d;
-import static org.lwjgl.opengl.GL11.glTranslated;
-import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
@@ -32,7 +16,6 @@ public class Graphics {
 	private static final int		DEFAULT_LINE_WIDTH	= 1;
 
 	private float					lineWidth			= DEFAULT_LINE_WIDTH;
-	private Texture					whiteTexture;
 	private ReadableColor			color				= Color.PURPLE;
 	private boolean					onGui;
 	private TrueTypeFont			font;
@@ -61,17 +44,17 @@ public class Graphics {
 			{
 				glBegin(GL_QUADS);
 				{
-					glVertex2d(-widthHALF, heightHALF);
-					glTexCoord2d(0, 0);
-
-					glVertex2d(-widthHALF, -heightHALF);
-					glTexCoord2d(1, 0);
-
-					glVertex2d(widthHALF, -heightHALF);
-					glTexCoord2d(1, 1);
-
-					glVertex2d(widthHALF, heightHALF);
 					glTexCoord2d(0, 1);
+					glVertex2d(-widthHALF, heightHALF);
+
+					glTexCoord2d(0, 0);
+					glVertex2d(-widthHALF, -heightHALF);
+
+					glTexCoord2d(1, 0);
+					glVertex2d(widthHALF, -heightHALF);
+
+					glTexCoord2d(1, 1);
+					glVertex2d(widthHALF, heightHALF);
 				}
 				glEnd();
 			}
@@ -183,27 +166,18 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void fillCircle(final double centerX, final double centerY, final float radius) {
-		Vector2d offset = World.getInstance().getOffset();
+	public void fillCircle(final double x, final double y, final float radius) {
+		Sprite sprite;
+		if (radius > 16)
+			sprite = Textures.circle_fill_256;
+		else
+			sprite = Textures.circle_fill_16;
 
-		// FIXME: better solution to check if on display
-		if (offset.distanceTo(centerX, centerY) > 2000)
-			return;
+		sprite.setWidth(radius);
+		sprite.setHeight(radius);
+		sprite.setBlendColor((Color) color);
 
-		applyColor();
-
-		glPointSize(radius);
-
-		glPushMatrix();
-		{
-			applyOffset();
-			glBegin(GL_POINTS);
-			{
-				glVertex2d(centerX, centerY);
-			}
-			glEnd();
-		}
-		glPopMatrix();
+		drawSprite(Vector2d.tmp.set(x, y), sprite);
 	}
 
 	public void drawString(final float centerX, final float centerY, final String text) {
@@ -216,7 +190,7 @@ public class Graphics {
 	}
 
 	private void applyColor() {
-		whiteTexture.bind();
+		Textures.whiteTexture.bind();
 		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
 	}
 
@@ -236,12 +210,21 @@ public class Graphics {
 
 	public static Graphics init() {
 		instance = new Graphics();
-		instance.whiteTexture = new Sprite("white").getTexture();
+		Textures.whiteTexture = new Sprite("white").getTexture();
+		Textures.circle_fill_16 = new Sprite("circle_16").setCentered(false);
+		Textures.circle_fill_256 = new Sprite("circle_256").setCentered(false);
 		instance.setUpFont("Times New Roman", Font.BOLD, 18);
 		return instance;
 	}
 
 	public static Graphics getInstance() {
 		return instance;
+	}
+
+
+	static class Textures {
+		static Texture	whiteTexture;
+		static Sprite	circle_fill_16;
+		static Sprite	circle_fill_256;
 	}
 }

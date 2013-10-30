@@ -65,6 +65,13 @@ public class Sprite {
 		return this;
 	}
 
+	public void setHeight(final double height) {
+		this.height = height;
+	}
+
+	public void setWidth(final double width) {
+		this.width = width;
+	}
 
 	/**
 	 * load all Images from Imagesfolder

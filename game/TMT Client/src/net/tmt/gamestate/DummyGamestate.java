@@ -48,5 +48,8 @@ public class DummyGamestate extends AbstractGamestate {
 		g.onGui().drawSprite(new Vector2d(300, 100), sprite_ship3);
 		g.onGui().drawSprite(new Vector2d(400, 100), sprite_ship4);
 		g.onGui().drawSprite(new Vector2d(500, 100), sprite_ship5);
+
+		g.setColor(Color.GREEN);
+		g.onGui().fillCircle(300, 300, 64);
 	}
 }

@@ -3,6 +3,7 @@ package net.tmt.gui;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
 public class SpaceGui extends Gui {
@@ -76,7 +77,11 @@ public class SpaceGui extends Gui {
 		g.setLineWidth(2);
 		g.onGui().drawRect(0, 0, width * 0.3f, height * 0.05f);
 		g.setColor(Color.WHITE);
-		g.onGui().drawString(0, 0, "Test");
+		g.onGui().drawString(
+				0,
+				0,
+				"(" + Mouse.getX() + "/" + Mouse.getY() + ")   "
+						+ (String) GuiManager.getInstance().getGuiValue().get("coordShip"));
 
 
 	}
@@ -116,6 +121,14 @@ public class SpaceGui extends Gui {
 
 	private void renderInfoWindow(final Graphics g) {
 		g.onGui().drawRect(width * 0.75f, height * 0.75f, width * 0.25f, height * 0.25f);
+
+		if (GuiManager.getInstance().getGuiValue().containsKey("onHover")) {
+			g.onGui().drawString(width * 0.75f, height * 0.75f,
+					(String) GuiManager.getInstance().getGuiValue().get("onHover"));
+		} else {
+			g.onGui().drawString(width * 0.75f, height * 0.75f, "overwrite");
+		}
+		GuiManager.getInstance().getGuiValue().remove("onHover");
 
 
 	}

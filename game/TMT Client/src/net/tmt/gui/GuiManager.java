@@ -1,7 +1,9 @@
 package net.tmt.gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
@@ -10,8 +12,10 @@ import net.tmt.gfx.Graphics;
 public class GuiManager implements Updateable, Renderable {
 	private static GuiManager	instance;
 
-	private List<Gui>			guiList	= new ArrayList<>();
+	private List<Gui>			guiList		= new ArrayList<>();
 	private Gui					activeGui;
+
+	private Map<String, Object>	guiValue	= new HashMap<>();
 
 	public static GuiManager init() {
 		instance = new GuiManager();
@@ -48,5 +52,13 @@ public class GuiManager implements Updateable, Renderable {
 
 	public static GuiManager getInstance() {
 		return instance;
+	}
+
+	public void sendValueToGuiElements(final String key, final Object value) {
+		guiValue.put(key, value);
+	}
+
+	public Map<String, Object> getGuiValue() {
+		return guiValue;
 	}
 }

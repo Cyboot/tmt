@@ -1,7 +1,7 @@
 package net.tmt.entity;
 
-import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.MoveComponent;
+import net.tmt.entity.component.util.ComponentFactory;
 import net.tmt.entity.particle.Particle;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
@@ -23,7 +23,7 @@ public class LaserShoot extends Particle {
 
 		Vector2d dir = Vector2d.fromAngle(Math.toRadians(roation));
 		addComponent(new MoveComponent.Builder().pos(pos).speed(speed).dir(dir).build());
-		addComponent(new CollisionComponent(8, owner));
+		ComponentFactory.addDefaultCollision(this, 8, 1, owner);
 	}
 
 	@Override

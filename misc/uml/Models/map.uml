@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA">
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="map">
+    <packagedElement xmi:type="uml:Package" xmi:id="_lusZ8EFhEeO-7NLwvHl6fg" name="map">
+      <ownedComment xmi:id="_inos8EFiEeO-7NLwvHl6fg" annotatedElement="_TLWlIEFiEeO-7NLwvHl6fg">
+        <body>Vector2d offset;&#xD;
+EntityManager em;&#xD;
+&#xD;
+map.update( em , offset , delta );</body>
+      </ownedComment>
+      <ownedComment xmi:id="_-sqd8EFiEeO-7NLwvHl6fg" annotatedElement="_E39_EEFiEeO-7NLwvHl6fg">
+        <body>generator.generateAround( coord , radius , chunkMap )</body>
+      </ownedComment>
+      <packagedElement xmi:type="uml:Class" xmi:id="_nVVAkEFhEeO-7NLwvHl6fg" name="World">
+        <ownedAttribute xmi:id="_pqjykEFhEeO-7NLwvHl6fg" name="update"/>
+        <ownedAttribute xmi:id="_TLS6wEFiEeO-7NLwvHl6fg" name="map" type="_s2p7IEFhEeO-7NLwvHl6fg" aggregation="composite" association="_TLWlIEFiEeO-7NLwvHl6fg">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TLS6wUFiEeO-7NLwvHl6fg" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TLS6wkFiEeO-7NLwvHl6fg" value="1"/>
+        </ownedAttribute>
+        <ownedOperation xmi:id="_q5jVQEFhEeO-7NLwvHl6fg" name="update"/>
+        <ownedOperation xmi:id="_rq_ZQEFhEeO-7NLwvHl6fg" name="render"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_s2p7IEFhEeO-7NLwvHl6fg" name="Map">
+        <ownedAttribute xmi:id="_uYZasEFhEeO-7NLwvHl6fg" name="HashMap chunkMap"/>
+        <ownedAttribute xmi:id="_Fm0pIEFiEeO-7NLwvHl6fg" name="chunk" type="_zuxpgEFhEeO-7NLwvHl6fg" aggregation="composite" association="_Fm46kEFiEeO-7NLwvHl6fg">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Fm0pIUFiEeO-7NLwvHl6fg" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Fm0pIkFiEeO-7NLwvHl6fg" value="1"/>
+        </ownedAttribute>
+        <ownedOperation xmi:id="_xiuosEFhEeO-7NLwvHl6fg" name="update"/>
+        <ownedOperation xmi:id="_yMNqkEFhEeO-7NLwvHl6fg" name="render"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_zuxpgEFhEeO-7NLwvHl6fg" name="Chunk">
+        <ownedAttribute xmi:id="_HN1qQEFiEeO-7NLwvHl6fg" name="staticEntitiesList"/>
+        <ownedAttribute xmi:id="_X8DUAEFiEeO-7NLwvHl6fg" name="entity2D" type="_WNKJQEFiEeO-7NLwvHl6fg" aggregation="composite" association="_X8RWcEFiEeO-7NLwvHl6fg">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X8DUAUFiEeO-7NLwvHl6fg" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X8DUAkFiEeO-7NLwvHl6fg" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_hF4UYEFkEeO-7NLwvHl6fg" name="coord"/>
+        <ownedOperation xmi:id="_2um3sEFhEeO-7NLwvHl6fg" name="update"/>
+        <ownedOperation xmi:id="_3swiAEFhEeO-7NLwvHl6fg" name="render"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_6hJ8QEFhEeO-7NLwvHl6fg" name="map.generator">
+        <packagedElement xmi:type="uml:Class" xmi:id="_97tXkEFhEeO-7NLwvHl6fg" name="MapGenerator">
+          <ownedAttribute xmi:id="_RvGXoEFkEeO-7NLwvHl6fg" name="chunkFormer" type="_Ji7ncEFkEeO-7NLwvHl6fg" aggregation="composite" association="_RvJa8EFkEeO-7NLwvHl6fg">
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RvGXoUFkEeO-7NLwvHl6fg" value="1"/>
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RvGXokFkEeO-7NLwvHl6fg" value="1"/>
+          </ownedAttribute>
+          <ownedOperation xmi:id="_BGM9oEFiEeO-7NLwvHl6fg" name="generateAround"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_SDfIsEFjEeO-7NLwvHl6fg" name="SpaceFormer">
+          <generalization xmi:id="_Qru2IkFkEeO-7NLwvHl6fg" general="_Ji7ncEFkEeO-7NLwvHl6fg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_bWPGcEFjEeO-7NLwvHl6fg" name="PlanetFormer">
+          <generalization xmi:id="_RKQlMEFkEeO-7NLwvHl6fg" general="_Ji7ncEFkEeO-7NLwvHl6fg"/>
+          <ownedOperation xmi:id="_eFY0UEFjEeO-7NLwvHl6fg" name="formChunk"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_zhlQIEFjEeO-7NLwvHl6fg" name="AsteroidFormer">
+          <generalization xmi:id="_P7P0YEFkEeO-7NLwvHl6fg" general="_Ji7ncEFkEeO-7NLwvHl6fg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Ji7ncEFkEeO-7NLwvHl6fg" name="ChunkFormer">
+          <ownedOperation xmi:id="_WFbUIEFjEeO-7NLwvHl6fg" name="formChunk"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_E39_EEFiEeO-7NLwvHl6fg" name="A_&lt;map>_&lt;mapGenerator>" memberEnd="_E39_EUFiEeO-7NLwvHl6fg _E39_FEFiEeO-7NLwvHl6fg" navigableOwnedEnd="_E39_FEFiEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_E39_EUFiEeO-7NLwvHl6fg" name="map" type="_s2p7IEFhEeO-7NLwvHl6fg" association="_E39_EEFiEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E39_EkFiEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E39_E0FiEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_E39_FEFiEeO-7NLwvHl6fg" name="mapGenerator" type="_97tXkEFhEeO-7NLwvHl6fg" association="_E39_EEFiEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E39_FUFiEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E39_FkFiEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Fm46kEFiEeO-7NLwvHl6fg" name="A_&lt;map>_&lt;chunk>" memberEnd="_Fm46kUFiEeO-7NLwvHl6fg _Fm0pIEFiEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_Fm46kUFiEeO-7NLwvHl6fg" name="map" type="_s2p7IEFhEeO-7NLwvHl6fg" association="_Fm46kEFiEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Fm46kkFiEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Fm46k0FiEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_TLWlIEFiEeO-7NLwvHl6fg" name="A_&lt;world>_&lt;map>" memberEnd="_TLWlIUFiEeO-7NLwvHl6fg _TLS6wEFiEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_TLWlIUFiEeO-7NLwvHl6fg" name="world" type="_nVVAkEFhEeO-7NLwvHl6fg" association="_TLWlIEFiEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TLWlIkFiEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TLWlI0FiEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_WNKJQEFiEeO-7NLwvHl6fg" name="Entity2D"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_X8RWcEFiEeO-7NLwvHl6fg" name="A_&lt;chunk>_&lt;entity2D>" memberEnd="_X8RWcUFiEeO-7NLwvHl6fg _X8DUAEFiEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_X8RWcUFiEeO-7NLwvHl6fg" name="chunk" type="_zuxpgEFhEeO-7NLwvHl6fg" association="_X8RWcEFiEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X8RWckFiEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X8RWc0FiEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_RvJa8EFkEeO-7NLwvHl6fg" name="A_&lt;mapGenerator>_&lt;chunkFormer>" memberEnd="_RvJa8UFkEeO-7NLwvHl6fg _RvGXoEFkEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_RvJa8UFkEeO-7NLwvHl6fg" name="mapGenerator" type="_97tXkEFhEeO-7NLwvHl6fg" association="_RvJa8EFkEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_RvJa8kFkEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_RvJa80FkEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

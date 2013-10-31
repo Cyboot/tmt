@@ -143,6 +143,7 @@ public class Vector2d {
 	 * normalised Vector generated from given angle
 	 * 
 	 * @param roationRad
+	 *            in radian
 	 * @return
 	 */
 	public static Vector2d fromAngle(final double roationRad) {

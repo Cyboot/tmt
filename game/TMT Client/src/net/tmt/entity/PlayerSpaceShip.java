@@ -1,8 +1,10 @@
 package net.tmt.entity;
 
+import net.tmt.entity.component.AcceleratingComponent;
 import net.tmt.entity.component.JetTrailComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.OnHoverComponent;
+import net.tmt.entity.component.RotateComponent;
 import net.tmt.entity.component.ShieldComponent;
 import net.tmt.entity.component.util.ComponentFactory;
 import net.tmt.game.Controls;
@@ -30,8 +32,8 @@ public class PlayerSpaceShip extends Entity2D {
 		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 		setSprite(new Sprite("ship_back_64"));
 
-		addComponent(new MoveComponent.Builder().accl(ACCL).friction(FRICTION).rotationSpeed(ROTATION_SPEED).build());
-
+		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
+		addComponent(new AcceleratingComponent(ACCL, FRICTION));
 		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
 
 		addComponent(new OnHoverComponent());
@@ -48,14 +50,22 @@ public class PlayerSpaceShip extends Entity2D {
 			dispatchValue(ShieldComponent.SET_ACTIVE, false);
 
 		if (Controls.pressed(Controls.LEFT))
-			dispatchValue(MoveComponent.IS_ROTATE_LEFT, true);
+			dispatchValue(RotateComponent.IS_ROTATE_LEFT, true);
 		if (Controls.pressed(Controls.RIGHT))
-			dispatchValue(MoveComponent.IS_ROTATE_RIGHT, true);
+			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
 
 		if (Controls.pressed(Controls.UP))
-			dispatchValue(MoveComponent.IS_ACCELERATING, true);
+			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
 		if (Controls.pressed(Controls.DOWN))
-			dispatchValue(MoveComponent.IS_DEACCELERATING, true);
+			dispatchValue(AcceleratingComponent.IS_DEACCELERATING, true);
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
+			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 8);
+		} else {
+			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL);
+		}
+
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_1))
 			shootColor = Color.CYAN;

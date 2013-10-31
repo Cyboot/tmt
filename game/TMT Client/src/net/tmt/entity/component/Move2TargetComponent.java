@@ -60,7 +60,7 @@ public class Move2TargetComponent extends Component {
 	@Override
 	public void initialDispatch(final ComponentDispatcher caller) {
 		super.initialDispatch(caller);
-		rotationSpeed = (double) caller.getValue(MoveComponent.ROTATION_SPEED);
+		rotationSpeed = (double) caller.getValue(RotateComponent.ROTATION_SPEED);
 
 		caller.dispatch(TARGET_REACHED, true);
 	}

@@ -21,8 +21,7 @@ public class LaserShoot extends Entity2D {
 		this.color = color;
 		removeAllComponents();
 
-		Vector2d dir = Vector2d.fromAngle(Math.toRadians(roation));
-		addComponent(new MoveComponent.Builder().speed(speed).dir(dir).build());
+		addComponent(new MoveComponent(speed, roation));
 		addComponent(new DecayComponent(lifetime));
 		ComponentFactory.addDefaultCollision(this, 8, 1, owner);
 	}

@@ -2,7 +2,6 @@ package net.tmt.entity.npc;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.Move2TargetComponent;
-import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.OnHoverComponent;
 import net.tmt.entity.component.util.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
@@ -23,7 +22,7 @@ abstract class NPCSpaceShip extends Entity2D {
 		this.speed = speed;
 		this.roationSpeed = rotationSpeed;
 
-		addComponent(new MoveComponent.Builder().speed(speed).rotationSpeed(roationSpeed).build());
+		ComponentFactory.addDefaultMove(this, 0, speed, rotationSpeed);
 		addComponent(new Move2TargetComponent());
 		addComponent(new OnHoverComponent());
 

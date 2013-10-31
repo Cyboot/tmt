@@ -47,12 +47,13 @@ public class MoveComponent extends Component {
 			speed = (double) caller.getValue(SPEED);
 		}
 		if (caller.isSet(IS_ACCELERATING)) {
-			speed += accl;
+			speed += accl * delta;
+		} else if (caller.isSet(IS_DEACCELERATING)) {
+			speed -= accl * delta;
+		} else {
+			speed *= 1 - friction * delta;
 		}
-		if (caller.isSet(IS_DEACCELERATING)) {
-			speed -= accl;
-		}
-		speed *= 1 - friction * delta;
+
 		if (Math.abs(speed) < MIN_SPEED && !caller.isSet(IS_ACCELERATING) && !caller.isSet(IS_DEACCELERATING)) {
 			speed = 0;
 		}
@@ -76,6 +77,7 @@ public class MoveComponent extends Component {
 
 		caller.dispatch(ROTATION_ANGLE, rotationAngle);
 		caller.dispatch(DIR, dir);
+		caller.dispatch(SPEED, speed);
 		pos.add(dir);
 	}
 

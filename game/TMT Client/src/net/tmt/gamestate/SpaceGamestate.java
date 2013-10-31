@@ -1,6 +1,6 @@
 package net.tmt.gamestate;
 
-import net.tmt.entity.ControlledSpaceShip;
+import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.npc.NPCCargoShip;
 import net.tmt.entity.npc.NPCTransporterShip;
 import net.tmt.entity.particle.ParticleEmittorEntity;
@@ -13,7 +13,7 @@ import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
 	private EntityManager		entityManager	= new EntityManager();
-	private ControlledSpaceShip	player			= new ControlledSpaceShip();
+	private PlayerSpaceShip	player			= new PlayerSpaceShip();
 	private World				world;
 
 	public SpaceGamestate() {
@@ -53,7 +53,7 @@ public class SpaceGamestate extends AbstractGamestate {
 		entityManager.render(g);
 	}
 
-	public ControlledSpaceShip getShip() {
+	public PlayerSpaceShip getShip() {
 		return player;
 	}
 }

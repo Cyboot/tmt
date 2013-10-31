@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.BackgroundBody;
-import net.tmt.entity.ControlledSpaceShip;
+import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.Star;
 import net.tmt.entity.Waypoint;
@@ -36,7 +36,7 @@ public class World implements Updateable, Renderable {
 	// DEBUG waypoints in World
 	private List<Entity2D>		waypoints		= new ArrayList<>();
 
-	private ControlledSpaceShip	player;
+	private PlayerSpaceShip	player;
 
 	public World(final EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -136,7 +136,7 @@ public class World implements Updateable, Renderable {
 		instance = new World(entityManager);
 	}
 
-	public void setPlayer(final ControlledSpaceShip ship) {
+	public void setPlayer(final PlayerSpaceShip ship) {
 		this.player = ship;
 	}
 

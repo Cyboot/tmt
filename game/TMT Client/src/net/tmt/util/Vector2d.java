@@ -115,6 +115,18 @@ public class Vector2d {
 	}
 
 	/**
+	 * rotate the vector for the given value
+	 * 
+	 * @param rotationRad
+	 */
+	public Vector2d rotate(final double rotationRad) {
+		double tempX = x;
+		x = Math.cos(rotationRad) * x - Math.sin(rotationRad) * y;
+		y = Math.cos(rotationRad) * y + Math.sin(rotationRad) * tempX;
+		return this;
+	}
+
+	/**
 	 * Angle of the two vectors
 	 * 
 	 * @param other
@@ -130,14 +142,14 @@ public class Vector2d {
 	/**
 	 * normalised Vector generated from given angle
 	 * 
-	 * @param roation
+	 * @param roationRad
 	 * @return
 	 */
-	public static Vector2d fromAngle(final double roation) {
+	public static Vector2d fromAngle(final double roationRad) {
 		Vector2d result = new Vector2d();
 
-		result.x = Math.sin(roation);
-		result.y = -Math.cos(roation);
+		result.x = Math.sin(roationRad);
+		result.y = -Math.cos(roationRad);
 
 		return result.normalize();
 	}

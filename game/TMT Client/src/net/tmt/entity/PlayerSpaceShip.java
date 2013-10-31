@@ -1,5 +1,6 @@
 package net.tmt.entity;
 
+import net.tmt.entity.component.JetTrailComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.OnHoverComponent;
 import net.tmt.entity.component.ShieldComponent;
@@ -17,15 +18,15 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 
-public class ControlledSpaceShip extends Entity2D {
-	private static double	ACCL			= 10;
+public class PlayerSpaceShip extends Entity2D {
+	private static double	ACCL			= 50;
 	private static double	FRICTION		= 0.4;
 	private static double	ROTATION_SPEED	= 180;
 
 	private CountdownTimer	timerShoot		= CountdownTimer.createManuelResetTimer(0.2);
 	private ReadableColor	shootColor		= Color.RED;
 
-	public ControlledSpaceShip() {
+	public PlayerSpaceShip() {
 		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 		setSprite(new Sprite("ship_back_64"));
 
@@ -34,6 +35,7 @@ public class ControlledSpaceShip extends Entity2D {
 		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
 
 		addComponent(new OnHoverComponent());
+		addComponent(new JetTrailComponent());
 
 		ComponentFactory.addDefaultCollision(this, 32, 1000000);
 	}

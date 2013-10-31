@@ -8,9 +8,9 @@ import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class BackgroundBody extends Entity2D {
-	private static final float	SIZE	= 3;
+	// private static final float SIZE = 3;
 
-	private Sprite				sprite;
+	private Sprite	sprite;
 
 	// private Color color;
 

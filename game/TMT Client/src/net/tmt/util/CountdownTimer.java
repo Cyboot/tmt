@@ -1,7 +1,7 @@
 package net.tmt.util;
 
 /**
- * easy to use class to check if a certain time has already passed.<br>
+ * Easy to use class to check if a certain time has already passed.<br>
  * Use the {@link CountdownTimer#isTimeleft(double)} to update and check if time
  * has passed yet
  * 
@@ -33,6 +33,17 @@ public class CountdownTimer {
 	}
 
 	/**
+	 * get the ratio of the passed time of this countdown
+	 * 
+	 * @return a value between 0 - 1 <br>
+	 *         (0 = isTimeleft() was true before, 1 = isTimeLeft will be true
+	 *         next call)
+	 */
+	public double getTimeleftRatio() {
+		return timer / timeleftIntervall;
+	}
+
+	/**
 	 * updates the timer and return if timer reached zero yet.<br>
 	 * if <i>autoReset</i> == true (default) it will automatically reset the
 	 * timer
@@ -56,6 +67,14 @@ public class CountdownTimer {
 	 */
 	public void reset() {
 		timer = timeleftIntervall;
+	}
+
+	/**
+	 * @param timeleftIntervall
+	 *            the new timerintervall (in seconds)
+	 */
+	public void setIntervall(final double timeleftIntervall) {
+		this.timeleftIntervall = timeleftIntervall;
 	}
 
 	public static CountdownTimer createManuelResetTimer(final double timeleftIntervall) {

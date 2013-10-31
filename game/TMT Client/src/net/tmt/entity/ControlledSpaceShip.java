@@ -29,8 +29,7 @@ public class ControlledSpaceShip extends Entity2D {
 		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 		setSprite(new Sprite("ship_back_64"));
 
-		addComponent(new MoveComponent.Builder().pos(pos).accl(ACCL).friction(FRICTION).rotationSpeed(ROTATION_SPEED)
-				.build());
+		addComponent(new MoveComponent.Builder().accl(ACCL).friction(FRICTION).rotationSpeed(ROTATION_SPEED).build());
 
 		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
 

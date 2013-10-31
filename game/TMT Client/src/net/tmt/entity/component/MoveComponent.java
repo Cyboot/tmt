@@ -24,6 +24,10 @@ public class MoveComponent extends Component {
 	private MoveComponent() {
 	}
 
+	public MoveComponent(final double accl, final double friction, final double speed, final Vector2d dir) {
+		this(accl, friction, speed);
+		this.dir = dir;
+	}
 
 	public MoveComponent(final double accl, final double friction, final double speed) {
 		this.accl = accl;
@@ -77,6 +81,7 @@ public class MoveComponent extends Component {
 
 	@Override
 	public void initialDispatch(final ComponentDispatcher caller) {
+		super.initialDispatch(caller);
 		if (caller.isSet(ROTATION_SPEED)) {
 			rotationSpeed = (double) caller.getValue(ROTATION_SPEED);
 		}
@@ -96,11 +101,6 @@ public class MoveComponent extends Component {
 		public Builder dir(final Vector2d dir) {
 			move.dir = dir;
 			move.rotationAngle = Math.toDegrees(dir.getRotation());
-			return this;
-		}
-
-		public Builder pos(final Vector2d pos) {
-			move.pos = pos;
 			return this;
 		}
 

@@ -58,9 +58,6 @@ public class EntityManager implements Updateable, Renderable {
 				}
 			}
 		}
-
-		// manages the addition and removal of entities
-		addremove.update();
 	}
 
 	@Override
@@ -70,6 +67,11 @@ public class EntityManager implements Updateable, Renderable {
 		renderLayer(LAYER_2_MEDIUM, g);
 		renderLayer(LAYER_3_FRONT, g);
 		renderLayer(LAYER_4_GUI, g);
+
+		// manages the addition and removal of entities
+		// must be called here in end of render() to make sure entitiy.update()
+		// is called before entitiy.render() even for newly added Entities
+		addremove.update();
 	}
 
 	private void renderLayer(final int layer, final Graphics g) {

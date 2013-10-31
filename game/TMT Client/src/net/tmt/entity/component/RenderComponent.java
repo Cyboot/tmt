@@ -4,8 +4,12 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.util.Color;
+
 public class RenderComponent extends Component {
-	private Sprite	sprite;
+	public static final String	BLEND_COLOR	= "BLEND_COLOR";
+
+	private Sprite				sprite;
 
 	public RenderComponent() {
 	}
@@ -24,8 +28,12 @@ public class RenderComponent extends Component {
 		if (caller.isSet(ROTATION_ANGLE))
 			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE));
 
-		if (sprite != null)
+		if (sprite != null) {
+			if (caller.isSet(BLEND_COLOR))
+				sprite.setBlendColor((Color) caller.getValue(BLEND_COLOR));
+
 			g.drawSprite(pos, sprite);
+		}
 
 	}
 
@@ -42,11 +50,6 @@ public class RenderComponent extends Component {
 
 		public Builder sprite(final Sprite sprite) {
 			render.sprite = sprite;
-			return this;
-		}
-
-		public Builder pos(final Vector2d pos) {
-			render.pos = pos;
 			return this;
 		}
 

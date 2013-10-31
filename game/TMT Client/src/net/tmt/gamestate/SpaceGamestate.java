@@ -3,6 +3,7 @@ package net.tmt.gamestate;
 import net.tmt.entity.ControlledSpaceShip;
 import net.tmt.entity.npc.NPCCargoShip;
 import net.tmt.entity.npc.NPCTransporterShip;
+import net.tmt.entity.particle.ParticleEmittorEntity;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
@@ -32,6 +33,9 @@ public class SpaceGamestate extends AbstractGamestate {
 		entityManager.addEntity(new NPCTransporterShip(new Vector2d(500, 500), NPCTransporterShip.TYPE_2));
 
 		entityManager.addEntity(player, EntityManager.LAYER_3_FRONT);
+
+		// DEBUG:
+		entityManager.addEntity(new ParticleEmittorEntity(new Vector2d(400, 200)));
 
 		onResume(-1);
 	}

@@ -20,14 +20,10 @@ public abstract class Entity2D implements Renderable {
 
 	private ComponentDispatcher	compDispatcher	= new ComponentDispatcher(this);
 
-	public Entity2D() {
-		this(new Vector2d());
-	}
-
 	public Entity2D(final Vector2d pos) {
 		id = currentID++;
 		this.pos = pos;
-		compDispatcher.addComponent(new RenderComponent.Builder().pos(pos).sprite(null).build());
+		compDispatcher.addComponent(new RenderComponent.Builder().sprite(null).build());
 	}
 
 	public void update(final EntityManager caller, final double delta) {

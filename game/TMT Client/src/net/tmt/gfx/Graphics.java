@@ -204,7 +204,7 @@ public class Graphics {
 	}
 
 	public void drawString(final float centerX, final float centerY, final String text) {
-		Fonts.font_12.drawString(centerX, centerY, text, slickColor);
+		font.drawString(centerX, centerY, text, slickColor);
 	}
 
 	public void setFont(final TrueTypeFont font) {

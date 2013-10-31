@@ -23,7 +23,7 @@ abstract class NPCSpaceShip extends Entity2D {
 		this.speed = speed;
 		this.roationSpeed = rotationSpeed;
 
-		addComponent(new MoveComponent.Builder().pos(pos).speed(speed).rotationSpeed(roationSpeed).build());
+		addComponent(new MoveComponent.Builder().speed(speed).rotationSpeed(roationSpeed).build());
 		addComponent(new Move2TargetComponent());
 		addComponent(new OnHoverComponent());
 

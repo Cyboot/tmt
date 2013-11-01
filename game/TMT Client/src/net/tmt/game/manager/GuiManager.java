@@ -1,4 +1,4 @@
-package net.tmt.gui;
+package net.tmt.game.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,12 @@ import java.util.Map;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
+import net.tmt.gui.DummyGui;
+import net.tmt.gui.EconomyGui;
+import net.tmt.gui.Gui;
+import net.tmt.gui.PlanetGui;
+import net.tmt.gui.SimulatorGui;
+import net.tmt.gui.SpaceGui;
 
 public class GuiManager implements Updateable, Renderable {
 	private static GuiManager	instance;

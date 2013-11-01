@@ -1,6 +1,7 @@
 package net.tmt.gui;
 
 import net.tmt.game.GameEngine;
+import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
 
 import org.lwjgl.util.Color;

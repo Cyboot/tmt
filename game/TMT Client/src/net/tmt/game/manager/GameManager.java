@@ -12,7 +12,6 @@ import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gamestate.SimulatorGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
-import net.tmt.gui.GuiManager;
 
 import org.lwjgl.input.Keyboard;
 

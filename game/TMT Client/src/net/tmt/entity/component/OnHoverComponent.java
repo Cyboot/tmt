@@ -1,8 +1,8 @@
 package net.tmt.entity.component;
 
 import net.tmt.game.GameEngine;
+import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
-import net.tmt.gui.GuiManager;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 

@@ -3,8 +3,8 @@ package net.tmt.gamestate;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.GameManager;
+import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
-import net.tmt.gui.GuiManager;
 
 public abstract class AbstractGamestate implements Updateable, Renderable {
 	public static final int	ACTIVE		= 0;

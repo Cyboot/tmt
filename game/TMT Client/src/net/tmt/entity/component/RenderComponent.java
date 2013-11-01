@@ -15,9 +15,8 @@ public class RenderComponent extends Component {
 	}
 
 
-	public RenderComponent(final Sprite sprite, final Vector2d pos) {
+	public RenderComponent(final Sprite sprite) {
 		this.sprite = sprite;
-		this.pos = pos;
 	}
 
 
@@ -32,7 +31,10 @@ public class RenderComponent extends Component {
 			if (caller.isSet(BLEND_COLOR))
 				sprite.setBlendColor((Color) caller.getValue(BLEND_COLOR));
 
-			g.drawSprite(pos, sprite);
+			if (caller.isSet(ExtraOffsetComponent.TRANSLATE_POS))
+				g.drawSprite((Vector2d) caller.getValue(ExtraOffsetComponent.TRANSLATE_POS), sprite);
+			else
+				g.drawSprite(pos, sprite);
 		}
 
 	}

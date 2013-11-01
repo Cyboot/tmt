@@ -8,7 +8,8 @@ public class RotateComponent extends Component {
 	private double				rotationSpeed;
 	private double				rotationAngle;
 
-	public RotateComponent(final double rotationSpeed) {
+	public RotateComponent(final double rotationAngle, final double rotationSpeed) {
+		this.rotationAngle = rotationAngle;
 		this.rotationSpeed = rotationSpeed;
 	}
 
@@ -37,6 +38,7 @@ public class RotateComponent extends Component {
 	public void initialDispatch(final ComponentDispatcher caller) {
 		super.initialDispatch(caller);
 
+		caller.dispatch(ROTATION_ANGLE, rotationAngle);
 		caller.dispatch(ROTATION_SPEED, rotationSpeed);
 	}
 }

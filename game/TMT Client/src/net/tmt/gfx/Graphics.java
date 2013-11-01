@@ -203,8 +203,13 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void drawString(final float centerX, final float centerY, final String text) {
-		font.drawString(centerX, centerY, text, slickColor);
+	public void drawText(final double centerX, final double centerY, final String text) {
+		glPushMatrix();
+		{
+			applyOffset();
+			font.drawString((float) centerX, (float) centerY, text, slickColor);
+		}
+		glPopMatrix();
 	}
 
 	public void setFont(final TrueTypeFont font) {

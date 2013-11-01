@@ -15,6 +15,11 @@ public class Vector2d {
 		this(0, 0);
 	}
 
+	public Vector2d(final Vector2d other) {
+		this(other.x, other.y);
+	}
+
+
 	public Vector2d(final double x, final double y) {
 		this.x = x;
 		this.y = y;
@@ -78,6 +83,9 @@ public class Vector2d {
 
 	public Vector2d normalize() {
 		double length = distanceTo(0, 0);
+
+		if (length == 0)
+			return this;
 
 		x /= length;
 		y /= length;

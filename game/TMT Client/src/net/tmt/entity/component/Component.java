@@ -16,7 +16,8 @@ public abstract class Component {
 	}
 
 	/**
-	 * Dispatch all values for the first time
+	 * Dispatch all values for the first time<br>
+	 * <b>Warning</b> call <i>super.initialDispatch()</i> for correct behaviour
 	 * 
 	 * @param caller
 	 */

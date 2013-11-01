@@ -32,6 +32,7 @@ public class BackgroundBody extends Entity2D {
 			sprite = new Sprite("nebula_green_256");
 			break;
 		}
+		sprite.setAlpha(75);
 
 		// color = new Color(RandomUtil.intRange(150, 255),
 		// RandomUtil.intRange(150, 255), RandomUtil.intRange(150, 255),

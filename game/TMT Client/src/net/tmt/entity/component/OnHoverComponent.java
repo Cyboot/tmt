@@ -3,6 +3,7 @@ package net.tmt.entity.component;
 import net.tmt.game.GameEngine;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.gui.Gui;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
@@ -22,7 +23,7 @@ public class OnHoverComponent extends Component {
 		isHover = false;
 		// bedinung genauer einstellen. radius abhänging von bildgröße
 		if (mouse2d.distanceTo(shipAbsolut2d) < 32) {
-			GuiManager.getInstance().sendValueToGuiElements("onHover", owner.toString());
+			GuiManager.getInstance().dispatch(Gui.GUI_HOVER, owner.toString());
 			isHover = true;
 		}
 	}

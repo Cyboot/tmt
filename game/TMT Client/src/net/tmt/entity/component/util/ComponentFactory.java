@@ -19,8 +19,8 @@ public class ComponentFactory {
 	 */
 	public static void addDefaultMove(final Entity2D entity, final double rotation, final double speed,
 			final double rotationSpeed) {
+		entity.addComponent(new RotateComponent(rotation, rotationSpeed));
 		entity.addComponent(new MoveComponent(speed, rotation));
-		entity.addComponent(new RotateComponent(rotationSpeed));
 	}
 
 	/**

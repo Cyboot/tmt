@@ -30,7 +30,7 @@ public abstract class Entity2D implements Renderable {
 		compDispatcher.update(caller, delta);
 	}
 
-	protected void dispatchValue(final String name, final Object value) {
+	public void dispatchValue(final String name, final Object value) {
 		compDispatcher.sendValueToComponents(name, value);
 	}
 

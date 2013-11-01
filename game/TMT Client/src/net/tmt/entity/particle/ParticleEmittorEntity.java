@@ -50,7 +50,7 @@ public class ParticleEmittorEntity extends Entity2D {
 
 		Color primColor = new Color(255, 0, 0, 150);
 		Color secColor = new Color(255, 0, 0, 100);
-		Entity2D particle = new Glow(pos.copy(), lifetime, speed, 0, glowTimer, primColor, secColor);
+		Entity2D particle = new Glow(pos.copy(), 32, lifetime, speed, 0, glowTimer, primColor, secColor);
 
 		caller.addEntity(particle);
 	}

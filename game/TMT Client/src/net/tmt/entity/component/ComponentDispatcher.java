@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.interfaces.Dispatcher;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 
-public class ComponentDispatcher implements Renderable {
+public class ComponentDispatcher implements Renderable, Dispatcher {
 	private Entity2D			owner;
 	private EntityManager		entityManager;
 
@@ -32,8 +33,17 @@ public class ComponentDispatcher implements Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		for (Component c : components)
-			c.render(this, g);
+		RenderComponent renderComp = null;
+		for (Component c : components) {
+			if (c instanceof RenderComponent)
+				renderComp = (RenderComponent) c;
+			else
+				c.render(this, g);
+		}
+		// render RenderComponent last
+		if (renderComp != null)
+			renderComp.render(this, g);
+
 		valueMap.clear();
 	}
 
@@ -54,20 +64,6 @@ public class ComponentDispatcher implements Renderable {
 		dispatchMap.remove(name);
 	}
 
-	public void dispatch(final String name, final Object value) {
-		dispatchMap.put(name, value);
-	}
-
-	public Object getValue(final String name) {
-		Object result = valueMap.get(name);
-
-		return result == null ? dispatchMap.get(name) : result;
-	}
-
-	protected boolean isSet(final String name) {
-		return valueMap.containsKey(name) || dispatchMap.containsKey(name);
-	}
-
 	protected Entity2D getOwner() {
 		return owner;
 	}
@@ -83,5 +79,28 @@ public class ComponentDispatcher implements Renderable {
 				return (T) c;
 		}
 		return null;
+	}
+
+	@Override
+	public void dispatch(final String name, final Object value) {
+		dispatchMap.put(name, value);
+	}
+
+	@Override
+	public Object getValue(final String name) {
+		Object result = valueMap.get(name);
+
+		return result == null ? dispatchMap.get(name) : result;
+	}
+
+	@Override
+	public boolean isSet(final String name) {
+		return valueMap.containsKey(name) || dispatchMap.containsKey(name);
+	}
+
+	@Override
+	public void remove(final String key) {
+		valueMap.remove(key);
+		dispatchMap.remove(key);
 	}
 }

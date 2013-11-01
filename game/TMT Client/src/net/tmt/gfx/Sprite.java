@@ -101,4 +101,9 @@ public class Sprite {
 		this.blendColor = blendColor;
 		return this;
 	}
+
+	public Sprite setAlpha(final int alpha) {
+		blendColor.setAlpha(alpha);
+		return this;
+	}
 }

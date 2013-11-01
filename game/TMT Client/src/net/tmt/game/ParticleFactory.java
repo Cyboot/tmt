@@ -1,5 +1,6 @@
 package net.tmt.game;
 
+import net.tmt.entity.particle.Glow;
 import net.tmt.entity.particle.Particle;
 import net.tmt.entity.particle.Spark;
 import net.tmt.util.Vector2d;
@@ -14,6 +15,9 @@ import org.lwjgl.util.Color;
  */
 public abstract class ParticleFactory {
 	public final static SparksClass	Sparks	= new SparksClass();
+	public final static GlowsClass	Glows	= new GlowsClass();
+	public static final SmokesClass	Smokes	= new SmokesClass();
+	public static final SolidsClass	Solids	= new SolidsClass();
 
 	public abstract Particle getDefault(final Vector2d pos);
 
@@ -22,16 +26,88 @@ public abstract class ParticleFactory {
 	public abstract void reset();
 
 
-	public static class Glows {
+	public static class GlowsClass extends ParticleFactory {
+		public double				size;
+		public double				lifetime;
+		public double				speed;
+		public double				rotation;
+		public double				glowTimer;
+		public Color				primColor;
+		public Color				secColor;
+
+		private final static double	DEFAULT_SIZE		= 4;
+		private final static double	DEFAULT_LIFETIME	= Double.MAX_VALUE;
+		private final static double	DEFAULT_SPEED		= 0;
+		private final static double	DEFAULT_ROTATION	= 0;
+		private static final double	DEFAULT_GLOW_TIMER	= 1;
+		private static final Color	DEFAULT_PRIM_COLOR	= (Color) Color.RED;
+		private static final Color	DEFAULT_SEC_COLOR	= (Color) Color.GREEN;
+
+		@Override
+		public Particle getDefault(final Vector2d pos) {
+			return new Glow(pos, DEFAULT_SIZE, DEFAULT_LIFETIME, DEFAULT_SPEED, DEFAULT_ROTATION, DEFAULT_GLOW_TIMER,
+					DEFAULT_PRIM_COLOR, DEFAULT_SEC_COLOR);
+		}
+
+		@Override
+		public Particle get(final Vector2d pos) {
+			return new Glow(pos, size, lifetime, speed, rotation, glowTimer, primColor, secColor);
+		}
+
+		@Override
+		public void reset() {
+			size = DEFAULT_SIZE;
+			lifetime = DEFAULT_LIFETIME;
+			speed = DEFAULT_SPEED;
+			rotation = DEFAULT_ROTATION;
+			glowTimer = DEFAULT_GLOW_TIMER;
+			primColor = DEFAULT_PRIM_COLOR;
+			secColor = DEFAULT_SEC_COLOR;
+		}
 
 	}
 
-	public static class Smokes {
+	public static class SmokesClass extends ParticleFactory {
+
+		@Override
+		public Particle getDefault(final Vector2d pos) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Particle get(final Vector2d pos) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void reset() {
+			// TODO Auto-generated method stub
+
+		}
 
 	}
 
-	public static class Solids {
+	public static class SolidsClass extends ParticleFactory {
 
+		@Override
+		public Particle getDefault(final Vector2d pos) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Particle get(final Vector2d pos) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void reset() {
+			// TODO Auto-generated method stub
+
+		}
 	}
 
 	public static class SparksClass extends ParticleFactory {
@@ -56,9 +132,7 @@ public abstract class ParticleFactory {
 		 */
 		@Override
 		public Particle get(final Vector2d pos) {
-			Particle particle = new Spark(pos, size, lifetime, color, speed, rotation);
-
-			return particle;
+			return new Spark(pos, size, lifetime, color, speed, rotation);
 		}
 
 		@Override
@@ -72,9 +146,7 @@ public abstract class ParticleFactory {
 
 		@Override
 		public Particle getDefault(final Vector2d pos) {
-			Particle particle = new Spark(pos, DEFAULT_SIZE, DEFAULT_LIFETIME, DEFAULT_COLOR, DEFAULT_SPEED,
-					DEFAULT_ROTATION);
-			return particle;
+			return new Spark(pos, DEFAULT_SIZE, DEFAULT_LIFETIME, DEFAULT_COLOR, DEFAULT_SPEED, DEFAULT_ROTATION);
 		}
 
 	}

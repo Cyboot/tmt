@@ -6,6 +6,8 @@ import net.tmt.entity.DestroyAnimation;
 import net.tmt.entity.Entity2D;
 
 public class SimpleHealthComponent extends Component {
+	public static final String	HEALTH			= "HEALTH";
+
 	private static final double	COLLISON_DAMAGE	= 100;
 
 	private double				health;
@@ -31,5 +33,6 @@ public class SimpleHealthComponent extends Component {
 			owner.kill();
 			caller.getEntityManager().addEntity(new DestroyAnimation(owner.getPos().copy()));
 		}
+		caller.dispatch(HEALTH, health);
 	}
 }

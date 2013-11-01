@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.tmt.game.interfaces.Dispatcher;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
@@ -15,7 +16,7 @@ import net.tmt.gui.PlanetGui;
 import net.tmt.gui.SimulatorGui;
 import net.tmt.gui.SpaceGui;
 
-public class GuiManager implements Updateable, Renderable {
+public class GuiManager implements Updateable, Renderable, Dispatcher {
 	private static GuiManager	instance;
 
 	private List<Gui>			guiList		= new ArrayList<>();
@@ -60,11 +61,23 @@ public class GuiManager implements Updateable, Renderable {
 		return instance;
 	}
 
-	public void sendValueToGuiElements(final String key, final Object value) {
+	@Override
+	public void dispatch(final String key, final Object value) {
 		guiValue.put(key, value);
 	}
 
-	public Map<String, Object> getGuiValue() {
-		return guiValue;
+	@Override
+	public Object getValue(final String key) {
+		return guiValue.get(key);
+	}
+
+	@Override
+	public boolean isSet(final String key) {
+		return guiValue.containsKey(key);
+	}
+
+	@Override
+	public void remove(final String key) {
+		guiValue.remove(key);
 	}
 }

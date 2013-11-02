@@ -1,22 +1,20 @@
 package net.tmt.map;
 
-import net.tmt.game.interfaces.Renderable;
+import net.tmt.entity.Entity2D;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
 
-public class Planet implements Renderable {
+public class Planet extends Entity2D {
 
 	private int			id;
-	private Coordinate	coord;
 	private PlanetMap	map;
-	MapController		mc	= MapController.getInstance();
 
-	public Planet(final int i, final Coordinate c, final int baseTerrain) {
+	public Planet(final int i, final Vector2d pos, final int baseTerrain) {
+		super(pos);
 		id = i;
-		coord = c;
 		map = new PlanetMap(baseTerrain);
 	}
 
@@ -24,15 +22,15 @@ public class Planet implements Renderable {
 		return map;
 	}
 
-	public int getId() {
+	public int getPlanetId() {
 		return id;
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		Vector2d v = mc.chunkCenter2pos(coord, PlanetMap.CHUNK_SIZE);
+		// Vector2d v = coord.center2pos(map.getChunkSize());
 		g.setColor(Color.GREEN);
-		g.drawCircle(v.x, v.y, 300);
+		g.drawCircle(pos.x, pos.y, 300);
 	}
 
 }

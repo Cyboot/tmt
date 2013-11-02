@@ -1,13 +1,35 @@
 package net.tmt.map;
 
+
 public class SpaceMap extends Map {
 
-	public static final int	CHUNK_SIZE	= 2000;
+	public static final int	BASE_TERRAIN_SPACE	= Map.TERRAIN_VOID;
+	public static final int	CHUNK_SIZE			= 2000;
 
+	private static SpaceMap	instance			= null;
+
+	/**
+	 * Returns the one single SpaceMap that contains all chunks. The constructor
+	 * SpaceMap() is only used for sub maps.
+	 * 
+	 * @return the whole SpaceMap
+	 */
+	public static SpaceMap getInstance() {
+		if (instance == null)
+			instance = new SpaceMap();
+		return instance;
+	}
+
+	/**
+	 * This constructor should only ever be used to create sub maps. To get the
+	 * "real" SpaceMap use the static getInstance() method.
+	 * 
+	 * @return an empty SpaceMap
+	 */
 	public SpaceMap() {
-		type = Map.TYPE_SPACE;
+		setType(Map.TYPE_SPACE);
 		chunkSize = SpaceMap.CHUNK_SIZE;
-		baseTerrain = Map.TERRAIN_VOID;
+		setBaseTerrain(BASE_TERRAIN_SPACE);
 	}
 
 }

@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.interfaces.Renderable;
+import net.tmt.gfx.Graphics;
+import net.tmt.map.generator.MapGenerator;
+import net.tmt.util.Vector2d;
 
 
-public abstract class Map {
+public abstract class Map implements Renderable {
 
+	// PRELOAD_RADIUS in chunks
+	private static final int				PRELOAD_RADIUS		= 3;
 	public static final int					TYPE_SPACE			= 1;
 	public static final int					TYPE_PLANET			= 2;
 	/* spacy stuff */
@@ -22,10 +28,11 @@ public abstract class Map {
 	public static final int					TERRAIN_FOREST		= 204;
 	public static final int					TERRAIN_SWAMP		= 205;
 
-	protected int							type;
-	protected int							baseTerrain;
-	public int								chunkSize;
-	protected HashMap<Coordinate, Chunk>	chunks				= new HashMap<Coordinate, Chunk>();
+	private int								type;
+	private int								baseTerrain;
+	private Vector2d						rederOffset;
+	protected int							chunkSize;
+	protected HashMap<Coordinate, Chunk>	chunkMap			= new HashMap<Coordinate, Chunk>();
 
 	public int								maxX				= Integer.MIN_VALUE;
 	public int								minX				= Integer.MAX_VALUE;
@@ -33,9 +40,20 @@ public abstract class Map {
 	public int								minY				= Integer.MAX_VALUE;
 
 	public boolean existsAround(final Coordinate coord, final int radius) {
-		// TODO: find some sort of boundary solution to avoid looping through
-		// all chunks here
-		return false;
+		Coordinate tmpC = new Coordinate(0, 0);
+		boolean exists = true;
+		for (int x = coord.x - radius; x <= coord.x + radius; x++) {
+			for (int y = coord.y - radius; y <= coord.y + radius; y++) {
+				tmpC.set(x, y);
+				if (chunkMap.get(tmpC) == null) {
+					exists = false;
+					break;
+				}
+			}
+			if (!exists)
+				break;
+		}
+		return exists;
 	}
 
 	private void updateBoudaries(final Coordinate coord) {
@@ -46,37 +64,36 @@ public abstract class Map {
 	}
 
 	public void addChunk(final int terrain, final Coordinate coord, final int size) {
-		chunks.put(coord, new Chunk(coord, terrain, size));
+		chunkMap.put(coord, new Chunk(coord, terrain, size));
 		updateBoudaries(coord);
 	}
 
-	public void addChunk(final int terrain, final Coordinate coord, final int size, final ArrayList<Entity2D> entities,
-			final ArrayList<Object> mapObjects) {
-		chunks.put(coord, new Chunk(coord, terrain, size, entities, mapObjects));
+	public void addChunk(final int terrain, final Coordinate coord, final int size,
+			final ArrayList<Entity2D> staticEntities) {
+		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities));
 		updateBoudaries(coord);
 	}
 
 	public void putChunk(final Coordinate coord, final Chunk c) {
-		chunks.put(coord, c);
+		chunkMap.put(coord, c);
 	}
 
-	public void addEntity(final Entity2D e) {
-		MapController mc = MapController.getInstance();
-		Coordinate coord = mc.pos2chunk(e.getPos(), this);
-		Generator.generateAround(coord, this, 0);
-		chunks.get(coord).addEntity(e);
+	public void addStaticEntity(final Entity2D e) {
+		Coordinate coord = new Coordinate(e.getPos(), this.chunkSize);
+		MapGenerator.generateAround(coord, this, PRELOAD_RADIUS);
+		chunkMap.get(coord).addStaticEntity(e);
 	}
 
 	public Chunk getChunk(final Coordinate coord) {
-		return chunks.get(coord);
+		return chunkMap.get(coord);
 	}
 
 	public HashMap<Coordinate, Chunk> getChunks() {
-		return chunks;
+		return chunkMap;
 	}
 
-	public SpaceMap subSpaceMap(final Coordinate coord, final int r) {
-		return (SpaceMap) subMap(coord, r, new SpaceMap());
+	public SpaceMap subSpaceMap(final Vector2d pos, final int r) {
+		return (SpaceMap) subMap(new Coordinate(pos, chunkSize), r, new SpaceMap());
 	}
 
 	public PlanetMap subPlanetMapMap(final Coordinate coord, final int r, final int planetId) {
@@ -89,9 +106,8 @@ public abstract class Map {
 				// TODO: why can't I just use the old chunk and add it to the
 				// new map?!
 				Coordinate currCoord = new Coordinate(x, y);
-				Chunk oldChunk = this.chunks.get(currCoord);
-				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getEntities(),
-						oldChunk.getMapObjects());
+				Chunk oldChunk = this.chunkMap.get(currCoord);
+				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities());
 			}
 		}
 		return m;
@@ -102,8 +118,8 @@ public abstract class Map {
 		for (int x = minX; x <= maxX; x++) {
 			for (int y = minY; y <= maxY; y++) {
 				Coordinate coord = new Coordinate(x, y);
-				if (chunks.containsKey(coord)) {
-					Chunk chunk = chunks.get(coord);
+				if (chunkMap.containsKey(coord)) {
+					Chunk chunk = chunkMap.get(coord);
 					String s = Integer.toString(chunk.terrain);
 					char c = s.charAt(s.length() - 1);
 					System.out.print(c);
@@ -114,4 +130,52 @@ public abstract class Map {
 			System.out.println();
 		}
 	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(final int type) {
+		this.type = type;
+	}
+
+	public int getBaseTerrain() {
+		return baseTerrain;
+	}
+
+	public void setBaseTerrain(final int baseTerrain) {
+		this.baseTerrain = baseTerrain;
+	}
+
+	public int getChunkSize() {
+		return chunkSize;
+	}
+
+	public void setChunkSize(final int chunkSize) {
+		this.chunkSize = chunkSize;
+	}
+
+	public void update(final Vector2d offset) {
+		rederOffset = offset;
+		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		Map tmp = (type == Map.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
+		// FIXME for a radius value of 1, the neighbor chunk in the upper left
+		// corner won't be rendered until the player is located INSIDE it
+		Map sm = subMap(new Coordinate(rederOffset, chunkSize), 2, tmp);
+
+		Coordinate coord = new Coordinate(0, 0);
+		for (int x = sm.minX; x <= sm.maxX; x++) {
+			for (int y = sm.minY; y <= sm.maxY; y++) {
+				coord.set(x, y);
+				if (sm.chunkMap.get(coord) != null) {
+					sm.chunkMap.get(coord).render(g);
+				}
+			}
+		}
+	}
+
 }

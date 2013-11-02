@@ -6,9 +6,9 @@ public class PlanetMap extends Map {
 	public static final int	CHUNK_SIZE	= 300;
 
 	public PlanetMap(final int base) {
-		type = Map.TYPE_PLANET;
+		setType(Map.TYPE_PLANET);
 		chunkSize = CHUNK_SIZE;
-		baseTerrain = base;
+		setBaseTerrain(base);
 	}
 
 }

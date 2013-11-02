@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.BackgroundBody;
-import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.Star;
 import net.tmt.entity.Waypoint;
 import net.tmt.game.GameEngine;
@@ -16,10 +16,8 @@ import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class World implements Updateable, Renderable {
-	private static final double	RATIO			= 1.8;
+	private static final double	RATIO		= 1.8;
 	private double				MOVE_DIFF_WIDTH;
 	private double				MOVE_DIFF_HEIGHT;
 	private double				MOVE_MAX_WIDTH;
@@ -28,15 +26,17 @@ public class World implements Updateable, Renderable {
 	private static World		instance;
 
 	private EntityManager		entityManager;
-	private MapController		mapController	= MapController.getInstance();
+	private SpaceMap			spaceMap	= SpaceMap.getInstance();
+	// TODO use PlanetMaps when GameState changes
+	private Map					currentMap	= spaceMap;
 
-	private Vector2d			tmp				= new Vector2d();
-	private Vector2d			offset			= new Vector2d();
+	private Vector2d			tmp			= new Vector2d();
+	private Vector2d			offset		= new Vector2d();
 
 	// DEBUG waypoints in World
-	private List<Entity2D>		waypoints		= new ArrayList<>();
+	private List<Entity2D>		waypoints	= new ArrayList<>();
 
-	private PlayerSpaceShip	player;
+	private PlayerSpaceShip		player;
 
 	public World(final EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -71,24 +71,25 @@ public class World implements Updateable, Renderable {
 			}
 		}
 
-
+		// DEBUG: debug stuff
 		addWaypoint(new Waypoint(new Vector2d(200, 800)));
 		addWaypoint(new Waypoint(new Vector2d(700, 400)));
 		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
 		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
 		addWaypoint(new Waypoint(new Vector2d(500, 100)));
-
-		MapController.getInstance().addPlanet(new Coordinate(0, 0));
+		spaceMap.addStaticEntity(new Planet(0, new Vector2d(0, 0), Map.TERRAIN_GRASS));
 	}
 
 	private void addWaypoint(final Waypoint waypoint) {
 		waypoints.add(waypoint);
-		entityManager.addEntity(waypoint, EntityManager.LAYER_1_BACK);
+		// entityManager.addEntity(waypoint, EntityManager.LAYER_1_BACK);
+		spaceMap.addStaticEntity(waypoint);
 	}
 
 	@Override
 	public void update(final double delta) {
 		centerAroundShip(delta * 1000);
+		currentMap.update(getOffsetCentered());
 	}
 
 	private void centerAroundShip(final double delta) {
@@ -161,23 +162,6 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.GREY);
-
-		// TODO: move this code inside Mapcontroller
-		Coordinate coord = new Coordinate(0, 0);
-		SpaceMap sm = mapController.getSubSpaceMap(getOffsetCentered(), 1);
-		for (int x = sm.minX; x <= sm.maxX; x++) {
-			for (int y = sm.minY; y <= sm.maxY; y++) {
-				coord.set(x, y);
-				if (sm.chunks.containsKey(coord)) {
-					g.drawRect(x * sm.chunkSize, y * sm.chunkSize, sm.chunkSize, sm.chunkSize);
-					ArrayList<Object> objects = mapController.getSpaceMap().getChunk(coord).getMapObjects();
-					for (Object o : objects) {
-						if (o instanceof Planet)
-							((Planet) o).render(g);
-					}
-				}
-			}
-		}
+		currentMap.render(g);
 	}
 }

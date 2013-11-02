@@ -12,7 +12,6 @@ public class Planet implements Renderable {
 	private int			id;
 	private Coordinate	coord;
 	private PlanetMap	map;
-	MapController		mc	= MapController.getInstance();
 
 	public Planet(final int i, final Coordinate c, final int baseTerrain) {
 		id = i;
@@ -30,7 +29,7 @@ public class Planet implements Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		Vector2d v = mc.chunkCenter2pos(coord, PlanetMap.CHUNK_SIZE);
+		Vector2d v = coord.center2pos(map.getChunkSize());
 		g.setColor(Color.GREEN);
 		g.drawCircle(v.x, v.y, 300);
 	}

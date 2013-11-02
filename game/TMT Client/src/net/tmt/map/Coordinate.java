@@ -2,12 +2,25 @@ package net.tmt.map;
 
 import java.math.BigInteger;
 
+import net.tmt.util.Vector2d;
+
 public class Coordinate {
 	public int	x, y;
 
 	public Coordinate(final int x, final int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public Coordinate(final Vector2d pos, final int chunkSize) {
+		x = (int) Math.ceil((pos.x / chunkSize) - .5);
+		y = (int) Math.ceil((pos.y / chunkSize) - .5);
+	}
+
+	public Vector2d center2pos(final int chunkSize) {
+		double newX = x * chunkSize;
+		double newY = y * chunkSize;
+		return new Vector2d(newX, newY);
 	}
 
 	@Override

@@ -71,20 +71,19 @@ public class World implements Updateable, Renderable {
 			}
 		}
 
-
+		// DEBUG: debug stuff
 		addWaypoint(new Waypoint(new Vector2d(200, 800)));
 		addWaypoint(new Waypoint(new Vector2d(700, 400)));
 		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
 		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
 		addWaypoint(new Waypoint(new Vector2d(500, 100)));
-
-		// DEBUG: debug planet
 		spaceMap.addStaticEntity(new Planet(0, new Vector2d(0, 0), Map.TERRAIN_GRASS));
 	}
 
 	private void addWaypoint(final Waypoint waypoint) {
 		waypoints.add(waypoint);
-		entityManager.addEntity(waypoint, EntityManager.LAYER_1_BACK);
+		// entityManager.addEntity(waypoint, EntityManager.LAYER_1_BACK);
+		spaceMap.addStaticEntity(waypoint);
 	}
 
 	@Override

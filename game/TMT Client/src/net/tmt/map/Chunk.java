@@ -40,7 +40,7 @@ public class Chunk implements Renderable {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(Color.GREY);
-		g.drawRect(coord.x * size, coord.y * size, size, size);
+		g.drawRect(coord.center2pos(size).x, coord.center2pos(size).y, size - 5, size - 5);
 		for (Entity2D e : staticEntityList) {
 			e.render(g);
 		}

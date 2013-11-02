@@ -101,7 +101,6 @@ public abstract class Map implements Renderable {
 	}
 
 	private Map subMap(final Coordinate coord, final int r, final Map m) {
-		MapGenerator.generateAround(coord, this, PRELOAD_RADIUS);
 		for (int x = coord.x - r; x <= coord.x + r; x++) {
 			for (int y = coord.y - r; y <= coord.y + r; y++) {
 				// TODO: why can't I just use the old chunk and add it to the
@@ -158,12 +157,15 @@ public abstract class Map implements Renderable {
 
 	public void update(final Vector2d offset) {
 		rederOffset = offset;
+		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		Map tmp = (type == Map.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
-		Map sm = subMap(new Coordinate(rederOffset, chunkSize), 1, tmp);
+		// FIXME for a radius value of 1, the neighbor chunk in the upper left
+		// corner won't be rendered until the player is located INSIDE it
+		Map sm = subMap(new Coordinate(rederOffset, chunkSize), 2, tmp);
 
 		Coordinate coord = new Coordinate(0, 0);
 		for (int x = sm.minX; x <= sm.maxX; x++) {

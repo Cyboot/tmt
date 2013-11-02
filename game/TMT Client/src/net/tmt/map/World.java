@@ -16,8 +16,6 @@ import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class World implements Updateable, Renderable {
 	private static final double	RATIO		= 1.8;
 	private double				MOVE_DIFF_WIDTH;
@@ -29,6 +27,8 @@ public class World implements Updateable, Renderable {
 
 	private EntityManager		entityManager;
 	private SpaceMap			spaceMap	= SpaceMap.getInstance();
+	// TODO use PlanetMaps when GameState changes
+	private Map					currentMap	= spaceMap;
 
 	private Vector2d			tmp			= new Vector2d();
 	private Vector2d			offset		= new Vector2d();
@@ -77,6 +77,9 @@ public class World implements Updateable, Renderable {
 		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
 		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
 		addWaypoint(new Waypoint(new Vector2d(500, 100)));
+
+		// DEBUG: debug planet
+		spaceMap.addStaticEntity(new Planet(0, new Vector2d(0, 0), Map.TERRAIN_GRASS));
 	}
 
 	private void addWaypoint(final Waypoint waypoint) {
@@ -87,6 +90,7 @@ public class World implements Updateable, Renderable {
 	@Override
 	public void update(final double delta) {
 		centerAroundShip(delta * 1000);
+		currentMap.update(getOffsetCentered());
 	}
 
 	private void centerAroundShip(final double delta) {
@@ -159,24 +163,6 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.GREY);
-
-		SpaceMap sm = spaceMap.subSpaceMap(getOffset(), 1);
-		// TODO: move this code inside Map
-		Coordinate coord = new Coordinate(0, 0);
-		for (int x = sm.minX; x <= sm.maxX; x++) {
-			for (int y = sm.minY; y <= sm.maxY; y++) {
-				coord.set(x, y);
-				if (sm.chunks.containsKey(coord)) {
-					g.drawRect(x * sm.chunkSize, y * sm.chunkSize, sm.chunkSize, sm.chunkSize);
-					// ArrayList<Object> objects =
-					// mapController.getSpaceMap().getChunk(coord).getMapObjects();
-					// for (Object o : objects) {
-					// if (o instanceof Planet)
-					// ((Planet) o).render(g);
-					// }
-				}
-			}
-		}
+		currentMap.render(g);
 	}
 }

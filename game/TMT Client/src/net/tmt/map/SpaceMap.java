@@ -1,5 +1,6 @@
 package net.tmt.map;
 
+
 public class SpaceMap extends Map {
 
 	public static final int	BASE_TERRAIN_SPACE	= Map.TERRAIN_VOID;

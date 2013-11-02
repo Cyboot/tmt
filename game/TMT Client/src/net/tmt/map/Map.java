@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.interfaces.Renderable;
+import net.tmt.gfx.Graphics;
 import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
 
 
-public abstract class Map {
+public abstract class Map implements Renderable {
 
 	// PRELOAD_RADIUS in chunks
 	private static final int				PRELOAD_RADIUS		= 3;
@@ -28,8 +30,9 @@ public abstract class Map {
 
 	private int								type;
 	private int								baseTerrain;
+	private Vector2d						rederOffset;
 	protected int							chunkSize;
-	protected HashMap<Coordinate, Chunk>	chunks				= new HashMap<Coordinate, Chunk>();
+	protected HashMap<Coordinate, Chunk>	chunkMap			= new HashMap<Coordinate, Chunk>();
 
 	public int								maxX				= Integer.MIN_VALUE;
 	public int								minX				= Integer.MAX_VALUE;
@@ -37,9 +40,20 @@ public abstract class Map {
 	public int								minY				= Integer.MAX_VALUE;
 
 	public boolean existsAround(final Coordinate coord, final int radius) {
-		// TODO: find some sort of boundary solution to avoid looping through
-		// all chunks here
-		return false;
+		Coordinate tmpC = new Coordinate(0, 0);
+		boolean exists = true;
+		for (int x = coord.x - radius; x <= coord.x + radius; x++) {
+			for (int y = coord.y - radius; y <= coord.y + radius; y++) {
+				tmpC.set(x, y);
+				if (chunkMap.get(tmpC) == null) {
+					exists = false;
+					break;
+				}
+			}
+			if (!exists)
+				break;
+		}
+		return exists;
 	}
 
 	private void updateBoudaries(final Coordinate coord) {
@@ -50,32 +64,32 @@ public abstract class Map {
 	}
 
 	public void addChunk(final int terrain, final Coordinate coord, final int size) {
-		chunks.put(coord, new Chunk(coord, terrain, size));
+		chunkMap.put(coord, new Chunk(coord, terrain, size));
 		updateBoudaries(coord);
 	}
 
 	public void addChunk(final int terrain, final Coordinate coord, final int size,
 			final ArrayList<Entity2D> staticEntities) {
-		chunks.put(coord, new Chunk(coord, terrain, size, staticEntities));
+		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities));
 		updateBoudaries(coord);
 	}
 
 	public void putChunk(final Coordinate coord, final Chunk c) {
-		chunks.put(coord, c);
+		chunkMap.put(coord, c);
 	}
 
 	public void addStaticEntity(final Entity2D e) {
 		Coordinate coord = new Coordinate(e.getPos(), this.chunkSize);
 		MapGenerator.generateAround(coord, this, PRELOAD_RADIUS);
-		chunks.get(coord).addStaticEntity(e);
+		chunkMap.get(coord).addStaticEntity(e);
 	}
 
 	public Chunk getChunk(final Coordinate coord) {
-		return chunks.get(coord);
+		return chunkMap.get(coord);
 	}
 
 	public HashMap<Coordinate, Chunk> getChunks() {
-		return chunks;
+		return chunkMap;
 	}
 
 	public SpaceMap subSpaceMap(final Vector2d pos, final int r) {
@@ -93,7 +107,7 @@ public abstract class Map {
 				// TODO: why can't I just use the old chunk and add it to the
 				// new map?!
 				Coordinate currCoord = new Coordinate(x, y);
-				Chunk oldChunk = this.chunks.get(currCoord);
+				Chunk oldChunk = this.chunkMap.get(currCoord);
 				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities());
 			}
 		}
@@ -105,8 +119,8 @@ public abstract class Map {
 		for (int x = minX; x <= maxX; x++) {
 			for (int y = minY; y <= maxY; y++) {
 				Coordinate coord = new Coordinate(x, y);
-				if (chunks.containsKey(coord)) {
-					Chunk chunk = chunks.get(coord);
+				if (chunkMap.containsKey(coord)) {
+					Chunk chunk = chunkMap.get(coord);
 					String s = Integer.toString(chunk.terrain);
 					char c = s.charAt(s.length() - 1);
 					System.out.print(c);
@@ -141,4 +155,25 @@ public abstract class Map {
 	public void setChunkSize(final int chunkSize) {
 		this.chunkSize = chunkSize;
 	}
+
+	public void update(final Vector2d offset) {
+		rederOffset = offset;
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		Map tmp = (type == Map.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
+		Map sm = subMap(new Coordinate(rederOffset, chunkSize), 1, tmp);
+
+		Coordinate coord = new Coordinate(0, 0);
+		for (int x = sm.minX; x <= sm.maxX; x++) {
+			for (int y = sm.minY; y <= sm.maxY; y++) {
+				coord.set(x, y);
+				if (sm.chunkMap.get(coord) != null) {
+					sm.chunkMap.get(coord).render(g);
+				}
+			}
+		}
+	}
+
 }

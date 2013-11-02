@@ -3,9 +3,13 @@ package net.tmt.map;
 import java.util.ArrayList;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.interfaces.Renderable;
+import net.tmt.gfx.Graphics;
+
+import org.lwjgl.util.Color;
 
 
-public class Chunk {
+public class Chunk implements Renderable {
 
 	public int					terrain;
 	public int					size;
@@ -31,6 +35,15 @@ public class Chunk {
 
 	public ArrayList<Entity2D> getStaticEntities() {
 		return staticEntityList;
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		g.setColor(Color.GREY);
+		g.drawRect(coord.x * size, coord.y * size, size, size);
+		for (Entity2D e : staticEntityList) {
+			e.render(g);
+		}
 	}
 
 }

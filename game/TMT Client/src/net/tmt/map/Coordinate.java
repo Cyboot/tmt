@@ -17,7 +17,7 @@ public class Coordinate {
 		y = (int) Math.ceil((pos.y / chunkSize) - .5);
 	}
 
-	public Vector2d center2pos(final int chunkSize) {
+	public Vector2d leftUpperCorner2pos(final int chunkSize) {
 		double newX = x * chunkSize;
 		double newY = y * chunkSize;
 		return new Vector2d(newX, newY);

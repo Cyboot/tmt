@@ -116,7 +116,7 @@ public class SpaceGui extends Gui {
 	private void renderInfoWindow(final Graphics g) {
 		g.onGui().drawRect(width * 0.75, height * 0.75, width * 0.25, height * 0.25);
 
-		if (guiManager.isSet("onHover")) {
+		if (guiManager.isSet(GUI_HOVER)) {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, (String) guiManager.getValue(GUI_HOVER));
 		} else {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "overwrite");

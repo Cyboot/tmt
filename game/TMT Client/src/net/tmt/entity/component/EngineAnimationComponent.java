@@ -38,7 +38,7 @@ public class EngineAnimationComponent extends Component {
 			Sparks.lifetime = 0.5;
 			Sparks.rotation = rotation;
 			Sparks.speed = speed * 0.7;
-			int size = 20;
+			int size = 16;
 			Particle particle = Sparks.get(pos.copy().add(-dir.x * size, -dir.y * size));
 
 			caller.getEntityManager().addEntity(particle);

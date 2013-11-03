@@ -8,10 +8,11 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class JetTrailComponent extends Component {
-	private static final double	DEFAULT_BOUNDARY_SPEED	= 400;
+	private static final double	DEFAULT_BOUNDARY_SPEED	= 250;
 
 	private double				boundarySpeed;
 	private boolean				showTrail;
+	private Color				color;
 
 	private CountdownTimer		timerSpawnParticle		= CountdownTimer.createManuelResetTimer(0.02);
 	private double				size					= 24;
@@ -23,6 +24,7 @@ public class JetTrailComponent extends Component {
 	public JetTrailComponent(final double boundarySpeed, final double size) {
 		this.boundarySpeed = boundarySpeed;
 		this.size = size;
+		this.color = new Color(255, 255, 255, 80);
 	}
 
 	@Override
@@ -46,8 +48,9 @@ public class JetTrailComponent extends Component {
 			pos1.add(-dir.x * size, -dir.y * size);
 			pos2.add(-dir.x * size, -dir.y * size);
 
+			color.setAlpha((int) (speed / DEFAULT_BOUNDARY_SPEED * 40));
 			Sparks.reset();
-			Sparks.color = (Color) Color.LTGREY;
+			Sparks.color = color;
 
 			Particle particle1 = Sparks.get(pos1.copy());
 			Particle particle2 = Sparks.get(pos2.copy());

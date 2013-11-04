@@ -4,6 +4,7 @@ import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.gui.elements.ToolTip;
+import net.tmt.map.World;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 
@@ -120,8 +121,8 @@ public class SpaceGui extends Gui {
 
 		if (guiManager.isSet(GUI_HOVER)) {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, (String) guiManager.getValue(GUI_HOVER));
-			new ToolTip(Vector2d.tmp1.set(Mouse.getX(), GameEngine.HEIGHT - Mouse.getY()), (Color) Color.CYAN, 15f,
-					100f).render(g);
+			new ToolTip(Vector2d.tmp1.set(Mouse.getX() + World.getInstance().getOffset().x,
+					GameEngine.HEIGHT - Mouse.getY() + World.getInstance().getOffset().y), "0123456789").render(g);
 		} else {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "overwrite");
 		}

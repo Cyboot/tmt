@@ -7,8 +7,13 @@ import org.lwjgl.util.Color;
 
 public class ToolTip extends LeafElement {
 
-	public ToolTip(final Vector2d pos, final Color borderColor, final double height, final double width) {
-		super(pos, borderColor, height, width);
+	String	text;
+
+	public ToolTip(final Vector2d pos, final String text) {
+		super(pos, (Color) Color.CYAN, 0, 0); // default
+		this.text = text;
+
+
 	}
 
 	@Override

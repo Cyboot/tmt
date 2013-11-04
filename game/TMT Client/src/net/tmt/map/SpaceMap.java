@@ -1,9 +1,9 @@
 package net.tmt.map;
 
 
-public class SpaceMap extends Map {
+public class SpaceMap extends WorldMap {
 
-	public static final int	BASE_TERRAIN_SPACE	= Map.TERRAIN_VOID;
+	public static final int	BASE_TERRAIN_SPACE	= WorldMap.TERRAIN_VOID;
 	public static final int	CHUNK_SIZE			= 2000;
 
 	private static SpaceMap	instance			= null;
@@ -27,7 +27,7 @@ public class SpaceMap extends Map {
 	 * @return an empty SpaceMap
 	 */
 	public SpaceMap() {
-		setType(Map.TYPE_SPACE);
+		setType(WorldMap.TYPE_SPACE);
 		chunkSize = SpaceMap.CHUNK_SIZE;
 		setBaseTerrain(BASE_TERRAIN_SPACE);
 	}

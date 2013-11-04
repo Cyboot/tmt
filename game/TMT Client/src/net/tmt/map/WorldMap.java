@@ -2,6 +2,7 @@ package net.tmt.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
@@ -9,35 +10,37 @@ import net.tmt.gfx.Graphics;
 import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.util.ReadableColor;
 
-public abstract class Map implements Renderable {
+
+public abstract class WorldMap implements Renderable {
 
 	// PRELOAD_RADIUS in chunks
-	private static final int				PRELOAD_RADIUS		= 3;
-	public static final int					TYPE_SPACE			= 1;
-	public static final int					TYPE_PLANET			= 2;
+	private static final int			PRELOAD_RADIUS		= 3;
+	public static final int				TYPE_SPACE			= 1;
+	public static final int				TYPE_PLANET			= 2;
 	/* spacy stuff */
-	public static final int					TERRAIN_VOID		= 100;
-	public static final int					TERRAIN_ASTEROIDS	= 101;
-	public static final int					TERRAIN_DEBRIS		= 102;
+	public static final int				TERRAIN_VOID		= 100;
+	public static final int				TERRAIN_ASTEROIDS	= 101;
+	public static final int				TERRAIN_DEBRIS		= 102;
 	/* planety stuff */
-	public static final int					TERRAIN_GRASS		= 200;
-	public static final int					TERRAIN_WATER		= 201;
-	public static final int					TERRAIN_DESERT		= 202;
-	public static final int					TERRAIN_SNOW		= 203;
-	public static final int					TERRAIN_FOREST		= 204;
-	public static final int					TERRAIN_SWAMP		= 205;
+	public static final int				TERRAIN_GRASS		= 200;
+	public static final int				TERRAIN_WATER		= 201;
+	public static final int				TERRAIN_DESERT		= 202;
+	public static final int				TERRAIN_SNOW		= 203;
+	public static final int				TERRAIN_FOREST		= 204;
+	public static final int				TERRAIN_SWAMP		= 205;
 
-	private int								type;
-	private int								baseTerrain;
-	private Vector2d						rederOffset;
-	protected int							chunkSize;
-	protected HashMap<Coordinate, Chunk>	chunkMap			= new HashMap<Coordinate, Chunk>();
+	private int							type;
+	private int							baseTerrain;
+	private Vector2d					rederOffset;
+	protected int						chunkSize;
+	protected Map<Coordinate, Chunk>	chunkMap			= new HashMap<Coordinate, Chunk>();
 
-	public int								maxX				= Integer.MIN_VALUE;
-	public int								minX				= Integer.MAX_VALUE;
-	public int								maxY				= Integer.MIN_VALUE;
-	public int								minY				= Integer.MAX_VALUE;
+	public int							maxX				= Integer.MIN_VALUE;
+	public int							minX				= Integer.MAX_VALUE;
+	public int							maxY				= Integer.MIN_VALUE;
+	public int							minY				= Integer.MAX_VALUE;
 
 	public boolean existsAround(final Coordinate coord, final int radius) {
 		Coordinate tmpC = new Coordinate(0, 0);
@@ -63,14 +66,14 @@ public abstract class Map implements Renderable {
 		minY = Math.min(minY, coord.y);
 	}
 
-	public void addChunk(final int terrain, final Coordinate coord, final int size) {
-		chunkMap.put(coord, new Chunk(coord, terrain, size));
+	public void addChunk(final Coordinate coord, final Chunk c) {
+		chunkMap.put(coord, c);
 		updateBoudaries(coord);
 	}
 
 	public void addChunk(final int terrain, final Coordinate coord, final int size,
-			final ArrayList<Entity2D> staticEntities) {
-		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities));
+			final ArrayList<Entity2D> staticEntities, final ReadableColor color) {
+		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities, color));
 		updateBoudaries(coord);
 	}
 
@@ -88,7 +91,7 @@ public abstract class Map implements Renderable {
 		return chunkMap.get(coord);
 	}
 
-	public HashMap<Coordinate, Chunk> getChunks() {
+	public Map<Coordinate, Chunk> getChunks() {
 		return chunkMap;
 	}
 
@@ -100,14 +103,15 @@ public abstract class Map implements Renderable {
 		return (PlanetMap) subMap(coord, r, new PlanetMap(planetId));
 	}
 
-	private Map subMap(final Coordinate coord, final int r, final Map m) {
+	private WorldMap subMap(final Coordinate coord, final int r, final WorldMap m) {
 		for (int x = coord.x - r; x <= coord.x + r; x++) {
 			for (int y = coord.y - r; y <= coord.y + r; y++) {
 				// TODO: why can't I just use the old chunk and add it to the
 				// new map?!
 				Coordinate currCoord = new Coordinate(x, y);
 				Chunk oldChunk = this.chunkMap.get(currCoord);
-				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities());
+				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities(),
+						oldChunk.getColor());
 			}
 		}
 		return m;
@@ -162,10 +166,10 @@ public abstract class Map implements Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		Map tmp = (type == Map.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
+		WorldMap tmp = (type == WorldMap.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
 		// FIXME for a radius value of 1, the neighbor chunk in the upper left
 		// corner won't be rendered until the player is located INSIDE it
-		Map sm = subMap(new Coordinate(rederOffset, chunkSize), 2, tmp);
+		WorldMap sm = subMap(new Coordinate(rederOffset, chunkSize), 2, tmp);
 
 		Coordinate coord = new Coordinate(0, 0);
 		for (int x = sm.minX; x <= sm.maxX; x++) {

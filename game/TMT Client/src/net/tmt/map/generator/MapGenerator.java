@@ -2,11 +2,11 @@ package net.tmt.map.generator;
 
 import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
-import net.tmt.map.Map;
+import net.tmt.map.WorldMap;
 
 public class MapGenerator {
 
-	public static Map generateAround(final Coordinate coord, final Map map, final int radius) {
+	public static WorldMap generateAround(final Coordinate coord, final WorldMap map, final int radius) {
 		Coordinate coordTmp = new Coordinate(coord.x, coord.y);
 
 		// for every chunk in radius
@@ -18,17 +18,7 @@ public class MapGenerator {
 
 				// chunk == null --> generate new chunk
 				if (chunk == null) {
-					// TODO: don't just add random terrain ;)
-					int terrain = map.getBaseTerrain();
-					if (Math.random() > 0.8) {
-						if (map.getType() == Map.TYPE_SPACE) {
-							terrain = Map.TERRAIN_ASTEROIDS;
-						}
-						if (map.getType() == Map.TYPE_PLANET) {
-							terrain = Map.TERRAIN_WATER;
-						}
-					}
-					map.addChunk(terrain, new Coordinate(x, y), map.getChunkSize());
+					map.addChunk(new Coordinate(x, y), ChunkFormer.formChunk(coordTmp, map));
 				}
 			}
 		}

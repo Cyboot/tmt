@@ -1,6 +1,22 @@
 package net.tmt.gfx;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.GL_POINTS;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glColor4d;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glPointSize;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glTexCoord2d;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glVertex2d;
 
 import java.awt.Font;
 
@@ -254,15 +270,15 @@ public class Graphics {
 	}
 
 	public static class Fonts {
-		static TrueTypeFont	font_12;
-		static TrueTypeFont	font_14;
-		static TrueTypeFont	font_16;
-		static TrueTypeFont	font_18;
+		public static TrueTypeFont	font_12;
+		public static TrueTypeFont	font_14;
+		public static TrueTypeFont	font_16;
+		public static TrueTypeFont	font_18;
 	}
 
 	private static class Textures {
-		static Texture	whiteTexture;
-		static Sprite	circle_fill_16;
-		static Sprite	circle_fill_256;
+		public static Texture	whiteTexture;
+		public static Sprite	circle_fill_16;
+		public static Sprite	circle_fill_256;
 	}
 }

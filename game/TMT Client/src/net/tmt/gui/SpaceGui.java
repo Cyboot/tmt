@@ -3,9 +3,11 @@ package net.tmt.gui;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.gui.elements.ToolTip;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
 public class SpaceGui extends Gui {
@@ -118,6 +120,8 @@ public class SpaceGui extends Gui {
 
 		if (guiManager.isSet(GUI_HOVER)) {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, (String) guiManager.getValue(GUI_HOVER));
+			new ToolTip(Vector2d.tmp1.set(Mouse.getX(), GameEngine.HEIGHT - Mouse.getY()), (Color) Color.CYAN, 15f,
+					100f).render(g);
 		} else {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "overwrite");
 		}

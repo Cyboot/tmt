@@ -10,11 +10,4 @@ public class LeafElement extends GuiElement {
 		super(pos, borderColor, height, width);
 	}
 
-	@Override
-	public void update(final Vector2d offset, final double delta) {
-
-		super.update(offset, delta);
-
-		// borderColor.setRed(RandomUtil.intRange(0, 255));
-	}
 }

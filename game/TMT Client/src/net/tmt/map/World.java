@@ -28,7 +28,7 @@ public class World implements Updateable, Renderable {
 	private EntityManager		entityManager;
 	private SpaceMap			spaceMap	= SpaceMap.getInstance();
 	// TODO use PlanetMaps when GameState changes
-	private WorldMap					currentMap	= spaceMap;
+	private WorldMap			currentMap	= spaceMap;
 
 	private Vector2d			tmp			= new Vector2d();
 	private Vector2d			offset		= new Vector2d();
@@ -77,7 +77,6 @@ public class World implements Updateable, Renderable {
 		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
 		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
 		addWaypoint(new Waypoint(new Vector2d(500, 100)));
-		spaceMap.addStaticEntity(new Planet(0, new Vector2d(0, 0), WorldMap.TERRAIN_GRASS));
 	}
 
 	private void addWaypoint(final Waypoint waypoint) {

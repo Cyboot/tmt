@@ -23,11 +23,12 @@ public class ChunkFormer {
 		int chance = (int) Math.rint(Math.random() * 2);
 		Chunk c = null;
 		switch (chance) {
-		case 0:
+		case 1:
 			c = new Chunk(coord, WorldMap.TERRAIN_VOID, map.getChunkSize());
 			c.setColor(Color.RED);
+			VoidChunkFormer.fill(c);
 			break;
-		case 1:
+		case 0:
 			c = new Chunk(coord, WorldMap.TERRAIN_ASTEROIDS, map.getChunkSize());
 			c.setColor(Color.GREEN);
 			break;

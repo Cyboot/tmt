@@ -18,5 +18,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/TMT%20Client/lib/slick/slick-javadoc.zip!/javadoc"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl/jinput.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

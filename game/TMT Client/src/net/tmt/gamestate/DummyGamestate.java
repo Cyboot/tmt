@@ -52,4 +52,5 @@ public class DummyGamestate extends AbstractGamestate {
 		g.setColor(Color.GREEN);
 		g.onGui().fillCircle(300, 300, 64);
 	}
+
 }

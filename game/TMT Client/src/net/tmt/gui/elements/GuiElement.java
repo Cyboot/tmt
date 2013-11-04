@@ -32,11 +32,35 @@ public abstract class GuiElement implements Renderable, Updateable {
 		g.setColor(foregroundColor);
 	}
 
-	protected void setPos(final Vector2d pos) {
+	public void setPos(final Vector2d pos) {
 		this.pos = pos;
 	}
 
 	public Vector2d getPos() {
 		return pos;
+	}
+
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(final Color borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(final Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public Color getForegroundColor() {
+		return foregroundColor;
+	}
+
+	public void setForegroundColor(final Color foregroundColor) {
+		this.foregroundColor = foregroundColor;
 	}
 }

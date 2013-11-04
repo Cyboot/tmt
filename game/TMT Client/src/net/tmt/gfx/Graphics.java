@@ -1,22 +1,6 @@
 package net.tmt.gfx;
 
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.GL_LINE_LOOP;
-import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
-import static org.lwjgl.opengl.GL11.GL_POINTS;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3d;
-import static org.lwjgl.opengl.GL11.glColor4d;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLineWidth;
-import static org.lwjgl.opengl.GL11.glPointSize;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glTexCoord2d;
-import static org.lwjgl.opengl.GL11.glTranslated;
-import static org.lwjgl.opengl.GL11.glVertex2d;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
@@ -101,6 +85,7 @@ public class Graphics {
 	public void drawRect(final double x, final double y, final double with, final double height) {
 		applyColor();
 
+
 		glLineWidth(lineWidth);
 		glPushMatrix();
 		{
@@ -121,26 +106,14 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void fillRect(final double x, final double y, final double with, final double height) {
-		applyColor();
+	public void fillRect(final double x, final double y, final double width, final double height) {
+		Sprite sprite = Textures.rect;
 
-		glLineWidth(lineWidth);
-		glPushMatrix();
-		{
-			applyOffset();
-			glTranslated(x, y, 0);
-			{
-				glBegin(GL_QUADS);
-				{
-					glVertex2d(0, height);
-					glVertex2d(0, 0);
-					glVertex2d(with, 0);
-					glVertex2d(with, height);
-				}
-				glEnd();
-			}
-		}
-		glPopMatrix();
+		sprite.setWidth(width);
+		sprite.setHeight(height);
+		sprite.setBlendColor((Color) color);
+
+		drawSprite(Vector2d.tmp1.set(x, y), sprite);
 	}
 
 	public void drawCircle(final double centerX, final double centerY, final double radius) {
@@ -234,7 +207,7 @@ public class Graphics {
 
 	private void applyColor() {
 		Textures.whiteTexture.bind();
-		glColor3d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255.);
+		glColor4d(color.getRed() / 255., color.getGreen() / 255., color.getBlue() / 255., color.getAlpha() / 255.);
 	}
 
 	/**
@@ -253,7 +226,8 @@ public class Graphics {
 
 	public static Graphics init() {
 		instance = new Graphics();
-		Textures.whiteTexture = new Sprite("white").getTexture();
+		Textures.rect = new Sprite("white").setCentered(false);
+		Textures.whiteTexture = Textures.rect.getTexture();
 		Textures.circle_fill_16 = new Sprite("circle_16").setCentered(false);
 		Textures.circle_fill_256 = new Sprite("circle_256").setCentered(false);
 		Fonts.font_12 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 12), false);
@@ -278,6 +252,7 @@ public class Graphics {
 
 	private static class Textures {
 		public static Texture	whiteTexture;
+		public static Sprite	rect;
 		public static Sprite	circle_fill_16;
 		public static Sprite	circle_fill_256;
 	}

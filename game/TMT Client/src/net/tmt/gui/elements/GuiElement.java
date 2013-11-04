@@ -15,11 +15,11 @@ public abstract class GuiElement implements Renderable {
 	protected double	width;
 
 
-	public GuiElement(final Vector2d pos, final Color borderColor, final double height, final double width) {
+	public GuiElement(final Vector2d pos, final Color borderColor, final double width, final double height) {
 		this.pos = pos;
 		this.borderColor = borderColor;
-		this.height = height;
 		this.width = width;
+		this.height = height;
 	}
 
 	public void update(final Vector2d offset, final double delta) {

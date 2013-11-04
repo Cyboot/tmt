@@ -12,7 +12,7 @@ public class CompositeElement extends GuiElement {
 
 	protected List<GuiElement>	gElementList	= new ArrayList<>();
 
-	public CompositeElement(final Vector2d pos, final Color borderColor, final double height, final double width) {
+	public CompositeElement(final Vector2d pos, final Color borderColor, final double width, final double height) {
 		super(pos, borderColor, height, width);
 	}
 

@@ -1,15 +1,15 @@
 package net.tmt.gui.elements;
 
 import net.tmt.game.interfaces.Renderable;
+import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
-public abstract class GuiElement implements Renderable {
+public abstract class GuiElement implements Renderable, Updateable {
 
 	protected Vector2d	pos;
-	protected Vector2d	offset;
 	protected double	height;
 	protected double	width;
 
@@ -18,14 +18,9 @@ public abstract class GuiElement implements Renderable {
 	protected Color		foregroundColor	= new Color(Color.WHITE);
 
 	public GuiElement(final Vector2d pos, final double width, final double height) {
-		this.pos = pos;
 		this.width = width;
 		this.height = height;
-	}
-
-	public void update(final Vector2d offset, final double delta) {
-		this.offset = offset;
-
+		setPos(pos);
 	}
 
 	@Override
@@ -35,5 +30,13 @@ public abstract class GuiElement implements Renderable {
 		g.setColor(borderColor);
 		g.drawRect(pos.x, pos.y, width, height);
 		g.setColor(foregroundColor);
+	}
+
+	protected void setPos(final Vector2d pos) {
+		this.pos = pos;
+	}
+
+	public Vector2d getPos() {
+		return pos;
 	}
 }

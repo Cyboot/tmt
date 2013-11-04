@@ -3,37 +3,32 @@ package net.tmt.gui;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.gui.elements.Button;
-import net.tmt.gui.elements.GuiElement;
-import net.tmt.gui.elements.LeafElement;
+import net.tmt.gui.elements.CompositeElement;
 import net.tmt.util.Vector2d;
 
 public class DummyGui extends Gui {
-
-	private GuiElement	guiElement;
-	private Button		button;
-	private Button		button2;
-
+	private CompositeElement	compElement;
 
 	public DummyGui() {
-		guiElement = new LeafElement(new Vector2d(50, 50), 100, 100);
-		button = new Button(new Vector2d(200, 200), 64, 32);
+		compElement = new CompositeElement(new Vector2d(200, 200), 300, 200);
 
-		button2 = new Button(new Vector2d(400, 200), new Sprite("ship_blue"));
+		compElement.addGuiElement(new Button(new Vector2d(0, 0), 64, 32));
+		compElement.addGuiElement(new Button(new Vector2d(0, 32 * 1 + 8 * 1), 64, 32));
+		compElement.addGuiElement(new Button(new Vector2d(0, 32 * 2 + 8 * 2), 64, 32));
+		compElement.addGuiElement(new Button(new Vector2d(0, 32 * 3 + 8 * 3), 64, 32));
+
+		compElement.addGuiElement(new Button(new Vector2d(100, 0), new Sprite("ship_blue")));
+		compElement.addGuiElement(new Button(new Vector2d(100, 100), new Sprite("ship_red")));
+		compElement.addGuiElement(new Button(new Vector2d(100, 200), new Sprite("ship_green")));
 	}
 
 	@Override
 	public void update(final double delta) {
-		Vector2d offset = new Vector2d();
-
-		button.update(offset, delta);
-		button2.update(offset, delta);
-		guiElement.update(offset, delta);
+		compElement.update(delta);
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		guiElement.render(g);
-		button.render(g);
-		button2.render(g);
+		compElement.render(g);
 	}
 }

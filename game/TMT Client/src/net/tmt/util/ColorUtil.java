@@ -4,15 +4,29 @@ import org.lwjgl.util.Color;
 
 public class ColorUtil {
 
-	public static Color brighter(final Color color, final double factor) {
+	/**
+	 * returns a brigher color. <b>Attention</b> Modifies the given color
+	 * parameter
+	 * 
+	 * @param color
+	 * @param factor
+	 * @return
+	 */
+	public static void brighter(final Color color, final double factor) {
 		color.setRed((int) (color.getRed() * factor));
 		color.setGreen((int) (color.getGreen() * factor));
 		color.setBlue((int) (color.getBlue() * factor));
-
-		return color;
 	}
 
-	public static Color darker(final Color color, final double factor) {
-		return brighter(color, 1 / factor);
+	/**
+	 * returns a darker color. <b>Attention</b> Modifies the given color
+	 * parameter
+	 * 
+	 * @param color
+	 * @param factor
+	 * @return
+	 */
+	public static void darker(final Color color, final double factor) {
+		brighter(color, 1 / factor);
 	}
 }

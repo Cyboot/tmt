@@ -26,17 +26,20 @@ public class Button extends LeafElement {
 
 	public Button(final Vector2d pos, final double width, final double height) {
 		super(pos, width, height);
-		rect = new Rectangle(pos.x, pos.y, width, height);
 
 		origin_backgroundColor = new Color(backgroundColor);
 		origin_borderColor = new Color(borderColor);
 	}
 
 	@Override
-	public void update(final Vector2d offset, final double delta) {
-		super.update(offset, delta);
-		rect.setX(offset.x + pos.x);
-		rect.setY(offset.y + pos.y);
+	protected void setPos(final Vector2d pos) {
+		super.setPos(pos);
+		rect = new Rectangle(pos.x, pos.y, width, height);
+	}
+
+	@Override
+	public void update(final double delta) {
+		super.update(delta);
 
 		Vector2d mouse = Vector2d.tmp1.set(Mouse.getX(), GameEngine.HEIGHT - Mouse.getY());
 

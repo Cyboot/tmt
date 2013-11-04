@@ -13,9 +13,9 @@ public abstract class GuiElement implements Renderable {
 	protected double	height;
 	protected double	width;
 
-	protected Color		borderColor		= (Color) Color.GREY;
-	protected Color		backgroundColor	= (Color) Color.DKGREY;
-	protected Color		foregroundColor	= (Color) Color.WHITE;
+	protected Color		borderColor		= new Color(Color.GREY);
+	protected Color		backgroundColor	= new Color(Color.DKGREY);
+	protected Color		foregroundColor	= new Color(Color.WHITE);
 
 	public GuiElement(final Vector2d pos, final double width, final double height) {
 		this.pos = pos;
@@ -36,5 +36,4 @@ public abstract class GuiElement implements Renderable {
 		g.drawRect(pos.x, pos.y, width, height);
 		g.setColor(foregroundColor);
 	}
-
 }

@@ -123,6 +123,7 @@ public class SpaceGui extends Gui {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, (String) guiManager.getValue(GUI_HOVER));
 			new ToolTip(Vector2d.tmp1.set(Mouse.getX() + World.getInstance().getOffset().x,
 					GameEngine.HEIGHT - Mouse.getY() + World.getInstance().getOffset().y), "0123456789").render(g);
+
 		} else {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "overwrite");
 		}

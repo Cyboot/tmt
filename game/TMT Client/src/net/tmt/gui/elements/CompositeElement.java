@@ -6,14 +6,12 @@ import java.util.List;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class CompositeElement extends GuiElement {
 
 	protected List<GuiElement>	gElementList	= new ArrayList<>();
 
-	public CompositeElement(final Vector2d pos, final Color borderColor, final double width, final double height) {
-		super(pos, borderColor, height, width);
+	public CompositeElement(final Vector2d pos, final double width, final double height) {
+		super(pos, height, width);
 	}
 
 	@Override

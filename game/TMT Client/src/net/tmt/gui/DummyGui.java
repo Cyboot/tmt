@@ -6,8 +6,6 @@ import net.tmt.gui.elements.GuiElement;
 import net.tmt.gui.elements.LeafElement;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class DummyGui extends Gui {
 
 	private GuiElement	guiElement;
@@ -15,8 +13,8 @@ public class DummyGui extends Gui {
 
 
 	public DummyGui() {
-		guiElement = new LeafElement(new Vector2d(50, 50), (Color) Color.ORANGE, 100, 100);
-		button = new Button(new Vector2d(200, 200), (Color) Color.WHITE, 64, 32);
+		guiElement = new LeafElement(new Vector2d(50, 50), 100, 100);
+		button = new Button(new Vector2d(200, 200), 64, 32);
 	}
 
 	@Override

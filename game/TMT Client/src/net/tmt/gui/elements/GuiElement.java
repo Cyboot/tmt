@@ -10,14 +10,15 @@ public abstract class GuiElement implements Renderable {
 
 	protected Vector2d	pos;
 	protected Vector2d	offset;
-	protected Color		borderColor;
 	protected double	height;
 	protected double	width;
 
+	protected Color		borderColor		= (Color) Color.GREY;
+	protected Color		backgroundColor	= (Color) Color.DKGREY;
+	protected Color		foregroundColor	= (Color) Color.WHITE;
 
-	public GuiElement(final Vector2d pos, final Color borderColor, final double width, final double height) {
+	public GuiElement(final Vector2d pos, final double width, final double height) {
 		this.pos = pos;
-		this.borderColor = borderColor;
 		this.width = width;
 		this.height = height;
 	}
@@ -29,8 +30,11 @@ public abstract class GuiElement implements Renderable {
 
 	@Override
 	public void render(final Graphics g) {
+		g.setColor(backgroundColor);
+		g.fillRect(pos.x, pos.y, width, height);
 		g.setColor(borderColor);
 		g.drawRect(pos.x, pos.y, width, height);
+		g.setColor(foregroundColor);
 	}
 
 }

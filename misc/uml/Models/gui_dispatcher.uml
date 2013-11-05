@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA">
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="DefaultName">
+    <packagedElement xmi:type="uml:Package" xmi:id="_shpRQEFdEeO-7NLwvHl6fg" name="gui">
+      <ownedComment xmi:id="_-G7bAEFfEeO-7NLwvHl6fg" annotatedElement="_w56nKUFfEeO-7NLwvHl6fg">
+        <body>Map map = guiManager.getValueMap();&#xD;
+&#xD;
+String key = MouseHoverComponent.HOVER_ENTITY;&#xD;
+String txt = map.get(key);&#xD;
+&#xD;
+guiElement.setText(txt);</body>
+      </ownedComment>
+      <packagedElement xmi:type="uml:Class" xmi:id="_vLQX0EFdEeO-7NLwvHl6fg" name="GuiManager" clientDependency="_PT4hIEFeEeO-7NLwvHl6fg">
+        <ownedAttribute xmi:id="_vO99sEFeEeO-7NLwvHl6fg" name="Map&lt;String, Object>   valueMap"/>
+        <ownedOperation xmi:id="_xoyxQEFdEeO-7NLwvHl6fg" name="update"/>
+        <ownedOperation xmi:id="_ynkGoEFdEeO-7NLwvHl6fg" name="render"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_1PFigEFdEeO-7NLwvHl6fg" name="Gui">
+        <ownedAttribute xmi:id="_cD2zsEFeEeO-7NLwvHl6fg" name="guiElement" type="_14vjgEFdEeO-7NLwvHl6fg" aggregation="composite" association="_cD6eEEFeEeO-7NLwvHl6fg">
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cD2zsUFeEeO-7NLwvHl6fg" value="1"/>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cD2zskFeEeO-7NLwvHl6fg" value="1"/>
+        </ownedAttribute>
+        <ownedOperation xmi:id="_K-UPEEFeEeO-7NLwvHl6fg" name="update"/>
+        <ownedOperation xmi:id="_MbdigEFeEeO-7NLwvHl6fg" name="render"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_41Zh4EFdEeO-7NLwvHl6fg" name="gui.elements">
+        <packagedElement xmi:type="uml:Class" xmi:id="_14vjgEFdEeO-7NLwvHl6fg" name="GuiElement">
+          <ownedAttribute xmi:id="_ocM-gEFgEeO-7NLwvHl6fg" name="Vector2d position"/>
+          <ownedOperation xmi:id="_-9_QwEFdEeO-7NLwvHl6fg" name="render"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_9sInUEFdEeO-7NLwvHl6fg" name="Button">
+          <generalization xmi:id="_BXiiEEFeEeO-7NLwvHl6fg" general="_14vjgEFdEeO-7NLwvHl6fg"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_CbFpwEFeEeO-7NLwvHl6fg" name="TextView">
+          <generalization xmi:id="_FTSl80FeEeO-7NLwvHl6fg" general="_14vjgEFdEeO-7NLwvHl6fg"/>
+          <ownedAttribute xmi:id="_jwbL4EFgEeO-7NLwvHl6fg" name="String text"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_PT4hIEFeEeO-7NLwvHl6fg" name="Dependency1" supplier="_1PFigEFdEeO-7NLwvHl6fg" client="_vLQX0EFdEeO-7NLwvHl6fg"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_Qc0fIEFeEeO-7NLwvHl6fg" name="update(GuiManager, delta)" memberEnd="_Qc0fIUFeEeO-7NLwvHl6fg _Qc0fJEFeEeO-7NLwvHl6fg" navigableOwnedEnd="_Qc0fJEFeEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_Qc0fIUFeEeO-7NLwvHl6fg" name="guiManager" type="_vLQX0EFdEeO-7NLwvHl6fg" association="_Qc0fIEFeEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Qc0fIkFeEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Qc0fI0FeEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_Qc0fJEFeEeO-7NLwvHl6fg" name="gui" type="_1PFigEFdEeO-7NLwvHl6fg" association="_Qc0fIEFeEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Qc0fJUFeEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Qc0fJkFeEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_cD6eEEFeEeO-7NLwvHl6fg" name="A_&lt;gui>_&lt;guiElement>" memberEnd="_cD6eEUFeEeO-7NLwvHl6fg _cD2zsEFeEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_cD6eEUFeEeO-7NLwvHl6fg" name="gui" type="_1PFigEFdEeO-7NLwvHl6fg" association="_cD6eEEFeEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cD6eEkFeEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cD6eE0FeEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_lKjScEFeEeO-7NLwvHl6fg" name="entity.component">
+      <packagedElement xmi:type="uml:Class" xmi:id="_pwdtoEFeEeO-7NLwvHl6fg" name="Component">
+        <ownedAttribute xmi:id="_ok8gQEFfEeO-7NLwvHl6fg" name="Entity2D owner"/>
+        <ownedOperation xmi:id="_rZVv8EFeEeO-7NLwvHl6fg" name="update"/>
+        <ownedOperation xmi:id="_r951kEFeEeO-7NLwvHl6fg" name="render"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_2TP4yEFeEeO-7NLwvHl6fg" name="MouseHoverComponent">
+        <generalization xmi:id="_-JO9kEFeEeO-7NLwvHl6fg" general="_pwdtoEFeEeO-7NLwvHl6fg"/>
+        <ownedAttribute xmi:id="_VGCQgEFfEeO-7NLwvHl6fg" name="String HOVER_ENTITY"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_AYFawEFfEeO-7NLwvHl6fg" name="sendValue( HOVER_ENTITY,   owner.toString() )" memberEnd="_AYFawUFfEeO-7NLwvHl6fg _AYFaxEFfEeO-7NLwvHl6fg" navigableOwnedEnd="_AYFaxEFfEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_AYFawUFfEeO-7NLwvHl6fg" name="mouseHoverComponent" type="_2TP4yEFeEeO-7NLwvHl6fg" association="_AYFawEFfEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_AYFawkFfEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_AYFaw0FfEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_AYFaxEFfEeO-7NLwvHl6fg" name="guiManager" type="_vLQX0EFdEeO-7NLwvHl6fg" association="_AYFawEFfEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_AYFaxUFfEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_AYFaxkFfEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_w56nKUFfEeO-7NLwvHl6fg" name="setText()" memberEnd="_w56nKkFfEeO-7NLwvHl6fg _w56nLUFfEeO-7NLwvHl6fg" navigableOwnedEnd="_w56nLUFfEeO-7NLwvHl6fg">
+      <ownedEnd xmi:id="_w56nKkFfEeO-7NLwvHl6fg" name="gui" type="_1PFigEFdEeO-7NLwvHl6fg" association="_w56nKUFfEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_w56nK0FfEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_w56nLEFfEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_w56nLUFfEeO-7NLwvHl6fg" name="textView" type="_CbFpwEFeEeO-7NLwvHl6fg" association="_w56nKUFfEeO-7NLwvHl6fg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_w56nLkFfEeO-7NLwvHl6fg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_w56nL0FfEeO-7NLwvHl6fg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

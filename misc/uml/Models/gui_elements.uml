@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA">
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="gui_elements">
+    <packagedElement xmi:type="uml:Package" xmi:id="_bs9PQEZDEeOG7_BTnmJXGA" name="gui.elements">
+      <packagedElement xmi:type="uml:Class" xmi:id="_dJLVoEZDEeOG7_BTnmJXGA" name="GuiElement">
+        <ownedAttribute xmi:id="_e0RlgEZDEeOG7_BTnmJXGA" name="Vector2d pos"/>
+        <ownedAttribute xmi:id="_g-1_okZDEeOG7_BTnmJXGA" name="String title"/>
+        <ownedAttribute xmi:id="_iJIogkZDEeOG7_BTnmJXGA" name="int width, height"/>
+        <ownedAttribute xmi:id="_n0lIYkZDEeOG7_BTnmJXGA" name="Color color"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_vFiNgEZDEeOG7_BTnmJXGA" name="Button">
+        <generalization xmi:id="_yb66hUZDEeOG7_BTnmJXGA" general="_dJLVoEZDEeOG7_BTnmJXGA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_wy68aEZDEeOG7_BTnmJXGA" name="Textview">
+        <generalization xmi:id="_yytp4EZDEeOG7_BTnmJXGA" general="_dJLVoEZDEeOG7_BTnmJXGA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_zSmq4EZDEeOG7_BTnmJXGA" name="ContainerElement">
+        <generalization xmi:id="_8rRDY0ZDEeOG7_BTnmJXGA" general="_dJLVoEZDEeOG7_BTnmJXGA"/>
+        <ownedAttribute xmi:id="_2661YkZDEeOG7_BTnmJXGA" name="List&lt;GuiElement> elements"/>
+        <ownedOperation xmi:id="_7Y1LIEZDEeOG7_BTnmJXGA" name="addGuiElement"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_BEaN4EZEEeOG7_BTnmJXGA" name="Class1"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_B43JoEZEEeOG7_BTnmJXGA" name="gui.view">
+      <packagedElement xmi:type="uml:Class" xmi:id="_FqLfIEZEEeOG7_BTnmJXGA" name="GameStateToolbar">
+        <generalization xmi:id="_IKHFQEZEEeOG7_BTnmJXGA" general="_zSmq4EZDEeOG7_BTnmJXGA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Ol2ZqEZEEeOG7_BTnmJXGA" name="MiniMapView"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_QFUBSEZEEeOG7_BTnmJXGA" name="ShipStatus"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_SIWQCEZEEeOG7_BTnmJXGA" name="MissionView"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_VZZxEEZEEeOG7_BTnmJXGA" name="RessourceView"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_b4LLWEZEEeOG7_BTnmJXGA" name="InfoWindow"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ixksGEZEEeOG7_BTnmJXGA" name="LogView"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_KMAEgEZEEeOG7_BTnmJXGA" name="A_&lt;gameStateToolbar>_&lt;button>" memberEnd="_KMAEgUZEEeOG7_BTnmJXGA _KMAEhEZEEeOG7_BTnmJXGA">
+      <ownedEnd xmi:id="_KMAEgUZEEeOG7_BTnmJXGA" name="gameStateToolbar" type="_FqLfIEZEEeOG7_BTnmJXGA" association="_KMAEgEZEEeOG7_BTnmJXGA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KMAEgkZEEeOG7_BTnmJXGA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KMAEg0ZEEeOG7_BTnmJXGA" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:id="_KMAEhEZEEeOG7_BTnmJXGA" name="button" type="_vFiNgEZDEeOG7_BTnmJXGA" aggregation="shared" association="_KMAEgEZEEeOG7_BTnmJXGA">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KMAEhUZEEeOG7_BTnmJXGA" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KMAEhkZEEeOG7_BTnmJXGA" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="__0K4kEZEEeOG7_BTnmJXGA" name="GuiManager" clientDependency="_AeOiMEZFEeOG7_BTnmJXGA _Cl71kEZFEeOG7_BTnmJXGA"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_AeOiMEZFEeOG7_BTnmJXGA" name="Dependency1" supplier="_B43JoEZEEeOG7_BTnmJXGA" client="__0K4kEZEEeOG7_BTnmJXGA"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_Cl71kEZFEeOG7_BTnmJXGA" name="Dependency2" supplier="_B43JoEZEEeOG7_BTnmJXGA" client="__0K4kEZEEeOG7_BTnmJXGA"/>
+  </packagedElement>
+</uml:Model>

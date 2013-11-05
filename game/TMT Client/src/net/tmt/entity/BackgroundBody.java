@@ -8,12 +8,7 @@ import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class BackgroundBody extends Entity2D {
-	// private static final float SIZE = 3;
-
 	private Sprite	sprite;
-
-	// private Color color;
-
 
 	public BackgroundBody(final Vector2d pos) {
 		super(pos);
@@ -34,9 +29,6 @@ public class BackgroundBody extends Entity2D {
 		}
 		sprite.setAlpha(75);
 
-		// color = new Color(RandomUtil.intRange(150, 255),
-		// RandomUtil.intRange(150, 255), RandomUtil.intRange(150, 255),
-		// 125);
 		removeAllComponents();
 	}
 
@@ -50,7 +42,5 @@ public class BackgroundBody extends Entity2D {
 		double y = pos.y - World.getInstance().getOffset().y;
 
 		g.onGui().drawSprite(Vector2d.tmp1.set(x / 16, y / 16), sprite);
-		// g.setColor(color);
-		// g.onGui().fillCircle(x / 16, y / 16, SIZE);
 	}
 }

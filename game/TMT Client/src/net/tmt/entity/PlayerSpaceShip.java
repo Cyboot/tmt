@@ -68,7 +68,7 @@ public class PlayerSpaceShip extends Entity2D {
 
 
 		// shoot LaserShoot
-		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.FIRE)) {
+		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.SHIP_FIRE)) {
 			timerShoot.reset();
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor,
 					this));
@@ -83,15 +83,15 @@ public class PlayerSpaceShip extends Entity2D {
 			dispatchValue(ShieldComponent.SET_ACTIVE, false);
 
 		// default speed
-		if (Controls.pressed(Controls.UP))
+		if (Controls.pressed(Controls.SHIP_BACK_SLOW_ACCL))
 			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
-		if (Controls.pressed(Controls.DOWN))
+		if (Controls.pressed(Controls.SHIP_BACK_SLOW_DEACCL))
 			dispatchValue(AcceleratingComponent.IS_DEACCELERATING, true);
 
 		// rotating
-		if (Controls.pressed(Controls.LEFT))
+		if (Controls.pressed(Controls.SHIP_ROTATE_LEFT))
 			dispatchValue(RotateComponent.IS_ROTATE_LEFT, true);
-		if (Controls.pressed(Controls.RIGHT))
+		if (Controls.pressed(Controls.SHIP_ROTATE_RIGHT))
 			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
 
 		// extra speed

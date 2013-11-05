@@ -13,8 +13,6 @@ import net.tmt.gamestate.SimulatorGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
 
-import org.lwjgl.input.Keyboard;
-
 /**
  * Manages the Gamestates. (pause/resume, active/inactive/background Gamestates)
  * 
@@ -60,45 +58,6 @@ public class GameManager implements Updateable, Renderable {
 			a.update(delta);
 
 		guiManager.update(delta);
-
-		debugSwitchGamestes();
-	}
-
-	/**
-	 * DEBUG: switch gamestates via F-Keys
-	 */
-	private void debugSwitchGamestes() {
-		// background if right CTRL is additonally pressed (pause otherwise)
-		boolean backgroundGamestate = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL);
-
-		boolean f1_down = Keyboard.isKeyDown(Keyboard.KEY_F1);
-		boolean f2_down = Keyboard.isKeyDown(Keyboard.KEY_F2);
-		boolean f3_down = Keyboard.isKeyDown(Keyboard.KEY_F3);
-		boolean f4_down = Keyboard.isKeyDown(Keyboard.KEY_F4);
-		boolean f5_down = Keyboard.isKeyDown(Keyboard.KEY_F5);
-
-		Class<? extends AbstractGamestate> clazz = null;
-
-		// start the gamestate according to the pressed F-Key
-		if (f1_down || f2_down || f3_down || f4_down || f5_down) {
-			if (backgroundGamestate)
-				background(getActiveGamestate());
-			else
-				pause(getActiveGamestate());
-
-			if (f1_down)
-				clazz = SpaceGamestate.class;
-			if (f2_down)
-				clazz = SimulatorGamestate.class;
-			if (f3_down)
-				clazz = PlanetGamestate.class;
-			if (f4_down)
-				clazz = EconomyGamestate.class;
-			if (f5_down)
-				clazz = DummyGamestate.class;
-
-			resume(clazz);
-		}
 	}
 
 	/**

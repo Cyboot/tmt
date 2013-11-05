@@ -6,7 +6,14 @@ import java.util.List;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
-public class CompositeElement extends GuiElement {
+/**
+ * An GuiElement that contains other elements. use
+ * {@link ContainerElement#addGuiElement(GuiElement)} to add other elements
+ * relative to the container
+ * 
+ * @author Tim Schmiedl (Cyboot)
+ */
+public class ContainerElement extends GuiElement {
 	public static final double	DEFAULT_PADDING	= 4;
 
 	private double				paddingLeft		= DEFAULT_PADDING;
@@ -14,7 +21,7 @@ public class CompositeElement extends GuiElement {
 
 	protected List<GuiElement>	guiElementList	= new ArrayList<>();
 
-	public CompositeElement(final Vector2d pos, final double width, final double height) {
+	public ContainerElement(final Vector2d pos, final double width, final double height) {
 		super(pos, width, height);
 	}
 
@@ -33,6 +40,12 @@ public class CompositeElement extends GuiElement {
 		}
 	}
 
+	/**
+	 * adds the given GuiElement to the container. Position of the guiElement is
+	 * relative to the container
+	 * 
+	 * @param guiElement
+	 */
 	public void addGuiElement(final GuiElement guiElement) {
 		guiElementList.add(guiElement);
 

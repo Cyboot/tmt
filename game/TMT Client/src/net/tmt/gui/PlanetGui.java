@@ -9,7 +9,7 @@ public class PlanetGui extends Gui {
 
 	@Override
 	public void update(final double delta) {
-
+		gameStateToolbar.update(delta);
 	}
 
 	@Override
@@ -25,9 +25,6 @@ public class PlanetGui extends Gui {
 
 		// minimap
 		g.onGui().drawRect(width * 0.85f, 0, width * 0.15f, height * 0.25f);
-
-		// sidebar
-		g.onGui().drawRect(0, height * 0.15f, width * 0.04f, height * 0.5f);
 
 		// missions
 		g.onGui().drawRect(width * 0.85f, height * 0.3f, width * 0.15f, height * 0.4f);
@@ -49,5 +46,7 @@ public class PlanetGui extends Gui {
 
 		// information window
 		g.onGui().drawRect(width * 0.75f, height * 0.75f, width * 0.25f, height * 0.25f);
+
+		gameStateToolbar.render(g);
 	}
 }

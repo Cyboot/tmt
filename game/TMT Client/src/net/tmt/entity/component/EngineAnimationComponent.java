@@ -45,17 +45,6 @@ public class EngineAnimationComponent extends Component {
 		}
 	}
 
-	@Override
-	public void render(final ComponentDispatcher caller, final Graphics g) {
-		if (caller.isSet(ENGINE_ACTIVE) && !(boolean) caller.getValue(ENGINE_ACTIVE))
-			return;
-
-		// FIXME: quick & very dirty: how to set Rotation_angle to other
-		// entities and avoid it to be overridden by other Components
-		mainGlow.dispatchValue(ROTATION_ANGLE, caller.getValue(ROTATION_ANGLE));
-		mainGlow.render(g);
-	}
-
 	private void createMainGlow(final ComponentDispatcher caller) {
 		Glows.reset();
 		Glows.glowTimer = 0.8;
@@ -66,5 +55,16 @@ public class EngineAnimationComponent extends Component {
 
 		mainGlow = Glows.get(pos);
 		mainGlow.addComponent(new ExtraOffsetComponent(new Vector2d(1, 24)));
+	}
+
+	@Override
+	public void render(final ComponentDispatcher caller, final Graphics g) {
+		if (caller.isSet(ENGINE_ACTIVE) && !(boolean) caller.getValue(ENGINE_ACTIVE))
+			return;
+
+		// FIXME: quick & very dirty: how to set Rotation_angle to other
+		// entities and avoid it to be overridden by other Components
+		mainGlow.dispatchValue(ROTATION_ANGLE, caller.getValue(ROTATION_ANGLE));
+		mainGlow.render(g);
 	}
 }

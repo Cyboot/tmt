@@ -1,14 +1,13 @@
 package net.tmt.gui;
 
+import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.gui.elements.ToolTip;
-import net.tmt.map.World;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
 public class SpaceGui extends Gui {
@@ -25,10 +24,10 @@ public class SpaceGui extends Gui {
 	public void update(final double delta) {
 		updateRessource(delta);
 		updateMap(delta);
-		updateSideBar(delta);
 		updateMissions(delta);
 		updateLog(delta);
 		updateInfoWindow(delta);
+		gameStateToolbar.update(delta);
 	}
 
 	@Override
@@ -37,20 +36,17 @@ public class SpaceGui extends Gui {
 		renderRessource(g);
 		g.setColor(Color.CYAN);
 		renderMap(g);
-		renderSideBar(g);
 		renderMissions(g);
 		renderLog(g);
 		renderShipInfo(g);
 		renderInfoWindow(g);
+		gameStateToolbar.render(g);
 	}
 
 	private void updateRessource(final double delta) {
 	}
 
 	private void updateMap(final double delta) {
-	}
-
-	private void updateSideBar(final double delta) {
 	}
 
 	private void updateMissions(final double delta) {
@@ -72,11 +68,6 @@ public class SpaceGui extends Gui {
 
 	private void renderMap(final Graphics g) {
 		g.onGui().drawRect(width * 0.85, 0, width * 0.15, height * 0.25);
-
-	}
-
-	private void renderSideBar(final Graphics g) {
-		g.onGui().drawRect(0, height * 0.15, width * 0.04, height * 0.5);
 
 	}
 
@@ -121,8 +112,7 @@ public class SpaceGui extends Gui {
 
 		if (guiManager.isSet(GUI_HOVER)) {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, (String) guiManager.getValue(GUI_HOVER));
-			ToolTip tmp = new ToolTip(Vector2d.tmp1.set(Mouse.getX() + 10 + World.getInstance().getOffset().x,
-					GameEngine.HEIGHT - Mouse.getY() + World.getInstance().getOffset().y));
+			ToolTip tmp = new ToolTip(Vector2d.tmp1.set(Controls.mouseX() + 10, Controls.mouseY()));
 			tmp.setText((String) guiManager.getValue(GUI_HOVER));
 			tmp.render(g);
 

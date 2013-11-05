@@ -3,7 +3,6 @@ package net.tmt.gamestate;
 import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.npc.NPCCargoShip;
 import net.tmt.entity.npc.NPCTransporterShip;
-import net.tmt.entity.particle.ParticleEmittorEntity;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
@@ -12,9 +11,9 @@ import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
-	private EntityManager		entityManager	= new EntityManager();
+	private EntityManager	entityManager	= new EntityManager();
 	private PlayerSpaceShip	player			= new PlayerSpaceShip();
-	private World				world;
+	private World			world;
 
 	public SpaceGamestate() {
 		// init World
@@ -30,12 +29,9 @@ public class SpaceGamestate extends AbstractGamestate {
 			entityManager.addEntity(new NPCCargoShip(new Vector2d(x, y)));
 		}
 		entityManager.addEntity(new NPCTransporterShip(new Vector2d(800, 200), NPCTransporterShip.TYPE_1));
-		entityManager.addEntity(new NPCTransporterShip(new Vector2d(500, 500), NPCTransporterShip.TYPE_2));
+		entityManager.addEntity(new NPCTransporterShip(new Vector2d(500, 700), NPCTransporterShip.TYPE_2));
 
 		entityManager.addEntity(player, EntityManager.LAYER_3_FRONT);
-
-		// DEBUG:
-		entityManager.addEntity(new ParticleEmittorEntity(new Vector2d(400, 200)));
 
 		onResume(-1);
 	}

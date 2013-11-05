@@ -5,7 +5,7 @@ import net.tmt.util.Vector2d;
 
 import org.newdawn.slick.TrueTypeFont;
 
-public class TextView extends LeafElement {
+public class TextView extends GuiElement {
 
 	protected String		text;
 	protected String[]		textBlock;
@@ -45,7 +45,7 @@ public class TextView extends LeafElement {
 		super.render(g);
 		g.setFont(Graphics.Fonts.font_12);
 		for (int i = 0; i < textBlock.length; i++)
-			g.drawText(pos.x, pos.y + 12 * i, textBlock[i]);
+			g.onGui().drawText(pos.x, pos.y + font.getHeight() * i, textBlock[i]);
 	}
 
 	public void setMaxLineLength(final int maxLineLength) {

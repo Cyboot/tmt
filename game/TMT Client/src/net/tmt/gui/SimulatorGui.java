@@ -9,7 +9,7 @@ public class SimulatorGui extends Gui {
 
 	@Override
 	public void update(final double delta) {
-
+		gameStateToolbar.update(delta);
 	}
 
 	@Override
@@ -34,5 +34,7 @@ public class SimulatorGui extends Gui {
 
 		// right
 		g.onGui().fillRect(width / 8 * 6, height / 2 - height / 64, width / 8, height / 128);
+
+		gameStateToolbar.render(g);
 	}
 }

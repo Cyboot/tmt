@@ -1,13 +1,12 @@
 package net.tmt.entity.component;
 
-import net.tmt.game.GameEngine;
+import net.tmt.game.Controls;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.Gui;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
 public class OnHoverComponent extends Component {
@@ -16,7 +15,7 @@ public class OnHoverComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
-		Vector2d mouse2d = Vector2d.tmp1.set(Mouse.getX(), GameEngine.HEIGHT - Mouse.getY());
+		Vector2d mouse2d = Vector2d.tmp1.set(Controls.mouseX(), Controls.mouseY());
 		Vector2d shipAbsolut2d = Vector2d.tmp2.set(pos.x - World.getInstance().getOffset().x, pos.y
 				- World.getInstance().getOffset().y);
 

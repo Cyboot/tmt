@@ -39,6 +39,7 @@ public class GameEngine {
 		while (!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			fps.updateBefore();
 			DebugUtil.update();
+			Controls.update();
 
 			long delta = fps.getDelta();
 

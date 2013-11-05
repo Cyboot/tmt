@@ -68,44 +68,39 @@ public abstract class ParticleFactory {
 	}
 
 	public static class SmokesClass extends ParticleFactory {
+		// TODO: ParticleFactory (Smoke)
 
 		@Override
 		public Particle getDefault(final Vector2d pos) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Particle get(final Vector2d pos) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public void reset() {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
 
 	public static class SolidsClass extends ParticleFactory {
+		// TODO: ParticleFactory (Solid)
 
 		@Override
 		public Particle getDefault(final Vector2d pos) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Particle get(final Vector2d pos) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public void reset() {
-			// TODO Auto-generated method stub
 
 		}
 	}

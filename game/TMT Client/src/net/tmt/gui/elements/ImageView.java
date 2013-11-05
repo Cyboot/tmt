@@ -11,7 +11,7 @@ public class ImageView extends GuiElement {
 
 	public ImageView(final Vector2d pos, final Sprite img) {
 		super(pos, img.getWidth(), img.getHeight());
-		this.img = img;
+		this.img = img.setCentered(false);
 	}
 
 	@Override
@@ -22,6 +22,7 @@ public class ImageView extends GuiElement {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
+		g.onGui().drawRect(pos.x, pos.y, 64, 64);
 		g.onGui().drawSprite(pos, img);
 	}
 

@@ -3,6 +3,7 @@ package net.tmt.entity;
 import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
+import net.tmt.entity.component.KillAnimationComponent;
 import net.tmt.entity.component.RenderComponent;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
@@ -11,14 +12,15 @@ import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
 public abstract class Entity2D implements Renderable {
-	private static long			currentID		= 1;
+	private static long			currentID			= 1;
 	private long				id;
-	private boolean				isAlive			= true;
-	private boolean				isCollisable	= false;
+	private boolean				isAlive				= true;
+	private boolean				isCollisable		= false;
+	private boolean				hasOnKillComponent	= false;
 	protected Vector2d			pos;
 	protected Entity2D			owner;
 
-	private ComponentDispatcher	compDispatcher	= new ComponentDispatcher(this);
+	private ComponentDispatcher	compDispatcher		= new ComponentDispatcher(this);
 
 	public Entity2D(final Vector2d pos) {
 		id = currentID++;
@@ -37,12 +39,18 @@ public abstract class Entity2D implements Renderable {
 	public void addComponent(final Component component) {
 		if (component instanceof CollisionComponent)
 			isCollisable = true;
+		if (component instanceof KillAnimationComponent)
+			hasOnKillComponent = true;
 
 		compDispatcher.addComponent(component);
 	}
 
-	protected Object getValue(final String name) {
-		return compDispatcher.getValue(name);
+	public Object getValue(final String key) {
+		return compDispatcher.getValue(key);
+	}
+
+	protected boolean isSet(final String key) {
+		return compDispatcher.isSet(key);
 	}
 
 	@Override
@@ -56,6 +64,9 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	protected void onKilled() {
+		if (hasOnKillComponent) {
+			compDispatcher.onKilled();
+		}
 	}
 
 	public boolean isAlive() {
@@ -72,6 +83,7 @@ public abstract class Entity2D implements Renderable {
 	protected void removeAllComponents() {
 		compDispatcher = new ComponentDispatcher(this);
 		isCollisable = false;
+		hasOnKillComponent = false;
 	}
 
 	public void setSprite(final Sprite sprite) {

@@ -1,8 +1,9 @@
 package net.tmt.entity;
 
+import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.DecayComponent;
 import net.tmt.entity.component.MoveComponent;
-import net.tmt.entity.component.util.ComponentFactory;
+import net.tmt.entity.component.SimpleHealthComponent;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
@@ -23,7 +24,9 @@ public class LaserShoot extends Entity2D {
 
 		addComponent(new MoveComponent(speed, roation));
 		addComponent(new DecayComponent(lifetime));
-		ComponentFactory.addDefaultCollision(this, 8, 1, owner);
+
+		addComponent(new CollisionComponent(8, owner));
+		addComponent(new SimpleHealthComponent(0.01, 25));
 	}
 
 	@Override

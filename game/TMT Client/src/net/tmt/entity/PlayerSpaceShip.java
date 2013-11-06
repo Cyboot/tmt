@@ -5,6 +5,7 @@ import net.tmt.entity.component.EngineAnimationComponent;
 import net.tmt.entity.component.JetTrailComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.OnHoverComponent;
+import net.tmt.entity.component.RocketLauncherComponent;
 import net.tmt.entity.component.RotateComponent;
 import net.tmt.entity.component.ShieldComponent;
 import net.tmt.entity.component.SimpleHealthComponent;
@@ -46,6 +47,7 @@ public class PlayerSpaceShip extends Entity2D {
 		addComponent(new OnHoverComponent());
 		addComponent(new JetTrailComponent());
 		addComponent(new TargetSearchComponent());
+		addComponent(new RocketLauncherComponent());
 
 		ComponentFactory.add3EngineAnimation(this, new Vector2d(1, 24), new Vector2d(-16, 20), new Vector2d(16, 20));
 		ComponentFactory.addDefaultCollision(this, 32, 1000000);
@@ -126,7 +128,9 @@ public class PlayerSpaceShip extends Entity2D {
 			dispatchValue(TargetSearchComponent.CHANGE_TARGET, true);
 		}
 		// DEBUG: kill target on right click
-		if (Controls.wasTyped(Controls.WEAPON_PRIMARY))
-			dispatchValue(TargetSearchComponent.KILL_TARGET, true);
+		if (Controls.wasTyped(Controls.WEAPON_PRIMARY)) {
+			dispatchValue(RocketLauncherComponent.LAUNCH_TYPE_1, true);
+			// dispatchValue(TargetSearchComponent.KILL_TARGET, true);
+		}
 	}
 }

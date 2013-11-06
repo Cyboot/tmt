@@ -6,9 +6,9 @@ public class Move2TargetComponent extends Component {
 	public static final String	SET_TARGET		= "SET_TARGET";
 	public static final String	TARGET_REACHED	= "TARGET_REACHED";
 
-	private static final double	MIN_DISTANCE	= 32;
 	private static double		MIN_ANGLE		= 5;
 
+	private double				minDistance		= 32;
 	private Vector2d			target_diff		= new Vector2d();
 	private Vector2d			target;
 	private double				rotationSpeed;
@@ -16,6 +16,10 @@ public class Move2TargetComponent extends Component {
 	private double				angleToTarget;
 
 	public Move2TargetComponent() {
+	}
+
+	public Move2TargetComponent(final double minDistance) {
+		this.minDistance = minDistance;
 	}
 
 	@Override
@@ -36,7 +40,7 @@ public class Move2TargetComponent extends Component {
 		}
 
 		// reached target
-		if (target != null && target.distanceTo(pos) < MIN_DISTANCE) {
+		if (target != null && target.distanceTo(pos) < minDistance) {
 			caller.dispatch(TARGET_REACHED, true);
 		} else {
 			caller.dispatch(TARGET_REACHED, false);
@@ -61,7 +65,5 @@ public class Move2TargetComponent extends Component {
 	public void initialDispatch(final ComponentDispatcher caller) {
 		super.initialDispatch(caller);
 		rotationSpeed = (double) caller.getValue(RotateComponent.ROTATION_SPEED);
-
-		caller.dispatch(TARGET_REACHED, true);
 	}
 }

@@ -3,7 +3,7 @@ package net.tmt.entity.component;
 import java.util.List;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.LaserShoot;
+import net.tmt.entity.npc.NPCSpaceShip;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Shape;
 import net.tmt.util.Vector2d;
@@ -12,7 +12,8 @@ import org.lwjgl.util.Color;
 
 public class TargetSearchComponent extends Component {
 	public static final String	CHANGE_TARGET	= "CHANGE_TARGET";
-	public static final String	KILL_TARGET		= "KILL_TARGET";
+	public static final String	TARGET			= "TARGET";
+	public static final String	IS_LOCKED		= "IS_LOCKED";
 
 	private Shape				shapeIn			= new Shape().setCentered(true);
 	private Shape				shapeOut		= new Shape().setCentered(true);
@@ -38,19 +39,19 @@ public class TargetSearchComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
+		isLocked = false;
 		if (target == null || caller.isSet(CHANGE_TARGET)) {
 			searchTarget(caller.getEntityManager().getCollidableEntities());
 		} else {
 			calcFocus(caller);
-
-			if (caller.isSet(KILL_TARGET) && isLocked)
-				target.kill();
 
 			if (!target.isAlive()) {
 				target = null;
 			}
 		}
 
+		caller.dispatch(IS_LOCKED, isLocked);
+		caller.dispatch(TARGET, target);
 		shapeIn.setScale(shapeScale);
 		shapeOut.setScale(shapeScale);
 	}
@@ -65,9 +66,9 @@ public class TargetSearchComponent extends Component {
 
 		colorOut = (Color) Color.YELLOW;
 		colorIn = (Color) Color.YELLOW;
-		if (diffAngle < 35)
+		if (diffAngle < 45)
 			colorOut = (Color) Color.RED;
-		if (diffAngle < 25) {
+		if (diffAngle < 30) {
 			isLocked = true;
 			colorIn = (Color) Color.RED;
 		}
@@ -79,7 +80,7 @@ public class TargetSearchComponent extends Component {
 		// find the nearest Entity and mark it as target
 		double minDist = Double.MAX_VALUE;
 		for (Entity2D e : entities) {
-			if (e == owner || e == previousTarget || e instanceof LaserShoot)
+			if (e == owner || e == previousTarget || !(e instanceof NPCSpaceShip))
 				continue;
 
 			double dist = e.getPos().distanceTo(owner.getPos());

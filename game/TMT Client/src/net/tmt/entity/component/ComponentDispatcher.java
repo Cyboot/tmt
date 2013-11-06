@@ -103,4 +103,14 @@ public class ComponentDispatcher implements Renderable, Dispatcher {
 		valueMap.remove(key);
 		dispatchMap.remove(key);
 	}
+
+	/**
+	 * calls {@link KillAnimationComponent#onKilled(ComponentDispatcher)}
+	 */
+	public void onKilled() {
+		for (Component c : components) {
+			if (c instanceof KillAnimationComponent)
+				((KillAnimationComponent) c).onKilled(this);
+		}
+	}
 }

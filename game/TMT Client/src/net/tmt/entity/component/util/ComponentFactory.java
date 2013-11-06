@@ -3,6 +3,7 @@ package net.tmt.entity.component.util;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.CollisionComponent;
 import net.tmt.entity.component.EngineAnimationComponent;
+import net.tmt.entity.component.KillAnimationComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.RotateComponent;
 import net.tmt.entity.component.SimpleHealthComponent;
@@ -26,7 +27,8 @@ public class ComponentFactory {
 	}
 
 	/**
-	 * Default Collision (CollisionComponent + SimpleHealthComponent)
+	 * Default Collision (CollisionComponent + SimpleHealthComponent +
+	 * KillAnimation)
 	 * 
 	 * @param entity
 	 * @param radius
@@ -37,6 +39,7 @@ public class ComponentFactory {
 			final Entity2D ignoredEntity) {
 		entity.addComponent(new CollisionComponent(radius, ignoredEntity));
 		entity.addComponent(new SimpleHealthComponent(health));
+		entity.addComponent(new KillAnimationComponent());
 	}
 
 	/**

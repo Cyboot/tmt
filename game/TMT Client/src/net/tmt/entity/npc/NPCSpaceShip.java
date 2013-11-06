@@ -9,7 +9,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
-abstract class NPCSpaceShip extends Entity2D {
+public abstract class NPCSpaceShip extends Entity2D {
 	private World		world	= World.getInstance();
 
 	protected double	speed;
@@ -27,6 +27,7 @@ abstract class NPCSpaceShip extends Entity2D {
 		addComponent(new OnHoverComponent());
 
 		ComponentFactory.addDefaultCollision(this, radius, 100);
+		dispatchValue(Move2TargetComponent.TARGET_REACHED, true);
 	}
 
 	@Override

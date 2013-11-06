@@ -1,6 +1,6 @@
 package net.tmt.util;
 
-import org.lwjgl.input.Keyboard;
+import net.tmt.game.Controls;
 
 public class DebugUtil {
 	public static final int	USER_MILOS		= 0;
@@ -26,13 +26,8 @@ public class DebugUtil {
 	}
 
 	public static void update() {
-		while (Keyboard.next()) {
-			boolean pressed = Keyboard.getEventKeyState();
-
-			if (Keyboard.getEventKey() == Keyboard.KEY_F9 && pressed) {
-				renderCollision = !renderCollision;
-			}
-		}
+		if (Controls.wasTyped(Controls.DEBUG_COLLISION))
+			renderCollision = !renderCollision;
 	}
 
 	public static boolean isTim() {

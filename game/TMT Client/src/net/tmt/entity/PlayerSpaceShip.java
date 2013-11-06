@@ -8,6 +8,7 @@ import net.tmt.entity.component.OnHoverComponent;
 import net.tmt.entity.component.RotateComponent;
 import net.tmt.entity.component.ShieldComponent;
 import net.tmt.entity.component.SimpleHealthComponent;
+import net.tmt.entity.component.TargetSearchComponent;
 import net.tmt.entity.component.util.ComponentFactory;
 import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
@@ -31,6 +32,8 @@ public class PlayerSpaceShip extends Entity2D {
 
 	private CountdownTimer	timerShoot		= CountdownTimer.createManuelResetTimer(0.2);
 	private ReadableColor	shootColor		= Color.RED;
+	private boolean			shieldToggle;
+	private boolean			mainEngineToggle;
 
 	public PlayerSpaceShip() {
 		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
@@ -42,6 +45,7 @@ public class PlayerSpaceShip extends Entity2D {
 
 		addComponent(new OnHoverComponent());
 		addComponent(new JetTrailComponent());
+		addComponent(new TargetSearchComponent());
 
 		ComponentFactory.add3EngineAnimation(this, new Vector2d(1, 24), new Vector2d(-16, 20), new Vector2d(16, 20));
 		ComponentFactory.addDefaultCollision(this, 32, 1000000);
@@ -77,10 +81,9 @@ public class PlayerSpaceShip extends Entity2D {
 
 	private void updateInput() {
 		// Shield
-		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL))
-			dispatchValue(ShieldComponent.SET_ACTIVE, true);
-		else
-			dispatchValue(ShieldComponent.SET_ACTIVE, false);
+		if (Controls.wasTyped(Controls.SHIP_SHIELD))
+			shieldToggle = !shieldToggle;
+		dispatchValue(ShieldComponent.SET_ACTIVE, shieldToggle);
 
 		dispatchValue(EngineAnimationComponent.ENGINE_1, false);
 		dispatchValue(EngineAnimationComponent.ENGINE_2, false);
@@ -107,12 +110,23 @@ public class PlayerSpaceShip extends Entity2D {
 		}
 
 		// extra speed
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+		if (Controls.wasTyped(Controls.SHIP_MAIN_ENGINE)) {
+			mainEngineToggle = !mainEngineToggle;
+		}
+		if (mainEngineToggle) {
 			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
 			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 8);
 			dispatchValue(EngineAnimationComponent.ENGINE_1, true);
 		} else {
 			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL);
 		}
+
+		// TargetSearch
+		if (Controls.wasTyped(Controls.CHANGE_TARGET)) {
+			dispatchValue(TargetSearchComponent.CHANGE_TARGET, true);
+		}
+		// DEBUG: kill target on right click
+		if (Controls.wasTyped(Controls.WEAPON_PRIMARY))
+			dispatchValue(TargetSearchComponent.KILL_TARGET, true);
 	}
 }

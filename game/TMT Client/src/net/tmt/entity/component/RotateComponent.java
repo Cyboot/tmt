@@ -29,7 +29,7 @@ public class RotateComponent extends Component {
 		if (caller.isSet(IS_ROTATE_RIGHT)) {
 			rotationAngle += rotationSpeed * delta;
 		}
-		rotationAngle %= 360;
+		rotationAngle = (rotationAngle + 360) % 360;
 
 		caller.dispatch(ROTATION_ANGLE, rotationAngle);
 	}

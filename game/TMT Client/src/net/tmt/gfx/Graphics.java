@@ -62,6 +62,33 @@ public class Graphics {
 		glPopMatrix();
 	}
 
+	public void drawShape(final Vector2d pos, final Shape shape) {
+		applyColor();
+
+		Vector2d shapeOffset = shape.getOffset();
+
+		glLineWidth(lineWidth);
+		glPushMatrix();
+		{
+			applyOffset();
+			glTranslated(pos.x, pos.y, 0);
+			glTranslated(-shapeOffset.x, -shapeOffset.y, 0);
+			glScaled(shape.getScale(), shape.getScale(), 1);
+			{
+				glBegin(GL_LINE_STRIP);
+				{
+					for (Vector2d v : shape.getPoints())
+						glVertex2d(v.x, v.y);
+
+					Vector2d last = shape.getFirstPoint();
+					glVertex2d(last.x, last.y);
+				}
+				glEnd();
+			}
+		}
+		glPopMatrix();
+	}
+
 	private void applyOffset() {
 		// ignore offset if onGui == true
 		if (!onGui)

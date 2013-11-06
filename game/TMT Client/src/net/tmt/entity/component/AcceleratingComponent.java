@@ -26,18 +26,23 @@ public class AcceleratingComponent extends Component {
 
 		if (caller.isSet(IS_ACCELERATING)) {
 			speed += accl * delta;
-		} else if (caller.isSet(IS_DEACCELERATING)) {
-			speed -= accl * delta;
+		} else if ((caller.isSet(RotateComponent.IS_ROTATE_LEFT) || caller.isSet(RotateComponent.IS_ROTATE_RIGHT))
+				&& speed < 50) {
+			double rotationSpeed = (double) caller.getValue(RotateComponent.ROTATION_SPEED);
+			speed += accl * rotationSpeed / 30 * delta;
 		} else {
+			if (caller.isSet(IS_DEACCELERATING))
+				speed -= accl * delta;
+
 			speed *= 1 - friction * delta;
+			if (Math.abs(speed) < MIN_SPEED) {
+				speed = 0;
+			}
 		}
 
 		if (speed > MAX_SPEED)
 			speed = MAX_SPEED;
 
-		if (Math.abs(speed) < MIN_SPEED && !caller.isSet(IS_ACCELERATING) && !caller.isSet(IS_DEACCELERATING)) {
-			speed = 0;
-		}
 
 		caller.dispatch(MoveComponent.SPEED, speed);
 	}

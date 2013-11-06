@@ -2,9 +2,11 @@ package net.tmt.entity.component.util;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.CollisionComponent;
+import net.tmt.entity.component.EngineAnimationComponent;
 import net.tmt.entity.component.MoveComponent;
 import net.tmt.entity.component.RotateComponent;
 import net.tmt.entity.component.SimpleHealthComponent;
+import net.tmt.util.Vector2d;
 
 public class ComponentFactory {
 
@@ -46,5 +48,23 @@ public class ComponentFactory {
 	 */
 	public static void addDefaultCollision(final Entity2D entity, final double radius, final double health) {
 		addDefaultCollision(entity, radius, health, null);
+	}
+
+
+	/**
+	 * Adds EngineAnmiation for MainEngine and Left and Right
+	 * 
+	 * @param entity
+	 * @param offsetEngineMain
+	 * @param offsetEngineRight
+	 * @param offsetEngineLeft
+	 */
+	public static void add3EngineAnimation(final Entity2D entity, final Vector2d offsetEngineMain,
+			final Vector2d offsetEngineRight, final Vector2d offsetEngineLeft) {
+		entity.addComponent(new EngineAnimationComponent(offsetEngineMain, true, 16, EngineAnimationComponent.ENGINE_1));
+		entity.addComponent(new EngineAnimationComponent(offsetEngineLeft, false, 12, EngineAnimationComponent.ENGINE_2));
+		entity.addComponent(new EngineAnimationComponent(offsetEngineRight, false, 12,
+				EngineAnimationComponent.ENGINE_3));
+
 	}
 }

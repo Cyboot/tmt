@@ -42,8 +42,8 @@ public class PlayerSpaceShip extends Entity2D {
 
 		addComponent(new OnHoverComponent());
 		addComponent(new JetTrailComponent());
-		addComponent(new EngineAnimationComponent());
 
+		ComponentFactory.add3EngineAnimation(this, new Vector2d(1, 24), new Vector2d(-16, 20), new Vector2d(16, 20));
 		ComponentFactory.addDefaultCollision(this, 32, 1000000);
 	}
 
@@ -82,26 +82,37 @@ public class PlayerSpaceShip extends Entity2D {
 		else
 			dispatchValue(ShieldComponent.SET_ACTIVE, false);
 
+		dispatchValue(EngineAnimationComponent.ENGINE_1, false);
+		dispatchValue(EngineAnimationComponent.ENGINE_2, false);
+		dispatchValue(EngineAnimationComponent.ENGINE_3, false);
+
 		// default speed
-		if (Controls.pressed(Controls.SHIP_BACK_SLOW_ACCL))
+		if (Controls.pressed(Controls.SHIP_BACK_SLOW_ACCL)) {
 			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
+			dispatchValue(EngineAnimationComponent.ENGINE_2, true);
+			dispatchValue(EngineAnimationComponent.ENGINE_3, true);
+		}
 		if (Controls.pressed(Controls.SHIP_BACK_SLOW_DEACCL))
 			dispatchValue(AcceleratingComponent.IS_DEACCELERATING, true);
 
+
 		// rotating
-		if (Controls.pressed(Controls.SHIP_ROTATE_LEFT))
+		if (Controls.pressed(Controls.SHIP_ROTATE_LEFT)) {
+			dispatchValue(EngineAnimationComponent.ENGINE_2, true);
 			dispatchValue(RotateComponent.IS_ROTATE_LEFT, true);
-		if (Controls.pressed(Controls.SHIP_ROTATE_RIGHT))
+		}
+		if (Controls.pressed(Controls.SHIP_ROTATE_RIGHT)) {
+			dispatchValue(EngineAnimationComponent.ENGINE_3, true);
 			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
+		}
 
 		// extra speed
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
 			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 8);
-			dispatchValue(EngineAnimationComponent.ENGINE_ACTIVE, true);
+			dispatchValue(EngineAnimationComponent.ENGINE_1, true);
 		} else {
 			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL);
-			dispatchValue(EngineAnimationComponent.ENGINE_ACTIVE, false);
 		}
 	}
 }

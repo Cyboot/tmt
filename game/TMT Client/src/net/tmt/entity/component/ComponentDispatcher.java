@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.component.animation.KillAnimationComponent;
+import net.tmt.entity.component.other.RenderComponent;
 import net.tmt.game.interfaces.Dispatcher;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
@@ -64,11 +66,11 @@ public class ComponentDispatcher implements Renderable, Dispatcher {
 		dispatchMap.remove(name);
 	}
 
-	protected Entity2D getOwner() {
+	public Entity2D getOwner() {
 		return owner;
 	}
 
-	protected EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return entityManager;
 	}
 

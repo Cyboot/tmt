@@ -3,11 +3,11 @@ package net.tmt.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.tmt.entity.BackgroundBody;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.PlayerSpaceShip;
-import net.tmt.entity.Star;
-import net.tmt.entity.Waypoint;
+import net.tmt.entity.statics.BackgroundBody;
+import net.tmt.entity.statics.Star;
+import net.tmt.entity.statics.Waypoint;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;

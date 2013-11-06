@@ -1,6 +1,6 @@
 package net.tmt.entity.npc;
 
-import net.tmt.entity.component.ShieldComponent;
+import net.tmt.entity.component.other.ShieldComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.CountdownTimer;

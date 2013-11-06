@@ -1,7 +1,7 @@
 package net.tmt.map.generator;
 
+import net.tmt.entity.statics.Planet;
 import net.tmt.map.Chunk;
-import net.tmt.map.Planet;
 import net.tmt.util.Vector2d;
 
 public class VoidChunkFormer {

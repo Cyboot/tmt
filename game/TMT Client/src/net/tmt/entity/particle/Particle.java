@@ -1,8 +1,8 @@
 package net.tmt.entity.particle;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.DecayComponent;
-import net.tmt.entity.component.util.ComponentFactory;
+import net.tmt.entity.component.other.DecayComponent;
+import net.tmt.game.factory.ComponentFactory;
 import net.tmt.util.Vector2d;
 
 public class Particle extends Entity2D {

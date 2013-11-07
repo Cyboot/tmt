@@ -39,7 +39,7 @@ public class EngineAnimationComponent extends Component {
 	public void update(final ComponentDispatcher caller, final double delta) {
 		if (mainGlow == null)
 			createMainGlow(caller);
-		mainGlow.dispatchValue(ROTATION_ANGLE, caller.getValue(ROTATION_ANGLE));
+		mainGlow.dispatchValue(ROTATION_ANGLE_MOVE, caller.getValue(ROTATION_ANGLE_MOVE));
 		mainGlow.update(caller.getEntityManager(), delta);
 
 		if (caller.isSet(engineNr) && !(boolean) caller.getValue(engineNr))
@@ -48,7 +48,7 @@ public class EngineAnimationComponent extends Component {
 
 		if (timerSpawn.isTimeleft(delta) && spawnSparks) {
 			double speed = (double) caller.getValue(MoveComponent.SPEED);
-			double rotation = (double) caller.getValue(ROTATION_ANGLE);
+			double rotation = (double) caller.getValue(ROTATION_ANGLE_MOVE);
 			Vector2d dir = ((Vector2d) caller.getValue(MoveComponent.DIR)).copy().normalize();
 
 			Sparks.reset();
@@ -82,7 +82,7 @@ public class EngineAnimationComponent extends Component {
 
 		// FIXME: quick & very dirty: how to set Rotation_angle to other
 		// entities and avoid it to be overridden by other Components
-		mainGlow.dispatchValue(ROTATION_ANGLE, caller.getValue(ROTATION_ANGLE));
+		mainGlow.dispatchValue(ROTATION_ANGLE_MOVE, caller.getValue(ROTATION_ANGLE_MOVE));
 		mainGlow.render(g);
 	}
 }

@@ -33,8 +33,8 @@ public class Spark extends Particle {
 
 		// a little random direction change to make it appear more natural
 		if (Math.random() > 0.85)
-			dispatchValue(Component.ROTATION_ANGLE,
-					(double) getValue(Component.ROTATION_ANGLE) + RandomUtil.intRange(-20, 20));
+			dispatchValue(Component.ROTATION_ANGLE_MOVE,
+					(double) getValue(Component.ROTATION_ANGLE_MOVE) + RandomUtil.intRange(-20, 20));
 	}
 
 	@Override

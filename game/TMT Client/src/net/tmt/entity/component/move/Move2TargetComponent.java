@@ -2,6 +2,7 @@ package net.tmt.entity.component.move;
 
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
+import net.tmt.util.MathUtil;
 import net.tmt.util.Vector2d;
 
 public class Move2TargetComponent extends Component {
@@ -13,7 +14,6 @@ public class Move2TargetComponent extends Component {
 	private double				minDistance		= 32;
 	private Vector2d			target_diff		= new Vector2d();
 	private Vector2d			target;
-	private double				rotationSpeed;
 	private double				rotation;
 	private double				angleToTarget;
 
@@ -37,8 +37,8 @@ public class Move2TargetComponent extends Component {
 			angleToTarget %= 360;
 		}
 
-		if (caller.isSet(ROTATION_ANGLE)) {
-			rotation = (double) caller.getValue(ROTATION_ANGLE);
+		if (caller.isSet(ROTATION_ANGLE_MOVE)) {
+			rotation = (double) caller.getValue(ROTATION_ANGLE_MOVE);
 		}
 
 		// reached target
@@ -48,24 +48,24 @@ public class Move2TargetComponent extends Component {
 			caller.dispatch(TARGET_REACHED, false);
 		}
 
+		caller.dispatch(RotateComponent.IS_ROTATE_LEFT, false);
+		caller.dispatch(RotateComponent.IS_ROTATE_RIGHT, false);
 
 		// Rotation to target is bigget than Min_Angle --> rotateToTarget
 		if (Math.abs(angleToTarget) > MIN_ANGLE) {
-			int neg = angleToTarget > 180 ? -1 : 1;
 
-			rotation += neg * rotationSpeed * delta;
-			caller.dispatch(ROTATION_ANGLE, rotation);
+			if (MathUtil.nearestAngle(rotation, Math.toDegrees(target_diff.getRotation())) == -1)
+				caller.dispatch(RotateComponent.IS_ROTATE_LEFT, true);
+			else
+				caller.dispatch(RotateComponent.IS_ROTATE_RIGHT, true);
+
+			// rotation += neg * rotationSpeed * delta;
+			// caller.dispatch(ROTATION_ANGLE_MOVE, rotation);
 		}
 	}
 
 	private Vector2d getTargetDiff() {
 		target_diff.set(target);
 		return target_diff.sub(pos);
-	}
-
-	@Override
-	public void initialDispatch(final ComponentDispatcher caller) {
-		super.initialDispatch(caller);
-		rotationSpeed = (double) caller.getValue(RotateComponent.ROTATION_SPEED);
 	}
 }

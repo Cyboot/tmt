@@ -17,7 +17,7 @@ public class ExtraOffsetComponent extends Component {
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		Vector2d translate = Vector2d.tmp1.set(offset);
-		double rotation = (double) caller.getValue(ROTATION_ANGLE);
+		double rotation = (double) caller.getValue(ROTATION_ANGLE_MOVE);
 		translate.rotate(Math.toRadians(rotation));
 
 		offsetPos.x = pos.x + translate.x;

@@ -29,7 +29,7 @@ public class Smoke extends Particle {
 			sprite = new Sprite("smoke_64", 32, 32);
 
 		addComponent(new GlowComponent(PRIM_COLOR, SEC_COLOR, 3));
-		dispatchValue(Component.ROTATION_ANGLE, RandomUtil.doubleRange(0, 360));
+		dispatchValue(Component.ROTATION_ANGLE_MOVE, RandomUtil.doubleRange(0, 360));
 
 		reverseRotation = Math.random() > 0.5 ? 1 : -1;
 	}
@@ -38,14 +38,14 @@ public class Smoke extends Particle {
 	public void update(final EntityManager caller, final double delta) {
 		super.update(caller, delta);
 
-		dispatchValue(Component.ROTATION_ANGLE, (double) getValue(Component.ROTATION_ANGLE) + rotationSpeed * delta
+		dispatchValue(Component.ROTATION_ANGLE_MOVE, (double) getValue(Component.ROTATION_ANGLE_MOVE) + rotationSpeed * delta
 				* reverseRotation);
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		sprite.setBlendColor((Color) getValue(RenderComponent.BLEND_COLOR));
-		sprite.setRotation((double) getValue(Component.ROTATION_ANGLE));
+		sprite.setRotation((double) getValue(Component.ROTATION_ANGLE_MOVE));
 
 		g.drawSprite(pos, sprite);
 	}

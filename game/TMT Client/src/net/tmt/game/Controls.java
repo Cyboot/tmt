@@ -17,14 +17,15 @@ public class Controls {
 	public static final int					MOUSE_RIGHT				= 1 + MOUSE_KEYVALUE_OFFSET;
 	public static final int					MOUSE_MIDDLE			= 2 + MOUSE_KEYVALUE_OFFSET;
 
-	public static final int					SHIP_MAIN_ENGINE		= KEY_LSHIFT;
+	public static final int					SHIP_MAIN_ENGINE		= KEY_Q;
 	public static final int					SHIP_ROTATE_LEFT		= KEY_A;
 	public static final int					SHIP_ROTATE_RIGHT		= KEY_D;
 	public static final int					SHIP_BACK_SLOW_ACCL		= KEY_W;
 	public static final int					SHIP_BACK_SLOW_DEACCL	= KEY_S;
 
+	public static final int					SHIP_FAST_ROTATE		= KEY_LSHIFT;
 	public static final int					SHIP_FIRE				= KEY_SPACE;
-	public static final int					SHIP_SHIELD				= KEY_Q;
+	public static final int					SHIP_SHIELD				= KEY_E;
 	public static final int					CHANGE_TARGET			= KEY_LEFT;
 	public static final int					WEAPON_PRIMARY			= KEY_RIGHT;
 

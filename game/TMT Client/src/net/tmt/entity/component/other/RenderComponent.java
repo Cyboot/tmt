@@ -2,6 +2,7 @@ package net.tmt.entity.component.other;
 
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
+import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
@@ -26,8 +27,9 @@ public class RenderComponent extends Component {
 	public void render(final ComponentDispatcher caller, final Graphics g) {
 		super.render(caller, g);
 
-		if (caller.isSet(ROTATION_ANGLE))
-			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE));
+		if (caller.isSet(RotateComponent.ROTATION_ANGLE_MOVE)) {
+			sprite.setRotation((double) caller.getValue(RotateComponent.ROTATION_ANGLE_MOVE));
+		}
 
 		if (sprite != null) {
 			if (caller.isSet(BLEND_COLOR))

@@ -1,5 +1,6 @@
 package net.tmt.util;
 
+
 public class Rectangle {
 	private double	x;
 	private double	y;
@@ -21,6 +22,26 @@ public class Rectangle {
 	 */
 	public boolean contains(final Vector2d point) {
 		return contains(point.x, point.y);
+	}
+
+	/**
+	 * calculates if the rectangle intersects with a circle
+	 * 
+	 * @param center
+	 *            center Point of the circle
+	 * @param radius
+	 * @return
+	 */
+	public boolean intersectsCircle(final Vector2d center, final double radius) {
+		// closestX in range: x..(x+width)
+		double closestX = Math.max(x, Math.min(center.x, x + width));
+		double closestY = Math.max(y, Math.min(center.y, y + height));
+
+		double distanceX = center.x - closestX;
+		double distanceY = center.y - closestY;
+
+		double distanceSquared = distanceX * distanceX + distanceY * distanceY;
+		return distanceSquared < (radius * radius);
 	}
 
 	/**

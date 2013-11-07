@@ -30,7 +30,7 @@ import org.lwjgl.util.ReadableColor;
 public class PlayerSpaceShip extends Entity2D {
 	private static double	ACCL			= 50;
 	private static double	FRICTION		= 0.4;
-	private static double	ROTATION_SPEED	= 180;
+	private static double	ROTATION_SPEED	= 90;
 
 	private CountdownTimer	timerShoot		= CountdownTimer.createManuelResetTimer(0.2);
 	private ReadableColor	shootColor		= Color.RED;
@@ -77,8 +77,8 @@ public class PlayerSpaceShip extends Entity2D {
 		// shoot LaserShoot
 		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.SHIP_FIRE)) {
 			timerShoot.reset();
-			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE), shootColor,
-					this));
+			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_MOVE),
+					shootColor, this));
 		}
 	}
 
@@ -111,6 +111,9 @@ public class PlayerSpaceShip extends Entity2D {
 			dispatchValue(EngineAnimationComponent.ENGINE_3, true);
 			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
 		}
+		if (Controls.pressed(Controls.SHIP_FAST_ROTATE))
+			dispatchValue(RotateComponent.FAST_ROTATE, true);
+
 
 		// extra speed
 		if (Controls.wasTyped(Controls.SHIP_MAIN_ENGINE)) {

@@ -23,7 +23,7 @@ public class SpaceGamestate extends AbstractGamestate {
 		world.setPlayer(player);
 
 		// add default Entities
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 20; i++) {
 			double x = RandomUtil.doubleRange(-1000, 2000);
 			double y = RandomUtil.doubleRange(-1000, 2000);
 			entityManager.addEntity(new NPCCargoShip(new Vector2d(x, y)));

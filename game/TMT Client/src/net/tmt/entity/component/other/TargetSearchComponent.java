@@ -61,7 +61,7 @@ public class TargetSearchComponent extends Component {
 	private void calcFocus(final ComponentDispatcher caller) {
 		Vector2d diff = Vector2d.tmp1.set(pos).sub(target.getPos());
 		double targetAngle = (Math.toDegrees(diff.getRotation()) + 180) % 360;
-		double rotationAngle = (double) caller.getValue(ROTATION_ANGLE);
+		double rotationAngle = (double) caller.getValue(ROTATION_ANGLE_MOVE);
 		diffAngle = Math.abs(targetAngle - rotationAngle);
 		if (diffAngle > 180)
 			diffAngle = 360 - diffAngle;

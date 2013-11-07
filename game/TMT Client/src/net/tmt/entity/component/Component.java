@@ -7,7 +7,7 @@ import net.tmt.util.Vector2d;
 public abstract class Component {
 	protected Entity2D		owner;
 	protected Vector2d		pos;
-	public static String	ROTATION_ANGLE	= "ROTATION_ANGLE";
+	public static String	ROTATION_ANGLE_MOVE	= "ROTATION_ANGLE_MOVE";
 
 	public void update(final ComponentDispatcher caller, final double delta) {
 	}

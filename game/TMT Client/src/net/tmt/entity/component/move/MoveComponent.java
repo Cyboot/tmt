@@ -32,8 +32,8 @@ public class MoveComponent extends Component {
 		if (caller.isSet(SPEED)) {
 			speed = (double) caller.getValue(SPEED);
 		}
-		if (caller.isSet(ROTATION_ANGLE)) {
-			rotationAngle = (double) caller.getValue(ROTATION_ANGLE);
+		if (caller.isSet(RotateComponent.ROTATION_ANGLE_FAST)) {
+			rotationAngle = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_FAST);
 		}
 
 		dir.x = Math.sin(Math.toRadians(rotationAngle)) * speed * delta;

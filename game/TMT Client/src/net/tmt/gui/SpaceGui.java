@@ -22,62 +22,41 @@ public class SpaceGui extends Gui {
 
 	@Override
 	public void update(final double delta) {
-		updateRessource(delta);
-		updateMap(delta);
-		updateMissions(delta);
-		updateLog(delta);
-		updateInfoWindow(delta);
 		gameStateToolbar.update(delta);
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(Color.CYAN);
-		renderRessource(g);
-		g.setColor(Color.CYAN);
-		renderMap(g);
 		renderMissions(g);
-		renderLog(g);
+		renderMap(g);
 		renderShipInfo(g);
 		renderInfoWindow(g);
 		gameStateToolbar.render(g);
 	}
 
-	private void updateRessource(final double delta) {
-	}
+	private void renderMissions(final Graphics g) {
+		double leftX = width * 0.8;
+		double widthElement = width - leftX;
+		double heightElement = height * 0.35;
+		double padding = 4;
 
-	private void updateMap(final double delta) {
-	}
-
-	private void updateMissions(final double delta) {
-	}
-
-	private void updateLog(final double delta) {
-	}
-
-	private void updateInfoWindow(final double delta) {
-	}
-
-
-	private void renderRessource(final Graphics g) {
-		g.setLineWidth(2);
-		g.onGui().drawRect(0, 0, width * 0.3, height * 0.05);
-		g.setColor(Color.WHITE);
-		g.onGui().drawText(0, 0, "test");
+		g.onGui().drawText(leftX + padding, 0, "Mission");
+		g.onGui().drawRect(leftX, 0, widthElement, heightElement);
 	}
 
 	private void renderMap(final Graphics g) {
-		g.onGui().drawRect(width * 0.85, 0, width * 0.15, height * 0.25);
+		double topY = height * 0.71;
+		double heightTab = 20;
+		double widthTab = 50;
+		double padding = 4;
 
-	}
+		g.onGui().drawRect(0 * widthTab, topY, widthTab, heightTab);
+		g.onGui().drawText(0 * widthTab + padding, topY + padding, "Map");
 
-	private void renderMissions(final Graphics g) {
-		g.onGui().drawRect(width * 0.85, height * 0.3, width * 0.15, height * 0.4);
-	}
-
-	private void renderLog(final Graphics g) {
-		g.onGui().drawRect(0, height * 0.71, width * 0.05, height * 0.04);
-		g.onGui().drawRect(0, height * 0.75, width * 0.25, height * 0.25);
+		g.onGui().drawRect(1 * widthTab, topY, widthTab, heightTab);
+		g.onGui().drawText(1 * widthTab + padding, topY + padding, "Chat");
+		g.onGui().drawRect(0, topY + heightTab, width * 0.25, height - topY - heightTab);
 
 	}
 
@@ -110,15 +89,14 @@ public class SpaceGui extends Gui {
 	private void renderInfoWindow(final Graphics g) {
 		g.onGui().drawRect(width * 0.75, height * 0.75, width * 0.25, height * 0.25);
 
+
 		if (guiManager.isSet(GUI_HOVER)) {
-			g.onGui().drawText(width * 0.75 + 5, height * 0.75, (String) guiManager.getValue(GUI_HOVER));
-			ToolTip tmp = new ToolTip(Vector2d.tmp1.set(Controls.mouseX() + 10, Controls.mouseY()));
-			tmp.setText((String) guiManager.getValue(GUI_HOVER));
+			String text = (String) guiManager.getValue(GUI_HOVER);
+			g.onGui().drawText(width * 0.75 + 5, height * 0.75, text);
+			ToolTip tmp = new ToolTip(Vector2d.tmp1.set(Controls.mouseX() + 10, Controls.mouseY()), text);
 			tmp.render(g);
-
-
 		} else {
-			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "overwrite");
+			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "InfoView");
 		}
 		guiManager.remove(GUI_HOVER);
 	}

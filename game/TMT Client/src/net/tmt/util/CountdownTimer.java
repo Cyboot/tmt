@@ -62,6 +62,10 @@ public class CountdownTimer {
 		return false;
 	}
 
+	public void setTimer(final double timer) {
+		this.timer = timer;
+	}
+
 	/**
 	 * resets the timer manually
 	 */

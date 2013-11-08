@@ -4,6 +4,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
 import net.tmt.entity.weapons.TargetRocket;
+import net.tmt.global.achievments.Achievments;
 
 public class RocketLauncherComponent extends Component {
 	public static final String	LAUNCH_TYPE_1	= "LAUNCH_TYPE_1";
@@ -20,8 +21,8 @@ public class RocketLauncherComponent extends Component {
 			Entity2D target = (Entity2D) caller.getValue(TargetSearchComponent.TARGET);
 
 			double rotation = (double) caller.getValue(ROTATION_ANGLE_LOOK);
-			System.out.println(rotation);
 			caller.getEntityManager().addEntity(new TargetRocket(owner.getPos().copy(), rotation, target, owner));
+			Achievments.achiev(Achievments.Space.FIRE_ROCKET);
 		}
 	}
 }

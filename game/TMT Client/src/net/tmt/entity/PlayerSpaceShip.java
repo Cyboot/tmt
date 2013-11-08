@@ -17,6 +17,8 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.global.achievments.Achievments;
+import net.tmt.global.stats.Stats;
 import net.tmt.gui.SpaceGui;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
@@ -59,10 +61,20 @@ public class PlayerSpaceShip extends Entity2D {
 		updateInput();
 		updateShoot(caller, delta);
 
+		updateStats(delta);
 
 		super.update(caller, delta);
 		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_HEALTH, getValue(SimpleHealthComponent.HEALTH));
 		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_SPEED, getValue(MoveComponent.SPEED));
+	}
+
+	private void updateStats(final double delta) {
+		double speed = (double) getValue(MoveComponent.SPEED);
+
+		if (speed > 500)
+			Achievments.achiev(Achievments.Space.SPEED_500);
+
+		Stats.add(Stats.Space.DISTANCE_TRAVELLED, speed * delta);
 	}
 
 	private void updateShoot(final EntityManager caller, final double delta) {
@@ -79,6 +91,8 @@ public class PlayerSpaceShip extends Entity2D {
 			timerShoot.reset();
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					shootColor, this));
+			Stats.add(Stats.Space.SHOOTS_FIRED, 1);
+			Achievments.achiev(Achievments.Space.FIRE_10_LASER);
 		}
 	}
 

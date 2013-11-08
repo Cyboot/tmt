@@ -10,6 +10,7 @@ import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.global.stats.Stats;
 import net.tmt.util.ConfigUtil;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.DebugUtil;
@@ -106,6 +107,7 @@ public class GameEngine {
 		graphics = Graphics.init();
 
 		gameManager = GameManager.init();
+		Stats.init();
 
 		try {
 			DebugUtil.setUser(ConfigUtil.getString("debug.User"));

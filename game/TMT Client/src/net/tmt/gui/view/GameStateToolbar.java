@@ -31,8 +31,7 @@ public class GameStateToolbar extends ContainerElement implements ClickListener 
 	}
 
 	private void addButton(final Button button) {
-		button.setBackgroundColor(new Color(0, 0, 0, 0));
-		button.setBorderColor(new Color(0, 0, 0, 0));
+		button.noBackground();
 		button.addClickListener(this);
 		addGuiElement(button);
 	}

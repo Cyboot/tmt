@@ -1,8 +1,10 @@
 package net.tmt.util;
 
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 
 public class ColorUtil {
+	public static final ReadableColor	TRANSPARENT	= new Color(0, 0, 0, 0);
 
 	/**
 	 * returns a brigher color. <b>Attention</b> Modifies the given color

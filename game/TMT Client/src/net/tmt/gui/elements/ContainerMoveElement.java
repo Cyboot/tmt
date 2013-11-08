@@ -4,8 +4,6 @@ import net.tmt.game.interfaces.ClickListener;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class ContainerMoveElement extends ContainerElement implements ClickListener {
 	private Button	moveButton;
 
@@ -13,8 +11,7 @@ public class ContainerMoveElement extends ContainerElement implements ClickListe
 		super(pos, width, height);
 
 		moveButton = new Button(new Vector2d(width - DEFAULT_PADDING * 2 - 32, 0), new Sprite("arrow_left"));
-		moveButton.setBorderColor(new Color(0, 0, 0, 0));
-		moveButton.setBackgroundColor(new Color(0, 0, 0, 0));
+		moveButton.noBackground();
 		moveButton.addClickListener(this);
 
 		addGuiElement(moveButton);

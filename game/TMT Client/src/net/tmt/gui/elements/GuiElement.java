@@ -3,6 +3,7 @@ package net.tmt.gui.elements;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -82,6 +83,12 @@ public abstract class GuiElement implements Renderable, Updateable {
 
 	public void setTitle(final String title) {
 		this.title = title;
+	}
+
+	public GuiElement noBackground() {
+		setBackgroundColor((Color) ColorUtil.TRANSPARENT);
+		setBorderColor((Color) ColorUtil.TRANSPARENT);
+		return this;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import static net.tmt.game.factory.ParticleFactory.*;
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
 import net.tmt.entity.component.move.MoveComponent;
+import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.ExtraOffsetComponent;
 import net.tmt.entity.particle.Particle;
 import net.tmt.gfx.Graphics;
@@ -39,7 +40,7 @@ public class EngineAnimationComponent extends Component {
 	public void update(final ComponentDispatcher caller, final double delta) {
 		if (mainGlow == null)
 			createMainGlow(caller);
-		mainGlow.dispatchValue(ROTATION_ANGLE_MOVE, caller.getValue(ROTATION_ANGLE_MOVE));
+		mainGlow.dispatchValue(ROTATION_ANGLE_LOOK, caller.getValue(ROTATION_ANGLE_LOOK));
 		mainGlow.update(caller.getEntityManager(), delta);
 
 		if (caller.isSet(engineNr) && !(boolean) caller.getValue(engineNr))
@@ -48,16 +49,23 @@ public class EngineAnimationComponent extends Component {
 
 		if (timerSpawn.isTimeleft(delta) && spawnSparks) {
 			double speed = (double) caller.getValue(MoveComponent.SPEED);
-			double rotation = (double) caller.getValue(ROTATION_ANGLE_MOVE);
-			Vector2d dir = ((Vector2d) caller.getValue(MoveComponent.DIR)).copy().normalize();
+			double rotationMove = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_MOVE);
+			double rotationLook = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_LOOK);
+
+			// if ship isn't looking in the direction its moving to --> no
+			// sparks
+			if (Math.abs(rotationMove - rotationLook) > 45)
+				return;
 
 			Sparks.reset();
 			Sparks.color = color;
 			Sparks.size = 3;
 			Sparks.lifetime = 0.5;
-			Sparks.rotation = rotation;
-			Sparks.speed = speed * 0.7;
-			Particle particle = Sparks.get(pos.copy().add(-dir.x * offset.x, -dir.y * offset.y * 2 / 3));
+			Sparks.speed = speed * 0.6;
+			Sparks.rotation = rotationMove;
+
+			Vector2d posParticle = new Vector2d().add(pos);
+			Particle particle = Sparks.get(posParticle);
 
 			caller.getEntityManager().addEntity(particle);
 		}
@@ -82,7 +90,7 @@ public class EngineAnimationComponent extends Component {
 
 		// FIXME: quick & very dirty: how to set Rotation_angle to other
 		// entities and avoid it to be overridden by other Components
-		mainGlow.dispatchValue(ROTATION_ANGLE_MOVE, caller.getValue(ROTATION_ANGLE_MOVE));
+		mainGlow.dispatchValue(ROTATION_ANGLE_LOOK, caller.getValue(ROTATION_ANGLE_LOOK));
 		mainGlow.render(g);
 	}
 }

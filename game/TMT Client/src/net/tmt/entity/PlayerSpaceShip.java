@@ -77,7 +77,7 @@ public class PlayerSpaceShip extends Entity2D {
 		// shoot LaserShoot
 		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.SHIP_FIRE)) {
 			timerShoot.reset();
-			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_MOVE),
+			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					shootColor, this));
 		}
 	}
@@ -124,7 +124,7 @@ public class PlayerSpaceShip extends Entity2D {
 			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 8);
 			dispatchValue(EngineAnimationComponent.ENGINE_1, true);
 		} else {
-			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL);
+			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 4);
 		}
 
 		// TargetSearch

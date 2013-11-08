@@ -39,8 +39,8 @@ public class ShieldComponent extends Component {
 
 		super.render(caller, g);
 
-		if (caller.isSet(ROTATION_ANGLE_MOVE))
-			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE_MOVE));
+		if (caller.isSet(ROTATION_ANGLE_LOOK))
+			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE_LOOK));
 
 		if (sprite != null)
 			g.drawSprite(pos, sprite);

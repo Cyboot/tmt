@@ -1,6 +1,6 @@
 package net.tmt.entity.particle;
 
-import net.tmt.entity.component.Component;
+import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
@@ -33,8 +33,8 @@ public class Spark extends Particle {
 
 		// a little random direction change to make it appear more natural
 		if (Math.random() > 0.85)
-			dispatchValue(Component.ROTATION_ANGLE_MOVE,
-					(double) getValue(Component.ROTATION_ANGLE_MOVE) + RandomUtil.intRange(-20, 20));
+			dispatchValue(RotateComponent.ROTATION_ANGLE_MOVE, (double) getValue(RotateComponent.ROTATION_ANGLE_MOVE)
+					+ RandomUtil.intRange(-20, 20));
 	}
 
 	@Override

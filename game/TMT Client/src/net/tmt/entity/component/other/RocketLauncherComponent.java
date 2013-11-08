@@ -19,7 +19,8 @@ public class RocketLauncherComponent extends Component {
 				&& (boolean) caller.getValue(TargetSearchComponent.IS_LOCKED)) {
 			Entity2D target = (Entity2D) caller.getValue(TargetSearchComponent.TARGET);
 
-			double rotation = (double) caller.getValue(ROTATION_ANGLE_MOVE);
+			double rotation = (double) caller.getValue(ROTATION_ANGLE_LOOK);
+			System.out.println(rotation);
 			caller.getEntityManager().addEntity(new TargetRocket(owner.getPos().copy(), rotation, target, owner));
 		}
 	}

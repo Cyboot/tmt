@@ -33,7 +33,7 @@ public class LaserShoot extends Entity2D {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
-		Vector2d dir = ((Vector2d) getValue(MoveComponent.DIR)).copy().normalize();
+		Vector2d dir = ((Vector2d) getValue(MoveComponent.MOVE_DIR)).copy().normalize();
 		int length = 25;
 
 		g.setColor(color);

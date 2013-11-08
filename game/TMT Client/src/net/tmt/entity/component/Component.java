@@ -5,9 +5,9 @@ import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
 public abstract class Component {
-	protected Entity2D		owner;
-	protected Vector2d		pos;
-	public static String	ROTATION_ANGLE_MOVE	= "ROTATION_ANGLE_MOVE";
+	protected Entity2D			owner;
+	protected Vector2d			pos;
+	public static final String	ROTATION_ANGLE_LOOK	= "ROTATION_ANGLE_LOOK";
 
 	public void update(final ComponentDispatcher caller, final double delta) {
 	}

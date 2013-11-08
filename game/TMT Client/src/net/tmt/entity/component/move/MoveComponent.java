@@ -7,7 +7,7 @@ import net.tmt.util.Vector2d;
 
 public class MoveComponent extends Component {
 	public static final String	SPEED	= "SPEED";
-	public static final String	DIR		= "DIR";
+	public static final String	MOVE_DIR		= "DIR";
 
 	private double				rotationAngle;
 
@@ -32,14 +32,14 @@ public class MoveComponent extends Component {
 		if (caller.isSet(SPEED)) {
 			speed = (double) caller.getValue(SPEED);
 		}
-		if (caller.isSet(RotateComponent.ROTATION_ANGLE_FAST)) {
-			rotationAngle = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_FAST);
+		if (caller.isSet(RotateComponent.ROTATION_ANGLE_MOVE)) {
+			rotationAngle = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_MOVE);
 		}
 
 		dir.x = Math.sin(Math.toRadians(rotationAngle)) * speed * delta;
 		dir.y = -Math.cos(Math.toRadians(rotationAngle)) * speed * delta;
 
-		caller.dispatch(DIR, dir);
+		caller.dispatch(MOVE_DIR, dir);
 		pos.add(dir);
 	}
 
@@ -47,6 +47,6 @@ public class MoveComponent extends Component {
 	public void initialDispatch(final ComponentDispatcher caller) {
 		super.initialDispatch(caller);
 		caller.dispatch(SPEED, speed);
-		caller.dispatch(DIR, dir);
+		caller.dispatch(MOVE_DIR, dir);
 	}
 }

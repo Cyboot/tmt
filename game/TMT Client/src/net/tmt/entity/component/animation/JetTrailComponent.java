@@ -41,7 +41,7 @@ public class JetTrailComponent extends Component {
 			showTrail = false;
 
 		if (timerSpawnParticle.isTimeleft(delta) && showTrail) {
-			Vector2d dir = ((Vector2d) caller.getValue(MoveComponent.DIR)).copy().normalize();
+			Vector2d dir = ((Vector2d) caller.getValue(MoveComponent.MOVE_DIR)).copy().normalize();
 			Vector2d dir90 = dir.copy().normalize().rotate(Math.toRadians(90));
 
 			// move to left/right of the Vertical center

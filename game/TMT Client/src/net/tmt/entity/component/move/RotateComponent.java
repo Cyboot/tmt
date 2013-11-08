@@ -1,10 +1,8 @@
 package net.tmt.entity.component.move;
 
-import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
 import net.tmt.util.MathUtil;
-import net.tmt.util.StringFormatter;
 
 public class RotateComponent extends Component {
 	public static final String	IS_ROTATE_LEFT		= "IS_ROTATE_LEFT";
@@ -12,14 +10,15 @@ public class RotateComponent extends Component {
 	public static final String	FAST_ROTATE			= "FAST_ROTATE";
 	public static final String	ROTATION_SPEED		= "ROTATION_SPEED";
 
-	public static final String	ROTATION_ANGLE_FAST	= "ROTATION_ANGLE_FAST";
+	public static String		ROTATION_ANGLE_MOVE	= "ROTATION_ANGLE_REAL_MOVE";
 
 	private double				rotationSpeed;
 	private double				rotationAngleMove;
-	private double				rotationAngleFast;
+	private double				rotationAngleLook;
 
 	public RotateComponent(final double rotationAngle, final double rotationSpeed) {
 		this.rotationAngleMove = rotationAngle;
+		this.rotationAngleLook = rotationAngle;
 		this.rotationSpeed = rotationSpeed;
 	}
 
@@ -48,36 +47,27 @@ public class RotateComponent extends Component {
 			adjustToMoveAngle(delta);
 
 		rotationAngleMove = (rotationAngleMove + 360) % 360;
-		rotationAngleFast = (rotationAngleFast + 360) % 360;
+		rotationAngleLook = (rotationAngleLook + 360) % 360;
 
-		// if (fastRotateEnable)
-		caller.dispatch(ROTATION_ANGLE_FAST, rotationAngleMove);
-		caller.dispatch(ROTATION_ANGLE_MOVE, rotationAngleFast);
+		caller.dispatch(ROTATION_ANGLE_LOOK, rotationAngleLook);
+		caller.dispatch(ROTATION_ANGLE_MOVE, rotationAngleMove);
 	}
 
 	private void rotate(final int neg, final boolean fast, final double delta) {
 		double factor = 1;
 		if (fast) {
 			factor = 0.2;
-			rotationAngleFast += neg * rotationSpeed * 3 * delta;
+			rotationAngleLook += neg * rotationSpeed * 3 * delta;
 			rotationAngleMove += neg * rotationSpeed * factor * delta;
 		} else {
-			rotationAngleFast += neg * rotationSpeed * factor * delta;
+			rotationAngleLook += neg * rotationSpeed * factor * delta;
 			rotationAngleMove += neg * rotationSpeed * factor * delta;
 		}
 	}
 
 	private void adjustToMoveAngle(final double delta) {
-		double diff = rotationAngleFast - rotationAngleMove;
-		int neg = MathUtil.nearestAngle(rotationAngleMove, rotationAngleFast);
+		int neg = MathUtil.nearestAngle(rotationAngleMove, rotationAngleLook);
 
-		if (owner instanceof PlayerSpaceShip) {
-			System.out.println(StringFormatter.format(diff));
-			// if (neg == 1)
-			// System.out.println("->");
-			// else
-			// System.out.println("<-");
-		}
 		rotationAngleMove += neg * rotationSpeed * delta;
 	}
 

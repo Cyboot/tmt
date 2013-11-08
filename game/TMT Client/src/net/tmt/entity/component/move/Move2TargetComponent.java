@@ -37,8 +37,8 @@ public class Move2TargetComponent extends Component {
 			angleToTarget %= 360;
 		}
 
-		if (caller.isSet(ROTATION_ANGLE_MOVE)) {
-			rotation = (double) caller.getValue(ROTATION_ANGLE_MOVE);
+		if (caller.isSet(ROTATION_ANGLE_LOOK)) {
+			rotation = (double) caller.getValue(ROTATION_ANGLE_LOOK);
 		}
 
 		// reached target
@@ -53,6 +53,7 @@ public class Move2TargetComponent extends Component {
 
 		// Rotation to target is bigget than Min_Angle --> rotateToTarget
 		if (Math.abs(angleToTarget) > MIN_ANGLE) {
+
 
 			if (MathUtil.nearestAngle(rotation, Math.toDegrees(target_diff.getRotation())) == -1)
 				caller.dispatch(RotateComponent.IS_ROTATE_LEFT, true);

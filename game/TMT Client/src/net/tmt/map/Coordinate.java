@@ -5,7 +5,10 @@ import java.math.BigInteger;
 import net.tmt.util.Vector2d;
 
 public class Coordinate {
-	public int	x, y;
+
+	public static Coordinate	tmp0	= new Coordinate(0, 0);
+	public static Coordinate	tmp1	= new Coordinate(0, 0);
+	public int					x, y;
 
 	public Coordinate(final int x, final int y) {
 		this.x = x;
@@ -23,8 +26,8 @@ public class Coordinate {
 	}
 
 	public Vector2d center2pos(final int chunkSize) {
-		double newX = (x * chunkSize) - (chunkSize / 2);
-		double newY = (y * chunkSize) - (chunkSize / 2);
+		double newX = x * chunkSize;
+		double newY = y * chunkSize;
 		return new Vector2d(newX, newY);
 	}
 
@@ -48,6 +51,11 @@ public class Coordinate {
 	public void set(final int x, final int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public void set(final Vector2d pos, final int chunkSize) {
+		x = posScalar2coordScalar(pos.x, chunkSize);
+		y = posScalar2coordScalar(pos.y, chunkSize);
 	}
 
 	@Override

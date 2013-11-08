@@ -17,6 +17,7 @@ public abstract class WorldMap implements Renderable {
 
 	// PRELOAD_RADIUS in chunks
 	private static final int			PRELOAD_RADIUS		= 3;
+	private static final int			RENDER_RADIUS		= 1;
 	public static final int				TYPE_SPACE			= 1;
 	public static final int				TYPE_PLANET			= 2;
 	/* spacy stuff */
@@ -166,20 +167,19 @@ public abstract class WorldMap implements Renderable {
 
 	@Override
 	public void render(final Graphics g) {
-		WorldMap tmp = (type == WorldMap.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
-		// FIXME for a radius value of 1, the neighbor chunk in the upper left
-		// corner won't be rendered until the player is located INSIDE it
-		WorldMap sm = subMap(new Coordinate(rederOffset, chunkSize), 2, tmp);
+		Coordinate coord = Coordinate.tmp0;
+		Coordinate.tmp0.set(rederOffset, chunkSize);
 
-		Coordinate coord = new Coordinate(0, 0);
-		for (int x = sm.minX; x <= sm.maxX; x++) {
-			for (int y = sm.minY; y <= sm.maxY; y++) {
-				coord.set(x, y);
-				if (sm.chunkMap.get(coord) != null) {
-					sm.chunkMap.get(coord).render(g);
+		for (int x = coord.x - RENDER_RADIUS; x <= coord.x + RENDER_RADIUS; x++) {
+			for (int y = coord.y - RENDER_RADIUS; y <= coord.y + RENDER_RADIUS; y++) {
+				Coordinate check = Coordinate.tmp1;
+				check.set(x, y);
+				if (chunkMap.get(check) != null) {
+					chunkMap.get(check).render(g);
 				}
 			}
 		}
+
 	}
 
 }

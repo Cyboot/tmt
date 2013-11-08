@@ -19,14 +19,16 @@ public class Chunk implements Renderable {
 	private ArrayList<Entity2D>	staticEntityList	= new ArrayList<Entity2D>();
 
 	public Chunk(final Coordinate coord, final int terrain, final int size) {
-		this.coord = coord;
+		// FIXME: find out why is seems as if coordinates generated in a
+		// constructor call can't be used here
+		this.coord = new Coordinate(coord.x, coord.y);
 		this.terrain = terrain;
 		this.size = size;
 	}
 
 	public Chunk(final Coordinate coord, final int terrain, final int size, final ArrayList<Entity2D> entities,
 			final ReadableColor color) {
-		this.coord = coord;
+		this.coord = new Coordinate(coord.x, coord.y);
 		this.terrain = terrain;
 		this.size = size;
 		this.staticEntityList = entities;
@@ -44,7 +46,7 @@ public class Chunk implements Renderable {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(color);
-		g.drawRect(coord.center2pos(size).x - (size / 2), coord.center2pos(size).y - (size / 2), size - 5, size - 5);
+		g.drawRect(coord.center2pos(size).x - (size / 2), coord.center2pos(size).y - (size / 2), size - 10, size - 10);
 		for (Entity2D e : staticEntityList) {
 			e.render(g);
 		}

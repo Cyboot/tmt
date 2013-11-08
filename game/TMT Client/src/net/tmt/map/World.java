@@ -12,6 +12,7 @@ import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.GameManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -25,6 +26,7 @@ public class World implements Updateable, Renderable {
 
 	private static World		instance;
 
+	private GameManager			gameManager	= GameManager.getInstance();
 	private EntityManager		entityManager;
 	private SpaceMap			spaceMap	= SpaceMap.getInstance();
 	// TODO use PlanetMaps when GameState changes

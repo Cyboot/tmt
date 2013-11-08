@@ -19,7 +19,7 @@ public class Graphics {
 	private ReadableColor			color				= Color.PURPLE;
 	private TrueTypeFont			font;
 	private boolean					onGui;
-	private org.newdawn.slick.Color	slickColor;
+	private org.newdawn.slick.Color	slickColor			= new org.newdawn.slick.Color(0);
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -101,8 +101,11 @@ public class Graphics {
 
 	public void setColor(final ReadableColor color) {
 		this.color = color;
-		this.slickColor = new org.newdawn.slick.Color(color.getRed() / 255f, color.getGreen() / 255f,
-				color.getBlue() / 255f, color.getAlpha() / 255f);
+
+		this.slickColor.r = color.getRed() / 255f;
+		this.slickColor.g = color.getGreen() / 255f;
+		this.slickColor.b = color.getBlue() / 255f;
+		this.slickColor.a = color.getAlpha() / 255f;
 	}
 
 	public void setLineWidth(final int width) {

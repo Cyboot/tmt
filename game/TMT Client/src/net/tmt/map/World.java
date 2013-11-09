@@ -12,6 +12,7 @@ import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.GameManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -25,10 +26,11 @@ public class World implements Updateable, Renderable {
 
 	private static World		instance;
 
+	private GameManager			gameManager	= GameManager.getInstance();
 	private EntityManager		entityManager;
 	private SpaceMap			spaceMap	= SpaceMap.getInstance();
 	// TODO use PlanetMaps when GameState changes
-	private WorldMap			currentMap	= spaceMap;
+	private WorldMap			currentMap;
 
 	private Vector2d			tmp			= new Vector2d();
 	private Vector2d			offset		= new Vector2d();
@@ -40,6 +42,7 @@ public class World implements Updateable, Renderable {
 
 	public World(final EntityManager entityManager) {
 		this.entityManager = entityManager;
+		currentMap = spaceMap;
 
 		// TODO: quick & dirty: Worldoffset
 		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
@@ -81,14 +84,13 @@ public class World implements Updateable, Renderable {
 
 	private void addWaypoint(final Waypoint waypoint) {
 		waypoints.add(waypoint);
-		// entityManager.addEntity(waypoint, EntityManager.LAYER_1_BACK);
 		spaceMap.addStaticEntity(waypoint);
 	}
 
 	@Override
 	public void update(final double delta) {
 		centerAroundShip(delta * 1000);
-		currentMap.update(getOffsetCentered());
+		currentMap.update(getOffsetCentered(), player.getPos(), this);
 	}
 
 	private void centerAroundShip(final double delta) {
@@ -162,5 +164,9 @@ public class World implements Updateable, Renderable {
 	@Override
 	public void render(final Graphics g) {
 		currentMap.render(g);
+	}
+
+	public void setCurrentMap(final WorldMap m) {
+		currentMap = m;
 	}
 }

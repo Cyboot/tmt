@@ -1,26 +1,25 @@
 package net.tmt.gamestate;
 
-import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.PlanetGui;
-
-import org.lwjgl.util.Color;
+import net.tmt.map.World;
 
 public class PlanetGamestate extends AbstractGamestate {
-	private Color	grassColor	= new Color(10, 150, 0, 255);
+	private World	world;
 
+	public PlanetGamestate() {
+		world = World.getInstance();
+	}
 
 	@Override
 	public void update(final double delta) {
-
+		world.update(delta);
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		guiManager.setGui(PlanetGui.class);
-
-		g.setColor(grassColor);
-		g.onGui().fillRect(0, 0, GameEngine.WIDTH, GameEngine.HEIGHT);
+		world.render(g);
 	}
 
 }

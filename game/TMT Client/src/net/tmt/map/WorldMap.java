@@ -10,13 +10,12 @@ import net.tmt.gfx.Graphics;
 import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.ReadableColor;
-
 
 public abstract class WorldMap implements Renderable {
 
 	// PRELOAD_RADIUS in chunks
 	private static final int			PRELOAD_RADIUS		= 3;
+	private static final int			RENDER_RADIUS		= 1;
 	public static final int				TYPE_SPACE			= 1;
 	public static final int				TYPE_PLANET			= 2;
 	/* spacy stuff */
@@ -72,8 +71,8 @@ public abstract class WorldMap implements Renderable {
 	}
 
 	public void addChunk(final int terrain, final Coordinate coord, final int size,
-			final ArrayList<Entity2D> staticEntities, final ReadableColor color) {
-		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities, color));
+			final ArrayList<Entity2D> staticEntities) {
+		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities));
 		updateBoudaries(coord);
 	}
 
@@ -110,8 +109,7 @@ public abstract class WorldMap implements Renderable {
 				// new map?!
 				Coordinate currCoord = new Coordinate(x, y);
 				Chunk oldChunk = this.chunkMap.get(currCoord);
-				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities(),
-						oldChunk.getColor());
+				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities());
 			}
 		}
 		return m;
@@ -159,27 +157,32 @@ public abstract class WorldMap implements Renderable {
 		this.chunkSize = chunkSize;
 	}
 
-	public void update(final Vector2d offset) {
+	public void update(final Vector2d offset, final Vector2d pPos, final World world) {
 		rederOffset = offset;
 		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
+
+		Coordinate check = Coordinate.tmp0;
+		Coordinate.tmp0.set(pPos, chunkSize);
+		if (chunkMap.get(check) != null) {
+			chunkMap.get(check).update(pPos, world);
+		}
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		WorldMap tmp = (type == WorldMap.TYPE_SPACE ? new SpaceMap() : new PlanetMap(baseTerrain));
-		// FIXME for a radius value of 1, the neighbor chunk in the upper left
-		// corner won't be rendered until the player is located INSIDE it
-		WorldMap sm = subMap(new Coordinate(rederOffset, chunkSize), 2, tmp);
+		Coordinate coord = Coordinate.tmp0;
+		Coordinate.tmp0.set(rederOffset, chunkSize);
 
-		Coordinate coord = new Coordinate(0, 0);
-		for (int x = sm.minX; x <= sm.maxX; x++) {
-			for (int y = sm.minY; y <= sm.maxY; y++) {
-				coord.set(x, y);
-				if (sm.chunkMap.get(coord) != null) {
-					sm.chunkMap.get(coord).render(g);
+		for (int x = coord.x - RENDER_RADIUS; x <= coord.x + RENDER_RADIUS; x++) {
+			for (int y = coord.y - RENDER_RADIUS; y <= coord.y + RENDER_RADIUS; y++) {
+				Coordinate check = Coordinate.tmp1;
+				check.set(x, y);
+				if (chunkMap.get(check) != null) {
+					chunkMap.get(check).render(g);
 				}
 			}
 		}
+
 	}
 
 }

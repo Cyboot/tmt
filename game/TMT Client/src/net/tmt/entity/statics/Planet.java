@@ -13,11 +13,13 @@ public class Planet extends Entity2D {
 	private static int	currID	= 0;
 	private int			id;
 	private PlanetMap	map;
+	private int			radius;
 
 	public Planet(final Vector2d pos, final int baseTerrain) {
 		super(pos);
 		id = currID;
 		Planet.currID++;
+		radius = 300;
 		map = new PlanetMap(baseTerrain);
 	}
 
@@ -53,7 +55,15 @@ public class Planet extends Entity2D {
 			g.setColor(Color.PURPLE);
 			break;
 		}
-		g.drawCircle(pos.x, pos.y, 300);
+		g.drawCircle(pos.x, pos.y, radius);
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(final int radius) {
+		this.radius = radius;
 	}
 
 }

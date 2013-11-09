@@ -160,9 +160,15 @@ public abstract class WorldMap implements Renderable {
 		this.chunkSize = chunkSize;
 	}
 
-	public void update(final Vector2d offset) {
+	public void update(final Vector2d offset, final Vector2d pPos, final World world) {
 		rederOffset = offset;
 		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
+
+		Coordinate check = Coordinate.tmp0;
+		Coordinate.tmp0.set(pPos, chunkSize);
+		if (chunkMap.get(check) != null) {
+			chunkMap.get(check).update(pPos, world);
+		}
 	}
 
 	@Override

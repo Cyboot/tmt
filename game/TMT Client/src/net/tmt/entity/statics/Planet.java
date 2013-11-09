@@ -3,6 +3,7 @@ package net.tmt.entity.statics;
 import net.tmt.entity.Entity2D;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.PlanetMap;
+import net.tmt.map.WorldMap;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -36,22 +37,22 @@ public class Planet extends Entity2D {
 		// Vector2d v = coord.center2pos(map.getChunkSize());
 		// DEBUG: debug planet color
 		switch (map.getBaseTerrain()) {
-		case 200:
+		case WorldMap.TERRAIN_GRASS:
 			g.setColor(Color.GREEN);
 			break;
-		case 201:
+		case WorldMap.TERRAIN_WATER:
 			g.setColor(Color.BLUE);
 			break;
-		case 202:
+		case WorldMap.TERRAIN_DESERT:
 			g.setColor(Color.YELLOW);
 			break;
-		case 203:
+		case WorldMap.TERRAIN_SNOW:
 			g.setColor(Color.WHITE);
 			break;
-		case 204:
+		case WorldMap.TERRAIN_FOREST:
 			g.setColor(Color.DKGREY);
 			break;
-		case 205:
+		case WorldMap.TERRAIN_SWAMP:
 			g.setColor(Color.PURPLE);
 			break;
 		}

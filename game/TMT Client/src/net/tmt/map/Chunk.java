@@ -10,6 +10,7 @@ import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 
@@ -25,22 +26,55 @@ public class Chunk implements Renderable {
 	public Chunk(final Coordinate coord, final int terrain, final int size) {
 		this.coord = new Coordinate(coord.x, coord.y);
 		this.terrain = terrain;
+		setColorAccordingToTerrain(terrain);
 		this.size = size;
 	}
 
 	public Chunk(final int x, final int y, final int terrain, final int size) {
 		this.coord = new Coordinate(x, y);
 		this.terrain = terrain;
+		setColorAccordingToTerrain(terrain);
 		this.size = size;
 	}
 
-	public Chunk(final Coordinate coord, final int terrain, final int size, final ArrayList<Entity2D> entities,
-			final ReadableColor color) {
+	public Chunk(final Coordinate coord, final int terrain, final int size, final ArrayList<Entity2D> entities) {
 		this.coord = new Coordinate(coord.x, coord.y);
 		this.terrain = terrain;
+		setColorAccordingToTerrain(terrain);
 		this.size = size;
 		this.staticEntityList = entities;
-		this.color = color;
+	}
+
+	private void setColorAccordingToTerrain(final int terrain) {
+		switch (terrain) {
+		case WorldMap.TERRAIN_VOID:
+			color = Color.RED;
+			break;
+		case WorldMap.TERRAIN_ASTEROIDS:
+			color = Color.GREEN;
+			break;
+		case WorldMap.TERRAIN_DEBRIS:
+			color = Color.BLUE;
+			break;
+		case WorldMap.TERRAIN_GRASS:
+			color = Color.GREEN;
+			break;
+		case WorldMap.TERRAIN_WATER:
+			color = Color.BLUE;
+			break;
+		case WorldMap.TERRAIN_DESERT:
+			color = Color.YELLOW;
+			break;
+		case WorldMap.TERRAIN_SNOW:
+			color = Color.WHITE;
+			break;
+		case WorldMap.TERRAIN_FOREST:
+			color = Color.DKGREY;
+			break;
+		case WorldMap.TERRAIN_SWAMP:
+			color = Color.PURPLE;
+			break;
+		}
 	}
 
 	public void addStaticEntity(final Entity2D e) {

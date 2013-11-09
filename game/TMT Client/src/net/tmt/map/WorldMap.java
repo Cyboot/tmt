@@ -10,8 +10,6 @@ import net.tmt.gfx.Graphics;
 import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.ReadableColor;
-
 
 public abstract class WorldMap implements Renderable {
 
@@ -73,8 +71,8 @@ public abstract class WorldMap implements Renderable {
 	}
 
 	public void addChunk(final int terrain, final Coordinate coord, final int size,
-			final ArrayList<Entity2D> staticEntities, final ReadableColor color) {
-		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities, color));
+			final ArrayList<Entity2D> staticEntities) {
+		chunkMap.put(coord, new Chunk(coord, terrain, size, staticEntities));
 		updateBoudaries(coord);
 	}
 
@@ -111,8 +109,7 @@ public abstract class WorldMap implements Renderable {
 				// new map?!
 				Coordinate currCoord = new Coordinate(x, y);
 				Chunk oldChunk = this.chunkMap.get(currCoord);
-				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities(),
-						oldChunk.getColor());
+				m.addChunk(oldChunk.terrain, currCoord, this.chunkSize, oldChunk.getStaticEntities());
 			}
 		}
 		return m;

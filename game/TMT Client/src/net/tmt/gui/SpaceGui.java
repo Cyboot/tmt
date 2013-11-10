@@ -36,20 +36,20 @@ public class SpaceGui extends Gui {
 	}
 
 	private void renderMissions(final Graphics g) {
-		double leftX = width * 0.8;
-		double widthElement = width - leftX;
-		double heightElement = height * 0.35;
-		double padding = 4;
+		final double leftX = width * 0.8;
+		final double widthElement = width - leftX;
+		final double heightElement = height * 0.35;
+		final double padding = 4;
 
 		g.onGui().drawText(leftX + padding, 0, "Mission");
 		g.onGui().drawRect(leftX, 0, widthElement, heightElement);
 	}
 
 	private void renderMap(final Graphics g) {
-		double topY = height * 0.71;
-		double heightTab = 20;
-		double widthTab = 50;
-		double padding = 4;
+		final double topY = height * 0.71;
+		final double heightTab = 20;
+		final double widthTab = 50;
+		final double padding = 4;
 
 		g.onGui().drawRect(0 * widthTab, topY, widthTab, heightTab);
 		g.onGui().drawText(0 * widthTab + padding, topY + padding, "Map");
@@ -61,9 +61,9 @@ public class SpaceGui extends Gui {
 	}
 
 	private void renderShipInfo(final Graphics g) {
-		double elemWidth = width * 0.3;
-		double leftX = width / 2 - elemWidth / 2;
-		double topY = height * 0.75;
+		final double elemWidth = width * 0.3;
+		final double leftX = width / 2 - elemWidth / 2;
+		final double topY = height * 0.75;
 
 		// border
 		g.onGui().drawRect(leftX, topY, elemWidth, height * 0.25);
@@ -71,7 +71,7 @@ public class SpaceGui extends Gui {
 		// ship
 		g.onGui().drawSprite(Vector2d.tmp1.set(leftX + 5, topY + 10), shipSchema);
 
-		double textX = leftX + 128 + 32;
+		final double textX = leftX + 128 + 32;
 		String health = "";
 		String speed = "";
 

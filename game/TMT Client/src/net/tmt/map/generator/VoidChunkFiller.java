@@ -6,7 +6,7 @@ import net.tmt.map.PlanetMap;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
-public class VoidChunkFormer {
+public class VoidChunkFiller {
 
 	public static void fill(final World world, final Chunk c) {
 		if (Math.random() > 0.6) {

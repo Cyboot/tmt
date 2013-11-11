@@ -24,7 +24,7 @@ public class ChunkFormer {
 		switch (chance) {
 		case 1:
 			c = new Chunk(coord, WorldMap.TERRAIN_VOID, map.getChunkSize());
-			VoidChunkFormer.fill(world, c);
+			VoidChunkFiller.fill(world, c);
 			break;
 		case 0:
 			c = new Chunk(coord, WorldMap.TERRAIN_ASTEROIDS, map.getChunkSize());
@@ -33,6 +33,7 @@ public class ChunkFormer {
 			c = new Chunk(coord, WorldMap.TERRAIN_DEBRIS, map.getChunkSize());
 			break;
 		}
+		GeneralSpaceChunkFiller.fill(world, c);
 		return c;
 	}
 

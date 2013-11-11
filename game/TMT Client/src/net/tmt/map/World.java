@@ -7,8 +7,6 @@ import java.util.Map;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.PlayerSpaceShip;
-import net.tmt.entity.statics.BackgroundBody;
-import net.tmt.entity.statics.Star;
 import net.tmt.entity.statics.Waypoint;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
@@ -30,7 +28,7 @@ public class World implements Updateable, Renderable {
 	private static World			instance;
 
 	private EntityManager			entityManager;
-	private SpaceMap				spaceMap	= SpaceMap.getInstance();
+	private SpaceMap				spaceMap;
 	private WorldMap				currentMap;
 	private Map<Integer, PlanetMap>	planetMaps	= new HashMap<Integer, PlanetMap>();
 
@@ -42,51 +40,17 @@ public class World implements Updateable, Renderable {
 
 	private PlayerSpaceShip			player;
 
-	public World(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-		currentMap = spaceMap;
-
+	public World() {
 		// TODO: quick & dirty: Worldoffset
 		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
 		MOVE_DIFF_WIDTH = (GameEngine.WIDTH / 2 - MOVE_MAX_WIDTH) * RATIO;
 
 		MOVE_MAX_HEIGTH = (GameEngine.HEIGHT / 2) * 1 / 50.;
 		MOVE_DIFF_HEIGHT = (GameEngine.HEIGHT / 2 - MOVE_MAX_HEIGTH) * RATIO;
-
-		final int DISTANCE = 200;
-		final int DISTANCE_BACK = 200 * 48;
-		final int MAX_MAP_SIZE = 10 * 1000;
-
-		this.entityManager.addEntity(new BackgroundBody(new Vector2d(0, 0)), EntityManager.LAYER_0_FAR_BACK);
-		for (int x = -MAX_MAP_SIZE * 2; x < MAX_MAP_SIZE * 2; x += DISTANCE_BACK) {
-			for (int y = -MAX_MAP_SIZE * 2; y < MAX_MAP_SIZE * 2; y += DISTANCE_BACK) {
-				double vx = x + RandomUtil.doubleRange(-DISTANCE_BACK / 4, DISTANCE_BACK / 4);
-				double vy = y + RandomUtil.doubleRange(-DISTANCE_BACK / 4, DISTANCE_BACK / 4);
-
-				this.entityManager.addEntity(new BackgroundBody(new Vector2d(vx, vy)), EntityManager.LAYER_0_FAR_BACK);
-			}
-		}
-
-		for (int x = -MAX_MAP_SIZE; x < MAX_MAP_SIZE; x += DISTANCE) {
-			for (int y = -MAX_MAP_SIZE; y < MAX_MAP_SIZE; y += DISTANCE) {
-				double vx = x + RandomUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
-				double vy = y + RandomUtil.doubleRange(-DISTANCE / 2, DISTANCE / 2);
-
-				this.entityManager.addEntity(new Star(new Vector2d(vx, vy)), EntityManager.LAYER_0_FAR_BACK);
-			}
-		}
-
-		// DEBUG: debug stuff
-		addWaypoint(new Waypoint(new Vector2d(200, 800)));
-		addWaypoint(new Waypoint(new Vector2d(700, 400)));
-		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
-		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
-		addWaypoint(new Waypoint(new Vector2d(500, 100)));
 	}
 
-	private void addWaypoint(final Waypoint waypoint) {
+	void addWaypoint(final Waypoint waypoint) {
 		waypoints.add(waypoint);
-		spaceMap.addStaticEntity(this, waypoint);
 	}
 
 	@Override
@@ -133,11 +97,14 @@ public class World implements Updateable, Renderable {
 	}
 
 	public static World getInstance() {
+		if (instance == null)
+			instance = new World();
 		return instance;
 	}
 
-	public static void init(final EntityManager entityManager) {
-		instance = new World(entityManager);
+	public void init() {
+		spaceMap = SpaceMap.getInstance();
+		currentMap = spaceMap;
 	}
 
 	public void setPlayer(final PlayerSpaceShip ship) {
@@ -182,6 +149,7 @@ public class World implements Updateable, Renderable {
 		gm.resume(PlanetGamestate.class);
 
 		PlanetMap map = planetMaps.get(Integer.valueOf(planetId));
+		// TODO: don't just use the "pace position"
 		map.update(this, getOffset(), player.getPos());
 		setCurrentMap(map);
 	}

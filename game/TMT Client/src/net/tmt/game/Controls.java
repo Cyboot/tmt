@@ -194,7 +194,7 @@ public class Controls {
 
 
 	private static int getKeycode(final String key) {
-		String valueCFG = ConfigUtil.getString(key);
+		String valueCFG = ConfigUtil.getString("controls." + key);
 		int result = Keyboard.getKeyIndex(valueCFG);
 
 		if (result == KEY_NONE) {
@@ -254,8 +254,8 @@ public class Controls {
 
 	@SuppressWarnings("unused")
 	private static class GamepadConstants {
-		// Gamepad
 		static final float	CONTROLLER_SENSIBILITY	= 0.5f;
+
 		static final int	POV_X_RIGHT				= 3001;
 		static final int	POV_X_LEFT				= 3002;
 		static final int	POV_Y_DOWN				= 3003;
@@ -270,18 +270,18 @@ public class Controls {
 		static final int	Z_ROT_UP				= 3011;
 		static final int	Z_ROT_DOWN				= 3012;
 
-		static final int	BUTTON_0				= 2000;
-		static final int	BUTTON_1				= 2001;
-		static final int	BUTTON_2				= 2002;
-		static final int	BUTTON_3				= 2003;
-		static final int	BUTTON_4				= 2004;
-		static final int	BUTTON_5				= 2005;
-		static final int	BUTTON_6				= 2006;
-		static final int	BUTTON_7				= 2007;
-		static final int	BUTTON_8				= 2008;
-		static final int	BUTTON_9				= 2009;
-		static final int	BUTTON_10				= 2010;
-		static final int	BUTTON_11				= 2011;
-		static final int	BUTTON_12				= 2012;
+		static final int	BUTTON_0				= CONTROLLER_KEYVALUE_OFFSET + 0;
+		static final int	BUTTON_1				= CONTROLLER_KEYVALUE_OFFSET + 1;
+		static final int	BUTTON_2				= CONTROLLER_KEYVALUE_OFFSET + 2;
+		static final int	BUTTON_3				= CONTROLLER_KEYVALUE_OFFSET + 3;
+		static final int	BUTTON_4				= CONTROLLER_KEYVALUE_OFFSET + 4;
+		static final int	BUTTON_5				= CONTROLLER_KEYVALUE_OFFSET + 5;
+		static final int	BUTTON_6				= CONTROLLER_KEYVALUE_OFFSET + 6;
+		static final int	BUTTON_7				= CONTROLLER_KEYVALUE_OFFSET + 7;
+		static final int	BUTTON_8				= CONTROLLER_KEYVALUE_OFFSET + 8;
+		static final int	BUTTON_9				= CONTROLLER_KEYVALUE_OFFSET + 9;
+		static final int	BUTTON_10				= CONTROLLER_KEYVALUE_OFFSET + 10;
+		static final int	BUTTON_11				= CONTROLLER_KEYVALUE_OFFSET + 11;
+		static final int	BUTTON_12				= CONTROLLER_KEYVALUE_OFFSET + 12;
 	}
 }

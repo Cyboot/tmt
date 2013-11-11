@@ -1,7 +1,9 @@
 package net.tmt.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.PlayerSpaceShip;
@@ -13,32 +15,32 @@ import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
+import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class World implements Updateable, Renderable {
-	private static final double	RATIO		= 1.8;
-	private double				MOVE_DIFF_WIDTH;
-	private double				MOVE_DIFF_HEIGHT;
-	private double				MOVE_MAX_WIDTH;
-	private double				MOVE_MAX_HEIGTH;
+	private static final double		RATIO		= 1.8;
+	private double					MOVE_DIFF_WIDTH;
+	private double					MOVE_DIFF_HEIGHT;
+	private double					MOVE_MAX_WIDTH;
+	private double					MOVE_MAX_HEIGTH;
 
-	private static World		instance;
+	private static World			instance;
 
-	private GameManager			gameManager	= GameManager.getInstance();
-	private EntityManager		entityManager;
-	private SpaceMap			spaceMap	= SpaceMap.getInstance();
-	// TODO use PlanetMaps when GameState changes
-	private WorldMap			currentMap;
+	private EntityManager			entityManager;
+	private SpaceMap				spaceMap	= SpaceMap.getInstance();
+	private WorldMap				currentMap;
+	private Map<Integer, PlanetMap>	planetMaps	= new HashMap<Integer, PlanetMap>();
 
-	private Vector2d			tmp			= new Vector2d();
-	private Vector2d			offset		= new Vector2d();
+	private Vector2d				tmp			= new Vector2d();
+	private Vector2d				offset		= new Vector2d();
 
 	// DEBUG waypoints in World
-	private List<Entity2D>		waypoints	= new ArrayList<>();
+	private List<Entity2D>			waypoints	= new ArrayList<>();
 
-	private PlayerSpaceShip		player;
+	private PlayerSpaceShip			player;
 
 	public World(final EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -84,13 +86,13 @@ public class World implements Updateable, Renderable {
 
 	private void addWaypoint(final Waypoint waypoint) {
 		waypoints.add(waypoint);
-		spaceMap.addStaticEntity(waypoint);
+		spaceMap.addStaticEntity(this, waypoint);
 	}
 
 	@Override
 	public void update(final double delta) {
 		centerAroundShip(delta * 1000);
-		currentMap.update(getOffsetCentered(), player.getPos(), this);
+		currentMap.update(this, getOffsetCentered(), player.getPos());
 	}
 
 	private void centerAroundShip(final double delta) {
@@ -168,5 +170,19 @@ public class World implements Updateable, Renderable {
 
 	public void setCurrentMap(final WorldMap m) {
 		currentMap = m;
+	}
+
+	public void registerPlanetmap(final int id, final PlanetMap map) {
+		planetMaps.put(Integer.valueOf(id), map);
+	}
+
+	public void changeToPlanetGameState(final int planetId) {
+		GameManager gm = GameManager.getInstance();
+		gm.pause(gm.getActiveGamestate());
+		gm.resume(PlanetGamestate.class);
+
+		PlanetMap map = planetMaps.get(Integer.valueOf(planetId));
+		map.update(this, getOffset(), player.getPos());
+		setCurrentMap(map);
 	}
 }

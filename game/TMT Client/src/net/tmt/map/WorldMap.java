@@ -80,9 +80,9 @@ public abstract class WorldMap implements Renderable {
 		chunkMap.put(coord, c);
 	}
 
-	public void addStaticEntity(final Entity2D e) {
+	public void addStaticEntity(final World world, final Entity2D e) {
 		Coordinate coord = new Coordinate(e.getPos(), this.chunkSize);
-		MapGenerator.generateAround(coord, this, PRELOAD_RADIUS);
+		MapGenerator.generateAround(world, coord, this, PRELOAD_RADIUS);
 		chunkMap.get(coord).addStaticEntity(e);
 	}
 
@@ -157,9 +157,9 @@ public abstract class WorldMap implements Renderable {
 		this.chunkSize = chunkSize;
 	}
 
-	public void update(final Vector2d offset, final Vector2d pPos, final World world) {
+	public void update(final World world, final Vector2d offset, final Vector2d pPos) {
 		rederOffset = offset;
-		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
+		MapGenerator.generateAround(world, new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
 
 		Coordinate check = Coordinate.tmp0;
 		Coordinate.tmp0.set(pPos, chunkSize);

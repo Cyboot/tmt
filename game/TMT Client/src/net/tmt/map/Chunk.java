@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.Planet;
 import net.tmt.game.interfaces.Renderable;
-import net.tmt.game.manager.GameManager;
-import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
@@ -87,19 +85,10 @@ public class Chunk implements Renderable {
 
 	public void update(final Vector2d playerPos, final World world) {
 		for (Entity2D e : staticEntityList) {
-			if (e instanceof Planet && playerPos.distanceTo(e.getPos()) < ((Planet) e).getRadius()) {
-				changeToPlanetGameState(world, playerPos, ((Planet) e));
+			if (e instanceof Planet) {
+				((Planet) e).landingCheck(world, playerPos);
 			}
 		}
-	}
-
-	private void changeToPlanetGameState(final World world, final Vector2d playerPos, final Planet p) {
-		GameManager gm = GameManager.getInstance();
-		gm.pause(gm.getActiveGamestate());
-		gm.resume(PlanetGamestate.class);
-
-		p.getMap().update(world.getOffset(), playerPos, world);
-		world.setCurrentMap(p.getMap());
 	}
 
 	@Override

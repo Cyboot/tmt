@@ -16,6 +16,7 @@
 	<classpathentry kind="lib" path="lib/slick/slick.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/TMT%20Client/lib/slick/slick-javadoc.zip!/javadoc"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="TMT Client/lib/native"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/lwjgl/jinput.jar"/>

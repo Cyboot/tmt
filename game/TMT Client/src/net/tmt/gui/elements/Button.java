@@ -11,7 +11,6 @@ import net.tmt.util.ColorUtil;
 import net.tmt.util.Rectangle;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
 public class Button extends GuiElement {
@@ -62,7 +61,6 @@ public class Button extends GuiElement {
 			isHover = false;
 
 		boolean click = Controls.wasReleased(Controls.MOUSE_LEFT);
-		Mouse.poll();
 
 		isMouseClicked = false;
 		if (isHover) {

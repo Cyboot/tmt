@@ -16,6 +16,7 @@ import net.tmt.util.DebugUtil;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -80,6 +81,16 @@ public class GameEngine {
 
 	private void initConfig() {
 		try {
+			String cfg = "res" + File.separator + "cfg" + File.separator + "controls.cfg";
+			String cfgGamepad = "res" + File.separator + "cfg" + File.separator + "controls_gamepad.cfg";
+			Controls.init(cfg);
+			Controls.init(cfgGamepad);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
 			String globalCFG = "res" + File.separator + "cfg" + File.separator + "global.cfg";
 			String localCFG = "res" + File.separator + "cfg" + File.separator + "local.cfg";
 			ConfigUtil.init(globalCFG); // init global configs
@@ -104,8 +115,13 @@ public class GameEngine {
 			e.printStackTrace();
 		}
 		graphics = Graphics.init();
-
 		gameManager = GameManager.init();
+		try {
+			Controllers.create();
+		} catch (LWJGLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			DebugUtil.setUser(ConfigUtil.getString("debug.User"));

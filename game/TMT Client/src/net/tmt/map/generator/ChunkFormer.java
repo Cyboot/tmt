@@ -2,28 +2,29 @@ package net.tmt.map.generator;
 
 import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
+import net.tmt.map.World;
 import net.tmt.map.WorldMap;
 
 public class ChunkFormer {
 
-	public static Chunk formChunk(final Coordinate coord, final WorldMap map) {
+	public static Chunk formChunk(final World world, final Coordinate coord, final WorldMap map) {
 		if (map.getType() == WorldMap.TYPE_SPACE)
-			return formSpaceChunk(coord, map);
+			return formSpaceChunk(world, coord, map);
 		else if (map.getType() == WorldMap.TYPE_PLANET)
-			return formPlanetChunk(coord, map);
+			return formPlanetChunk(world, coord, map);
 		else {
 			// TODO throw an exception — maybe?
 			return null;
 		}
 	}
 
-	private static Chunk formSpaceChunk(final Coordinate coord, final WorldMap map) {
+	private static Chunk formSpaceChunk(final World world, final Coordinate coord, final WorldMap map) {
 		int chance = (int) Math.rint(Math.random() * 2);
 		Chunk c = null;
 		switch (chance) {
 		case 1:
 			c = new Chunk(coord, WorldMap.TERRAIN_VOID, map.getChunkSize());
-			VoidChunkFormer.fill(c);
+			VoidChunkFormer.fill(world, c);
 			break;
 		case 0:
 			c = new Chunk(coord, WorldMap.TERRAIN_ASTEROIDS, map.getChunkSize());
@@ -35,7 +36,7 @@ public class ChunkFormer {
 		return c;
 	}
 
-	private static Chunk formPlanetChunk(final Coordinate coord, final WorldMap map) {
+	private static Chunk formPlanetChunk(final World world, final Coordinate coord, final WorldMap map) {
 		int chance = (int) Math.rint(Math.random() * 5);
 		Chunk c = null;
 		switch (chance) {

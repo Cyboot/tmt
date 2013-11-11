@@ -2,41 +2,41 @@ package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.gfx.Graphics;
-import net.tmt.map.PlanetMap;
+import net.tmt.map.World;
 import net.tmt.map.WorldMap;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
-// TODO: hook up planet entries with game states and move planet classes into entity package
 public class Planet extends Entity2D {
 
 	private static int	currID	= 0;
-	private int			id;
-	private PlanetMap	map;
+	private int			planetId;
 	private int			radius;
+	private int			baseTerrain;
 
 	public Planet(final Vector2d pos, final int baseTerrain) {
 		super(pos);
-		id = currID;
+		planetId = currID;
 		Planet.currID++;
 		radius = 300;
-		map = new PlanetMap(baseTerrain);
-	}
-
-	public PlanetMap getMap() {
-		return map;
+		this.baseTerrain = baseTerrain;
 	}
 
 	public int getPlanetId() {
-		return id;
+		return planetId;
+	}
+
+	public void landingCheck(final World world, final Vector2d playerPos) {
+		if (playerPos.distanceTo(getPos()) < getRadius()) {
+			world.changeToPlanetGameState(planetId);
+		}
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		// Vector2d v = coord.center2pos(map.getChunkSize());
 		// DEBUG: debug planet color
-		switch (map.getBaseTerrain()) {
+		switch (baseTerrain) {
 		case WorldMap.TERRAIN_GRASS:
 			g.setColor(Color.GREEN);
 			break;

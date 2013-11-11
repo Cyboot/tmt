@@ -37,7 +37,7 @@ public class GameManager implements Updateable, Renderable {
 		instance.pause(new SpaceGamestate());
 		instance.pause(new SimulatorGamestate());
 		instance.pause(new PlanetGamestate());
-		instance.pause(new EconomyGamestate());
+		instance.pause(EconomyGamestate.getInstance());
 		instance.pause(new DummyGamestate());
 
 		instance.resume(SpaceGamestate.class);

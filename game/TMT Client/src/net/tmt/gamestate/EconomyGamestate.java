@@ -17,11 +17,13 @@ public class EconomyGamestate extends AbstractGamestate {
 	public static final int			CONSTRUCTING		= 1;
 	public static final int			BULIDING_SELECTED	= 2;
 
-
 	private static EconomyGamestate	instance			= new EconomyGamestate();
 	private List<Building>			buildingList		= new ArrayList<>();
 
 	private int						inputState			= NEUTRAL;
+
+	private EconomyGamestate() {
+	}
 
 	@Override
 	public void update(final double delta) {

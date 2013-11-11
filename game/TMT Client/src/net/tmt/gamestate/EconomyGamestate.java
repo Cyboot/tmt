@@ -1,12 +1,27 @@
 package net.tmt.gamestate;
 
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.tmt.entity.economy.Building;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.EconomyGui;
+import net.tmt.util.Vector2d;
+
+import org.lwjgl.input.Mouse;
 
 public class EconomyGamestate extends AbstractGamestate {
-	private static EconomyGamestate	instance	= new EconomyGamestate();
 
-	private InputState				inputState	= InputState.NEUTRAL;
+	public static final int			NEUTRAL				= 0;
+	public static final int			CONSTRUCTING		= 1;
+	public static final int			BULIDING_SELECTED	= 2;
+
+
+	private static EconomyGamestate	instance			= new EconomyGamestate();
+	private List<Building>			buildingList		= new ArrayList<>();
+
+	private int						inputState			= NEUTRAL;
 
 	@Override
 	public void update(final double delta) {
@@ -14,9 +29,17 @@ public class EconomyGamestate extends AbstractGamestate {
 		case NEUTRAL:
 			// do nothing special here (yet)
 			break;
+
 		case CONSTRUCTING:
 			// TODO #27 on Leftclick --> create the Building
+
+			if (Mouse.isButtonDown(MouseEvent.MOUSE_CLICKED)) {
+				buildingList.add(new Building(new Vector2d(Mouse.getX(), Mouse.getY())));
+				// setInputState(InputState.NEUTRAL);
+			}
 			break;
+
+
 		case BULIDING_SELECTED:
 			// TODO #27 tell gui to display building information
 			break;
@@ -30,6 +53,7 @@ public class EconomyGamestate extends AbstractGamestate {
 		switch (inputState) {
 		case NEUTRAL:
 			// nothing special
+
 			break;
 		case CONSTRUCTING:
 			// TODO #27 display the currently constructing building at mouse
@@ -39,13 +63,16 @@ public class EconomyGamestate extends AbstractGamestate {
 			// display building information (already done in update() )
 			break;
 		}
+
+		for (Building building : buildingList)
+			building.render(g);
 	}
 
-	public InputState getInputState() {
+	public int getInputState() {
 		return inputState;
 	}
 
-	public void setInputState(final InputState inputState) {
+	public void setInputState(final int inputState) {
 		this.inputState = inputState;
 	}
 
@@ -53,14 +80,14 @@ public class EconomyGamestate extends AbstractGamestate {
 		return instance;
 	}
 
-	public static enum InputState {
-		/** neutral */
-		NEUTRAL,
-
-		/** currently constructing a building */
-		CONSTRUCTING,
-
-		/** infos about building etc. */
-		BULIDING_SELECTED
-	}
+	// public static enum InputState {
+	// /** neutral */
+	// NEUTRAL,
+	//
+	// /** currently constructing a building */
+	// CONSTRUCTING,
+	//
+	// /** infos about building etc. */
+	// BULIDING_SELECTED
+	// }
 }

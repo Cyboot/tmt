@@ -1,6 +1,7 @@
 package net.tmt.gui.view;
 
 import net.tmt.game.interfaces.ClickListener;
+import net.tmt.gamestate.EconomyGamestate;
 import net.tmt.gfx.Sprite;
 import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;
@@ -8,6 +9,7 @@ import net.tmt.gui.elements.GuiElement;
 import net.tmt.util.Vector2d;
 
 public class BuildView extends ContainerElement implements ClickListener {
+
 
 	public BuildView(final Vector2d pos, final double width, final double height) {
 		super(pos, width, height);
@@ -28,7 +30,7 @@ public class BuildView extends ContainerElement implements ClickListener {
 
 		switch (caller.getTitle()) {
 		case "icon_base":
-
+			EconomyGamestate.getInstance().setInputState(EconomyGamestate.CONSTRUCTING);
 			break;
 
 		case "icon_mine":

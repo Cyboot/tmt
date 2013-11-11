@@ -24,6 +24,9 @@ public abstract class GuiElement implements Renderable, Updateable {
 		this.pos = pos;
 		this.height = height;
 		this.width = width;
+
+		setBackgroundColor(getBackgroundColor());
+		setBorderColor(getBorderColor());
 	}
 
 	public GuiElement(final Vector2d pos, final double width, final double height) {

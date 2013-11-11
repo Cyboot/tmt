@@ -42,8 +42,6 @@ public class Button extends GuiElement {
 	public Button(final Vector2d pos, final double width, final double height) {
 		this(pos, width, height, "");
 
-		setBackgroundColor(getBackgroundColor());
-		setBorderColor(getBorderColor());
 	}
 
 	@Override

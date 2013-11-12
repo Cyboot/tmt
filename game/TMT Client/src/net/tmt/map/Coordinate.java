@@ -1,13 +1,11 @@
 package net.tmt.map;
 
-import java.math.BigInteger;
-
 import net.tmt.util.Vector2d;
 
 public class Coordinate {
-
 	public static Coordinate	tmp0	= new Coordinate(0, 0);
 	public static Coordinate	tmp1	= new Coordinate(0, 0);
+
 	public int					x, y;
 
 	public Coordinate(final int x, final int y) {
@@ -26,8 +24,8 @@ public class Coordinate {
 	}
 
 	public Vector2d center2pos(final int chunkSize) {
-		double newX = x * chunkSize;
-		double newY = y * chunkSize;
+		double newX = x * chunkSize + chunkSize / 2;
+		double newY = y * chunkSize + chunkSize / 2;
 		return new Vector2d(newX, newY);
 	}
 
@@ -41,11 +39,7 @@ public class Coordinate {
 
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(Integer.toString(x));
-		BigInteger bigY = new BigInteger(Integer.toString(y));
-		big = big.shiftLeft(32);
-		big = big.add(bigY);
-		return big.hashCode();
+		return x << 16 | (y & 0x0000FFFF);
 	}
 
 	public void set(final int x, final int y) {

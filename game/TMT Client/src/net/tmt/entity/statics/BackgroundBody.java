@@ -14,7 +14,7 @@ public class BackgroundBody extends Entity2D {
 	public BackgroundBody(final Vector2d pos) {
 		super(pos);
 
-		switch (RandomUtil.intRange(0, 4)) {
+		switch (RandomUtil.intRange(0, 3)) {
 		case 0:
 			sprite = new Sprite("galaxie_orange_64");
 			break;

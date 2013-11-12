@@ -19,7 +19,6 @@ public class SpaceGamestate extends AbstractGamestate {
 		// init World
 		world = World.getInstance();
 		world.init();
-		world.setEntityManager(entityManager);
 		world.setPlayer(player);
 
 		// add default Entities

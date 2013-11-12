@@ -1,44 +1,28 @@
 package net.tmt.map;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.PlayerSpaceShip;
-import net.tmt.entity.statics.Waypoint;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
-import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gfx.Graphics;
-import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class World implements Updateable, Renderable {
-	private static final double		RATIO		= 1.8;
-	private double					MOVE_DIFF_WIDTH;
-	private double					MOVE_DIFF_HEIGHT;
-	private double					MOVE_MAX_WIDTH;
-	private double					MOVE_MAX_HEIGTH;
+	private static final double	RATIO	= 1.8;
+	private double				MOVE_DIFF_WIDTH;
+	private double				MOVE_DIFF_HEIGHT;
+	private double				MOVE_MAX_WIDTH;
+	private double				MOVE_MAX_HEIGTH;
 
-	private static World			instance;
+	private static World		instance;
 
-	private EntityManager			entityManager;
-	private SpaceMap				spaceMap;
-	private WorldMap				currentMap;
-	private Map<Integer, PlanetMap>	planetMaps	= new HashMap<Integer, PlanetMap>();
+	private Vector2d			tmp		= new Vector2d();
+	private Vector2d			offset	= new Vector2d();
 
-	private Vector2d				tmp			= new Vector2d();
-	private Vector2d				offset		= new Vector2d();
-
-	// DEBUG waypoints in World
-	private List<Entity2D>			waypoints	= new ArrayList<>();
-
-	private PlayerSpaceShip			player;
+	private WorldMap			map;
+	private Entity2D			player;
 
 	public World() {
 		// TODO: quick & dirty: Worldoffset
@@ -49,14 +33,15 @@ public class World implements Updateable, Renderable {
 		MOVE_DIFF_HEIGHT = (GameEngine.HEIGHT / 2 - MOVE_MAX_HEIGTH) * RATIO;
 	}
 
-	void addWaypoint(final Waypoint waypoint) {
-		waypoints.add(waypoint);
-	}
-
 	@Override
 	public void update(final double delta) {
 		centerAroundShip(delta * 1000);
-		currentMap.update(this, getOffsetCentered(), player.getPos());
+		map.update(getOffsetCentered(), player.getPos());
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		map.render(g);
 	}
 
 	private void centerAroundShip(final double delta) {
@@ -103,44 +88,19 @@ public class World implements Updateable, Renderable {
 	}
 
 	public void init() {
-		spaceMap = SpaceMap.getInstance();
-		currentMap = spaceMap;
+		map = SpaceMap.getInstance();
 	}
 
-	public void setPlayer(final PlayerSpaceShip ship) {
+	public void setPlayer(final Entity2D ship) {
 		this.player = ship;
 	}
 
-	/**
-	 * get the next waypoint in list (looping)
-	 * 
-	 * @param waypoint
-	 *            current waypoint
-	 * @return
-	 */
-	public Entity2D getNextWaypoint(final Entity2D waypoint) {
-		int indexOf = 0;
-		indexOf = waypoint == null ? RandomUtil.intRange(-1, waypoints.size()) : waypoints.indexOf(waypoint);
-		indexOf = ++indexOf % waypoints.size();
-
-		return waypoints.get(indexOf);
+	public void setMap(final WorldMap m) {
+		map = m;
 	}
 
-	public void setEntityManager(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
-	@Override
-	public void render(final Graphics g) {
-		currentMap.render(g);
-	}
-
-	public void setCurrentMap(final WorldMap m) {
-		currentMap = m;
-	}
-
-	public void registerPlanetmap(final int id, final PlanetMap map) {
-		planetMaps.put(Integer.valueOf(id), map);
+	public WorldMap getMap() {
+		return map;
 	}
 
 	public void changeToPlanetGameState(final int planetId) {
@@ -148,9 +108,6 @@ public class World implements Updateable, Renderable {
 		gm.pause(gm.getActiveGamestate());
 		gm.resume(PlanetGamestate.class);
 
-		PlanetMap map = planetMaps.get(Integer.valueOf(planetId));
-		// TODO: don't just use the "pace position"
-		map.update(this, getOffset(), player.getPos());
-		setCurrentMap(map);
+		// FIXME: planetstate
 	}
 }

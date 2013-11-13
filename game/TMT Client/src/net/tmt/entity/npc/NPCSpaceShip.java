@@ -11,7 +11,7 @@ import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public abstract class NPCSpaceShip extends Entity2D {
-	private World		world	= World.getInstance();
+	private World		world	= World.getActiveWorld();
 
 	protected double	speed;
 	protected double	roationSpeed;

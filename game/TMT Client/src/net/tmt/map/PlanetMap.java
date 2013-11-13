@@ -7,7 +7,6 @@ public class PlanetMap extends WorldMap {
 
 	public PlanetMap(final Terrain baseTerrain) {
 		setChunkSize(CHUNK_SIZE);
-		setBaseTerrain(baseTerrain);
 	}
 
 }

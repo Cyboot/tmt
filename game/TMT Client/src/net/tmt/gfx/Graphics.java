@@ -92,7 +92,7 @@ public class Graphics {
 	private void applyOffset() {
 		// ignore offset if onGui == true
 		if (!onGui)
-			glTranslated(-World.getInstance().getOffset().x, -World.getInstance().getOffset().y, 0);
+			glTranslated(-World.getActiveWorld().getOffset().x, -World.getActiveWorld().getOffset().y, 0);
 		onGui = false;
 
 		// reset lineWidth to default width
@@ -200,7 +200,7 @@ public class Graphics {
 	}
 
 	public void drawPoint(final double centerX, final double centerY, final float size) {
-		Vector2d offset = World.getInstance().getOffset();
+		Vector2d offset = World.getActiveWorld().getOffset();
 
 		// FIXME: better solution to check if on display
 		if (!onGui && offset.distanceTo(centerX, centerY) > 2000)

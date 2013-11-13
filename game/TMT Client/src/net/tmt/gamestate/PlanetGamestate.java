@@ -8,7 +8,7 @@ public class PlanetGamestate extends AbstractGamestate {
 	private World	world;
 
 	public PlanetGamestate() {
-		world = World.getInstance();
+		world = World.getActiveWorld();
 	}
 
 	@Override

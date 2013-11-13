@@ -15,7 +15,6 @@ public abstract class WorldMap implements Renderable {
 	private static final int			PRELOAD_RADIUS	= 3;
 	private static final int			RENDER_RADIUS	= 1;
 
-	private Terrain						baseTerrain;
 	private Vector2d					rederOffset;
 	private int							chunkSize;
 	protected Map<Coordinate, Chunk>	chunkMap		= new HashMap<Coordinate, Chunk>();
@@ -69,7 +68,4 @@ public abstract class WorldMap implements Renderable {
 		this.chunkSize = chunkSize;
 	}
 
-	protected void setBaseTerrain(final Terrain terrain) {
-		baseTerrain = terrain;
-	}
 }

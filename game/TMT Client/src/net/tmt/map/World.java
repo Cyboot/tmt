@@ -4,8 +4,6 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
-import net.tmt.game.manager.GameManager;
-import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
@@ -24,7 +22,7 @@ public class World implements Updateable, Renderable {
 	private WorldMap			map;
 	private Entity2D			player;
 
-	public World() {
+	private World() {
 		// TODO: quick & dirty: Worldoffset
 		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
 		MOVE_DIFF_WIDTH = (GameEngine.WIDTH / 2 - MOVE_MAX_WIDTH) * RATIO;
@@ -35,7 +33,7 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void update(final double delta) {
-		centerAroundShip(delta * 1000);
+		centerAroundPlayer(delta * 1000);
 		map.update(getOffsetCentered(), player.getPos());
 	}
 
@@ -44,7 +42,7 @@ public class World implements Updateable, Renderable {
 		map.render(g);
 	}
 
-	private void centerAroundShip(final double delta) {
+	private void centerAroundPlayer(final double delta) {
 		double dx = getOffsetCentered().x - player.getPos().x;
 		double dy = getOffsetCentered().y - player.getPos().y;
 
@@ -81,12 +79,6 @@ public class World implements Updateable, Renderable {
 		return tmp;
 	}
 
-	public static World getInstance() {
-		if (instance == null)
-			instance = new World();
-		return instance;
-	}
-
 	public void init() {
 		map = SpaceMap.getInstance();
 	}
@@ -103,11 +95,9 @@ public class World implements Updateable, Renderable {
 		return map;
 	}
 
-	public void changeToPlanetGameState(final int planetId) {
-		GameManager gm = GameManager.getInstance();
-		gm.pause(gm.getActiveGamestate());
-		gm.resume(PlanetGamestate.class);
-
-		// FIXME: planetstate
+	public static World getActiveWorld() {
+		if (instance == null)
+			instance = new World();
+		return instance;
 	}
 }

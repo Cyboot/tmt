@@ -17,7 +17,7 @@ public class SpaceGamestate extends AbstractGamestate {
 
 	public SpaceGamestate() {
 		// init World
-		world = World.getInstance();
+		world = World.getActiveWorld();
 		world.init();
 		world.setPlayer(player);
 

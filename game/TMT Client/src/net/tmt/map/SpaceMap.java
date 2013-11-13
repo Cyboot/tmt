@@ -16,12 +16,6 @@ public class SpaceMap extends WorldMap {
 
 	private List<Waypoint>	waypoints	= new ArrayList<>();
 
-	/**
-	 * Returns the one single SpaceMap that contains all chunks. The constructor
-	 * SpaceMap() is only used for sub maps.
-	 * 
-	 * @return the whole SpaceMap
-	 */
 	public static SpaceMap getInstance() {
 		if (instance == null)
 			instance = new SpaceMap();
@@ -29,15 +23,8 @@ public class SpaceMap extends WorldMap {
 	}
 
 
-	/**
-	 * This constructor should only ever be used to create sub maps. To get the
-	 * "real" SpaceMap use the static getInstance() method.
-	 * 
-	 * @return an empty SpaceMap
-	 */
 	public SpaceMap() {
 		setChunkSize(SpaceMap.CHUNK_SIZE);
-		setBaseTerrain(Terrain.SPACE_VOID);
 
 		// DEBUG: debug stuff
 		addWaypoint(new Waypoint(new Vector2d(200, 800)));

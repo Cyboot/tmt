@@ -8,15 +8,24 @@ public class PlanetMission extends Mission {
 	private Planet	planet;
 
 	public PlanetMission(final Planet planet) {
-		super("Planet #" + planet.getId(), "Welcome on this wonderfull planet. Enjoy lot of the lovley terrain "
-				+ planet.getBaseTerrain().name());
+		super("Planet #" + planet.getId(),
+				"Welcome to this wonderful planet. Here you can enjoy a lot of the lovley terrain type "
+						+ planet.getBaseTerrain().name());
 		this.planet = planet;
 	}
 
 	@Override
 	public void update(final double delta) {
-		// immediatly finish mission because it changes to PlanetGamestate
-		finish();
+		super.update(delta);
+
+		switch (getState()) {
+		case ACTIVE:
+			// immediatly finish mission because it changes to PlanetGamestate
+			finish();
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override

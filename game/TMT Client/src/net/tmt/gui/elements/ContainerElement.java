@@ -14,10 +14,8 @@ import net.tmt.util.Vector2d;
  * @author Tim Schmiedl (Cyboot)
  */
 public class ContainerElement extends GuiElement {
-	public static final double	DEFAULT_PADDING	= 4;
-
-	private double				paddingLeft		= DEFAULT_PADDING;
-	private double				paddingTop		= DEFAULT_PADDING;
+	private double				paddingLeft		= GuiElement.DEFAULT_PADDING;
+	private double				paddingTop		= GuiElement.DEFAULT_PADDING;
 
 	protected List<GuiElement>	guiElementList	= new ArrayList<>();
 

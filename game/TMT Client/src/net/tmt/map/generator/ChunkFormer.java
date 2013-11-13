@@ -23,7 +23,7 @@ class ChunkFormer {
 
 	private static Chunk formSpaceChunk(final Coordinate coord, final WorldMap map) {
 		RandomUtil.setSeed(coord.hashCode());
-		int chance = RandomUtil.intRange(0, 5);
+		int chance = RandomUtil.intRange(0, 0);
 		Chunk chunk = null;
 		switch (chance) {
 		case 0:
@@ -51,7 +51,7 @@ class ChunkFormer {
 	}
 
 	private static Chunk formPlanetChunk(final Coordinate coord, final WorldMap map) {
-		RandomUtil.setSeed(coord.hashCode());
+		RandomUtil.setSeed(coord.hashCode() ^ map.hashCode());
 
 		Chunk chunk = null;
 		if (RandomUtil.randBoolean(0.75)) {

@@ -176,4 +176,13 @@ public class Vector2d {
 
 		return df.format(x) + " : " + df.format(y);
 	}
+
+	public Vector2d sub(final double x, final double y) {
+		return add(-x, -y);
+	}
+
+	@Override
+	public int hashCode() {
+		return (int) x << 16 | ((int) y & 0x0000FFFF);
+	}
 }

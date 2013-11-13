@@ -29,17 +29,19 @@ public class GameManager implements Updateable, Renderable {
 	private AbstractGamestate		activeGamestate;
 
 	private GuiManager				guiManager;
+	private MissionManager			missionManager;
 
 	public static GameManager init() {
 		instance = new GameManager();
 		instance.guiManager = GuiManager.init();
+		instance.missionManager = MissionManager.getInstance();
 
-		instance.pause(new SpaceGamestate());
-		instance.pause(new SimulatorGamestate());
+		instance.pause(SpaceGamestate.getInstance());
+		instance.pause(SimulatorGamestate.getInstance());
 		instance.pause(EconomyGamestate.getInstance());
-		instance.pause(new DummyGamestate());
+		instance.pause(DummyGamestate.getInstance());
 
-		instance.resume(SpaceGamestate.class);
+		instance.resume(SpaceGamestate.getInstance().getId());
 		return instance;
 	}
 
@@ -56,6 +58,7 @@ public class GameManager implements Updateable, Renderable {
 		for (AbstractGamestate a : backgroundGamestates)
 			a.update(delta);
 
+		missionManager.update(delta);
 		guiManager.update(delta);
 	}
 
@@ -68,17 +71,17 @@ public class GameManager implements Updateable, Renderable {
 	 * @throws IllegalArgumentException
 	 *             if no such Gamestate/class was paused before
 	 */
-	public void resume(final Class<? extends AbstractGamestate> clazz) {
+	public void resume(final int id) {
 		AbstractGamestate toResume = null;
 
 		for (AbstractGamestate a : inactivedGamestates) {
-			if (a.getClass().equals(clazz)) {
+			if (a.getId() == id) {
 				toResume = a;
 				break;
 			}
 		}
 		for (AbstractGamestate a : backgroundGamestates) {
-			if (a.getClass().equals(clazz)) {
+			if (a.getId() == id) {
 				toResume = a;
 				break;
 			}
@@ -93,14 +96,14 @@ public class GameManager implements Updateable, Renderable {
 			inactivedGamestates.remove(activeGamestate);
 			backgroundGamestates.remove(activeGamestate);
 		} else
-			throw new IllegalArgumentException("Cannot resume '" + clazz + "' because it was not paused before!");
+			throw new IllegalArgumentException("Cannot resume Gamestate #" + id + " because it was not paused before!");
 
 		prepareWorld();
 	}
 
 	public void start(final AbstractGamestate gamestate) {
 		pause(gamestate);
-		resume(gamestate.getClass());
+		resume(gamestate.getId());
 	}
 
 	/**
@@ -155,8 +158,10 @@ public class GameManager implements Updateable, Renderable {
 
 	private void prepareWorld() {
 		World.setActiveWorld(activeGamestate.getClass());
+
 		// make sure update() is called before render() is called
-		World.getActiveWorld().update(0);
+		if (World.getActiveWorld() != null)
+			World.getActiveWorld().update(0);
 	}
 
 

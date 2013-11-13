@@ -35,7 +35,7 @@ public class PlanetGamestate extends AbstractGamestate {
 		World.init(PlanetGamestate.class);
 		World.setActiveWorld(PlanetGamestate.class);
 		world = World.getActiveWorld();
-		world.setMap(new PlanetMap(planet.getBaseTerrain()));
+		world.setMap(new PlanetMap(planet));
 		world.setPlayer(new Hero(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2)));
 	}
 }

@@ -8,13 +8,15 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class DummyGamestate extends AbstractGamestate {
-	private Sprite	sprite_ship1;
-	private Sprite	sprite_ship2;
-	private Sprite	sprite_ship3;
-	private Sprite	sprite_ship4;
-	private Sprite	sprite_ship5;
+	private static DummyGamestate	instance;
 
-	public DummyGamestate() {
+	private Sprite					sprite_ship1;
+	private Sprite					sprite_ship2;
+	private Sprite					sprite_ship3;
+	private Sprite					sprite_ship4;
+	private Sprite					sprite_ship5;
+
+	private DummyGamestate() {
 		sprite_ship1 = new Sprite("ship_double_64");
 		sprite_ship2 = new Sprite("ship_back_64");
 		sprite_ship3 = new Sprite("ship_round_64");
@@ -53,5 +55,12 @@ public class DummyGamestate extends AbstractGamestate {
 
 	@Override
 	public void requestMap() {
+	}
+
+	public static DummyGamestate getInstance() {
+		if (instance == null)
+			instance = new DummyGamestate();
+
+		return instance;
 	}
 }

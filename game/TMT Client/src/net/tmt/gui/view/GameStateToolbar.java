@@ -4,7 +4,6 @@ import net.tmt.game.interfaces.ClickListener;
 import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.DummyGamestate;
 import net.tmt.gamestate.EconomyGamestate;
-import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gamestate.SimulatorGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Sprite;
@@ -48,23 +47,24 @@ public class GameStateToolbar extends ContainerElement implements ClickListener 
 	public void onClick(final GuiElement caller) {
 		GameManager gameManager = GameManager.getInstance();
 
-		gameManager.pause(gameManager.getActiveGamestate());
+		if (caller.getTitle() != "planet")
+			gameManager.pause(gameManager.getActiveGamestate());
 
 		switch (caller.getTitle()) {
 		case "space":
-			gameManager.resume(SpaceGamestate.class);
+			gameManager.resume(SpaceGamestate.getInstance().getId());
 			break;
 		case "simulator":
-			gameManager.resume(SimulatorGamestate.class);
+			gameManager.resume(SimulatorGamestate.getInstance().getId());
 			break;
 		case "planet":
-			gameManager.resume(PlanetGamestate.class);
+			System.out.println("not working yet");
 			break;
 		case "economy":
-			gameManager.resume(EconomyGamestate.class);
+			gameManager.resume(EconomyGamestate.getInstance().getId());
 			break;
 		case "dummy":
-			gameManager.resume(DummyGamestate.class);
+			gameManager.resume(DummyGamestate.getInstance().getId());
 			break;
 		}
 	}

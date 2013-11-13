@@ -62,6 +62,15 @@ public class CountdownTimer {
 		return false;
 	}
 
+	/**
+	 * get the timeleft
+	 * 
+	 * @return timeleft in seconds
+	 */
+	public double getTimeleft() {
+		return timer;
+	}
+
 	public void setTimer(final double timer) {
 		this.timer = timer;
 	}
@@ -85,5 +94,10 @@ public class CountdownTimer {
 		CountdownTimer result = new CountdownTimer(timeleftIntervall);
 		result.autoReset = false;
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Timer " + StringFormatter.format(timer) + "/" + StringFormatter.format(timeleftIntervall);
 	}
 }

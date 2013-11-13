@@ -91,6 +91,10 @@ public class World implements Updateable, Renderable {
 		this.player = ship;
 	}
 
+	public Entity2D getPlayer() {
+		return player;
+	}
+
 	public void setMap(final WorldMap m) {
 		map = m;
 	}

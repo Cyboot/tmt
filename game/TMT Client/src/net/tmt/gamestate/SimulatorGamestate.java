@@ -4,6 +4,10 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gui.SimulatorGui;
 
 public class SimulatorGamestate extends AbstractGamestate {
+	private static SimulatorGamestate	instance;
+
+	private SimulatorGamestate() {
+	}
 
 	@Override
 	public void update(final double delta) {
@@ -17,5 +21,11 @@ public class SimulatorGamestate extends AbstractGamestate {
 
 	@Override
 	public void requestMap() {
+	}
+
+	public static SimulatorGamestate getInstance() {
+		if (instance == null)
+			instance = new SimulatorGamestate();
+		return instance;
 	}
 }

@@ -11,6 +11,9 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 	public static final int	PAUSED		= 1;
 	public static final int	BACKGROUND	= 2;
 
+	private static int		currentID	= 0;
+	private int				id			= currentID++;
+
 	private int				state;
 	protected GameManager	gameManager	= GameManager.getInstance();
 	protected GuiManager	guiManager	= GuiManager.getInstance();
@@ -71,5 +74,9 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 	 */
 	protected void onResume(final int oldState) {
 
+	}
+
+	public int getId() {
+		return id;
 	}
 }

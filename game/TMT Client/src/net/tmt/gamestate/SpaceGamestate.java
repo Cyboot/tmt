@@ -12,11 +12,13 @@ import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
-	private EntityManager	entityManager	= new EntityManager();
-	private PlayerSpaceShip	player			= new PlayerSpaceShip();
-	private World			world;
+	private static SpaceGamestate	instance;
 
-	public SpaceGamestate() {
+	private EntityManager			entityManager	= new EntityManager();
+	private PlayerSpaceShip			player			= new PlayerSpaceShip();
+	private World					world;
+
+	private SpaceGamestate() {
 		requestMap();
 
 		// add default Entities
@@ -58,5 +60,11 @@ public class SpaceGamestate extends AbstractGamestate {
 
 	public PlayerSpaceShip getShip() {
 		return player;
+	}
+
+	public static SpaceGamestate getInstance() {
+		if (instance == null)
+			instance = new SpaceGamestate();
+		return instance;
 	}
 }

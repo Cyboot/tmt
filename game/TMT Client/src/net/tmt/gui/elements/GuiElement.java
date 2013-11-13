@@ -9,14 +9,16 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public abstract class GuiElement implements Renderable, Updateable {
-	private String		title;
-	protected Vector2d	pos;
-	protected double	height;
-	protected double	width;
+	public static final double	DEFAULT_PADDING	= 4;
 
-	protected Color		borderColor		= new Color(Color.GREY);
-	protected Color		backgroundColor	= new Color(Color.DKGREY);
-	protected Color		foregroundColor	= new Color(Color.WHITE);
+	private String				title;
+	protected Vector2d			pos;
+	protected double			height;
+	protected double			width;
+
+	protected Color				borderColor		= new Color(Color.GREY);
+	protected Color				backgroundColor	= new Color(Color.DKGREY);
+	protected Color				foregroundColor	= new Color(Color.WHITE);
 
 
 	public GuiElement(final Vector2d pos, final double height, final double width, final String title) {

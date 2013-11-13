@@ -12,17 +12,20 @@ import net.tmt.util.Rectangle;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
+import org.newdawn.slick.Font;
 
 public class Button extends GuiElement {
 	private Color				origin_backgroundColor;
 	private Color				origin_borderColor;
 
+	private Font				font			= Graphics.Fonts.font_12;
 	private Rectangle			rect;
 	private boolean				isHover;
 	private boolean				isMouseClicked;
 	private Sprite				img;
 
 	private List<ClickListener>	clickListener	= new ArrayList<>();
+	private String				label;
 
 	public Button(final Vector2d pos, final Sprite img, final String title) {
 		this(pos, img.getWidth(), img.getHeight(), title);
@@ -32,6 +35,13 @@ public class Button extends GuiElement {
 
 	public Button(final Vector2d pos, final Sprite img) {
 		this(pos, img, "");
+	}
+
+	public Button(final Vector2d pos, final String label) {
+		this(pos.sub(DEFAULT_PADDING, DEFAULT_PADDING), 0, 0, label);
+		width = font.getWidth(label) + 2 * DEFAULT_PADDING;
+		height = font.getHeight(label) + 2 * DEFAULT_PADDING;
+		this.label = label;
 	}
 
 	public Button(final Vector2d pos, final double width, final double height, final String title) {
@@ -119,6 +129,10 @@ public class Button extends GuiElement {
 				img.setBlendColor(new Color(100, 100, 100, 255));
 
 			g.onGui().drawSprite(pos, img);
+		}
+		if (label != null) {
+			g.setColor(getForegroundColor());
+			g.onGui().drawText(pos.x + DEFAULT_PADDING, pos.y + DEFAULT_PADDING, label);
 		}
 	}
 }

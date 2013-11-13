@@ -9,11 +9,15 @@ public class MissionOverlay extends Gui {
 
 	@Override
 	public void update(final double delta) {
-		Mission mission = (Mission) guiManager.getValue(MISSION);
+		if (guiManager.isSet(MISSION_OFFER)) {
+			Mission mission = (Mission) guiManager.getValue(MISSION_OFFER);
+			guiManager.remove(MISSION_OFFER);
 
-		// FIXME always new MissionView
-		if (mission != null)
 			missionView = new MissionView(mission);
+		} else {
+			missionView = null;
+		}
+
 
 		if (missionView != null)
 			missionView.update(delta);

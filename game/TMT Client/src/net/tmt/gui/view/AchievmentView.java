@@ -13,7 +13,7 @@ public class AchievmentView extends ContainerElement {
 		super(new Vector2d(), 150, 50);
 
 		textview_name = new TextView(new Vector2d(DEFAULT_PADDING, DEFAULT_PADDING), 150 - 2 * DEFAULT_PADDING, 15);
-		textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 20 + DEFAULT_PADDING), 150 - 2 * 150, 30);
+		textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 20 + DEFAULT_PADDING), 150 - 2 * DEFAULT_PADDING, 30);
 
 		textview_name.noBackground();
 		textview_desc.noBackground();

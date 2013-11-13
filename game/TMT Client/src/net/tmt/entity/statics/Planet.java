@@ -4,6 +4,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.manager.MissionManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.Terrain;
+import net.tmt.map.World;
 import net.tmt.mission.Mission;
 import net.tmt.mission.PlanetMission;
 import net.tmt.util.Vector2d;
@@ -24,6 +25,12 @@ public class Planet extends Entity2D {
 		this.radius = radius;
 		this.baseTerrain = baseTerrain;
 		mission = new PlanetMission(this);
+
+		setColor();
+	}
+
+	private void setColor() {
+
 	}
 
 	public int getPlanetId() {
@@ -31,8 +38,7 @@ public class Planet extends Entity2D {
 	}
 
 	public void landingCheck(final Vector2d playerPos) {
-		if (playerPos.distanceTo(getPos()) < getRadius()) {
-			System.out.println("collide with planet");
+		if (World.getActiveWorld().getPlayer().getPos().distanceTo(pos) < getRadius()) {
 			MissionManager.getInstance().offerMission(mission);
 		}
 	}
@@ -58,9 +64,13 @@ public class Planet extends Entity2D {
 		case PLANET_SWAMP:
 			g.setColor(Color.PURPLE);
 			break;
+		case PLANET_MOUNTAIN:
+			g.setColor(Color.ORANGE);
+			break;
 		default:
 			break;
 		}
+		g.drawSprite(pos, baseTerrain.getSprite());
 		g.drawCircle(pos.x, pos.y, radius);
 	}
 
@@ -76,4 +86,8 @@ public class Planet extends Entity2D {
 		return baseTerrain;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + "[terrain=" + baseTerrain.name() + "]";
+	}
 }

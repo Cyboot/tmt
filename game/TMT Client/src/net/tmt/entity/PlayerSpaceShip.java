@@ -145,10 +145,8 @@ public class PlayerSpaceShip extends Entity2D {
 		if (Controls.wasTyped(Controls.CHANGE_TARGET)) {
 			dispatchValue(TargetSearchComponent.CHANGE_TARGET, true);
 		}
-		// DEBUG: kill target on right click
 		if (Controls.wasTyped(Controls.WEAPON_PRIMARY)) {
 			dispatchValue(RocketLauncherComponent.LAUNCH_TYPE_1, true);
-			// dispatchValue(TargetSearchComponent.KILL_TARGET, true);
 		}
 	}
 }

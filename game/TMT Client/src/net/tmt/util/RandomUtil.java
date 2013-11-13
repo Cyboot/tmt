@@ -7,7 +7,7 @@ import java.util.Random;
 public class RandomUtil {
 
 
-	private static final int	SEED	= 161567;
+	private static final int	SEED	= 42;
 	private static Random		random	= new Random(SEED);
 
 	public static double doubleRange(final double min, final double max) {
@@ -30,8 +30,24 @@ public class RandomUtil {
 		return random.nextInt(max - min + 1) + min;
 	}
 
+	/**
+	 * random boolean value
+	 * 
+	 * @return
+	 */
 	public static boolean randBoolean() {
 		return random.nextBoolean();
+	}
+
+	/**
+	 * random boolean value with the given probobility<br>
+	 * 
+	 * @param probability
+	 *            between 0 - 1
+	 * @return
+	 */
+	public static boolean randBoolean(final double probability) {
+		return random.nextDouble() < probability;
 	}
 
 	/**

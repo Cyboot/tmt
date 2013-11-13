@@ -9,7 +9,6 @@ public class TextView extends GuiElement {
 
 	protected String		text;
 	protected String[]		textBlock;
-	protected int			maxLineLength;
 	protected TrueTypeFont	font;
 
 
@@ -17,26 +16,25 @@ public class TextView extends GuiElement {
 		super(pos, width, height);
 		// defaults
 		font = Graphics.Fonts.font_12;
-		maxLineLength = 50;
 	}
 
 
 	protected void setupTextBlock() {
-		int txtLength = text.length();
+		int textWidth = font.getWidth(text);
 
-		if (txtLength <= maxLineLength) {
-			width = txtLength * font.getWidth("M");
+		if (textWidth <= width) {
 			height = font.getHeight();
 			textBlock = new String[] { text };
 		} else {
-			int rows = (text.length() / maxLineLength) + 1;
-			width = maxLineLength * font.getWidth("M");
+			int rows = (int) (textWidth / width) + 1;
 			height = rows * font.getHeight();
 			textBlock = new String[rows];
-			for (int i = 0; i < rows - 1; i++) {
-				textBlock[i] = text.substring(i * rows, (i * rows) + maxLineLength);
+			int charsPerLine = (int) (width / font.getWidth("W"));
+
+			for (int i = 0; i < rows; i++) {
+				int maxIndex = Math.min(text.length(), (i * charsPerLine) + charsPerLine);
+				textBlock[i] = text.substring(i * charsPerLine, maxIndex);
 			}
-			textBlock[textBlock.length - 1] = text.substring((rows - 1) * maxLineLength);
 		}
 	}
 
@@ -47,11 +45,6 @@ public class TextView extends GuiElement {
 		for (int i = 0; i < textBlock.length; i++)
 			g.onGui().drawText(pos.x, pos.y + font.getHeight() * i, textBlock[i]);
 	}
-
-	public void setMaxLineLength(final int maxLineLength) {
-		this.maxLineLength = maxLineLength;
-	}
-
 
 	public void setText(final String text) {
 		this.text = text;

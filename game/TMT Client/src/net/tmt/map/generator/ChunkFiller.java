@@ -40,7 +40,7 @@ class ChunkFiller {
 			break;
 		}
 
-		Planet p = new Planet(pos, terrain, 50);
+		Planet p = new Planet(pos, terrain, 300);
 		chunk.addStaticEntity(p);
 	}
 

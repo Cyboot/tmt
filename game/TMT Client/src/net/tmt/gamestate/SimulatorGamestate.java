@@ -14,4 +14,8 @@ public class SimulatorGamestate extends AbstractGamestate {
 	public void render(final Graphics g) {
 		guiManager.setGui(SimulatorGui.class);
 	}
+
+	@Override
+	public void requestMap() {
+	}
 }

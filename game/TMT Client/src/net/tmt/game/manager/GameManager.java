@@ -8,10 +8,10 @@ import net.tmt.game.interfaces.Updateable;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gamestate.DummyGamestate;
 import net.tmt.gamestate.EconomyGamestate;
-import net.tmt.gamestate.PlanetGamestate;
 import net.tmt.gamestate.SimulatorGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
+import net.tmt.map.World;
 
 /**
  * Manages the Gamestates. (pause/resume, active/inactive/background Gamestates)
@@ -36,7 +36,6 @@ public class GameManager implements Updateable, Renderable {
 
 		instance.pause(new SpaceGamestate());
 		instance.pause(new SimulatorGamestate());
-		instance.pause(new PlanetGamestate());
 		instance.pause(EconomyGamestate.getInstance());
 		instance.pause(new DummyGamestate());
 
@@ -95,6 +94,13 @@ public class GameManager implements Updateable, Renderable {
 			backgroundGamestates.remove(activeGamestate);
 		} else
 			throw new IllegalArgumentException("Cannot resume '" + clazz + "' because it was not paused before!");
+
+		prepareWorld();
+	}
+
+	public void start(final AbstractGamestate gamestate) {
+		pause(gamestate);
+		resume(gamestate.getClass());
 	}
 
 	/**
@@ -146,6 +152,13 @@ public class GameManager implements Updateable, Renderable {
 		if (activeGamestate == gamestate)
 			activeGamestate = null;
 	}
+
+	private void prepareWorld() {
+		World.setActiveWorld(activeGamestate.getClass());
+		// make sure update() is called before render() is called
+		World.getActiveWorld().update(0);
+	}
+
 
 	public AbstractGamestate getActiveGamestate() {
 		return activeGamestate;

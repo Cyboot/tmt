@@ -50,4 +50,8 @@ public class DummyGamestate extends AbstractGamestate {
 		g.onGui().drawSprite(new Vector2d(500, 100), sprite_ship5);
 
 	}
+
+	@Override
+	public void requestMap() {
+	}
 }

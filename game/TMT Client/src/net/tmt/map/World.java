@@ -1,5 +1,8 @@
 package net.tmt.map;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.tmt.entity.Entity2D;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
@@ -8,19 +11,20 @@ import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
 public class World implements Updateable, Renderable {
-	private static final double	RATIO	= 1.8;
-	private double				MOVE_DIFF_WIDTH;
-	private double				MOVE_DIFF_HEIGHT;
-	private double				MOVE_MAX_WIDTH;
-	private double				MOVE_MAX_HEIGTH;
+	private static final double			RATIO			= 1.8;
+	private double						MOVE_DIFF_WIDTH;
+	private double						MOVE_DIFF_HEIGHT;
+	private double						MOVE_MAX_WIDTH;
+	private double						MOVE_MAX_HEIGTH;
 
-	private static World		instance;
+	private static Map<Class<?>, World>	worldInstances	= new HashMap<Class<?>, World>();
+	private static World				activeWorld;
 
-	private Vector2d			tmp		= new Vector2d();
-	private Vector2d			offset	= new Vector2d();
+	private Vector2d					tmp				= new Vector2d();
+	private Vector2d					offset			= new Vector2d();
 
-	private WorldMap			map;
-	private Entity2D			player;
+	private WorldMap					map;
+	private Entity2D					player;
 
 	private World() {
 		// TODO: quick & dirty: Worldoffset
@@ -79,8 +83,8 @@ public class World implements Updateable, Renderable {
 		return tmp;
 	}
 
-	public void init() {
-		map = SpaceMap.getInstance();
+	public static void init(final Class<?> clazz) {
+		worldInstances.put(clazz, new World());
 	}
 
 	public void setPlayer(final Entity2D ship) {
@@ -96,8 +100,10 @@ public class World implements Updateable, Renderable {
 	}
 
 	public static World getActiveWorld() {
-		if (instance == null)
-			instance = new World();
-		return instance;
+		return activeWorld;
+	}
+
+	public static void setActiveWorld(final Class<?> clazz) {
+		activeWorld = worldInstances.get(clazz);
 	}
 }

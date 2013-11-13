@@ -7,6 +7,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.Planet;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.gfx.Graphics;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -45,7 +46,7 @@ public class Chunk implements Renderable {
 			color = Color.PURPLE;
 			break;
 		default:
-			color = Color.LTGREY;
+			color = ColorUtil.TRANSPARENT;
 		}
 
 		this.size = size;
@@ -62,8 +63,8 @@ public class Chunk implements Renderable {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(color);
-		g.drawRect(getCoord().x * size - 4, getCoord().y * size, size - 8, size - 8);
 		g.drawSprite(new Vector2d(getCoord().x * size, getCoord().y * size), terrain.getSprite());
+		g.drawRect(getCoord().x * size + 4, getCoord().y * size + 4, size - 8, size - 8);
 		for (Entity2D e : staticEntityList) {
 			e.render(g);
 		}

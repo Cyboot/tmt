@@ -6,6 +6,7 @@ import net.tmt.entity.npc.NPCTransporterShip;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
+import net.tmt.map.SpaceMap;
 import net.tmt.map.World;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -16,10 +17,7 @@ public class SpaceGamestate extends AbstractGamestate {
 	private World			world;
 
 	public SpaceGamestate() {
-		// init World
-		world = World.getActiveWorld();
-		world.init();
-		world.setPlayer(player);
+		requestMap();
 
 		// add default Entities
 		for (int i = 0; i < 20; i++) {
@@ -33,6 +31,16 @@ public class SpaceGamestate extends AbstractGamestate {
 		entityManager.addEntity(player, EntityManager.LAYER_3_FRONT);
 
 		onResume(-1);
+	}
+
+	@Override
+	public void requestMap() {
+		// init World
+		World.init(SpaceGamestate.class);
+		World.setActiveWorld(SpaceGamestate.class);
+		world = World.getActiveWorld();
+		world.setMap(SpaceMap.getInstance());
+		world.setPlayer(player);
 	}
 
 	@Override

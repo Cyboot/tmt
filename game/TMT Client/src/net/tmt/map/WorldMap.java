@@ -12,18 +12,19 @@ import net.tmt.util.Vector2d;
 
 public abstract class WorldMap implements Renderable {
 	// PRELOAD_RADIUS in chunks
-	private static final int			PRELOAD_RADIUS	= 3;
-	private static final int			RENDER_RADIUS	= 1;
+	private int							preloadRadius;
+	private int							renderRadius;
 
 	private Vector2d					rederOffset;
 	private int							chunkSize;
-	protected Map<Coordinate, Chunk>	chunkMap		= new HashMap<Coordinate, Chunk>();
+	protected Map<Coordinate, Chunk>	chunkMap	= new HashMap<Coordinate, Chunk>();
+	private Terrain						baseTerrain;
 
 	public void update(final Vector2d offset, final Vector2d pPos) {
 		rederOffset = offset;
 
 		// generate new Terrain if needed
-		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, PRELOAD_RADIUS);
+		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, preloadRadius);
 
 		// update all chunks (for now all of them)
 		for (Chunk c : chunkMap.values())
@@ -35,8 +36,8 @@ public abstract class WorldMap implements Renderable {
 		Coordinate coord = Coordinate.tmp0;
 		Coordinate.tmp0.set(rederOffset, chunkSize);
 
-		for (int x = coord.x - RENDER_RADIUS; x <= coord.x + RENDER_RADIUS; x++) {
-			for (int y = coord.y - RENDER_RADIUS; y <= coord.y + RENDER_RADIUS; y++) {
+		for (int x = coord.x - renderRadius; x <= coord.x + renderRadius; x++) {
+			for (int y = coord.y - renderRadius; y <= coord.y + renderRadius; y++) {
 				Coordinate check = Coordinate.tmp1;
 				check.set(x, y);
 				if (chunkMap.get(check) != null) {
@@ -52,7 +53,7 @@ public abstract class WorldMap implements Renderable {
 
 	public void addStaticEntity(final Entity2D e) {
 		Coordinate coord = new Coordinate(e.getPos(), this.chunkSize);
-		MapGenerator.generateAround(coord, this, PRELOAD_RADIUS);
+		MapGenerator.generateAround(coord, this, preloadRadius);
 		chunkMap.get(coord).addStaticEntity(e);
 	}
 
@@ -66,6 +67,21 @@ public abstract class WorldMap implements Renderable {
 
 	protected void setChunkSize(final int chunkSize) {
 		this.chunkSize = chunkSize;
+
+		if (chunkSize == SpaceMap.CHUNK_SIZE) {
+			preloadRadius = 3;
+			renderRadius = 1;
+		} else if (chunkSize == PlanetMap.CHUNK_SIZE) {
+			preloadRadius = 15;
+			renderRadius = 10;
+		}
 	}
 
+	protected void setBaseTerrain(final Terrain baseTerrain) {
+		this.baseTerrain = baseTerrain;
+	}
+
+	public Terrain getBaseTerrain() {
+		return baseTerrain;
+	}
 }

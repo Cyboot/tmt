@@ -10,7 +10,7 @@ import net.tmt.util.Vector2d;
 
 
 public class SpaceMap extends WorldMap {
-	public static final int	CHUNK_SIZE	= 248;
+	public static final int	CHUNK_SIZE	= 2048;
 
 	private static SpaceMap	instance	= null;
 
@@ -24,7 +24,7 @@ public class SpaceMap extends WorldMap {
 
 
 	public SpaceMap() {
-		setChunkSize(SpaceMap.CHUNK_SIZE);
+		setChunkSize(CHUNK_SIZE);
 
 		// DEBUG: debug stuff
 		addWaypoint(new Waypoint(new Vector2d(200, 800)));

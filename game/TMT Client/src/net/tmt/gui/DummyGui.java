@@ -5,7 +5,7 @@ import net.tmt.gui.elements.TextView;
 import net.tmt.util.Vector2d;
 
 public class DummyGui extends Gui {
-	TextView	textview	= new TextView(new Vector2d(300, 300), 0, 0);
+	TextView	textview	= new TextView(new Vector2d(300, 300), 300, 100);
 
 	public DummyGui() {
 		textview.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales porttitor lorem. "

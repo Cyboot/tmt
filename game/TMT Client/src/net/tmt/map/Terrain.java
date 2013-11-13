@@ -11,12 +11,12 @@ public enum Terrain {
 	SPACE_DEBRIS("space_void"), //
 
 	PLANET_GRASS("planet_grass"), //
-	PLANET_WATER("planet_grass"), //
-	PLANET_DESERT("planet_grass"), //
-	PLANET_SNOW("planet_grass"), //
-	PLANET_FOREST("planet_grass"), //
-	PLANET_SWAMP("planet_grass"), //
-	PLANET_MOUNTAIN("planet_grass");
+	PLANET_WATER("planet_water"), //
+	PLANET_DESERT("planet_desert"), //
+	PLANET_SNOW("planet_snow"), //
+	PLANET_FOREST("planet_forest"), //
+	PLANET_SWAMP("planet_swamp"), //
+	PLANET_MOUNTAIN("planet_mountain");
 
 	private Sprite	sprite;
 	private String	str;

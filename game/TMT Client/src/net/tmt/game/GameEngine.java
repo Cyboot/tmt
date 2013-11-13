@@ -10,6 +10,7 @@ import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.global.stats.Stats;
 import net.tmt.map.Terrain;
 import net.tmt.util.ConfigUtil;
 import net.tmt.util.CountdownTimer;
@@ -118,12 +119,14 @@ public class GameEngine {
 		Terrain.init();
 		graphics = Graphics.init();
 		gameManager = GameManager.init();
+
 		try {
 			Controllers.create();
 		} catch (LWJGLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		Stats.init();
 
 		try {
 			DebugUtil.setUser(ConfigUtil.getString("debug.User"));

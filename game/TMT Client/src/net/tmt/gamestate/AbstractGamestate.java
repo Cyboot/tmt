@@ -21,6 +21,8 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 	@Override
 	public abstract void render(Graphics g);
 
+	public abstract void requestMap();
+
 	public int getState() {
 		return state;
 	}

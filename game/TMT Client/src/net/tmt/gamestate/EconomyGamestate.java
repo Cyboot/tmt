@@ -82,6 +82,10 @@ public class EconomyGamestate extends AbstractGamestate {
 		return instance;
 	}
 
+	@Override
+	public void requestMap() {
+	}
+
 	// public static enum InputState {
 	// /** neutral */
 	// NEUTRAL,

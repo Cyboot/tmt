@@ -10,6 +10,7 @@ import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.global.achievments.Achievments;
 import net.tmt.global.stats.Stats;
 import net.tmt.map.Terrain;
 import net.tmt.util.ConfigUtil;
@@ -118,6 +119,7 @@ public class GameEngine {
 			e.printStackTrace();
 		}
 		PlanetNameUtil.init();
+		Achievments.init();
 		Terrain.init();
 		graphics = Graphics.init();
 		gameManager = GameManager.init();

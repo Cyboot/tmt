@@ -34,7 +34,6 @@ public class AchievmentOverlay extends Gui {
 		if (!show)
 			return;
 
-		// DEBUG: don't render achievments
-		// view.render(g);
+		view.render(g);
 	}
 }

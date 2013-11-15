@@ -10,10 +10,11 @@ public class AchievmentView extends ContainerElement {
 	private TextView	textview_desc;
 
 	public AchievmentView() {
-		super(new Vector2d(), 150, 50);
+		super(new Vector2d(), 300, 64);
 
-		textview_name = new TextView(new Vector2d(DEFAULT_PADDING, DEFAULT_PADDING), 150 - 2 * DEFAULT_PADDING, 15);
-		textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 20 + DEFAULT_PADDING), 150 - 2 * DEFAULT_PADDING, 30);
+		textview_name = new TextView(new Vector2d(DEFAULT_PADDING, DEFAULT_PADDING), width - 2 * DEFAULT_PADDING, 15);
+		textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 20 + DEFAULT_PADDING), width - 2 * DEFAULT_PADDING,
+				30);
 
 		textview_name.noBackground();
 		textview_desc.noBackground();

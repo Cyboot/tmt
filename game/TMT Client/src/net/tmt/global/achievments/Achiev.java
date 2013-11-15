@@ -6,6 +6,7 @@ package net.tmt.global.achievments;
  * @author Tim Schmiedl (Cyboot)
  */
 public class Achiev {
+	private String		key;
 	private String		description;
 	private String		name;
 
@@ -13,14 +14,15 @@ public class Achiev {
 	private int			counter;
 
 
-	protected Achiev(final String name, final String desc, final int countTarget) {
+	protected Achiev(final String key, final String name, final String desc, final int countTarget) {
+		this.key = key;
 		this.name = name;
 		this.description = desc;
 		this.COUNTER_TARGET = countTarget;
 	}
 
-	public Achiev(final String name, final String desc) {
-		this(name, desc, 1);
+	public Achiev(final String key, final String name, final String desc) {
+		this(key, name, desc, 1);
 	}
 
 	public String getDescription() {
@@ -29,6 +31,10 @@ public class Achiev {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getKey() {
+		return key;
 	}
 
 	public void addCount() {

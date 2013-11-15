@@ -11,7 +11,7 @@ public class PlanetNameUtil {
 	}
 
 	public static void init() {
-		String readFromFile = FilereaderUtil.readFromFile("res/misc/moons.txt");
+		String readFromFile = FileUtil.readFromFile("res/txt/moons.txt");
 
 		for (String str : readFromFile.split("\n"))
 			planetNames.add(str);

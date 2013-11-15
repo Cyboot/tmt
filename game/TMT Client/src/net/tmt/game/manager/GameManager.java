@@ -11,7 +11,6 @@ import net.tmt.gamestate.EconomyGamestate;
 import net.tmt.gamestate.SimulatorGamestate;
 import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
-import net.tmt.map.World;
 
 /**
  * Manages the Gamestates. (pause/resume, active/inactive/background Gamestates)
@@ -21,12 +20,14 @@ import net.tmt.map.World;
 public class GameManager implements Updateable, Renderable {
 	private static GameManager		instance;
 
+	private boolean					dirtyGamestateswitch	= false;
 	/** all inactive, but yet not deleted Gamestates */
 	private List<AbstractGamestate>	inactivedGamestates		= new CopyOnWriteArrayList<>();
 	/** all updated, but not visible Gamestates */
 	private List<AbstractGamestate>	backgroundGamestates	= new CopyOnWriteArrayList<>();
 	/** the active and visible Gamestate */
 	private AbstractGamestate		activeGamestate;
+
 
 	private GuiManager				guiManager;
 	private MissionManager			missionManager;
@@ -47,12 +48,18 @@ public class GameManager implements Updateable, Renderable {
 
 	@Override
 	public void render(final Graphics g) {
+		// don't render if Gamestate was switched before (to make sure update()
+		// is always called before render() )
+		if (dirtyGamestateswitch)
+			return;
+
 		activeGamestate.render(g);
 		guiManager.render(g);
 	}
 
 	@Override
 	public void update(final double delta) {
+		dirtyGamestateswitch = false;
 		activeGamestate.update(delta);
 
 		for (AbstractGamestate a : backgroundGamestates)
@@ -63,10 +70,10 @@ public class GameManager implements Updateable, Renderable {
 	}
 
 	/**
-	 * Resumes the Gamestate for the given class. the previous Gamestate will be
+	 * Resumes the Gamestate for the given id. The previous Gamestate will be
 	 * send to background
 	 * 
-	 * @param clazz
+	 * @param id
 	 *            of the Gamestate to continue
 	 * @throws IllegalArgumentException
 	 *             if no such Gamestate/class was paused before
@@ -98,10 +105,15 @@ public class GameManager implements Updateable, Renderable {
 		} else
 			throw new IllegalArgumentException("Cannot resume Gamestate #" + id + " because it was not paused before!");
 
-		prepareWorld();
+		dirtyGamestateswitch = true;
 	}
 
-	public void start(final AbstractGamestate gamestate) {
+	/**
+	 * adds and starts a new Gamestate
+	 * 
+	 * @param gamestate
+	 */
+	public void startNew(final AbstractGamestate gamestate) {
 		pause(gamestate);
 		resume(gamestate.getId());
 	}
@@ -126,24 +138,6 @@ public class GameManager implements Updateable, Renderable {
 	}
 
 	/**
-	 * makes the given Gamestate to a background Gamestate
-	 * 
-	 * @param gamestate
-	 */
-	public void background(final AbstractGamestate gamestate) {
-		gamestate.setState(AbstractGamestate.BACKGROUND);
-		inactivedGamestates.remove(gamestate);
-
-		if (gamestate == activeGamestate) {
-			activeGamestate = null;
-		}
-
-		// don't duplicate Gamestate in list
-		if (!backgroundGamestates.contains(gamestate))
-			backgroundGamestates.add(gamestate);
-	}
-
-	/**
 	 * stops and deletes the given Gamestate. It cannot resumed afterwards
 	 * 
 	 * @param gamestate
@@ -156,24 +150,37 @@ public class GameManager implements Updateable, Renderable {
 			activeGamestate = null;
 	}
 
-	private void prepareWorld() {
-		World.setActiveWorld(activeGamestate.getClass());
+	/**
+	 * makes the given Gamestate to a background Gamestate
+	 * 
+	 * @param gamestate
+	 */
+	private void background(final AbstractGamestate gamestate) {
+		gamestate.setState(AbstractGamestate.BACKGROUND);
+		inactivedGamestates.remove(gamestate);
 
-		// make sure update() is called before render() is called
-		if (World.getActiveWorld() != null)
-			World.getActiveWorld().update(0);
+		if (gamestate == activeGamestate) {
+			activeGamestate = null;
+		}
+
+		// don't duplicate Gamestate in list
+		if (!backgroundGamestates.contains(gamestate))
+			backgroundGamestates.add(gamestate);
 	}
-
 
 	public AbstractGamestate getActiveGamestate() {
 		return activeGamestate;
 	}
 
-	public static GameManager getInstance() {
-		return instance;
-	}
-
 	public List<AbstractGamestate> getBackgroundGamestates() {
 		return backgroundGamestates;
+	}
+
+	public List<AbstractGamestate> getInactivedGamestates() {
+		return inactivedGamestates;
+	}
+
+	public static GameManager getInstance() {
+		return instance;
 	}
 }

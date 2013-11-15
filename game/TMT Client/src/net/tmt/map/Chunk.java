@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.statics.Planet;
 import net.tmt.game.interfaces.Renderable;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.ColorUtil;
 import net.tmt.util.Vector2d;
@@ -52,29 +52,42 @@ public class Chunk implements Renderable {
 		this.size = size;
 	}
 
-	public void update(final Vector2d offset) {
-		for (Entity2D e : staticEntityList) {
-			if (e instanceof Planet) {
-				((Planet) e).landingCheck(offset);
-			}
-		}
-	}
 
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(color);
-		g.drawSprite(new Vector2d(getCoord().x * size, getCoord().y * size), terrain.getSprite());
-		g.drawRect(getCoord().x * size + 4, getCoord().y * size + 4, size - 8, size - 8);
+		g.drawSprite(Vector2d.tmp1.set(getCoord().x * size, getCoord().y * size), terrain.getSprite());
+		// g.drawRect(getCoord().x * size + 4, getCoord().y * size + 4, size -
+		// 8, size - 8);
 		for (Entity2D e : staticEntityList) {
 			e.render(g);
 		}
 	}
 
-	public void addStaticEntity(final Entity2D e) {
+	/**
+	 * adds an Entity to the chunk
+	 * 
+	 * @param e
+	 *            Entity to add
+	 * @return if Entity was added successfull
+	 */
+	public boolean addStaticEntity(final Entity2D e) {
 		staticEntityList.add(e);
+		return true;
 	}
 
 	public Coordinate getCoord() {
 		return coord;
+	}
+
+	public void update(final EntityManager entityManager, final double delta) {
+		try {
+			for (Entity2D e : staticEntityList)
+				e.update(entityManager, delta);
+		} catch (NullPointerException e) {
+			System.err
+					.println("entityManager == null. if there are static entities inside chunk that need the entitymanager to update "
+							+ "you should call WorldMap.setEntityManager() at after creation of the map");
+		}
 	}
 }

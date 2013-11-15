@@ -7,6 +7,7 @@ public class SimulatorGamestate extends AbstractGamestate {
 	private static SimulatorGamestate	instance;
 
 	private SimulatorGamestate() {
+		super(null);
 	}
 
 	@Override
@@ -16,11 +17,8 @@ public class SimulatorGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
+		super.render(g);
 		guiManager.setGui(SimulatorGui.class);
-	}
-
-	@Override
-	public void requestMap() {
 	}
 
 	public static SimulatorGamestate getInstance() {

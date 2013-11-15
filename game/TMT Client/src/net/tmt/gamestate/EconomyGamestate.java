@@ -1,43 +1,57 @@
 package net.tmt.gamestate;
 
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.tmt.entity.economy.Building;
+import net.tmt.entity.statics.Planet;
+import net.tmt.game.Controls;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.EconomyGui;
+import net.tmt.map.PlanetChunk;
+import net.tmt.map.PlanetMap;
+import net.tmt.map.Terrain;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.input.Mouse;
-
 public class EconomyGamestate extends AbstractGamestate {
+	private static EconomyGamestate	instance	= new EconomyGamestate();
 
-	public static final int			NEUTRAL				= 0;
-	public static final int			CONSTRUCTING		= 1;
-	public static final int			BULIDING_SELECTED	= 2;
+	private InputState				inputState	= InputState.NEUTRAL;
 
-	private static EconomyGamestate	instance			= new EconomyGamestate();
-	private List<Building>			buildingList		= new ArrayList<>();
-
-	private int						inputState			= NEUTRAL;
+	private Building				buildingToConstruct;
 
 	private EconomyGamestate() {
+		super(new PlanetMap(new Planet(new Vector2d(), Terrain.PLANET_GRASS, 0)));
 	}
 
 	@Override
 	public void update(final double delta) {
+		world.update(delta);
+		entityManager.update(delta);
+
 		switch (inputState) {
 		case NEUTRAL:
 			// do nothing special here (yet)
 			break;
 
 		case CONSTRUCTING:
-			// TODO #27 on Leftclick --> create the Building
+			// update position to mouse curser
+			int chunkSize = world.getMap().getChunkSize();
+			int x = (Controls.mouseX() / chunkSize) * chunkSize + Building.SIZE / 2;
+			int y = (Controls.mouseY() / chunkSize) * chunkSize + Building.SIZE / 2;
 
-			if (Mouse.isButtonDown(MouseEvent.MOUSE_CLICKED)) {
-				buildingList.add(new Building(new Vector2d(Mouse.getX(), Mouse.getY())));
-				// setInputState(InputState.NEUTRAL);
+			buildingToConstruct.getPos().set(x, y);
+
+			// add Building to EntityManager on leftclick
+			if (Controls.wasReleased(Controls.MOUSE_LEFT)) {
+
+				// #27 maybe the Chunk to build on is of interest:
+				@SuppressWarnings("unused")
+				PlanetChunk chunk = (PlanetChunk) world.getMap().getChunk(buildingToConstruct.getPos());
+
+				boolean success = world.addStaticEntity(buildingToConstruct);
+
+				if (success) {
+					buildingToConstruct = null;
+					setInputState(InputState.NEUTRAL);
+				}
 			}
 			break;
 
@@ -50,7 +64,10 @@ public class EconomyGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
+		super.render(g);
 		guiManager.setGui(EconomyGui.class);
+		world.render(g);
+		entityManager.render(g);
 
 		switch (inputState) {
 		case NEUTRAL:
@@ -58,23 +75,20 @@ public class EconomyGamestate extends AbstractGamestate {
 
 			break;
 		case CONSTRUCTING:
-			// TODO #27 display the currently constructing building at mouse
-			// position
+			// render the currently constructing Building under curser
+			buildingToConstruct.render(g);
 			break;
 		case BULIDING_SELECTED:
 			// display building information (already done in update() )
 			break;
 		}
-
-		for (Building building : buildingList)
-			building.render(g);
 	}
 
-	public int getInputState() {
+	public InputState getInputState() {
 		return inputState;
 	}
 
-	public void setInputState(final int inputState) {
+	public void setInputState(final InputState inputState) {
 		this.inputState = inputState;
 	}
 
@@ -82,18 +96,18 @@ public class EconomyGamestate extends AbstractGamestate {
 		return instance;
 	}
 
-	@Override
-	public void requestMap() {
+	public void setBuildingToConstruct(final Building buildingToConstruct) {
+		this.buildingToConstruct = buildingToConstruct;
 	}
 
-	// public static enum InputState {
-	// /** neutral */
-	// NEUTRAL,
-	//
-	// /** currently constructing a building */
-	// CONSTRUCTING,
-	//
-	// /** infos about building etc. */
-	// BULIDING_SELECTED
-	// }
+	public static enum InputState {
+		/** neutral */
+		NEUTRAL,
+
+		/** currently constructing a building */
+		CONSTRUCTING,
+
+		/** infos about building etc. */
+		BULIDING_SELECTED
+	}
 }

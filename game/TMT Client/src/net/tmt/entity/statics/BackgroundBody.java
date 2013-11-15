@@ -4,12 +4,13 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
-import net.tmt.map.World;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class BackgroundBody extends Entity2D {
-	private Sprite	sprite;
+	private Sprite		sprite;
+
+	private Vector2d	offset;
 
 	public BackgroundBody(final Vector2d pos) {
 		super(pos);
@@ -35,12 +36,13 @@ public class BackgroundBody extends Entity2D {
 
 	@Override
 	public void update(final EntityManager caller, final double delta) {
+		offset = caller.getWorld().getOffset();
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		double x = pos.x - World.getActiveWorld().getOffset().x;
-		double y = pos.y - World.getActiveWorld().getOffset().y;
+		double x = pos.x - offset.x;
+		double y = pos.y - offset.y;
 
 		g.onGui().drawSprite(Vector2d.tmp1.set(x / 16, y / 16), sprite);
 	}

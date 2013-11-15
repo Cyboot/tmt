@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
-import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -20,6 +19,7 @@ public class Graphics {
 	private TrueTypeFont			font;
 	private boolean					onGui;
 	private org.newdawn.slick.Color	slickColor			= new org.newdawn.slick.Color(0);
+	private Vector2d				offset;
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -92,7 +92,7 @@ public class Graphics {
 	private void applyOffset() {
 		// ignore offset if onGui == true
 		if (!onGui)
-			glTranslated(-World.getActiveWorld().getOffset().x, -World.getActiveWorld().getOffset().y, 0);
+			glTranslated(-offset.x, -offset.y, 0);
 		onGui = false;
 
 		// reset lineWidth to default width
@@ -106,6 +106,10 @@ public class Graphics {
 		this.slickColor.g = color.getGreen() / 255f;
 		this.slickColor.b = color.getBlue() / 255f;
 		this.slickColor.a = color.getAlpha() / 255f;
+	}
+
+	public void setOffset(final Vector2d offset) {
+		this.offset = offset;
 	}
 
 	public void setLineWidth(final int width) {
@@ -200,12 +204,6 @@ public class Graphics {
 	}
 
 	public void drawPoint(final double centerX, final double centerY, final float size) {
-		Vector2d offset = World.getActiveWorld().getOffset();
-
-		// FIXME: better solution to check if on display
-		if (!onGui && offset.distanceTo(centerX, centerY) > 2000)
-			return;
-
 		applyColor();
 
 		glPointSize(size);

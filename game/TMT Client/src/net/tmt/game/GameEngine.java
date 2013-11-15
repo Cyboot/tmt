@@ -15,6 +15,7 @@ import net.tmt.map.Terrain;
 import net.tmt.util.ConfigUtil;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.DebugUtil;
+import net.tmt.util.PlanetNameUtil;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -116,6 +117,7 @@ public class GameEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		PlanetNameUtil.init();
 		Terrain.init();
 		graphics = Graphics.init();
 		gameManager = GameManager.init();

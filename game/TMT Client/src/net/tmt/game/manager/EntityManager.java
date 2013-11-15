@@ -10,6 +10,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
+import net.tmt.map.World;
 
 /**
  * <pre>
@@ -34,14 +35,16 @@ public class EntityManager implements Updateable, Renderable {
 	private List<Entity2D>					collidableEntities	= new ArrayList<>();
 
 	private AddRemove						addremove			= new AddRemove();
+	private World							world;
 
-	public EntityManager() {
+	public EntityManager(final World world) {
 		// Init Entitymap
 		entityMap.put(LAYER_0_FAR_BACK, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_1_BACK, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_2_MEDIUM, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_3_FRONT, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_4_GUI, new ArrayList<Entity2D>());
+		this.world = world;
 	}
 
 	@Override
@@ -101,6 +104,10 @@ public class EntityManager implements Updateable, Renderable {
 
 	public List<Entity2D> getCollidableEntities() {
 		return collidableEntities;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 	/**

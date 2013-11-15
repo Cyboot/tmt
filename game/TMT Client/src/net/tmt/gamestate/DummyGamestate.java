@@ -17,6 +17,7 @@ public class DummyGamestate extends AbstractGamestate {
 	private Sprite					sprite_ship5;
 
 	private DummyGamestate() {
+		super(null);
 		sprite_ship1 = new Sprite("ship_double_64");
 		sprite_ship2 = new Sprite("ship_back_64");
 		sprite_ship3 = new Sprite("ship_round_64");
@@ -37,6 +38,7 @@ public class DummyGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
+		super.render(g);
 		guiManager.setGui(DummyGui.class);
 
 		sprite_ship1.setBlendColor(new Color(255, 175, 175, 255));
@@ -51,10 +53,6 @@ public class DummyGamestate extends AbstractGamestate {
 		g.onGui().drawSprite(new Vector2d(400, 100), sprite_ship4);
 		g.onGui().drawSprite(new Vector2d(500, 100), sprite_ship5);
 
-	}
-
-	@Override
-	public void requestMap() {
 	}
 
 	public static DummyGamestate getInstance() {

@@ -2,9 +2,12 @@ package net.tmt.gamestate;
 
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.map.World;
+import net.tmt.map.WorldMap;
 
 public abstract class AbstractGamestate implements Updateable, Renderable {
 	public static final int	ACTIVE		= 0;
@@ -13,18 +16,29 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 
 	private static int		currentID	= 0;
 	private int				id			= currentID++;
-
 	private int				state;
+
+	protected EntityManager	entityManager;
 	protected GameManager	gameManager	= GameManager.getInstance();
 	protected GuiManager	guiManager	= GuiManager.getInstance();
+	protected World			world;
+
+	protected AbstractGamestate(final WorldMap worldmap) {
+		world = new World();
+		world.setMap(worldmap);
+		entityManager = new EntityManager(world);
+
+		if (worldmap != null)
+			worldmap.setEntityManager(entityManager);
+	}
 
 	@Override
 	public abstract void update(final double delta);
 
 	@Override
-	public abstract void render(Graphics g);
-
-	public abstract void requestMap();
+	public void render(final Graphics g) {
+		g.setOffset(world.getOffset());
+	}
 
 	public int getState() {
 		return state;
@@ -78,5 +92,14 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 
 	public int getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " #" + id;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 }

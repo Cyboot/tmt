@@ -19,8 +19,7 @@ public class Coordinate {
 	}
 
 	private int posScalar2coordScalar(final double s, final int chunkSize) {
-		int factor = (s < 0 ? -1 : 1);
-		return (int) Math.rint(Math.abs(s) / chunkSize) * factor;
+		return (int) s / chunkSize;
 	}
 
 	public Vector2d center2pos(final int chunkSize) {
@@ -42,14 +41,16 @@ public class Coordinate {
 		return x << 16 | (y & 0x0000FFFF);
 	}
 
-	public void set(final int x, final int y) {
+	public Coordinate set(final int x, final int y) {
 		this.x = x;
 		this.y = y;
+		return this;
 	}
 
-	public void set(final Vector2d pos, final int chunkSize) {
+	public Coordinate set(final Vector2d pos, final int chunkSize) {
 		x = posScalar2coordScalar(pos.x, chunkSize);
 		y = posScalar2coordScalar(pos.y, chunkSize);
+		return this;
 	}
 
 	@Override

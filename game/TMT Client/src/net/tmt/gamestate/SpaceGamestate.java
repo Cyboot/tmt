@@ -7,19 +7,17 @@ import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
 import net.tmt.map.SpaceMap;
-import net.tmt.map.World;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
 	private static SpaceGamestate	instance;
 
-	private EntityManager			entityManager	= new EntityManager();
-	private PlayerSpaceShip			player			= new PlayerSpaceShip();
-	private World					world;
+	private PlayerSpaceShip			player	= new PlayerSpaceShip();
 
 	private SpaceGamestate() {
-		requestMap();
+		super(SpaceMap.getInstance());
+		world.setPlayer(player);
 
 		// add default Entities
 		for (int i = 0; i < 20; i++) {
@@ -36,16 +34,6 @@ public class SpaceGamestate extends AbstractGamestate {
 	}
 
 	@Override
-	public void requestMap() {
-		// init World
-		World.init(SpaceGamestate.class);
-		World.setActiveWorld(SpaceGamestate.class);
-		world = World.getActiveWorld();
-		world.setMap(SpaceMap.getInstance());
-		world.setPlayer(player);
-	}
-
-	@Override
 	public void update(final double delta) {
 		world.update(delta);
 		entityManager.update(delta);
@@ -53,7 +41,9 @@ public class SpaceGamestate extends AbstractGamestate {
 
 	@Override
 	public void render(final Graphics g) {
+		super.render(g);
 		guiManager.setGui(SpaceGui.class);
+
 		world.render(g);
 		entityManager.render(g);
 	}

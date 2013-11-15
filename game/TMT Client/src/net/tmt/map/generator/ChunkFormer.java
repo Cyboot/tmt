@@ -2,6 +2,7 @@ package net.tmt.map.generator;
 
 import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
+import net.tmt.map.PlanetChunk;
 import net.tmt.map.PlanetMap;
 import net.tmt.map.SpaceMap;
 import net.tmt.map.Terrain;
@@ -50,32 +51,32 @@ class ChunkFormer {
 		return chunk;
 	}
 
-	private static Chunk formPlanetChunk(final Coordinate coord, final WorldMap map) {
+	private static PlanetChunk formPlanetChunk(final Coordinate coord, final WorldMap map) {
 		RandomUtil.setSeed(coord.hashCode() ^ map.hashCode());
 
-		Chunk chunk = null;
+		PlanetChunk chunk = null;
 		if (RandomUtil.randBoolean(0.75)) {
-			chunk = new Chunk(coord, map.getBaseTerrain(), map.getChunkSize());
+			chunk = new PlanetChunk(coord, map.getBaseTerrain(), map.getChunkSize());
 		} else {
 			int chance = RandomUtil.intRange(0, 5);
 			switch (chance) {
 			case 0:
-				chunk = new Chunk(coord, Terrain.PLANET_GRASS, map.getChunkSize());
+				chunk = new PlanetChunk(coord, Terrain.PLANET_GRASS, map.getChunkSize());
 				break;
 			case 1:
-				chunk = new Chunk(coord, Terrain.PLANET_WATER, map.getChunkSize());
+				chunk = new PlanetChunk(coord, Terrain.PLANET_WATER, map.getChunkSize());
 				break;
 			case 2:
-				chunk = new Chunk(coord, Terrain.PLANET_DESERT, map.getChunkSize());
+				chunk = new PlanetChunk(coord, Terrain.PLANET_DESERT, map.getChunkSize());
 				break;
 			case 3:
-				chunk = new Chunk(coord, Terrain.PLANET_SNOW, map.getChunkSize());
+				chunk = new PlanetChunk(coord, Terrain.PLANET_SNOW, map.getChunkSize());
 				break;
 			case 4:
-				chunk = new Chunk(coord, Terrain.PLANET_FOREST, map.getChunkSize());
+				chunk = new PlanetChunk(coord, Terrain.PLANET_FOREST, map.getChunkSize());
 				break;
 			case 5:
-				chunk = new Chunk(coord, Terrain.PLANET_SWAMP, map.getChunkSize());
+				chunk = new PlanetChunk(coord, Terrain.PLANET_SWAMP, map.getChunkSize());
 				break;
 			}
 		}

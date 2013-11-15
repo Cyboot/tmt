@@ -1,8 +1,5 @@
 package net.tmt.map;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.tmt.entity.Entity2D;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
@@ -11,22 +8,19 @@ import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
 public class World implements Updateable, Renderable {
-	private static final double			RATIO			= 1.8;
-	private double						MOVE_DIFF_WIDTH;
-	private double						MOVE_DIFF_HEIGHT;
-	private double						MOVE_MAX_WIDTH;
-	private double						MOVE_MAX_HEIGTH;
+	private static final double	RATIO	= 1.8;
+	private double				MOVE_DIFF_WIDTH;
+	private double				MOVE_DIFF_HEIGHT;
+	private double				MOVE_MAX_WIDTH;
+	private double				MOVE_MAX_HEIGTH;
 
-	private static Map<Class<?>, World>	worldInstances	= new HashMap<Class<?>, World>();
-	private static World				activeWorld;
+	private Vector2d			tmp		= new Vector2d();
+	private Vector2d			offset	= new Vector2d();
 
-	private Vector2d					tmp				= new Vector2d();
-	private Vector2d					offset			= new Vector2d();
+	private WorldMap			map;
+	private Entity2D			player;
 
-	private WorldMap					map;
-	private Entity2D					player;
-
-	private World() {
+	public World() {
 		// TODO: quick & dirty: Worldoffset
 		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
 		MOVE_DIFF_WIDTH = (GameEngine.WIDTH / 2 - MOVE_MAX_WIDTH) * RATIO;
@@ -37,13 +31,17 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void update(final double delta) {
-		centerAroundPlayer(delta * 1000);
-		map.update(getOffsetCentered(), player.getPos());
+		if (player != null)
+			centerAroundPlayer(delta * 1000);
+
+		if (map != null)
+			map.update(getOffsetCentered(), delta);
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		map.render(g);
+		if (map != null)
+			map.render(g);
 	}
 
 	private void centerAroundPlayer(final double delta) {
@@ -83,12 +81,8 @@ public class World implements Updateable, Renderable {
 		return tmp;
 	}
 
-	public static void init(final Class<?> clazz) {
-		worldInstances.put(clazz, new World());
-	}
-
-	public void setPlayer(final Entity2D ship) {
-		this.player = ship;
+	public void setPlayer(final Entity2D player) {
+		this.player = player;
 	}
 
 	public Entity2D getPlayer() {
@@ -103,11 +97,14 @@ public class World implements Updateable, Renderable {
 		return map;
 	}
 
-	public static World getActiveWorld() {
-		return activeWorld;
-	}
-
-	public static void setActiveWorld(final Class<?> clazz) {
-		activeWorld = worldInstances.get(clazz);
+	/**
+	 * adds an Entity to the map
+	 * 
+	 * @param e
+	 *            Entity to add
+	 * @return if Entity was added successfull
+	 */
+	public boolean addStaticEntity(final Entity2D e) {
+		return map.addStaticEntity(e);
 	}
 }

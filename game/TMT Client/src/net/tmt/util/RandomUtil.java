@@ -5,10 +5,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class RandomUtil {
+	/**
+	 * the seed for the Space and Planetmaps (working like in Minecraft). same
+	 * seed produces the same maps every time
+	 */
+	public static final int	SEED	= 42;
 
-
-	private static final int	SEED	= 42;
-	private static Random		random	= new Random(SEED);
+	private static Random	random	= new Random(SEED);
 
 	public static double doubleRange(final double min, final double max) {
 		double rand = random.nextDouble();

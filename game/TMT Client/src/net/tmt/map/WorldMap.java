@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
@@ -20,25 +21,26 @@ public abstract class WorldMap implements Renderable {
 	protected Map<Coordinate, Chunk>	chunkMap	= new HashMap<Coordinate, Chunk>();
 	private Terrain						baseTerrain;
 
-	public void update(final Vector2d offset, final Vector2d pPos) {
+	// FIXME: Entitymanager here?
+	protected EntityManager				entityManager;
+
+	public void update(final Vector2d offset, final double delta) {
 		rederOffset = offset;
 
 		// generate new Terrain if needed
 		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, preloadRadius);
 
-		// update all chunks (for now all of them)
 		for (Chunk c : chunkMap.values())
-			c.update(offset);
+			c.update(entityManager, delta);
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		Coordinate coord = Coordinate.tmp0;
-		Coordinate.tmp0.set(rederOffset, chunkSize);
+		Coordinate coord = Coordinate.tmp0.set(rederOffset, chunkSize);
+		Coordinate check = Coordinate.tmp1;
 
 		for (int x = coord.x - renderRadius; x <= coord.x + renderRadius; x++) {
 			for (int y = coord.y - renderRadius; y <= coord.y + renderRadius; y++) {
-				Coordinate check = Coordinate.tmp1;
 				check.set(x, y);
 				if (chunkMap.get(check) != null) {
 					chunkMap.get(check).render(g);
@@ -51,14 +53,25 @@ public abstract class WorldMap implements Renderable {
 		chunkMap.put(coord, c);
 	}
 
-	public void addStaticEntity(final Entity2D e) {
+	/**
+	 * adds an Entity to the map
+	 * 
+	 * @param e
+	 *            Entity to add
+	 * @return if Entity was added successfull
+	 */
+	public boolean addStaticEntity(final Entity2D e) {
 		Coordinate coord = new Coordinate(e.getPos(), this.chunkSize);
 		MapGenerator.generateAround(coord, this, preloadRadius);
-		chunkMap.get(coord).addStaticEntity(e);
+		return chunkMap.get(coord).addStaticEntity(e);
 	}
 
 	public Chunk getChunk(final Coordinate coord) {
 		return chunkMap.get(coord);
+	}
+
+	public Chunk getChunk(final Vector2d pos) {
+		return chunkMap.get(Coordinate.tmp0.set(pos, getChunkSize()));
 	}
 
 	public int getChunkSize() {
@@ -83,5 +96,9 @@ public abstract class WorldMap implements Renderable {
 
 	public Terrain getBaseTerrain() {
 		return baseTerrain;
+	}
+
+	public void setEntityManager(final EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 }

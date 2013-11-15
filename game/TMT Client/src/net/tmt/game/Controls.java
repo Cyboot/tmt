@@ -42,6 +42,11 @@ public class Controls {
 	public static final List<Integer>		CHANGE_TARGET				= new ArrayList<>();
 	public static final List<Integer>		WEAPON_PRIMARY				= new ArrayList<>();
 
+	// on planet
+	public static final List<Integer>		HERO_UP						= new ArrayList<>();
+	public static final List<Integer>		HERO_DOWN					= new ArrayList<>();
+	public static final List<Integer>		HERO_LEFT					= new ArrayList<>();
+	public static final List<Integer>		HERO_RIGHT					= new ArrayList<>();
 
 	// Debug Keys
 	public static final List<Integer>		DEBUG_COLLISION				= new ArrayList<>();
@@ -50,6 +55,7 @@ public class Controls {
 	public static final List<Integer>		DEBUG_KEY_3					= new ArrayList<>();
 	public static final List<Integer>		DEBUG_KEY_4					= new ArrayList<>();
 	public static final List<Integer>		DEBUG_KEY_5					= new ArrayList<>();
+
 
 	/** gamepad */
 	private static Controller				controller;
@@ -179,6 +185,11 @@ public class Controls {
 		SHIP_SHIELD.add(getKeycode("SHIP_SHIELD"));
 		CHANGE_TARGET.add(getKeycode("CHANGE_TARGET"));
 		WEAPON_PRIMARY.add(getKeycode("WEAPON_PRIMARY"));
+
+		HERO_UP.add(getKeycode("HERO_UP"));
+		HERO_DOWN.add(getKeycode("HERO_DOWN"));
+		HERO_LEFT.add(getKeycode("HERO_LEFT"));
+		HERO_RIGHT.add(getKeycode("HERO_RIGHT"));
 
 		MOUSE_LEFT.add(0 + MOUSE_KEYVALUE_OFFSET);
 		MOUSE_RIGHT.add(1 + MOUSE_KEYVALUE_OFFSET);

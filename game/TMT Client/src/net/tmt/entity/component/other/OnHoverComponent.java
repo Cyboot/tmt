@@ -18,8 +18,10 @@ public class OnHoverComponent extends Component {
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		Vector2d mouse2d = Vector2d.tmp1.set(Controls.mouseX(), Controls.mouseY());
-		Vector2d shipAbsolut2d = Vector2d.tmp2.set(pos.x - World.getActiveWorld().getOffset().x, pos.y
-				- World.getActiveWorld().getOffset().y);
+
+		World world = caller.getEntityManager().getWorld();
+
+		Vector2d shipAbsolut2d = Vector2d.tmp2.set(pos.x - world.getOffset().x, pos.y - world.getOffset().y);
 
 		isHover = false;
 		// bedinung genauer einstellen. radius abhänging von bildgröße

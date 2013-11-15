@@ -1,12 +1,14 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.MissionManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.Terrain;
-import net.tmt.map.World;
 import net.tmt.mission.Mission;
 import net.tmt.mission.PlanetMission;
+import net.tmt.util.PlanetNameUtil;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -14,6 +16,7 @@ import org.lwjgl.util.Color;
 public class Planet extends Entity2D {
 	private static int	currID	= 0;
 
+	private String		name;
 	private Mission		mission;
 	private int			planetId;
 	private int			radius;
@@ -24,6 +27,7 @@ public class Planet extends Entity2D {
 		planetId = currID++;
 		this.radius = radius;
 		this.baseTerrain = baseTerrain;
+		name = PlanetNameUtil.getPlanetName(pos.hashCode() + RandomUtil.SEED);
 		mission = new PlanetMission(this);
 
 		setColor();
@@ -37,8 +41,15 @@ public class Planet extends Entity2D {
 		return planetId;
 	}
 
-	public void landingCheck(final Vector2d playerPos) {
-		if (World.getActiveWorld().getPlayer().getPos().distanceTo(pos) < getRadius()) {
+	@Override
+	public void update(final EntityManager caller, final double delta) {
+		super.update(caller, delta);
+
+		landingCheck(caller.getWorld().getPlayer().getPos());
+	}
+
+	private void landingCheck(final Vector2d playerPos) {
+		if (playerPos.distanceTo(pos) < getRadius()) {
 			MissionManager.getInstance().offerMission(mission);
 		}
 	}
@@ -86,8 +97,12 @@ public class Planet extends Entity2D {
 		return baseTerrain;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	@Override
 	public String toString() {
-		return super.toString() + "[terrain=" + baseTerrain.name() + "]";
+		return super.toString() + "[name= " + name + ", terrain=" + baseTerrain.name() + "]";
 	}
 }

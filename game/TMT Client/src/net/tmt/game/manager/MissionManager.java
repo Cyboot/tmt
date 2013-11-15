@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.tmt.game.interfaces.Updateable;
+import net.tmt.global.mission.Mission;
+import net.tmt.global.mission.Mission.State;
 import net.tmt.gui.Gui;
-import net.tmt.mission.Mission;
-import net.tmt.mission.Mission.State;
 
 public class MissionManager implements Updateable {
 	private static final MissionManager	instance			= new MissionManager();

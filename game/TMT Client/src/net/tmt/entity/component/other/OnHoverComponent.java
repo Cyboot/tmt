@@ -6,6 +6,7 @@ import net.tmt.game.Controls;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.Gui;
+import net.tmt.gui.elements.ToolTip;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
@@ -26,7 +27,11 @@ public class OnHoverComponent extends Component {
 		isHover = false;
 		// bedinung genauer einstellen. radius abhänging von bildgröße
 		if (mouse2d.distanceTo(shipAbsolut2d) < 32) {
-			GuiManager.getInstance().dispatch(Gui.GUI_HOVER, owner.toString());
+			String info = owner.toString();
+			GuiManager guiManager = GuiManager.getInstance();
+
+			guiManager.dispatch(Gui.GUI_HOVER, info);
+			guiManager.setTooltip(new ToolTip(new Vector2d(Controls.mouseX() + 15, Controls.mouseY()), info));
 			isHover = true;
 		}
 	}

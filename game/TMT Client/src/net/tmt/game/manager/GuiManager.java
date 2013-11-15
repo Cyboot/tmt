@@ -17,6 +17,7 @@ import net.tmt.gui.MissionOverlay;
 import net.tmt.gui.PlanetGui;
 import net.tmt.gui.SimulatorGui;
 import net.tmt.gui.SpaceGui;
+import net.tmt.gui.elements.ToolTip;
 
 public class GuiManager implements Updateable, Renderable, Dispatcher {
 	private static GuiManager	instance;
@@ -26,6 +27,8 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 	private Gui					activeGui;
 
 	private Map<String, Object>	guiValue	= new HashMap<>();
+
+	private ToolTip				tooltip;
 
 	public static GuiManager init() {
 		instance = new GuiManager();
@@ -43,6 +46,7 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 
 	@Override
 	public void update(final double delta) {
+
 		if (activeGui != null)
 			activeGui.update(delta);
 		for (Gui g : overlayGui)
@@ -55,6 +59,10 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 			activeGui.render(g);
 		for (Gui gui : overlayGui)
 			gui.render(g);
+		if (tooltip != null) {
+			tooltip.render(g);
+			tooltip = null;
+		}
 	}
 
 	public void setGui(final Class<? extends Gui> gui) {
@@ -88,5 +96,9 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 	@Override
 	public void remove(final String key) {
 		guiValue.remove(key);
+	}
+
+	public void setTooltip(final ToolTip tooltip) {
+		this.tooltip = tooltip;
 	}
 }

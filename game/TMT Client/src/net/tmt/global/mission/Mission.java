@@ -1,4 +1,4 @@
-package net.tmt.mission;
+package net.tmt.global.mission;
 
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.util.CountdownTimer;

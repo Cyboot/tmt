@@ -3,11 +3,11 @@ package net.tmt.gui.view;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.ClickListener;
 import net.tmt.game.manager.MissionManager;
+import net.tmt.global.mission.Mission;
 import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;
 import net.tmt.gui.elements.GuiElement;
 import net.tmt.gui.elements.TextView;
-import net.tmt.mission.Mission;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 

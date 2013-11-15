@@ -1,8 +1,8 @@
 package net.tmt.gui;
 
 import net.tmt.gfx.Graphics;
+import net.tmt.global.mission.Mission;
 import net.tmt.gui.view.MissionView;
-import net.tmt.mission.Mission;
 
 public class MissionOverlay extends Gui {
 	private MissionView	missionView;

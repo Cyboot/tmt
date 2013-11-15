@@ -1,4 +1,4 @@
-package net.tmt.mission;
+package net.tmt.global.mission;
 
 import net.tmt.entity.statics.Planet;
 import net.tmt.game.manager.GameManager;

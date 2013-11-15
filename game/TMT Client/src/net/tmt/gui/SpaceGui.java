@@ -1,10 +1,8 @@
 package net.tmt.gui;
 
-import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
-import net.tmt.gui.elements.ToolTip;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 
@@ -82,8 +80,6 @@ public class SpaceGui extends Gui {
 		if (guiManager.isSet(GUI_HOVER)) {
 			String text = (String) guiManager.getValue(GUI_HOVER);
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, text);
-			ToolTip tmp = new ToolTip(Vector2d.tmp1.set(Controls.mouseX() + 10, Controls.mouseY()), text);
-			tmp.render(g);
 		} else {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "InfoView");
 		}

@@ -90,7 +90,7 @@ public class CountdownTimer {
 		this.timeleftIntervall = timeleftIntervall;
 	}
 
-	public static CountdownTimer createManuelResetTimer(final double timeleftIntervall) {
+	public static CountdownTimer createManualResetTimer(final double timeleftIntervall) {
 		CountdownTimer result = new CountdownTimer(timeleftIntervall);
 		result.autoReset = false;
 		return result;

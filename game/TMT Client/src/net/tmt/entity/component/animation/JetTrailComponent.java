@@ -17,7 +17,7 @@ public class JetTrailComponent extends Component {
 	private boolean				showTrail;
 	private Color				color;
 
-	private CountdownTimer		timerSpawnParticle		= CountdownTimer.createManuelResetTimer(0.02);
+	private CountdownTimer		timerSpawnParticle		= CountdownTimer.createManualResetTimer(0.02);
 	private double				size					= 24;
 
 	public JetTrailComponent() {

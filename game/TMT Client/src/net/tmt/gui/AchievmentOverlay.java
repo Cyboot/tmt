@@ -6,7 +6,7 @@ import net.tmt.gui.view.AchievmentView;
 import net.tmt.util.CountdownTimer;
 
 public class AchievmentOverlay extends Gui {
-	private CountdownTimer	timer	= CountdownTimer.createManuelResetTimer(5);
+	private CountdownTimer	timer	= CountdownTimer.createManualResetTimer(5);
 	private boolean			show	= false;
 
 	private AchievmentView	view	= new AchievmentView();

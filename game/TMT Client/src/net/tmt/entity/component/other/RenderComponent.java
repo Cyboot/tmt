@@ -16,11 +16,9 @@ public class RenderComponent extends Component {
 	public RenderComponent() {
 	}
 
-
 	public RenderComponent(final Sprite sprite) {
 		this.sprite = sprite;
 	}
-
 
 	@Override
 	public void render(final ComponentDispatcher caller, final Graphics g) {

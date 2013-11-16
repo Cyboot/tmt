@@ -34,7 +34,7 @@ public class PlayerSpaceShip extends Entity2D {
 	private static double	FRICTION		= 0.4;
 	private static double	ROTATION_SPEED	= 90;
 
-	private CountdownTimer	timerShoot		= CountdownTimer.createManuelResetTimer(0.2);
+	private CountdownTimer	timerShoot		= CountdownTimer.createManualResetTimer(0.2);
 	private ReadableColor	shootColor		= Color.RED;
 	private boolean			shieldToggle;
 	private boolean			mainEngineToggle;

@@ -3,6 +3,7 @@ package net.tmt.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.tmt.entity.component.collision.CollisionComponent;
 import net.tmt.entity.component.move.MoveComponent;
 import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.AnimatedRenderComponent;
@@ -24,10 +25,11 @@ public class Hero extends Entity2D {
 		List<Sprite> aniSprites = new ArrayList<Sprite>();
 		aniSprites.add(new Sprite("hero_walk_0"));
 		aniSprites.add(new Sprite("hero_walk_1"));
-		aniRenCom = new AnimatedRenderComponent(aniSprites, 0.2);
+		aniRenCom = new AnimatedRenderComponent(aniSprites, 0.25);
 		aniRenCom.setPauseFrame(new Sprite("hero_stand"));
 		addComponent(aniRenCom);
 		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
+		addComponent(new CollisionComponent(10));
 	}
 
 	@Override

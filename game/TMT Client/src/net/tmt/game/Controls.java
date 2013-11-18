@@ -1,6 +1,12 @@
 package net.tmt.game;
 
-import static org.lwjgl.input.Keyboard.*;
+import static org.lwjgl.input.Keyboard.KEY_F1;
+import static org.lwjgl.input.Keyboard.KEY_F2;
+import static org.lwjgl.input.Keyboard.KEY_F3;
+import static org.lwjgl.input.Keyboard.KEY_F4;
+import static org.lwjgl.input.Keyboard.KEY_F5;
+import static org.lwjgl.input.Keyboard.KEY_F9;
+import static org.lwjgl.input.Keyboard.KEY_NONE;
 
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
@@ -47,6 +53,7 @@ public class Controls {
 	public static final List<Integer>		HERO_DOWN					= new ArrayList<>();
 	public static final List<Integer>		HERO_LEFT					= new ArrayList<>();
 	public static final List<Integer>		HERO_RIGHT					= new ArrayList<>();
+	public static final List<Integer>		HERO_SPRINT					= new ArrayList<>();
 
 	// Debug Keys
 	public static final List<Integer>		DEBUG_COLLISION				= new ArrayList<>();
@@ -190,6 +197,7 @@ public class Controls {
 		HERO_DOWN.add(getKeycode("HERO_DOWN"));
 		HERO_LEFT.add(getKeycode("HERO_LEFT"));
 		HERO_RIGHT.add(getKeycode("HERO_RIGHT"));
+		HERO_SPRINT.add(getKeycode("HERO_SPRINT"));
 
 		MOUSE_LEFT.add(0 + MOUSE_KEYVALUE_OFFSET);
 		MOUSE_RIGHT.add(1 + MOUSE_KEYVALUE_OFFSET);

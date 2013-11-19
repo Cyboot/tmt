@@ -36,6 +36,10 @@ public class AnimatedRenderComponent extends RenderComponent {
 		this.pauseFrame = pauseFrame;
 	}
 
+	public void setAnimationFrames(final List<Sprite> sprites) {
+		this.sprites = sprites;
+	}
+
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		super.update(caller, delta);

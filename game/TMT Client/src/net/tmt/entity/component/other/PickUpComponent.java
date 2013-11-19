@@ -12,16 +12,18 @@ import net.tmt.util.Vector2d;
 
 public class PickUpComponent extends Component {
 
-	private Entity2D	owner;
+	private Entity2D	itemOwner;
 	private Vector2d	relativePos;
+	private boolean		wearable;
 
-	public PickUpComponent(final Vector2d relativePos) {
+	public PickUpComponent(final Vector2d relativePos, final boolean wearable) {
 		this.relativePos = relativePos;
+		this.wearable = wearable;
 	}
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
-		if (owner == null) {
+		if (itemOwner == null) {
 			checkPickUp(caller);
 		} else {
 			updatePosition(caller);
@@ -29,19 +31,16 @@ public class PickUpComponent extends Component {
 	}
 
 	private void updatePosition(final ComponentDispatcher caller) {
-		MoveComponent mc = owner.getComponent(MoveComponent.class);
-		if (mc != null) {
-			Vector2d ownerPos = (Vector2d) owner.getValue(MoveComponent.MOVE_DIR);
-			if (ownerPos != null) {
-				Vector2d newPos = ownerPos.add(relativePos);
-				owner.dispatchValue(MoveComponent.MOVE_DIR, newPos);
-			}
-			// TODO: maybe a better solution for this?
-			double ownerRotationAngleLook = Double.MIN_VALUE;
-			ownerRotationAngleLook = (double) owner.getValue(MoveComponent.ROTATION_ANGLE_LOOK);
-			if (ownerRotationAngleLook != Double.MIN_VALUE) {
-				owner.dispatchValue(MoveComponent.ROTATION_ANGLE_LOOK, ownerRotationAngleLook);
-			}
+		// TODO: relativePos needs to take rotation into account
+		Vector2d v1 = itemOwner.getPos();
+		Vector2d v2 = caller.getOwner().getPos();
+		v2.x = v1.x + relativePos.x;
+		v2.y = v1.y + relativePos.y;
+		// TODO: maybe a better solution for this? ... aaand the thing above
+		double ownerRotationAngleLook = Double.MIN_VALUE;
+		ownerRotationAngleLook = (double) itemOwner.getValue(MoveComponent.ROTATION_ANGLE_LOOK);
+		if (ownerRotationAngleLook != Double.MIN_VALUE) {
+			caller.getOwner().dispatchValue(MoveComponent.ROTATION_ANGLE_LOOK, ownerRotationAngleLook);
 		}
 	}
 
@@ -56,7 +55,9 @@ public class PickUpComponent extends Component {
 					for (Entity2D e : ce) {
 						// TODO: maybe implement an AbleToPickUp interface
 						if (e instanceof Hero) {
-							owner = e;
+							itemOwner = e;
+							if (!wearable)
+								((Hero) e).setHoldingSth(true);
 						}
 					}
 				}
@@ -65,7 +66,11 @@ public class PickUpComponent extends Component {
 	}
 
 	public Entity2D getOwner() {
-		return owner;
+		return itemOwner;
+	}
+
+	public boolean isWearable() {
+		return wearable;
 	}
 
 }

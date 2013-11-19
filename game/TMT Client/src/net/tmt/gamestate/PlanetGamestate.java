@@ -2,6 +2,7 @@ package net.tmt.gamestate;
 
 import net.tmt.entity.Hero;
 import net.tmt.entity.pickups.BackPack;
+import net.tmt.entity.pickups.GlowingStuff;
 import net.tmt.entity.statics.Planet;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
@@ -25,6 +26,8 @@ public class PlanetGamestate extends AbstractGamestate {
 		// DEBUG: debug items
 		BackPack bp = new BackPack(new Vector2d(GameEngine.WIDTH / 2 - 40, GameEngine.HEIGHT / 2 - 40));
 		entityManager.addEntity(bp);
+		GlowingStuff gs = new GlowingStuff(new Vector2d(GameEngine.WIDTH / 2 - 140, GameEngine.HEIGHT / 2 - 140));
+		entityManager.addEntity(gs);
 	}
 
 	@Override

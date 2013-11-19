@@ -21,6 +21,7 @@ public class Hero extends Entity2D {
 	private AnimatedRenderComponent	aniRenCom;
 	private boolean					sprinting			= false;
 	private boolean					catchingBreath		= false;
+	private boolean					holdingSomething	= false;
 	private CountdownTimer			sprintingTimer		= CountdownTimer.createManualResetTimer(5);
 	private CountdownTimer			catchBreathTimer	= CountdownTimer.createManualResetTimer(15);
 
@@ -65,6 +66,8 @@ public class Hero extends Entity2D {
 		}
 		speed = (sprinting ? 256 : 128);
 
+		checkHolding();
+
 		if (movingF || movingB)
 			aniRenCom.resumeAnimation();
 		else
@@ -95,6 +98,26 @@ public class Hero extends Entity2D {
 
 	private void notSprinting() {
 		sprinting = false;
+	}
+
+	public void setHoldingSth(final boolean h) {
+		holdingSomething = h;
+	}
+
+	private void checkHolding() {
+		if (holdingSomething) {
+			List<Sprite> aniSprites = new ArrayList<Sprite>();
+			aniSprites.add(new Sprite("hero_walk_hold_0"));
+			aniSprites.add(new Sprite("hero_walk_hold_1"));
+			aniRenCom.setAnimationFrames(aniSprites);
+			aniRenCom.setPauseFrame(new Sprite("hero_stand_hold"));
+		} else {
+			List<Sprite> aniSprites = new ArrayList<Sprite>();
+			aniSprites.add(new Sprite("hero_walk_0"));
+			aniSprites.add(new Sprite("hero_walk_1"));
+			aniRenCom.setAnimationFrames(aniSprites);
+			aniRenCom.setPauseFrame(new Sprite("hero_stand"));
+		}
 	}
 
 }

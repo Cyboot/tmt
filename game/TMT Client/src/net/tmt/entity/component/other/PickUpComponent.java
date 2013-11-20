@@ -31,17 +31,17 @@ public class PickUpComponent extends Component {
 	}
 
 	private void updatePosition(final ComponentDispatcher caller) {
-		// TODO: relativePos needs to take rotation into account
-		Vector2d v1 = itemOwner.getPos();
-		Vector2d v2 = caller.getOwner().getPos();
-		v2.x = v1.x + relativePos.x;
-		v2.y = v1.y + relativePos.y;
 		// TODO: maybe a better solution for this? ... aaand the thing above
-		double ownerRotationAngleLook = Double.MIN_VALUE;
-		ownerRotationAngleLook = (double) itemOwner.getValue(MoveComponent.ROTATION_ANGLE_LOOK);
-		if (ownerRotationAngleLook != Double.MIN_VALUE) {
-			caller.getOwner().dispatchValue(MoveComponent.ROTATION_ANGLE_LOOK, ownerRotationAngleLook);
+		double itemOwnerRotationAngleLook = Double.MIN_VALUE;
+		itemOwnerRotationAngleLook = (double) itemOwner.getValue(MoveComponent.ROTATION_ANGLE_LOOK);
+		if (itemOwnerRotationAngleLook != Double.MIN_VALUE) {
+			caller.getOwner().dispatchValue(MoveComponent.ROTATION_ANGLE_LOOK, itemOwnerRotationAngleLook);
 		}
+		Vector2d.tmp1.set(itemOwner.getPos());
+		Vector2d.tmp2.set(relativePos);
+		Vector2d.tmp2.rotate(Math.toRadians(itemOwnerRotationAngleLook));
+		Vector2d.tmp1.add(Vector2d.tmp2);
+		caller.getOwner().getPos().set(Vector2d.tmp1);
 	}
 
 	private void checkPickUp(final ComponentDispatcher caller) {

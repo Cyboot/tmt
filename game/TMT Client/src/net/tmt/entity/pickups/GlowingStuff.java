@@ -22,7 +22,7 @@ public class GlowingStuff extends Entity2D {
 		aniSprites.add(new Sprite("glowing_stuff_3"));
 		addComponent(new AnimatedRenderComponent(aniSprites, 0.1));
 		addComponent(new CollisionComponent(10));
-		addComponent(new PickUpComponent(new Vector2d(-10, -20), false));
+		addComponent(new PickUpComponent(new Vector2d(3, -15), false));
 	}
 
 }

@@ -1,6 +1,7 @@
 package net.tmt.entity.economy;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.component.OnClickComponent;
 import net.tmt.entity.component.other.OnHoverComponent;
 import net.tmt.util.Vector2d;
 
@@ -12,6 +13,7 @@ public class Building extends Entity2D {
 		super(pos);
 
 		addComponent(new OnHoverComponent());
+		addComponent(new OnClickComponent());
 	}
 
 }

@@ -1,6 +1,5 @@
 package net.tmt.gui;
 
-import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.StringFormatter;
@@ -11,9 +10,6 @@ import org.lwjgl.util.Color;
 public class SpaceGui extends Gui {
 	public static final String	GUI_SHIP_HEALTH	= "GUI_SHIP_HEALTH";
 	public static final String	GUI_SHIP_SPEED	= "GUI_SHIP_SPEED";
-
-	private int					width			= GameEngine.WIDTH;
-	private int					height			= GameEngine.HEIGHT;
 
 	private Sprite				shipSchema		= new Sprite("schema_ship_back_64", 128, 128).setCentered(false);
 

@@ -2,6 +2,7 @@ package net.tmt.gui.view;
 
 import net.tmt.entity.economy.Base;
 import net.tmt.entity.economy.Mine;
+import net.tmt.entity.economy.Store;
 import net.tmt.game.interfaces.ClickListener;
 import net.tmt.gamestate.EconomyGamestate;
 import net.tmt.gamestate.EconomyGamestate.InputState;
@@ -43,7 +44,7 @@ public class BuildView extends ContainerElement implements ClickListener {
 				game.setBuildingToConstruct(new Mine(new Vector2d()));
 				break;
 			case "icon_store":
-				// #27 Store Building here
+				game.setBuildingToConstruct(new Store(new Vector2d()));
 				break;
 			default:
 				break;

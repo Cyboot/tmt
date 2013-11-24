@@ -39,6 +39,15 @@ public class EconomyGamestate extends AbstractGamestate {
 
 			buildingToConstruct.getPos().set(x, y);
 
+			// right click to abort constructin
+			if (Controls.wasReleased(Controls.MOUSE_RIGHT)) {
+
+				buildingToConstruct = null;
+				setInputState(InputState.NEUTRAL);
+				break;
+			}
+
+
 			// add Building to EntityManager on leftclick
 			if (Controls.wasReleased(Controls.MOUSE_LEFT)) {
 
@@ -46,11 +55,13 @@ public class EconomyGamestate extends AbstractGamestate {
 				@SuppressWarnings("unused")
 				PlanetChunk chunk = (PlanetChunk) world.getMap().getChunk(buildingToConstruct.getPos());
 
-				boolean success = world.addStaticEntity(buildingToConstruct);
-
-				if (success) {
-					buildingToConstruct = null;
-					setInputState(InputState.NEUTRAL);
+				// do not construct building through GUI
+				if (isBuildingInGUI() || isThereAlreadyBuilding()) {
+					boolean success = world.addStaticEntity(buildingToConstruct);
+					if (success) {
+						buildingToConstruct = null;
+						setInputState(InputState.NEUTRAL);
+					}
 				}
 			}
 			break;
@@ -61,6 +72,7 @@ public class EconomyGamestate extends AbstractGamestate {
 			break;
 		}
 	}
+
 
 	@Override
 	public void render(final Graphics g) {
@@ -82,6 +94,16 @@ public class EconomyGamestate extends AbstractGamestate {
 			// display building information (already done in update() )
 			break;
 		}
+	}
+
+	boolean isBuildingInGUI() {
+		// TODO: how to find out the sprite-size?
+		return true;
+	}
+
+	private boolean isThereAlreadyBuilding() {
+		// TODO: how to find out the sprite-size?
+		return true;
 	}
 
 	public InputState getInputState() {

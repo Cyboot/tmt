@@ -1,6 +1,7 @@
 package net.tmt.gamestate;
 
 import net.tmt.entity.Hero;
+import net.tmt.entity.npc.PlanetCreature;
 import net.tmt.entity.pickups.BackPack;
 import net.tmt.entity.pickups.GlowingStuff;
 import net.tmt.entity.statics.Planet;
@@ -28,6 +29,9 @@ public class PlanetGamestate extends AbstractGamestate {
 		entityManager.addEntity(bp);
 		GlowingStuff gs = new GlowingStuff(new Vector2d(GameEngine.WIDTH / 2 - 140, GameEngine.HEIGHT / 2 - 140));
 		entityManager.addEntity(gs);
+		PlanetCreature pc = new PlanetCreature(new Vector2d(GameEngine.WIDTH / 2 + 140, GameEngine.HEIGHT / 2 + 140),
+				100);
+		entityManager.addEntity(pc);
 	}
 
 	@Override

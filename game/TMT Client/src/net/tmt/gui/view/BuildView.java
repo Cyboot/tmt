@@ -4,9 +4,12 @@ import net.tmt.entity.economy.Base;
 import net.tmt.entity.economy.Mine;
 import net.tmt.entity.economy.Store;
 import net.tmt.game.interfaces.ClickListener;
+import net.tmt.game.manager.GuiManager;
 import net.tmt.gamestate.EconomyGamestate;
 import net.tmt.gamestate.EconomyGamestate.InputState;
+import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.gui.Gui;
 import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;
 import net.tmt.gui.elements.GuiElement;
@@ -38,6 +41,7 @@ public class BuildView extends ContainerElement implements ClickListener {
 			game.setInputState(InputState.CONSTRUCTING);
 			switch (caller.getTitle()) {
 			case "icon_base":
+				// TODO: you just can create one base in planet?
 				game.setBuildingToConstruct(new Base(new Vector2d()));
 				break;
 			case "icon_mine":
@@ -49,6 +53,19 @@ public class BuildView extends ContainerElement implements ClickListener {
 			default:
 				break;
 			}
+		}
+	}
+
+	@Override
+	public void render(final Graphics g) {
+		super.render(g);
+
+		GuiManager guiManager = GuiManager.getInstance();
+
+		if (guiManager.isSet(Gui.GUI_CLICKED)) {
+			String text = (String) guiManager.getValue(Gui.GUI_CLICKED);
+			// g.onGui().drawText(width * 0.76 + 5, height * 0.97, text);
+			g.onGui().drawText(pos.x, pos.y, text);
 		}
 	}
 }

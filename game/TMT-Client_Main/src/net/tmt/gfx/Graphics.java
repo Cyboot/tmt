@@ -3,6 +3,9 @@ package net.tmt.gfx;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.File;
+import java.io.IOException;
 
 import net.tmt.util.Vector2d;
 
@@ -258,12 +261,28 @@ public class Graphics {
 		Textures.whiteTexture = Textures.rect.getTexture();
 		Textures.circle_fill_16 = new Sprite("circle_16").setCentered(false);
 		Textures.circle_fill_256 = new Sprite("circle_256").setCentered(false);
-		Fonts.font_12 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 12), false);
-		Fonts.font_14 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 14), false);
-		Fonts.font_16 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 16), false);
-		Fonts.font_18 = new TrueTypeFont(new Font("Courier New", Font.PLAIN, 18), false);
 
-		instance.font = Fonts.font_12;
+		Font font = null;
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, new File("res" + File.separator + "gfx" + File.separator
+					+ "CONTRA__.ttf"));
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		Fonts.font_12_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 12), true);
+		Fonts.font_14_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 14), true);
+		Fonts.font_16_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 16), true);
+		Fonts.font_18_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 18), true);
+		Fonts.font_12_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 12), true);
+		Fonts.font_14_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 14), true);
+		Fonts.font_16_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 16), true);
+		Fonts.font_18_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 18), true);
+		Fonts.font_12_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 12), true);
+		Fonts.font_14_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 14), true);
+		Fonts.font_16_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 16), true);
+		Fonts.font_18_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 18), true);
+
+		instance.font = Fonts.font_12_plain;
 		return instance;
 	}
 
@@ -272,10 +291,21 @@ public class Graphics {
 	}
 
 	public static class Fonts {
-		public static TrueTypeFont	font_12;
-		public static TrueTypeFont	font_14;
-		public static TrueTypeFont	font_16;
-		public static TrueTypeFont	font_18;
+		public static TrueTypeFont	font_12_plain;
+		public static TrueTypeFont	font_12_bold;
+		public static TrueTypeFont	font_12_italic;
+
+		public static TrueTypeFont	font_14_plain;
+		public static TrueTypeFont	font_14_bold;
+		public static TrueTypeFont	font_14_italic;
+
+		public static TrueTypeFont	font_16_plain;
+		public static TrueTypeFont	font_16_bold;
+		public static TrueTypeFont	font_16_italic;
+
+		public static TrueTypeFont	font_18_plain;
+		public static TrueTypeFont	font_18_bold;
+		public static TrueTypeFont	font_18_italic;
 	}
 
 	private static class Textures {

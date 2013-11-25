@@ -3,6 +3,7 @@ package net.tmt.gui.view;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.ClickListener;
 import net.tmt.game.manager.MissionManager;
+import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.Mission;
 import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;
@@ -25,8 +26,10 @@ public class MissionView extends ContainerElement implements ClickListener {
 
 		TextView textview_name = new TextView(new Vector2d(DEFAULT_PADDING, DEFAULT_PADDING), width - 2
 				* DEFAULT_PADDING, 15);
-		TextView textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 20 + DEFAULT_PADDING), width - 2
+		textview_name.setFont(Graphics.Fonts.font_16_bold);
+		TextView textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 25 + DEFAULT_PADDING), width - 2
 				* DEFAULT_PADDING, 30);
+		textview_desc.setFont(Graphics.Fonts.font_14_italic);
 
 		textview_timeleft = new TextView(new Vector2d(DEFAULT_PADDING, height - 100), width - 2 * DEFAULT_PADDING, 30);
 

@@ -14,10 +14,14 @@ public class TextView extends GuiElement {
 
 	public TextView(final Vector2d pos, final double width, final double height) {
 		super(pos, width, height);
+
 		// defaults
-		font = Graphics.Fonts.font_12;
+		font = Graphics.Fonts.font_14_plain;
 	}
 
+	public void setFont(final TrueTypeFont font) {
+		this.font = font;
+	}
 
 	protected void setupTextBlock() {
 		int textWidth = font.getWidth(text);
@@ -29,11 +33,12 @@ public class TextView extends GuiElement {
 			int rows = (int) (textWidth / width) + 1;
 			height = rows * font.getHeight();
 			textBlock = new String[rows];
-			int charsPerLine = (int) (width / font.getWidth("W"));
+			int charsPerLine = (int) (width / font.getWidth("e"));
 
 			for (int i = 0; i < rows; i++) {
 				int maxIndex = Math.min(text.length(), (i * charsPerLine) + charsPerLine);
-				textBlock[i] = text.substring(i * charsPerLine, maxIndex);
+				int minIndex = Math.min(text.length(), i * charsPerLine);
+				textBlock[i] = text.substring(minIndex, maxIndex);
 			}
 		}
 	}
@@ -41,7 +46,7 @@ public class TextView extends GuiElement {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
-		g.setFont(Graphics.Fonts.font_12);
+		g.setFont(font);
 		for (int i = 0; i < textBlock.length; i++)
 			g.onGui().drawText(pos.x, pos.y + font.getHeight() * i, textBlock[i]);
 	}

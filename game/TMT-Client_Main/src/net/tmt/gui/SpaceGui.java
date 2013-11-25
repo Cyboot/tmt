@@ -30,7 +30,7 @@ public class SpaceGui extends Gui {
 
 	private void renderMap(final Graphics g) {
 		final double topY = height * 0.71;
-		final double heightTab = 20;
+		final double heightTab = 25;
 		final double widthTab = 50;
 		final double padding = 4;
 

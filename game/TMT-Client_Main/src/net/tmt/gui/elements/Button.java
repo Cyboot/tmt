@@ -18,7 +18,7 @@ public class Button extends GuiElement {
 	private Color				origin_backgroundColor;
 	private Color				origin_borderColor;
 
-	private Font				font			= Graphics.Fonts.font_12;
+	private Font				font			= Graphics.Fonts.font_14_plain;
 	private Rectangle			rect;
 	private boolean				isHover;
 	private boolean				isMouseClicked;

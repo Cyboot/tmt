@@ -19,7 +19,9 @@ public class Coordinate {
 	}
 
 	private int posScalar2coordScalar(final double s, final int chunkSize) {
-		return (int) s / chunkSize;
+		int negative = s < 0 ? -1 : 0;
+
+		return (int) s / chunkSize + negative;
 	}
 
 	public Vector2d center2pos(final int chunkSize) {

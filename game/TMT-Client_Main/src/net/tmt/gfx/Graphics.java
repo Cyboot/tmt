@@ -270,19 +270,28 @@ public class Graphics {
 			e.printStackTrace();
 		}
 		Fonts.font_12_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 12), true);
-		Fonts.font_14_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 14), true);
-		Fonts.font_16_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 16), true);
-		Fonts.font_18_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 18), true);
 		Fonts.font_12_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 12), true);
-		Fonts.font_14_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 14), true);
-		Fonts.font_16_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 16), true);
-		Fonts.font_18_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 18), true);
 		Fonts.font_12_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 12), true);
+
+		Fonts.font_14_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 14), true);
+		Fonts.font_14_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 14), true);
 		Fonts.font_14_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 14), true);
+
+		Fonts.font_16_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 16), true);
+		Fonts.font_16_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 16), true);
 		Fonts.font_16_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 16), true);
+
+		Fonts.font_18_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 18), true);
+		Fonts.font_18_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 18), true);
 		Fonts.font_18_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 18), true);
 
-		instance.font = Fonts.font_12_plain;
+		Fonts.font_26_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 26), true);
+		Fonts.font_26_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 26), true);
+		Fonts.font_26_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 26), true);
+
+		Fonts.font_default = Fonts.font_12_plain;
+		instance.font = Fonts.font_default;
+
 		return instance;
 	}
 
@@ -291,6 +300,8 @@ public class Graphics {
 	}
 
 	public static class Fonts {
+		public static TrueTypeFont	font_default;
+
 		public static TrueTypeFont	font_12_plain;
 		public static TrueTypeFont	font_12_bold;
 		public static TrueTypeFont	font_12_italic;
@@ -306,6 +317,10 @@ public class Graphics {
 		public static TrueTypeFont	font_18_plain;
 		public static TrueTypeFont	font_18_bold;
 		public static TrueTypeFont	font_18_italic;
+
+		public static TrueTypeFont	font_26_plain;
+		public static TrueTypeFont	font_26_bold;
+		public static TrueTypeFont	font_26_italic;
 	}
 
 	private static class Textures {

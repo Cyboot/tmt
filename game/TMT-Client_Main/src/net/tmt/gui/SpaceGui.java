@@ -1,6 +1,7 @@
 package net.tmt.gui;
 
 import net.tmt.gfx.Graphics;
+import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
@@ -14,6 +15,18 @@ public class SpaceGui extends Gui {
 	private Sprite				shipSchema		= new Sprite("schema_ship_back_64", 128, 128).setCentered(false);
 
 
+	private static final int	LEVEL_SIZE		= 96;
+	private Sprite				level_bg		= new Sprite("level_bg", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_0			= new Sprite("level_0", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_1			= new Sprite("level_1", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_2			= new Sprite("level_2", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_3			= new Sprite("level_3", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_4			= new Sprite("level_4", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_5			= new Sprite("level_5", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_6			= new Sprite("level_6", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+	private Sprite				level_7			= new Sprite("level_7", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+
+
 	@Override
 	public void update(final double delta) {
 		gameStateToolbar.update(delta);
@@ -21,11 +34,36 @@ public class SpaceGui extends Gui {
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.CYAN);
+		renderLevel(g);
+		g.setColor(new Color(0, 150, 200));
 		renderMap(g);
 		renderShipInfo(g);
+		g.setColor(new Color(0, 150, 200));
 		renderInfoWindow(g);
 		gameStateToolbar.render(g);
+	}
+
+	private void renderLevel(final Graphics g) {
+		Vector2d pos = Vector2d.tmp1.set(0, 0);
+
+		g.onGui().drawSprite(pos, level_bg);
+		g.onGui().drawSprite(pos, level_0);
+		g.onGui().drawSprite(pos, level_1);
+		g.onGui().drawSprite(pos, level_2);
+		g.onGui().drawSprite(pos, level_3);
+		g.onGui().drawSprite(pos, level_4);
+		g.onGui().drawSprite(pos, level_5);
+		// g.onGui().drawSprite(pos, level_6);
+		// g.onGui().drawSprite(pos, level_7);
+
+		level_5.setAlpha(15);
+
+		g.setFont(Fonts.font_26_bold);
+
+		g.setColor(new Color(255, 150, 0));
+		g.onGui().drawText(LEVEL_SIZE / 3, LEVEL_SIZE / 3, "22");
+
+		g.setFont(Fonts.font_default);
 	}
 
 	private void renderMap(final Graphics g) {
@@ -44,6 +82,7 @@ public class SpaceGui extends Gui {
 	}
 
 	private void renderShipInfo(final Graphics g) {
+
 		final double elemWidth = width * 0.3;
 		final double leftX = width / 2 - elemWidth / 2;
 		final double topY = height * 0.75;
@@ -58,6 +97,7 @@ public class SpaceGui extends Gui {
 		String health = "";
 		String speed = "";
 
+		g.setColor(new Color(255, 150, 0));
 		if (guiManager.isSet(GUI_SHIP_HEALTH))
 			health = StringFormatter.format((double) guiManager.getValue(GUI_SHIP_HEALTH));
 

@@ -17,6 +17,7 @@ public class CollisionComponent extends Component {
 
 	private double				radius;
 	private Entity2D			ignoredEntity;
+	private Class<?>			collidableEntity	= null;
 	private boolean				isCollision;
 	private List<Entity2D>		collisonEntities	= new ArrayList<>();
 
@@ -49,8 +50,15 @@ public class CollisionComponent extends Component {
 		isCollision = false;
 		collisonEntities.clear();
 		for (Entity2D e : entities) {
-			// don't collide with yourself and ignored Entity
-			if (e == owner || e == ignoredEntity || owner == e.getOwner())
+			// don't collide with yourself
+			if (e == owner || owner == e.getOwner())
+				continue;
+			// don't collide with other entities that the collidableEntity (if
+			// is set)
+			if (collidableEntity != null && e.getClass().equals(collidableEntity))
+				continue;
+			// don't collide with ignored entity
+			if (collidableEntity == null && e == ignoredEntity)
 				continue;
 
 			double radius2 = e.getComponent(CollisionComponent.class).getRadius();
@@ -67,5 +75,9 @@ public class CollisionComponent extends Component {
 
 	public double getRadius() {
 		return radius;
+	}
+
+	public void setCollidableEntityClass(final Class<?> collidableEntity) {
+		this.collidableEntity = collidableEntity;
 	}
 }

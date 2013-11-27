@@ -22,13 +22,15 @@ public class MoneyLevelOverlay extends Gui {
 	private CountdownTimer		timerShowMissing	= CountdownTimer.createManualResetTimer(5);
 	private CountdownTimer		timerBlink			= new CountdownTimer(0.5);
 	private int					lastRP				= 0;
-	private String				lastLevel			= "";
+	private String				lastLevel			= "0";
 	private boolean				showMissingRP;
 	private boolean				blink				= false;
 
 	public MoneyLevelOverlay() {
 		for (int i = 0; i < 8; i++) {
-			level_part.add(new Sprite("level_" + i, LEVEL_SIZE, LEVEL_SIZE).setCentered(false));
+			Sprite sprite = new Sprite("level_" + i, LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
+			level_part.add(sprite);
+			sprite.setAlpha(0);
 		}
 	}
 

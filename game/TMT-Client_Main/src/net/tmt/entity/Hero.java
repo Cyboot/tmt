@@ -9,12 +9,13 @@ import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.AnimatedRenderComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.factory.ComponentFactory;
+import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
-public class Hero extends Entity2D {
+public class Hero extends Entity2D implements Playable {
 
 	private double					speed				= 128;
 	private final double			ROTATION_SPEED		= 180;

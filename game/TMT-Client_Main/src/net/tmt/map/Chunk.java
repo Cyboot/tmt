@@ -21,6 +21,7 @@ public class Chunk implements Renderable {
 
 	private ReadableColor	color;
 	private List<Entity2D>	staticEntityList	= new ArrayList<Entity2D>();
+	private List<Entity2D>	deadEntities		= new ArrayList<>();
 
 	public Chunk(final Coordinate coord, final Terrain terrain, final int size) {
 		this.coord = new Coordinate(coord.x, coord.y);
@@ -82,8 +83,16 @@ public class Chunk implements Renderable {
 
 	public void update(final EntityManager entityManager, final double delta) {
 		try {
-			for (Entity2D e : staticEntityList)
+			for (Entity2D e : staticEntityList) {
 				e.update(entityManager, delta);
+				if (!e.isAlive())
+					deadEntities.add(e);
+			}
+
+			if (!deadEntities.isEmpty()) {
+				staticEntityList.removeAll(deadEntities);
+				deadEntities.clear();
+			}
 		} catch (NullPointerException e) {
 			System.err
 					.println("entityManager == null. if there are static entities inside chunk that need the entitymanager to update "

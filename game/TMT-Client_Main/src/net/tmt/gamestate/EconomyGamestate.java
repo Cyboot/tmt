@@ -18,7 +18,7 @@ public class EconomyGamestate extends AbstractGamestate {
 	private Building				buildingToConstruct;
 
 	private EconomyGamestate() {
-		super(new PlanetMap(new Planet(new Vector2d(), Terrain.PLANET_GRASS, 0)));
+		super(new PlanetMap(new Planet(new Vector2d(Double.MAX_VALUE, Double.MAX_VALUE), Terrain.PLANET_GRASS, 0)));
 	}
 
 	@Override

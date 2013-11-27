@@ -1,10 +1,10 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.MissionManager;
 import net.tmt.gfx.Graphics;
-import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.PlanetMission;
 import net.tmt.map.Terrain;
 import net.tmt.util.PlanetNameUtil;
@@ -17,10 +17,11 @@ public class Planet extends Entity2D {
 	private static int	currID	= 0;
 
 	private String		name;
-	private Mission		mission;
+
 	private int			planetId;
 	private int			radius;
 	private Terrain		baseTerrain;
+
 
 	public Planet(final Vector2d pos, final Terrain baseTerrain, final int radius) {
 		super(pos);
@@ -28,7 +29,8 @@ public class Planet extends Entity2D {
 		this.radius = radius;
 		this.baseTerrain = baseTerrain;
 		name = PlanetNameUtil.getPlanetName(pos.hashCode() + RandomUtil.SEED);
-		mission = new PlanetMission(this);
+
+		MissionManager.getInstance().registerArea(new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 1.2));
 
 		setColor();
 	}
@@ -44,14 +46,6 @@ public class Planet extends Entity2D {
 	@Override
 	public void update(final EntityManager caller, final double delta) {
 		super.update(caller, delta);
-
-		landingCheck(caller.getWorld().getPlayer().getPos());
-	}
-
-	private void landingCheck(final Vector2d playerPos) {
-		if (playerPos.distanceTo(pos) < getRadius()) {
-			MissionManager.getInstance().offerMission(mission);
-		}
 	}
 
 	@Override

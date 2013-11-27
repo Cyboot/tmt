@@ -25,7 +25,7 @@ public class PlanetMission extends Mission {
 		switch (getState()) {
 		case ACTIVE:
 			// immediatly finish mission because it changes to PlanetGamestate
-			finish();
+			finish(Medal.NONE);
 			break;
 		default:
 			break;
@@ -33,7 +33,8 @@ public class PlanetMission extends Mission {
 	}
 
 	@Override
-	public void start() {
+	public void finish(final Medal medal) {
+		super.finish(medal);
 		GameManager gm = GameManager.getInstance();
 		gm.pause(gm.getActiveGamestate());
 

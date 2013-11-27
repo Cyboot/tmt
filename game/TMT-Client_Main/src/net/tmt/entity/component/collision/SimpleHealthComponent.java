@@ -33,7 +33,7 @@ public class SimpleHealthComponent extends Component {
 
 			// iterate over all collidable entities
 			for (Entity2D e : ((List<Entity2D>) caller.getValue(CollisionComponent.COLLISION_ENTITIES))) {
-				double dmg = (double) e.getValue(DAMAGE);
+				double dmg = e.isSet(DAMAGE) ? (double) e.getValue(DAMAGE) : 0;
 
 				if (dmg != COLLISON_DAMAGE)
 					health -= dmg;

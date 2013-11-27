@@ -14,6 +14,7 @@ import net.tmt.entity.weapons.LaserShoot;
 import net.tmt.game.Controls;
 import net.tmt.game.GameEngine;
 import net.tmt.game.factory.ComponentFactory;
+import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Sprite;
@@ -29,7 +30,7 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 
-public class PlayerSpaceShip extends Entity2D {
+public class PlayerSpaceShip extends Entity2D implements Playable {
 	private static double	ACCL			= 50;
 	private static double	FRICTION		= 0.4;
 	private static double	ROTATION_SPEED	= 90;

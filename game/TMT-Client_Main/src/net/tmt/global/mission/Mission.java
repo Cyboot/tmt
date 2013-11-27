@@ -1,6 +1,11 @@
 package net.tmt.global.mission;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.tmt.game.interfaces.Updateable;
+import net.tmt.global.Money;
+import net.tmt.global.RPLevel;
 import net.tmt.util.CountdownTimer;
 
 public abstract class Mission implements Updateable {
@@ -10,8 +15,24 @@ public abstract class Mission implements Updateable {
 	private String				desc;
 	private String				title;
 
+	private List<Object>		callerObjects			= new ArrayList<>();
 	private CountdownTimer		timerOffer;
 	private CountdownTimer		timerBurnout;
+
+	private int					moneyForGold;
+	private int					moneyForSilver;
+	private int					moneyForBronze;
+	private int					rpForGold;
+	private int					rpForSilver;
+	private int					rpForBronze;
+
+	public static enum State {
+		OFFERED, BURNOUT, REFUSED, ACTIVE, FINISHED
+	}
+
+	public static enum Medal {
+		GOLD, SILVER, BRONZE, NONE
+	}
 
 	public Mission(final String title, final String desc) {
 		this.title = title;
@@ -37,10 +58,53 @@ public abstract class Mission implements Updateable {
 			break;
 		}
 		state = nextState;
+
+		for (Object obj : callerObjects)
+			onAction(obj);
+		callerObjects.clear();
 	}
 
+	/**
+	 * start the Mission
+	 */
 	public void start() {
 		state = State.ACTIVE;
+	}
+
+	/**
+	 * finish the Mission, adds Money & RP rewards
+	 */
+	protected void finish(final Medal medal) {
+		state = State.FINISHED;
+
+		switch (medal) {
+		case GOLD:
+			RPLevel.addRP(rpForGold);
+			Money.addMoney(moneyForGold);
+			break;
+		case SILVER:
+			RPLevel.addRP(rpForSilver);
+			Money.addMoney(moneyForSilver);
+			break;
+		case BRONZE:
+			RPLevel.addRP(rpForBronze);
+			Money.addMoney(moneyForBronze);
+			break;
+		default:
+			break;
+		}
+	}
+
+	protected void setRewardMoney(final int moneyForGold, final int moneyForSilver, final int moneyForBronze) {
+		this.moneyForGold = moneyForGold;
+		this.moneyForSilver = moneyForSilver;
+		this.moneyForBronze = moneyForBronze;
+	}
+
+	protected void setRewardRP(final int rpForGold, final int rpForSilver, final int rpForBronze) {
+		this.rpForGold = rpForGold;
+		this.rpForSilver = rpForSilver;
+		this.rpForBronze = rpForBronze;
 	}
 
 	public String getTitle() {
@@ -53,14 +117,6 @@ public abstract class Mission implements Updateable {
 
 	public State getState() {
 		return state;
-	}
-
-	protected void finish() {
-		state = State.FINISHED;
-	}
-
-	public static enum State {
-		OFFERED, BURNOUT, REFUSED, ACTIVE, FINISHED
 	}
 
 	public void refuse() {
@@ -80,5 +136,17 @@ public abstract class Mission implements Updateable {
 		state = State.OFFERED;
 		timerOffer = new CountdownTimer(DEFAULT_OFFER_TIME);
 		timerBurnout = new CountdownTimer(DEFAULT_BURNOUT_TIME);
+	}
+
+	/**
+	 * call from outside to inform the mission
+	 * 
+	 * @param caller
+	 */
+	public final void action(final Object caller) {
+		callerObjects.add(caller);
+	}
+
+	protected void onAction(final Object caller) {
 	}
 }

@@ -3,7 +3,9 @@ package net.tmt.game.manager;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import net.tmt.entity.statics.area.Area;
 import net.tmt.game.interfaces.Updateable;
+import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.Mission.State;
 import net.tmt.gui.Gui;
@@ -59,6 +61,8 @@ public class MissionManager implements Updateable {
 
 	@Override
 	public void update(final double delta) {
+		updateRegisterArea();
+
 		// update the offered Mission
 		if (offeredMission != null) {
 			if (offeredMission.getState() == State.REFUSED || offeredMission.getState() == State.BURNOUT)
@@ -84,7 +88,29 @@ public class MissionManager implements Updateable {
 		}
 	}
 
+	private void updateRegisterArea() {
+		if (tmpAreaList.isEmpty())
+			return;
+
+		AbstractGamestate game = GameManager.getInstance().getActiveGamestate();
+		for (Area ma : tmpAreaList)
+			game.getWorld().addStaticEntity(ma);
+
+		tmpAreaList.clear();
+	}
+
 	public static MissionManager getInstance() {
 		return instance;
+	}
+
+	private List<Area>	tmpAreaList	= new CopyOnWriteArrayList<>();
+
+	/**
+	 * register a MissionArea
+	 * 
+	 * @param missionArea
+	 */
+	public void registerArea(final Area missionArea) {
+		tmpAreaList.add(missionArea);
 	}
 }

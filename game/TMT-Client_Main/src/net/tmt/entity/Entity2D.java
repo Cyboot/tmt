@@ -49,7 +49,7 @@ public abstract class Entity2D implements Renderable {
 		return compDispatcher.getValue(key);
 	}
 
-	protected boolean isSet(final String key) {
+	public boolean isSet(final String key) {
 		return compDispatcher.isSet(key);
 	}
 

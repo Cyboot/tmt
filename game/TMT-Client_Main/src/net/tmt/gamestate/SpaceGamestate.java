@@ -1,10 +1,12 @@
 package net.tmt.gamestate;
 
 import net.tmt.entity.PlayerSpaceShip;
+import net.tmt.entity.statics.SpaceStation;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
 import net.tmt.map.SpaceMap;
+import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
 	private static SpaceGamestate	instance;
@@ -16,6 +18,7 @@ public class SpaceGamestate extends AbstractGamestate {
 		world.setPlayer(player);
 
 		entityManager.addEntity(player, EntityManager.LAYER_3_FRONT);
+		world.addStaticEntity(new SpaceStation(new Vector2d(-500, -500)));
 
 		onResume(-1);
 	}

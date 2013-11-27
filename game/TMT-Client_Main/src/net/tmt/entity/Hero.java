@@ -80,7 +80,7 @@ public class Hero extends Entity2D {
 		if (!sprinting) {
 			sprintingTimer.setTimer(5);
 		}
-		if (!sprintingTimer.isTimeleft(delta) && catchBreathTimer.isTimeleft(delta)) {
+		if (!sprintingTimer.isTimeUp(delta) && catchBreathTimer.isTimeUp(delta)) {
 			sprinting = true;
 		} else {
 			if (!catchingBreath) {
@@ -89,7 +89,7 @@ public class Hero extends Entity2D {
 			}
 			notSprinting();
 		}
-		if (catchingBreath && catchBreathTimer.isTimeleft(delta)) {
+		if (catchingBreath && catchBreathTimer.isTimeUp(delta)) {
 			catchingBreath = false;
 			catchBreathTimer.setTimer(-1);
 			sprintingTimer.reset();

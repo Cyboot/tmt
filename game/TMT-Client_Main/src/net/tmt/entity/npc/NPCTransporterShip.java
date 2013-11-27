@@ -34,7 +34,7 @@ public class NPCTransporterShip extends NPCSpaceShip {
 
 	@Override
 	public void update(final EntityManager caller, final double delta) {
-		if (timerShield.isTimeleft(delta)) {
+		if (timerShield.isTimeUp(delta)) {
 			shieldToggle = !shieldToggle;
 		}
 

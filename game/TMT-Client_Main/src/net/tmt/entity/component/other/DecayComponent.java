@@ -19,7 +19,7 @@ public class DecayComponent extends Component {
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 
-		if (timer.isTimeleft(delta)) {
+		if (timer.isTimeUp(delta)) {
 			caller.getOwner().kill();
 		}
 	}

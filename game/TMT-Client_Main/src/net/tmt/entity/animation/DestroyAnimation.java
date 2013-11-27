@@ -22,7 +22,7 @@ public class DestroyAnimation extends Animation {
 	public void update(final EntityManager caller, final double delta) {
 		super.update(caller, delta);
 
-		if (timerAnimation.isTimeleft(delta)) {
+		if (timerAnimation.isTimeUp(delta)) {
 			radius += 3;
 		}
 	}

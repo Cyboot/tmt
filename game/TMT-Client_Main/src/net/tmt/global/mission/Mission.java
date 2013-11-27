@@ -26,11 +26,11 @@ public abstract class Mission implements Updateable {
 
 		switch (state) {
 		case OFFERED:
-			if (timerOffer.isTimeleft(delta))
+			if (timerOffer.isTimeUp(delta))
 				nextState = State.BURNOUT;
 			break;
 		case BURNOUT:
-			if (timerBurnout.isTimeleft(delta))
+			if (timerBurnout.isTimeUp(delta))
 				nextState = State.REFUSED;
 			break;
 		default:

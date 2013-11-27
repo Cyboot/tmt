@@ -14,6 +14,7 @@ import net.tmt.gui.DummyGui;
 import net.tmt.gui.EconomyGui;
 import net.tmt.gui.Gui;
 import net.tmt.gui.MissionOverlay;
+import net.tmt.gui.MoneyLevelOverlay;
 import net.tmt.gui.PlanetGui;
 import net.tmt.gui.SimulatorGui;
 import net.tmt.gui.SpaceGui;
@@ -35,6 +36,7 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 
 		instance.overlayGui.add(new AchievmentOverlay());
 		instance.overlayGui.add(new MissionOverlay());
+		instance.overlayGui.add(new MoneyLevelOverlay());
 		instance.guiList.add(new SpaceGui());
 		instance.guiList.add(new SimulatorGui());
 		instance.guiList.add(new PlanetGui());

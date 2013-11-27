@@ -24,7 +24,7 @@ public class AchievmentOverlay extends Gui {
 			show = true;
 		}
 
-		if (timer.isTimeleft(delta)) {
+		if (timer.isTimeUp(delta)) {
 			show = false;
 		}
 	}

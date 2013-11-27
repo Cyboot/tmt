@@ -47,7 +47,7 @@ public class EngineAnimationComponent extends Component {
 			return;
 
 
-		if (timerSpawn.isTimeleft(delta) && spawnSparks) {
+		if (timerSpawn.isTimeUp(delta) && spawnSparks) {
 			double speed = (double) caller.getValue(MoveComponent.SPEED);
 			double rotationMove = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_MOVE);
 			double rotationLook = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_LOOK);

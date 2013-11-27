@@ -26,7 +26,7 @@ public class GlowComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
-		if (timerGlow.isTimeleft(delta)) {
+		if (timerGlow.isTimeUp(delta)) {
 			Color tmp = primColor;
 			primColor = secColor;
 			secColor = tmp;

@@ -43,7 +43,7 @@ public class AnimatedRenderComponent extends RenderComponent {
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		super.update(caller, delta);
-		if (timer.isTimeleft(delta) && !paused) {
+		if (timer.isTimeUp(delta) && !paused) {
 			setSprite(sprites.get(currSpriteIndex));
 			currSpriteIndex = (currSpriteIndex + 1) % sprites.size();
 		}

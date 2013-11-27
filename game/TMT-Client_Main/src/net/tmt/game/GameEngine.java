@@ -54,7 +54,7 @@ public class GameEngine {
 			}
 			fps.updateAfter();
 
-			if (timerMs.isTimeleft(delta / 1000.)) {
+			if (timerMs.isTimeUp(delta / 1000.)) {
 				updateTitle();
 			}
 

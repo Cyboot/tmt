@@ -27,7 +27,7 @@ public class ParticleEmittorEntity extends Entity2D {
 		super.update(caller, delta);
 
 		timerParticle.setIntervall(0.25);
-		if (timerParticle.isTimeleft(delta)) {
+		if (timerParticle.isTimeUp(delta)) {
 			spawnSmoke(caller);
 		}
 	}

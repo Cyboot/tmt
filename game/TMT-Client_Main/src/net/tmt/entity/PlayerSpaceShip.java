@@ -87,7 +87,7 @@ public class PlayerSpaceShip extends Entity2D {
 
 
 		// shoot LaserShoot
-		if (timerShoot.isTimeleft(delta) && Controls.pressed(Controls.SHIP_FIRE)) {
+		if (timerShoot.isTimeUp(delta) && Controls.pressed(Controls.SHIP_FIRE)) {
 			timerShoot.reset();
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					shootColor, this));

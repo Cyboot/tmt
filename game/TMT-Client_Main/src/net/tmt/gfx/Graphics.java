@@ -223,11 +223,11 @@ public class Graphics {
 		glPopMatrix();
 	}
 
-	public void drawText(final double centerX, final double centerY, final String text) {
+	public void drawText(final double x, final double y, final String text) {
 		glPushMatrix();
 		{
 			applyOffset();
-			font.drawString((float) centerX, (float) centerY, text, slickColor);
+			font.drawString((float) x, (float) y, text, slickColor);
 		}
 		glPopMatrix();
 	}

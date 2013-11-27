@@ -2,7 +2,7 @@ package net.tmt.util;
 
 /**
  * Easy to use class to check if a certain time has already passed.<br>
- * Use the {@link CountdownTimer#isTimeleft(double)} to update and check if time
+ * Use the {@link CountdownTimer#isTimeUp(double)} to update and check if time
  * has passed yet
  * 
  * @author Tim Schmiedl (Cyboot)
@@ -51,7 +51,7 @@ public class CountdownTimer {
 	 * @param delta
 	 * @return if time has passed yet
 	 */
-	public boolean isTimeleft(final double delta) {
+	public boolean isTimeUp(final double delta) {
 		timer -= delta;
 
 		if (timer <= 0) {

@@ -4,9 +4,12 @@ import net.tmt.entity.statics.Planet;
 import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gamestate.PlanetGamestate;
+import net.tmt.global.RPLevel;
 
 public class PlanetMission extends Mission {
-	private Planet	planet;
+	private static final int	RP_FOR_NEW_PLANET	= 200;
+	private static final int	RP_FOR_OLD_PLANET	= 50;
+	private Planet				planet;
 
 	public PlanetMission(final Planet planet) {
 		super(planet.getName() + " (Planet #" + planet.getId() + ")",
@@ -43,10 +46,13 @@ public class PlanetMission extends Mission {
 					pausedGamestate = (PlanetGamestate) a;
 			}
 		}
-		if (pausedGamestate == null)
+		if (pausedGamestate == null) {
 			gm.startNew(new PlanetGamestate(planet));
-		else
+			RPLevel.addRP(RP_FOR_NEW_PLANET);
+		} else {
 			gm.resume(pausedGamestate.getId());
+			RPLevel.addRP(RP_FOR_OLD_PLANET);
+		}
 	}
 
 }

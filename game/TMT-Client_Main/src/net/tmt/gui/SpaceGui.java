@@ -1,11 +1,11 @@
 package net.tmt.gui;
 
 import net.tmt.gfx.Graphics;
+import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
-
-import org.lwjgl.util.Color;
 
 public class SpaceGui extends Gui {
 	public static final String	GUI_SHIP_HEALTH	= "GUI_SHIP_HEALTH";
@@ -20,10 +20,11 @@ public class SpaceGui extends Gui {
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(new Color(0, 150, 200));
+		g.setColor(ColorUtil.GUI_CYAN);
+		g.setFont(Fonts.font_14_plain);
 		renderMap(g);
 		renderShipInfo(g);
-		g.setColor(new Color(0, 150, 200));
+		g.setColor(ColorUtil.GUI_CYAN);
 		renderInfoWindow(g);
 		gameStateToolbar.render(g);
 	}
@@ -59,7 +60,7 @@ public class SpaceGui extends Gui {
 		String health = "";
 		String speed = "";
 
-		g.setColor(new Color(255, 150, 0));
+		g.setColor(ColorUtil.GUI_ORANGE);
 		if (guiManager.isSet(GUI_SHIP_HEALTH))
 			health = StringFormatter.format((double) guiManager.getValue(GUI_SHIP_HEALTH));
 

@@ -5,6 +5,7 @@ public class RPLevel {
 	private static int	rp			= 0;
 
 	private static int	rpTarget	= 1000;
+	private static int	lastRPGain;
 
 	/**
 	 * @param level
@@ -20,6 +21,7 @@ public class RPLevel {
 	 * @param rp
 	 */
 	public static void addRP(final int rp) {
+		lastRPGain = rp;
 		RPLevel.rp += rp;
 
 		checkLevel();
@@ -68,5 +70,14 @@ public class RPLevel {
 	 */
 	public static int getRPmissing() {
 		return rpTarget - rp;
+	}
+
+	/**
+	 * the last gained RP
+	 * 
+	 * @return
+	 */
+	public static int getLastRPGain() {
+		return lastRPGain;
 	}
 }

@@ -16,8 +16,8 @@ public abstract class GuiElement implements Renderable, Updateable {
 	protected double			height;
 	protected double			width;
 
-	protected Color				borderColor		= new Color(Color.GREY);
-	protected Color				backgroundColor	= new Color(Color.DKGREY);
+	protected Color				borderColor		= new Color(ColorUtil.GUI_CYAN_DARK_1);
+	protected Color				backgroundColor	= new Color(ColorUtil.GUI_CYAN_DARK_2);
 	protected Color				foregroundColor	= new Color(Color.WHITE);
 
 

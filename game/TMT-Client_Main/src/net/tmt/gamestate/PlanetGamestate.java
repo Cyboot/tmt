@@ -9,6 +9,7 @@ import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.PlanetGui;
 import net.tmt.map.PlanetMap;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.Vector2d;
 
 public class PlanetGamestate extends AbstractGamestate {
@@ -46,6 +47,10 @@ public class PlanetGamestate extends AbstractGamestate {
 		super.render(g);
 		guiManager.setGui(PlanetGui.class);
 		world.render(g);
+
+		// Blend color, so hero and other entities are more noticable
+		g.setColor(ColorUtil.BLACK_ALPHA_50);
+		g.onGui().fillRect(0, 0, GameEngine.WIDTH, GameEngine.HEIGHT);
 
 		entityManager.render(g);
 	}

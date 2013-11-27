@@ -9,8 +9,11 @@ import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;
 import net.tmt.gui.elements.GuiElement;
 import net.tmt.gui.elements.TextView;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
+
+import org.lwjgl.util.Color;
 
 public class MissionView extends ContainerElement implements ClickListener {
 	private Mission		mission;
@@ -41,6 +44,7 @@ public class MissionView extends ContainerElement implements ClickListener {
 		addGuiElement(textview_name);
 		addGuiElement(textview_desc);
 		addGuiElement(textview_timeleft);
+		setBackgroundColor((Color) ColorUtil.GUI_CYAN_DARK_3);
 	}
 
 	@Override

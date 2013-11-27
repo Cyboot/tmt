@@ -8,10 +8,10 @@ import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.Money;
 import net.tmt.global.RPLevel;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 public class MoneyLevelOverlay extends Gui {
@@ -20,9 +20,11 @@ public class MoneyLevelOverlay extends Gui {
 	private List<Sprite>		level_part			= new ArrayList<>();
 
 	private CountdownTimer		timerShowMissing	= CountdownTimer.createManualResetTimer(5);
+	private CountdownTimer		timerBlink			= new CountdownTimer(0.5);
 	private int					lastRP				= 0;
 	private String				lastLevel			= "";
 	private boolean				showMissingRP;
+	private boolean				blink				= false;
 
 	public MoneyLevelOverlay() {
 		for (int i = 0; i < 8; i++) {
@@ -46,6 +48,8 @@ public class MoneyLevelOverlay extends Gui {
 		if (timerShowMissing.isTimeUp(delta)) {
 			showMissingRP = false;
 		}
+		if (timerBlink.isTimeUp(delta))
+			blink = !blink;
 	}
 
 
@@ -86,7 +90,7 @@ public class MoneyLevelOverlay extends Gui {
 		String text = Money.getMoney();
 		int x = Math.max(font.getWidth("$"), LEVEL_SIZE / 2 - font.getWidth(text) / 2);
 
-		g.setColor(new Color(255, 150, 0));
+		g.setColor(ColorUtil.GUI_ORANGE);
 		g.onGui().drawText(0, LEVEL_SIZE + 12, "$");
 		g.onGui().drawText(x, LEVEL_SIZE + 12, text);
 	}
@@ -102,7 +106,7 @@ public class MoneyLevelOverlay extends Gui {
 
 		// Level Nr
 		g.setFont(Fonts.font_26_bold);
-		g.setColor(new Color(255, 150, 0));
+		g.setColor(ColorUtil.GUI_ORANGE);
 		int offset = 8;
 		if (RPLevel.getLevel().length() > 1)
 			offset = 0;
@@ -116,8 +120,13 @@ public class MoneyLevelOverlay extends Gui {
 			String text = lastRP + " / " + RPLevel.getRPtarget();
 			int x = Math.max(0, LEVEL_SIZE / 2 - font.getWidth(text) / 2);
 
-			g.setColor(new Color(0, 150, 200));
+			g.setColor(ColorUtil.GUI_CYAN);
 			g.onGui().drawText(x, LEVEL_SIZE - 3, text);
+
+			if (blink) {
+				g.setColor(ColorUtil.GUI_ORANGE);
+				g.onGui().drawText(LEVEL_SIZE * 5 / 6, 4, "+" + RPLevel.getLastRPGain());
+			}
 		}
 
 	}

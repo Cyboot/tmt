@@ -31,7 +31,15 @@ public class RPLevel {
 		if (rp > rpTarget) {
 			rp %= rpTarget;
 			level++;
-			rpTarget *= 1.05;
+
+			// increase rp for next level. Try to fit to "round" numbers (e.g
+			// ...250 or at least ...200)
+			int deltaRP = (int) ((rpTarget * 1.1) - rpTarget);
+			rpTarget += deltaRP;
+			if (deltaRP > 250)
+				rpTarget += 250 - rpTarget % 250;
+			else
+				rpTarget += 100 - rpTarget % 100;
 		}
 	}
 

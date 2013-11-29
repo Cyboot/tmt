@@ -30,7 +30,10 @@ public class Planet extends Entity2D {
 		this.baseTerrain = baseTerrain;
 		name = PlanetNameUtil.getPlanetName(pos.hashCode() + RandomUtil.SEED);
 
-		MissionManager.getInstance().registerArea(new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 1.2));
+		// FIXME: BUG (maybe not here): Planets far away sometimes doesn't have
+		// OfferAreas
+		MissionManager.getInstance()
+				.registerArea(new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 1.2));
 
 		setColor();
 	}

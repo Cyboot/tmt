@@ -1,11 +1,10 @@
 package net.tmt.global.mission;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.global.Money;
 import net.tmt.global.RPLevel;
+import net.tmt.global.mission.MissionDispatcher.Entry;
 import net.tmt.util.CountdownTimer;
 
 public abstract class Mission implements Updateable {
@@ -15,7 +14,6 @@ public abstract class Mission implements Updateable {
 	private String				desc;
 	private String				title;
 
-	private List<Object>		callerObjects			= new ArrayList<>();
 	private CountdownTimer		timerOffer;
 	private CountdownTimer		timerBurnout;
 
@@ -25,6 +23,9 @@ public abstract class Mission implements Updateable {
 	private int					rpForGold;
 	private int					rpForSilver;
 	private int					rpForBronze;
+	private MissionAreaOffer	offerArea;
+	private boolean				repeatable;
+	private boolean				hasReward				= false;
 
 	public static enum State {
 		OFFERED, BURNOUT, REFUSED, ACTIVE, FINISHED
@@ -35,10 +36,15 @@ public abstract class Mission implements Updateable {
 	}
 
 	public Mission(final String title, final String desc) {
+		this(title, desc, false);
+	}
+
+	public Mission(final String title, final String desc, final boolean repeatable) {
 		this.title = title;
 		this.desc = desc;
 		timerOffer = new CountdownTimer(DEFAULT_OFFER_TIME);
 		timerBurnout = new CountdownTimer(DEFAULT_BURNOUT_TIME);
+		this.repeatable = repeatable;
 	}
 
 	@Override
@@ -59,15 +65,18 @@ public abstract class Mission implements Updateable {
 		}
 		state = nextState;
 
-		for (Object obj : callerObjects)
-			onAction(obj);
-		callerObjects.clear();
+		for (Entry entry : MissionDispatcher.getEntries()) {
+			onAction(entry.getObject(), entry.getMessage());
+		}
 	}
 
 	/**
 	 * start the Mission
 	 */
 	public void start() {
+		// remove the OfferArea if its not repeatable
+		if (!repeatable)
+			offerArea.kill();
 		state = State.ACTIVE;
 	}
 
@@ -75,6 +84,10 @@ public abstract class Mission implements Updateable {
 	 * finish the Mission, adds Money & RP rewards
 	 */
 	protected void finish(final Medal medal) {
+		// if Mission is already finished, ignore it
+		if (state != State.ACTIVE)
+			return;
+
 		state = State.FINISHED;
 
 		switch (medal) {
@@ -99,12 +112,14 @@ public abstract class Mission implements Updateable {
 		this.moneyForGold = moneyForGold;
 		this.moneyForSilver = moneyForSilver;
 		this.moneyForBronze = moneyForBronze;
+		this.hasReward = true;
 	}
 
 	protected void setRewardRP(final int rpForGold, final int rpForSilver, final int rpForBronze) {
 		this.rpForGold = rpForGold;
 		this.rpForSilver = rpForSilver;
 		this.rpForBronze = rpForBronze;
+		this.hasReward = true;
 	}
 
 	public String getTitle() {
@@ -138,15 +153,40 @@ public abstract class Mission implements Updateable {
 		timerBurnout = new CountdownTimer(DEFAULT_BURNOUT_TIME);
 	}
 
-	/**
-	 * call from outside to inform the mission
-	 * 
-	 * @param caller
-	 */
-	public final void action(final Object caller) {
-		callerObjects.add(caller);
+	protected void onAction(final Object object, final String message) {
 	}
 
-	protected void onAction(final Object caller) {
+	public void setOfferArea(final MissionAreaOffer offerArea) {
+		this.offerArea = offerArea;
+	}
+
+	public int getRewardRP(final Medal medal) {
+		switch (medal) {
+		case GOLD:
+			return rpForGold;
+		case SILVER:
+			return rpForSilver;
+		case BRONZE:
+			return rpForBronze;
+		default:
+			return 0;
+		}
+	}
+
+	public int getRewardMoney(final Medal medal) {
+		switch (medal) {
+		case GOLD:
+			return moneyForGold;
+		case SILVER:
+			return moneyForSilver;
+		case BRONZE:
+			return moneyForBronze;
+		default:
+			return 0;
+		}
+	}
+
+	public boolean hasReward() {
+		return hasReward;
 	}
 }

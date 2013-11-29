@@ -6,7 +6,7 @@ import net.tmt.game.Controls;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.Gui;
-import net.tmt.gui.elements.ToolTip;
+import net.tmt.gui.elements.Label;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
@@ -31,7 +31,7 @@ public class OnHoverComponent extends Component {
 			GuiManager guiManager = GuiManager.getInstance();
 
 			guiManager.dispatch(Gui.GUI_HOVER, info);
-			guiManager.setTooltip(new ToolTip(new Vector2d(Controls.mouseX() + 15, Controls.mouseY()), info));
+			guiManager.setTooltip(Label.createTooltip(new Vector2d(Controls.mouseX() + 15, Controls.mouseY()), info));
 			isHover = true;
 		}
 	}

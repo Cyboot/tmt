@@ -2,10 +2,10 @@ package net.tmt.gui;
 
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.Mission;
-import net.tmt.gui.view.MissionView;
+import net.tmt.gui.view.MissionOfferView;
 
 public class MissionOverlay extends Gui {
-	private MissionView	missionView;
+	private MissionOfferView	missionView;
 
 	@Override
 	public void update(final double delta) {
@@ -13,7 +13,7 @@ public class MissionOverlay extends Gui {
 			Mission mission = (Mission) guiManager.getValue(MISSION_OFFER);
 			guiManager.remove(MISSION_OFFER);
 
-			missionView = new MissionView(mission);
+			missionView = new MissionOfferView(mission);
 		} else {
 			missionView = null;
 		}

@@ -10,17 +10,17 @@ import net.tmt.game.manager.MissionManager;
 import net.tmt.util.Vector2d;
 
 public class DummyMission extends Mission {
-	private long		timePassed	= 0;
+	private double		timePassed	= 0;
 
 	private List<Area>	areas		= new ArrayList<>();
 
 	public DummyMission() {
 		super("Dummy", "dummy Mission for debugging purpose, find the circle to complete the mission");
 
-		setRewardMoney(1000, 500, 250);
-		setRewardRP(1250, 1000, 750);
+		setRewardMoney(250, 100, 50);
+		setRewardRP(750, 500, 250);
 
-		areas.add(new MissionAreaAction(new Vector2d(-1000, -500), this));
+		areas.add(new MissionAreaAction(new Vector2d(-1000, -500)));
 	}
 
 	@Override
@@ -41,8 +41,8 @@ public class DummyMission extends Mission {
 	}
 
 	@Override
-	public void onAction(final Object caller) {
-		if (caller instanceof MissionAreaAction) {
+	public void onAction(final Object object, final String message) {
+		if (object instanceof MissionAreaAction) {
 			Medal medal = Medal.BRONZE;
 
 			if (timePassed < 10)

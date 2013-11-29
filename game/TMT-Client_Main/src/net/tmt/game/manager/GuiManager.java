@@ -18,7 +18,7 @@ import net.tmt.gui.MoneyLevelOverlay;
 import net.tmt.gui.PlanetGui;
 import net.tmt.gui.SimulatorGui;
 import net.tmt.gui.SpaceGui;
-import net.tmt.gui.elements.ToolTip;
+import net.tmt.gui.elements.Label;
 
 public class GuiManager implements Updateable, Renderable, Dispatcher {
 	private static GuiManager	instance;
@@ -29,7 +29,7 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 
 	private Map<String, Object>	guiValue	= new HashMap<>();
 
-	private ToolTip				tooltip;
+	private Label				tooltip;
 
 	public static GuiManager init() {
 		instance = new GuiManager();
@@ -100,7 +100,7 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 		guiValue.remove(key);
 	}
 
-	public void setTooltip(final ToolTip tooltip) {
+	public void setTooltip(final Label tooltip) {
 		this.tooltip = tooltip;
 	}
 }

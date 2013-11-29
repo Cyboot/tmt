@@ -14,7 +14,7 @@ public class PlanetMission extends Mission {
 	public PlanetMission(final Planet planet) {
 		super(planet.getName() + " (Planet #" + planet.getId() + ")",
 				"Welcome to this wonderful planet. Here you can enjoy a lot of the lovley terrain type "
-						+ planet.getBaseTerrain().name());
+						+ planet.getBaseTerrain().name(), true);
 		this.planet = planet;
 	}
 

@@ -21,6 +21,7 @@ public abstract class Entity2D implements Renderable {
 	protected Entity2D			owner;
 
 	private ComponentDispatcher	compDispatcher		= new ComponentDispatcher(this);
+	private Sprite				sprite;
 
 	public Entity2D(final Vector2d pos) {
 		id = currentID++;
@@ -87,6 +88,7 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	public void setSprite(final Sprite sprite) {
+		this.sprite = sprite;
 		for (Component c : compDispatcher.getComponents()) {
 			if (c instanceof RenderComponent)
 				((RenderComponent) c).setSprite(sprite);
@@ -107,6 +109,10 @@ public abstract class Entity2D implements Renderable {
 
 	public Entity2D getOwner() {
 		return owner;
+	}
+
+	protected Sprite getSprite() {
+		return sprite;
 	}
 
 	@Override

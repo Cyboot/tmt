@@ -14,7 +14,7 @@ public class MissionDispatcher {
 		entries.add(new Entry(object, message));
 	}
 
-	protected void clearValues() {
+	protected static void clearValues() {
 		entries.clear();
 	}
 

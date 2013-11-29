@@ -6,7 +6,6 @@ import java.util.List;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.area.Area;
 import net.tmt.entity.statics.area.MissionAreaAction;
-import net.tmt.game.manager.MissionManager;
 import net.tmt.util.Vector2d;
 
 public class DummyMission extends Mission {

@@ -153,6 +153,14 @@ public abstract class Mission implements Updateable {
 		timerBurnout = new CountdownTimer(DEFAULT_BURNOUT_TIME);
 	}
 
+	/**
+	 * will be called for every action that happend during the loop. <br>
+	 * decide what object is releavant for the mission use something like this: <br>
+	 * <code>object instanceof SomeObject</code>
+	 * 
+	 * @param object
+	 * @param message
+	 */
 	protected void onAction(final Object object, final String message) {
 	}
 

@@ -2,11 +2,11 @@ package net.tmt.gui.view;
 
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.ClickListener;
-import net.tmt.game.manager.MissionManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.Mission;
+import net.tmt.global.mission.MissionManager;
 import net.tmt.global.mission.Mission.Medal;
 import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;

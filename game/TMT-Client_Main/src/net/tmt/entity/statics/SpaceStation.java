@@ -5,9 +5,9 @@ import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.OnHoverComponent;
 import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.game.manager.EntityManager;
-import net.tmt.game.manager.MissionManager;
 import net.tmt.gfx.Sprite;
-import net.tmt.global.mission.DummyMission;
+import net.tmt.global.mission.MissionManager;
+import net.tmt.global.mission.SpaceRaceMission;
 import net.tmt.util.Vector2d;
 
 public class SpaceStation extends Entity2D {
@@ -18,7 +18,7 @@ public class SpaceStation extends Entity2D {
 	public SpaceStation(final Vector2d pos) {
 		super(pos);
 
-		MissionManager.getInstance().registerArea(new MissionAreaOffer(pos, new DummyMission(), SIZE));
+		MissionManager.getInstance().registerArea(new MissionAreaOffer(pos, new SpaceRaceMission(pos, 10), SIZE));
 		addComponent(new OnHoverComponent());
 		addComponent(new RotateComponent(0, 3));
 

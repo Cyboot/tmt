@@ -34,9 +34,9 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 	public static GuiManager init() {
 		instance = new GuiManager();
 
-		instance.overlayGui.add(new AchievmentOverlay());
 		instance.overlayGui.add(new MissionOverlay());
 		instance.overlayGui.add(new MoneyLevelOverlay());
+		instance.overlayGui.add(new AchievmentOverlay());
 		instance.guiList.add(new SpaceGui());
 		instance.guiList.add(new SimulatorGui());
 		instance.guiList.add(new PlanetGui());

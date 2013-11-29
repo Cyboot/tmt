@@ -1,12 +1,13 @@
-package net.tmt.game.manager;
+package net.tmt.global.mission;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.tmt.entity.statics.area.Area;
 import net.tmt.game.interfaces.Updateable;
+import net.tmt.game.manager.GameManager;
+import net.tmt.game.manager.GuiManager;
 import net.tmt.gamestate.AbstractGamestate;
-import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.Mission.State;
 import net.tmt.gui.Gui;
 
@@ -86,6 +87,7 @@ public class MissionManager implements Updateable {
 			if (m.getState() == State.REFUSED)
 				offeredMissionList.remove(m);
 		}
+		MissionDispatcher.clearValues();
 	}
 
 	private void updateRegisterArea() {
@@ -112,5 +114,14 @@ public class MissionManager implements Updateable {
 	 */
 	public void registerArea(final Area missionArea) {
 		tmpAreaList.add(missionArea);
+	}
+
+	/**
+	 * check if the player is currently inside a mission
+	 * 
+	 * @return
+	 */
+	public boolean isMissionActive() {
+		return activeMission != null;
 	}
 }

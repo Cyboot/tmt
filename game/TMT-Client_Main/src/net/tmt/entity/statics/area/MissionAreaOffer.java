@@ -1,8 +1,9 @@
 package net.tmt.entity.statics.area;
 
-import net.tmt.game.manager.MissionManager;
+import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.Mission;
+import net.tmt.global.mission.MissionManager;
 import net.tmt.util.Vector2d;
 
 public class MissionAreaOffer extends Area {
@@ -17,7 +18,20 @@ public class MissionAreaOffer extends Area {
 	}
 
 	@Override
+	public void render(final Graphics g) {
+		// don't render if player is aready inside a mission
+		if (MissionManager.getInstance().isMissionActive())
+			return;
+
+		super.render(g);
+	}
+
+	@Override
 	protected void onCollide() {
+		// disable if player is already inside a mission
+		if (MissionManager.getInstance().isMissionActive())
+			return;
+
 		MissionManager.getInstance().offerMission(mission);
 	}
 }

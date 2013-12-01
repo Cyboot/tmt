@@ -7,6 +7,8 @@ import net.tmt.entity.component.collision.CollisionComponent;
 import net.tmt.entity.component.move.MoveComponent;
 import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.AnimatedRenderComponent;
+import net.tmt.entity.component.other.PickUpComponent;
+import net.tmt.entity.pickups.BackPack;
 import net.tmt.game.Controls;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
@@ -22,7 +24,10 @@ public class Hero extends Entity2D implements Playable {
 	private AnimatedRenderComponent	aniRenCom;
 	private boolean					sprinting			= false;
 	private boolean					catchingBreath		= false;
-	private boolean					holdingSomething	= false;
+	private Entity2D				holding;
+	private List<Entity2D>			wearing				= new ArrayList<Entity2D>();
+	private boolean					movingF				= false;
+	private boolean					movingB				= false;
 	private CountdownTimer			sprintingTimer		= CountdownTimer.createManualResetTimer(5);
 	private CountdownTimer			catchBreathTimer	= CountdownTimer.createManualResetTimer(15);
 
@@ -43,11 +48,19 @@ public class Hero extends Entity2D implements Playable {
 	@Override
 	public void update(final EntityManager caller, final double delta) {
 		// FIXME: MoveComponent's speed is always 0?
-		double s = ((double) getValue(MoveComponent.SPEED));;
+		// context: moving should be set based on current speed instead of
+		// keyboard input
+		double s = ((double) getValue(MoveComponent.SPEED));
 
-		boolean movingF = true;
-		boolean movingB = true;
+		checkControls(delta);
+		checkHolding();
+		setAnimation();
+		super.update(caller, delta);
+	}
 
+	private void checkControls(final double delta) {
+		movingF = true;
+		movingB = true;
 		if (Controls.pressed(Controls.HERO_UP))
 			dispatchValue(MoveComponent.SPEED, speed);
 		else
@@ -66,15 +79,54 @@ public class Hero extends Entity2D implements Playable {
 			notSprinting();
 		}
 		speed = (sprinting ? 256 : 128);
+		if (Controls.pressed(Controls.HERO_PACK))
+			packHoldingItem();
+		if (Controls.pressed(Controls.HERO_UNPACK))
+			unpackItem();
 
-		checkHolding();
+	}
 
+	private void packHoldingItem() {
+		if (holding == null)
+			return;
+		BackPack bp = null;
+		for (Entity2D e : wearing) {
+			if (e instanceof BackPack)
+				bp = (BackPack) e;
+		}
+		if (bp == null)
+			return;
+		bp.packItem(holding);
+		holding.getComponent(PickUpComponent.class).getPacked();
+		holding = null;
+	}
+
+
+	private void unpackItem() {
+		if (holding != null) {
+			throwHoldingItem();
+			return;
+		}
+		BackPack bp = null;
+		for (Entity2D e : wearing) {
+			if (e instanceof BackPack)
+				bp = (BackPack) e;
+		}
+		if (bp == null || bp.getItemCount() < 1)
+			return;
+		holding = bp.unPackNext();
+		holding.getComponent(PickUpComponent.class).getUnPacked();
+	}
+
+	private void throwHoldingItem() {
+		// TODO: implement throwing away
+	}
+
+	private void setAnimation() {
 		if (movingF || movingB)
 			aniRenCom.resumeAnimation();
 		else
 			aniRenCom.pauseAnimation();
-
-		super.update(caller, delta);
 	}
 
 	private void chekSprinting(final double delta) {
@@ -101,12 +153,16 @@ public class Hero extends Entity2D implements Playable {
 		sprinting = false;
 	}
 
-	public void setHoldingSth(final boolean h) {
-		holdingSomething = h;
+	public void hold(final Entity2D e) {
+		holding = e;
+	}
+
+	public void wear(final Entity2D e) {
+		wearing.add(e);
 	}
 
 	private void checkHolding() {
-		if (holdingSomething) {
+		if (holding != null) {
 			List<Sprite> aniSprites = new ArrayList<Sprite>();
 			aniSprites.add(new Sprite("hero_walk_hold_0"));
 			aniSprites.add(new Sprite("hero_walk_hold_1"));

@@ -54,6 +54,8 @@ public class Controls {
 	public static final List<Integer>		HERO_LEFT					= new ArrayList<>();
 	public static final List<Integer>		HERO_RIGHT					= new ArrayList<>();
 	public static final List<Integer>		HERO_SPRINT					= new ArrayList<>();
+	public static final List<Integer>		HERO_PACK					= new ArrayList<>();
+	public static final List<Integer>		HERO_UNPACK					= new ArrayList<>();
 
 	// Debug Keys
 	public static final List<Integer>		DEBUG_COLLISION				= new ArrayList<>();
@@ -198,6 +200,8 @@ public class Controls {
 		HERO_LEFT.add(getKeycode("HERO_LEFT"));
 		HERO_RIGHT.add(getKeycode("HERO_RIGHT"));
 		HERO_SPRINT.add(getKeycode("HERO_SPRINT"));
+		HERO_PACK.add(getKeycode("HERO_PACK"));
+		HERO_UNPACK.add(getKeycode("HERO_UNPACK"));
 
 		MOUSE_LEFT.add(0 + MOUSE_KEYVALUE_OFFSET);
 		MOUSE_RIGHT.add(1 + MOUSE_KEYVALUE_OFFSET);

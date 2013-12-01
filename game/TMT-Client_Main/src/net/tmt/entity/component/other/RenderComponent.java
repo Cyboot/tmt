@@ -12,6 +12,7 @@ public class RenderComponent extends Component {
 	public static final String	BLEND_COLOR	= "BLEND_COLOR";
 
 	private Sprite				sprite;
+	private boolean				hidden		= false;
 
 	public RenderComponent() {
 	}
@@ -20,9 +21,19 @@ public class RenderComponent extends Component {
 		this.sprite = sprite;
 	}
 
+	public void hide() {
+		hidden = true;
+	}
+
+	public void unhide() {
+		hidden = false;
+	}
+
 	@Override
 	public void render(final ComponentDispatcher caller, final Graphics g) {
 		super.render(caller, g);
+		if (hidden)
+			return;
 
 		if (caller.isSet(ROTATION_ANGLE_LOOK)) {
 			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE_LOOK));
@@ -42,6 +53,10 @@ public class RenderComponent extends Component {
 
 	public void setSprite(final Sprite sprite) {
 		this.sprite = sprite;
+	}
+
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	public static class Builder {

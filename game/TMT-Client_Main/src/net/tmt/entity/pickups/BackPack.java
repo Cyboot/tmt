@@ -29,8 +29,16 @@ public class BackPack extends Entity2D {
 			contents.add(e);
 	}
 
+	public int getItemCount() {
+		return contents.size();
+	}
+
 	public void unPackItem(final Entity2D e) {
 		contents.remove(e);
+	}
+
+	public Entity2D unPackNext() {
+		return contents.remove(contents.size() - 1);
 	}
 
 }

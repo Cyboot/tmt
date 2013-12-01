@@ -8,23 +8,27 @@ import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
 import net.tmt.entity.component.collision.CollisionComponent;
 import net.tmt.entity.component.move.MoveComponent;
+import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
 public class PickUpComponent extends Component {
 
-	private Entity2D	itemHolder;
-	private Vector2d	relativePos;
-	private boolean		wearable;
+	private Entity2D		itemHolder;
+	private Vector2d		relativePos;
+	private boolean			wearable;
+	private CountdownTimer	thrownTimer	= CountdownTimer.createManualResetTimer(1.5);
 
 	public PickUpComponent(final Vector2d relativePos, final boolean wearable) {
 		this.relativePos = relativePos;
 		this.wearable = wearable;
+		thrownTimer.setTimer(0);
 	}
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		if (itemHolder == null) {
-			checkPickUp(caller);
+			if (thrownTimer.isTimeUp(delta))
+				checkPickUp(caller);
 		} else {
 			updatePosition(caller);
 		}
@@ -49,6 +53,11 @@ public class PickUpComponent extends Component {
 		if (r == null)
 			return;
 		r.unhide();
+	}
+
+	public void getThrown() {
+		itemHolder = null;
+		thrownTimer.reset();
 	}
 
 	private void updatePosition(final ComponentDispatcher caller) {

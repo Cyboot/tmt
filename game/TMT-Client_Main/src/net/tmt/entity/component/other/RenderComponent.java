@@ -55,10 +55,6 @@ public class RenderComponent extends Component {
 		this.sprite = sprite;
 	}
 
-	public Sprite getSprite() {
-		return sprite;
-	}
-
 	public static class Builder {
 		private RenderComponent	render;
 

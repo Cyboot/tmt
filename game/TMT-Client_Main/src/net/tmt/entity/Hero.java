@@ -30,6 +30,7 @@ public class Hero extends Entity2D implements Playable {
 	private boolean					movingB				= false;
 	private CountdownTimer			sprintingTimer		= CountdownTimer.createManualResetTimer(5);
 	private CountdownTimer			catchBreathTimer	= CountdownTimer.createManualResetTimer(15);
+	private CountdownTimer			uppackThrowTimer	= CountdownTimer.createManualResetTimer(0.2);
 
 	public Hero(final Vector2d pos) {
 		super(pos);
@@ -82,7 +83,7 @@ public class Hero extends Entity2D implements Playable {
 		if (Controls.pressed(Controls.HERO_PACK))
 			packHoldingItem();
 		if (Controls.pressed(Controls.HERO_UNPACK))
-			unpackItem();
+			unpackItem(delta);
 
 	}
 
@@ -102,9 +103,10 @@ public class Hero extends Entity2D implements Playable {
 	}
 
 
-	private void unpackItem() {
+	private void unpackItem(final double delta) {
 		if (holding != null) {
-			throwHoldingItem();
+			if (uppackThrowTimer.isTimeUp(delta))
+				throwHoldingItem();
 			return;
 		}
 		BackPack bp = null;
@@ -116,10 +118,12 @@ public class Hero extends Entity2D implements Playable {
 			return;
 		holding = bp.unPackNext();
 		holding.getComponent(PickUpComponent.class).getUnPacked();
+		uppackThrowTimer.reset();
 	}
 
 	private void throwHoldingItem() {
-		// TODO: implement throwing away
+		holding.getComponent(PickUpComponent.class).getThrown();
+		holding = null;
 	}
 
 	private void setAnimation() {

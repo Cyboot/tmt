@@ -1,5 +1,6 @@
 package net.tmt.map.generator;
 
+import net.tmt.game.manager.EntityManager;
 import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
 import net.tmt.map.PlanetChunk;
@@ -11,31 +12,31 @@ import net.tmt.util.RandomUtil;
 
 class ChunkFormer {
 
-	public static Chunk formChunk(final Coordinate coord, final WorldMap map) {
+	public static Chunk formChunk(final Coordinate coord, final WorldMap map, final EntityManager entityManager) {
 		if (map instanceof SpaceMap)
-			return formSpaceChunk(coord, map);
+			return formSpaceChunk(coord, map, entityManager);
 		else if (map instanceof PlanetMap)
-			return formPlanetChunk(coord, map);
+			return formPlanetChunk(coord, map, entityManager);
 		else {
-			// TODO throw an exception — maybe?
-			return null;
+			throw new IllegalArgumentException("Maptype is not known");
 		}
 	}
 
-	private static Chunk formSpaceChunk(final Coordinate coord, final WorldMap map) {
+	private static Chunk formSpaceChunk(final Coordinate coord, final WorldMap map, final EntityManager entityManager) {
 		RandomUtil.setSeed(coord.hashCode());
-		int chance = RandomUtil.intRange(0, 0);
+		int chance = RandomUtil.intRange(0, 2);
 		Chunk chunk = null;
 		switch (chance) {
 		case 0:
 			chunk = new Chunk(coord, Terrain.SPACE_PLANET, map.getChunkSize());
-			ChunkFiller.fillPlanet(chunk);
+			ChunkFiller.fillPlanet(chunk, entityManager);
 			break;
 		case 1:
-			chunk = new Chunk(coord, Terrain.SPACE_VOID, map.getChunkSize());
+			chunk = new Chunk(coord, Terrain.SPACE_ASTEROIDS_FLOATING, map.getChunkSize());
+			ChunkFiller.fillAsteroid(chunk, entityManager);
 			break;
 		case 2:
-			chunk = new Chunk(coord, Terrain.SPACE_DEBRIS, map.getChunkSize());
+			chunk = new Chunk(coord, Terrain.SPACE_VOID, map.getChunkSize());
 			break;
 		case 3:
 			chunk = new Chunk(coord, Terrain.SPACE_NEBULA, map.getChunkSize());
@@ -44,14 +45,15 @@ class ChunkFormer {
 			chunk = new Chunk(coord, Terrain.SPACE_ASTEROIDS_BELT, map.getChunkSize());
 			break;
 		case 5:
-			chunk = new Chunk(coord, Terrain.SPACE_ASTEROIDS_FLOATING, map.getChunkSize());
+			chunk = new Chunk(coord, Terrain.SPACE_DEBRIS, map.getChunkSize());
 			break;
 		}
-		ChunkFiller.fillDefault(chunk);
+		ChunkFiller.fillDefault(chunk, entityManager);
 		return chunk;
 	}
 
-	private static PlanetChunk formPlanetChunk(final Coordinate coord, final WorldMap map) {
+	private static PlanetChunk formPlanetChunk(final Coordinate coord, final WorldMap map,
+			final EntityManager entityManager) {
 		RandomUtil.setSeed(coord.hashCode() ^ map.hashCode());
 
 		PlanetChunk chunk = null;

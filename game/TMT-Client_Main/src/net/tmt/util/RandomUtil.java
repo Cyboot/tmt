@@ -9,7 +9,7 @@ public class RandomUtil {
 	 * the seed for the Space and Planetmaps (working like in Minecraft). same
 	 * seed produces the same maps every time
 	 */
-	public static final int	SEED	= 42;
+	public static final int	SEED	= 13;
 
 	private static Random	random	= new Random(SEED);
 

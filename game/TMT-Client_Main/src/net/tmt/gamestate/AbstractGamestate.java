@@ -28,8 +28,8 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 		world.setMap(worldmap);
 		entityManager = new EntityManager(world);
 
-		if (worldmap != null)
-			worldmap.setEntityManager(entityManager);
+		if (world != null)
+			world.setEntityManager(entityManager);
 	}
 
 	@Override

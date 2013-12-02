@@ -4,6 +4,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
@@ -19,6 +20,7 @@ public class World implements Updateable, Renderable {
 
 	private WorldMap			map;
 	private Entity2D			player;
+	private EntityManager		entityManager;
 
 	public World() {
 		// TODO: quick & dirty: Worldoffset
@@ -35,7 +37,7 @@ public class World implements Updateable, Renderable {
 			centerAroundPlayer(delta * 1000);
 
 		if (map != null)
-			map.update(getOffsetCentered(), delta);
+			map.update(getOffsetCentered(), entityManager, delta);
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class World implements Updateable, Renderable {
 		return offset;
 	}
 
-	private Vector2d getOffsetCentered() {
+	public Vector2d getOffsetCentered() {
 		tmp.x = offset.x + GameEngine.WIDTH / 2;
 		tmp.y = offset.y + GameEngine.HEIGHT / 2;
 		return tmp;
@@ -105,6 +107,18 @@ public class World implements Updateable, Renderable {
 	 * @return if Entity was added successfull
 	 */
 	public boolean addStaticEntity(final Entity2D e) {
-		return map.addStaticEntity(e);
+		boolean freeToBuild = map.chunkFreeToBuild(e.getPos(), entityManager);
+
+		if (freeToBuild) {
+			entityManager.addEntity(e);
+			if (map instanceof PlanetMap)
+				map.setChunkNotEmpty(e.getPos());
+		}
+
+		return freeToBuild;
+	}
+
+	public void setEntityManager(final EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 }

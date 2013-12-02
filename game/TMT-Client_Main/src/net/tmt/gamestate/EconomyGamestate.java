@@ -1,14 +1,12 @@
 package net.tmt.gamestate;
 
 import net.tmt.entity.economy.Building;
-import net.tmt.entity.statics.Planet;
 import net.tmt.game.Controls;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.EconomyGui;
 import net.tmt.map.PlanetChunk;
 import net.tmt.map.PlanetMap;
 import net.tmt.map.Terrain;
-import net.tmt.util.Vector2d;
 
 public class EconomyGamestate extends AbstractGamestate {
 	private static EconomyGamestate	instance	= new EconomyGamestate();
@@ -18,7 +16,7 @@ public class EconomyGamestate extends AbstractGamestate {
 	private Building				buildingToConstruct;
 
 	private EconomyGamestate() {
-		super(new PlanetMap(new Planet(new Vector2d(Double.MAX_VALUE, Double.MAX_VALUE), Terrain.PLANET_GRASS, 0)));
+		super(new PlanetMap(Terrain.PLANET_GRASS, 0));
 	}
 
 	@Override

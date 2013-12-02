@@ -10,7 +10,9 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
+import net.tmt.gui.Gui;
 import net.tmt.map.World;
+import net.tmt.util.Vector2d;
 
 /**
  * <pre>
@@ -24,17 +26,18 @@ import net.tmt.map.World;
  * @author Tim Schmiedl (Cyboot)
  */
 public class EntityManager implements Updateable, Renderable {
+	private static final int				GRID_SIZE			= 2048;
 	public static final int					LAYER_0_FAR_BACK	= 0;
 	public static final int					LAYER_1_BACK		= 1;
-	public static final int					LAYER_2_MEDIUM		= 2;					// default
+	public static final int					LAYER_2_MEDIUM		= 2;				// default
 	public static final int					LAYER_3_FRONT		= 3;
 	public static final int					LAYER_4_GUI			= 4;
 
 	/** Map<Layer , List<Entity>> */
 	private Map<Integer, List<Entity2D>>	entityMap			= new HashMap<>();
-	private List<Entity2D>					collidableEntities	= new ArrayList<>();
 
 	private AddRemove						addremove			= new AddRemove();
+	private Collision						collision			= new Collision();
 	private World							world;
 
 	public EntityManager(final World world) {
@@ -53,14 +56,19 @@ public class EntityManager implements Updateable, Renderable {
 			Integer key = entry.getKey();
 			List<Entity2D> list = entry.getValue();
 
+			Vector2d tmp = new Vector2d();
 			for (Entity2D e : list) {
 				if (e.isAlive()) {
+					tmp.set(e.getPos());
 					e.update(this, delta);
+					if (e.isCollisable())
+						collision.move(tmp, e.getPos(), e);
 				} else {
 					addremove.remove(e, key);
 				}
 			}
 		}
+		GuiManager.getInstance().dispatch(Gui.DEBUG_ENTITY_COUNT, getEntityCount());
 	}
 
 	@Override
@@ -102,8 +110,28 @@ public class EntityManager implements Updateable, Renderable {
 		addremove.add(entity, layer);
 	}
 
-	public List<Entity2D> getCollidableEntities() {
-		return collidableEntities;
+	public List<List<Entity2D>> getCollidableEntities(final Vector2d v) {
+		List<List<Entity2D>> result = new ArrayList<>();
+
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				Vector2d vector = Vector2d.tmp1.set(v);
+				long key = collision.getKey(vector.add(GRID_SIZE * x, GRID_SIZE * y));
+
+
+				result.add(collision.getSubAreaForCollidable(key));
+			}
+		}
+
+		return result;
+	}
+
+	public int getEntityCount() {
+		int result = 0;
+		for (List<Entity2D> list : entityMap.values())
+			result += list.size();
+
+		return result;
 	}
 
 	public World getWorld() {
@@ -152,8 +180,9 @@ public class EntityManager implements Updateable, Renderable {
 
 					for (Entity2D e : list) {
 						// Entity is collidable? --> add to collidable List
-						if (e.isCollisable())
-							collidableEntities.add(e);
+						if (e.isCollisable()) {
+							collision.add(e);
+						}
 
 						entityMap.get(key).add(e);
 					}
@@ -170,11 +199,64 @@ public class EntityManager implements Updateable, Renderable {
 
 					// remove dead entities from all Lists
 					entityMap.get(key).removeAll(list);
-					collidableEntities.removeAll(list);
+
+					for (Entity2D e : list) {
+						if (e.isCollisable())
+							collision.remove(e);
+					}
+
+
 					list.clear();
 				}
 				dirtyRemove = false;
 			}
 		}
 	}
+
+	private class Collision {
+		private Map<Long, List<Entity2D>>	collidableEntities	= new HashMap<>();
+
+		private long getKey(final Vector2d v) {
+			long x = v.x() > 0 ? v.x() : Integer.MAX_VALUE + v.x();
+			long y = v.y() > 0 ? v.y() : Integer.MAX_VALUE + v.y();
+			x /= GRID_SIZE;
+			y /= GRID_SIZE;
+
+			y <<= 32;
+
+			return x | y;
+		}
+
+
+		public void move(final Vector2d oldPos, final Vector2d newPos, final Entity2D entity) {
+			long keyOld = getKey(oldPos);
+			long keyNew = getKey(newPos);
+
+			if (keyOld != keyNew) {
+				remove(entity);
+				add(entity);
+			}
+		}
+
+		public void remove(final Entity2D e) {
+			getSubAreaForCollidable(getKey(e.getPos())).remove(e);
+		}
+
+
+		public void add(final Entity2D e) {
+			getSubAreaForCollidable(getKey(e.getPos())).add(e);
+		}
+
+		private List<Entity2D> getSubAreaForCollidable(final long key) {
+			List<Entity2D> result = collidableEntities.get(key);
+
+			if (result == null) {
+				List<Entity2D> value = new ArrayList<>();
+				collidableEntities.put(key, value);
+				return value;
+			} else
+				return result;
+		}
+	}
+
 }

@@ -45,30 +45,35 @@ public class CollisionComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
-		List<Entity2D> entities = caller.getEntityManager().getCollidableEntities();
+		List<List<Entity2D>> entityList = caller.getEntityManager().getCollidableEntities(pos);
 
 		isCollision = false;
 		collisonEntities.clear();
-		for (Entity2D e : entities) {
-			// don't collide with yourself
-			if (e == owner || owner == e.getOwner())
-				continue;
-			// don't collide with other entities that the collidableEntity (if
-			// is set)
-			if (collidableEntity != null && e.getClass().equals(collidableEntity))
-				continue;
-			// don't collide with ignored entity
-			if (collidableEntity == null && e == ignoredEntity)
-				continue;
 
-			double radius2 = e.getComponent(CollisionComponent.class).getRadius();
+		for (List<Entity2D> entities : entityList) {
+			for (Entity2D e : entities) {
+				// don't collide with yourself
+				if (e == owner || owner == e.getOwner())
+					continue;
+				// don't collide with other entities that the collidableEntity
+				// (if
+				// is set)
+				if (collidableEntity != null && !collidableEntity.isInstance(e))
+					continue;
+				// don't collide with ignored entity
+				if (collidableEntity == null && e == ignoredEntity)
+					continue;
 
-			double dist = pos.distanceTo(e.getPos());
-			if (dist < radius2 + radius) {
-				isCollision = true;
-				collisonEntities.add(e);
+				double radius2 = e.getCollisionComponent().getRadius();
+
+				double dist = pos.distanceTo(e.getPos());
+				if (dist < radius2 + radius) {
+					isCollision = true;
+					collisonEntities.add(e);
+				}
 			}
 		}
+
 		caller.dispatch(IS_COLLISION, isCollision);
 		caller.dispatch(COLLISION_ENTITIES, collisonEntities);
 	}

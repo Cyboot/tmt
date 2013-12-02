@@ -1,6 +1,8 @@
 package net.tmt.map.generator;
 
+import net.tmt.entity.Asteroid;
 import net.tmt.entity.statics.Planet;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.map.Chunk;
 import net.tmt.map.Terrain;
 import net.tmt.util.RandomUtil;
@@ -8,7 +10,7 @@ import net.tmt.util.Vector2d;
 
 class ChunkFiller {
 
-	public static void fillPlanet(final Chunk chunk) {
+	public static void fillPlanet(final Chunk chunk, final EntityManager entityManager) {
 		Vector2d pos = chunk.getCoord().center2pos(chunk.size);
 
 		int seed = chunk.getCoord().hashCode();
@@ -41,10 +43,23 @@ class ChunkFiller {
 		}
 
 		Planet p = new Planet(pos, terrain, 300);
-		chunk.addStaticEntity(p);
+		entityManager.addEntity(p, EntityManager.LAYER_1_BACK);
 	}
 
-	public static void fillDefault(final Chunk chunk) {
+	public static void fillAsteroid(final Chunk chunk, final EntityManager entityManager) {
+		Vector2d pos = chunk.getCoord().center2pos(chunk.size);
+
+		int seed = chunk.getCoord().hashCode();
+		RandomUtil.setSeed(seed);
+		for (int i = 0; i < 30; i++) {
+			double deltaX = RandomUtil.doubleRange(-256, 256);
+			double deltaY = RandomUtil.doubleRange(-256, 256);
+
+			entityManager.addEntity(new Asteroid(pos.copy().add(deltaX, deltaY)), EntityManager.LAYER_2_MEDIUM);
+		}
+	}
+
+	public static void fillDefault(final Chunk chunk, final EntityManager entityManager) {
 
 		// add stars (not used now, because of terrain image)
 

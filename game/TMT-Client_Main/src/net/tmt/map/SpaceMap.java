@@ -36,7 +36,6 @@ public class SpaceMap extends WorldMap {
 
 	private void addWaypoint(final Waypoint waypoint) {
 		waypoints.add(waypoint);
-		addStaticEntity(waypoint);
 	}
 
 	/**

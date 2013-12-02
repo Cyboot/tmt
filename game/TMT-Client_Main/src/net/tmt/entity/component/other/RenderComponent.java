@@ -2,8 +2,10 @@ package net.tmt.entity.component.other;
 
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
+import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.util.DebugUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -31,9 +33,14 @@ public class RenderComponent extends Component {
 
 	@Override
 	public void render(final ComponentDispatcher caller, final Graphics g) {
-		super.render(caller, g);
 		if (hidden)
 			return;
+
+		// only render if its not to far away from screen
+		double dist = caller.getEntityManager().getWorld().getOffsetCentered().distanceTo(pos);
+		if (dist > GameEngine.WIDTH) {
+			return;
+		}
 
 		if (caller.isSet(ROTATION_ANGLE_LOOK)) {
 			sprite.setRotation((double) caller.getValue(ROTATION_ANGLE_LOOK));
@@ -49,6 +56,10 @@ public class RenderComponent extends Component {
 				g.drawSprite(pos, sprite);
 		}
 
+		if (DebugUtil.renderCollision) {
+			g.setColor(Color.YELLOW);
+			g.drawText(pos.x, pos.y, "#" + owner.getId());
+		}
 	}
 
 	public void setSprite(final Sprite sprite) {

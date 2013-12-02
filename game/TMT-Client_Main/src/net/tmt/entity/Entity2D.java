@@ -15,7 +15,7 @@ public abstract class Entity2D implements Renderable {
 	private static long			currentID			= 1;
 	private long				id;
 	private boolean				isAlive				= true;
-	private boolean				isCollisable		= false;
+	CollisionComponent			collisionComponent;
 	private boolean				hasOnKillComponent	= false;
 	protected Vector2d			pos;
 	protected Entity2D			owner;
@@ -39,7 +39,7 @@ public abstract class Entity2D implements Renderable {
 
 	public void addComponent(final Component component) {
 		if (component instanceof CollisionComponent)
-			isCollisable = true;
+			collisionComponent = (CollisionComponent) component;
 		if (component instanceof KillAnimationComponent)
 			hasOnKillComponent = true;
 
@@ -83,7 +83,7 @@ public abstract class Entity2D implements Renderable {
 	 */
 	protected void removeAllComponents() {
 		compDispatcher = new ComponentDispatcher(this);
-		isCollisable = false;
+		collisionComponent = null;
 		hasOnKillComponent = false;
 	}
 
@@ -96,7 +96,11 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	public boolean isCollisable() {
-		return isCollisable;
+		return collisionComponent != null;
+	}
+
+	public CollisionComponent getCollisionComponent() {
+		return collisionComponent;
 	}
 
 	public <T extends Component> T getComponent(final Class<T> clazz) {

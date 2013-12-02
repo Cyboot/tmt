@@ -1,7 +1,7 @@
 package net.tmt.entity.economy;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.OnClickComponent;
+import net.tmt.entity.component.other.OnClickComponent;
 import net.tmt.entity.component.other.OnHoverComponent;
 import net.tmt.util.Vector2d;
 

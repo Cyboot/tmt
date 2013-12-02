@@ -1,5 +1,7 @@
-package net.tmt.entity.component;
+package net.tmt.entity.component.other;
 
+import net.tmt.entity.component.Component;
+import net.tmt.entity.component.ComponentDispatcher;
 import net.tmt.game.Controls;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;

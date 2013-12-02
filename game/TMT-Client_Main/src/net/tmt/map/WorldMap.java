@@ -3,7 +3,6 @@ package net.tmt.map;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
@@ -21,17 +20,11 @@ public abstract class WorldMap implements Renderable {
 	protected Map<Coordinate, Chunk>	chunkMap	= new HashMap<Coordinate, Chunk>();
 	private Terrain						baseTerrain;
 
-	// FIXME: Entitymanager here?
-	protected EntityManager				entityManager;
-
-	public void update(final Vector2d offset, final double delta) {
+	public void update(final Vector2d offset, final EntityManager entityManager, final double delta) {
 		rederOffset = offset;
 
 		// generate new Terrain if needed
-		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, preloadRadius);
-
-		for (Chunk c : chunkMap.values())
-			c.update(entityManager, delta);
+		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, entityManager, preloadRadius);
 	}
 
 	@Override
@@ -60,10 +53,12 @@ public abstract class WorldMap implements Renderable {
 	 *            Entity to add
 	 * @return if Entity was added successfull
 	 */
-	public boolean addStaticEntity(final Entity2D e) {
-		Coordinate coord = new Coordinate(e.getPos(), this.chunkSize);
-		MapGenerator.generateAround(coord, this, preloadRadius);
-		return chunkMap.get(coord).addStaticEntity(e);
+	public boolean chunkFreeToBuild(final Vector2d pos, final EntityManager entityManager) {
+		Coordinate coord = new Coordinate(pos, this.chunkSize);
+		MapGenerator.generateAround(coord, this, entityManager, 0);
+
+		return true;
+		// return chunkMap.get(coord).freeToBuild();
 	}
 
 	public Chunk getChunk(final Coordinate coord) {
@@ -98,7 +93,8 @@ public abstract class WorldMap implements Renderable {
 		return baseTerrain;
 	}
 
-	public void setEntityManager(final EntityManager entityManager) {
-		this.entityManager = entityManager;
+	public void setChunkNotEmpty(final Vector2d pos) {
+		Coordinate coord = new Coordinate(pos, this.chunkSize);
+		chunkMap.get(coord).setEmpty(false);
 	}
 }

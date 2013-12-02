@@ -43,7 +43,7 @@ public class TargetSearchComponent extends Component {
 	public void update(final ComponentDispatcher caller, final double delta) {
 		isLocked = false;
 		if (target == null || caller.isSet(CHANGE_TARGET)) {
-			searchTarget(caller.getEntityManager().getCollidableEntities());
+			searchTarget(caller.getEntityManager().getCollidableEntities(pos));
 		} else {
 			calcFocus(caller);
 
@@ -76,19 +76,21 @@ public class TargetSearchComponent extends Component {
 		}
 	}
 
-	private void searchTarget(final List<Entity2D> entities) {
+	private void searchTarget(final List<List<Entity2D>> list) {
 		Entity2D previousTarget = target;
 
 		// find the nearest Entity and mark it as target
 		double minDist = Double.MAX_VALUE;
-		for (Entity2D e : entities) {
-			if (e == owner || e == previousTarget || !(e instanceof NPCSpaceShip))
-				continue;
+		for (List<Entity2D> innerList : list) {
+			for (Entity2D e : innerList) {
+				if (e == owner || e == previousTarget || !(e instanceof NPCSpaceShip))
+					continue;
 
-			double dist = e.getPos().distanceTo(owner.getPos());
-			if (dist < minDist) {
-				minDist = dist;
-				target = e;
+				double dist = e.getPos().distanceTo(owner.getPos());
+				if (dist < minDist) {
+					minDist = dist;
+					target = e;
+				}
 			}
 		}
 	}

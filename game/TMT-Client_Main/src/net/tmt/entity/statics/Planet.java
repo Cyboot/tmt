@@ -2,6 +2,7 @@ package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.area.MissionAreaOffer;
+import net.tmt.game.GameEngine;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.MissionManager;
@@ -14,10 +15,11 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class Planet extends Entity2D {
-	private static int	currID	= 0;
+	private static int	currID		= 0;
 
 	private String		name;
 
+	private boolean		isOnScreen	= true;
 	private int			planetId;
 	private int			radius;
 	private Terrain		baseTerrain;
@@ -49,10 +51,17 @@ public class Planet extends Entity2D {
 	@Override
 	public void update(final EntityManager caller, final double delta) {
 		super.update(caller, delta);
+
+		// only render if its not to far away from screen
+		double dist = caller.getWorld().getOffsetCentered().distanceTo(pos);
+		isOnScreen = dist < GameEngine.WIDTH;
 	}
 
 	@Override
 	public void render(final Graphics g) {
+		if (!isOnScreen)
+			return;
+
 		switch (baseTerrain) {
 		case PLANET_GRASS:
 			g.setColor(Color.GREEN);

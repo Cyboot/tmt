@@ -11,6 +11,7 @@ public abstract class Gui implements Updateable, Renderable {
 	public static final String	ACHIEVMENT			= "ACHIEVMENT";
 	public static final String	MISSION_OFFER		= "MISSION";
 	public static final String	GUI_CLICKED			= "CLICKED";
+	public static final String	DEBUG_ENTITY_COUNT	= "DEBUG_ENTITY_COUNT";
 
 	protected int				width				= GameEngine.WIDTH;
 	protected int				height				= GameEngine.HEIGHT;

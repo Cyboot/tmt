@@ -83,5 +83,9 @@ public class SpaceGui extends Gui {
 			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "InfoView");
 		}
 		guiManager.remove(GUI_HOVER);
+
+		if (guiManager.isSet(DEBUG_ENTITY_COUNT)) {
+			g.onGui().drawText(width * 0.75 + 5, height * 0.85, "Entities: " + guiManager.getValue(DEBUG_ENTITY_COUNT));
+		}
 	}
 }

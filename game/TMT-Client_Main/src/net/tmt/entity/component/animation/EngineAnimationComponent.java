@@ -9,6 +9,7 @@ import net.tmt.entity.component.other.ExtraOffsetComponent;
 import net.tmt.entity.particle.Particle;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.CountdownTimer;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -50,24 +51,31 @@ public class EngineAnimationComponent extends Component {
 		if (timerSpawn.isTimeUp(delta) && spawnSparks) {
 			double speed = (double) caller.getValue(MoveComponent.SPEED);
 			double rotationMove = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_MOVE);
-			double rotationLook = (double) caller.getValue(RotateComponent.ROTATION_ANGLE_LOOK);
+			double rotationLook180 = ((double) caller.getValue(RotateComponent.ROTATION_ANGLE_LOOK) + 180) % 360;
 
-			// if ship isn't looking in the direction its moving to --> no
-			// sparks
-			if (Math.abs(rotationMove - rotationLook) > 45)
-				return;
+			Vector2d dirMove = Vector2d.tmp1;
+			Vector2d dirLook = Vector2d.tmp2;
+			Vector2d dirResult = Vector2d.tmp1;
+
+			dirMove.x = Math.sin(Math.toRadians(rotationMove)) * speed;
+			dirMove.y = -Math.cos(Math.toRadians(rotationMove)) * speed;
+
+			dirLook.x = Math.sin(Math.toRadians(rotationLook180)) * speed * 0.5;
+			dirLook.y = -Math.cos(Math.toRadians(rotationLook180)) * speed * 0.5;
+
+			dirResult.add(dirLook);
 
 			Sparks.reset();
 			Sparks.color = color;
 			Sparks.size = 3;
-			Sparks.lifetime = 0.5;
-			Sparks.speed = speed * 0.6;
-			Sparks.rotation = rotationMove;
+			Sparks.lifetime = 0.5 * RandomUtil.doubleRange(0.8, 1.2);
+			Sparks.speed = dirResult.length() * RandomUtil.doubleRange(0.8, 1.2);
+			Sparks.rotation = Math.toDegrees(dirResult.getRotation());
 
-			Vector2d posParticle = new Vector2d().add(pos);
-			Particle particle = Sparks.get(posParticle);
-
-			caller.getEntityManager().addEntity(particle);
+			for (int i = 0; i < 5; i++) {
+				Particle particle = Sparks.get(pos.copy());
+				caller.getEntityManager().addEntity(particle);
+			}
 		}
 	}
 

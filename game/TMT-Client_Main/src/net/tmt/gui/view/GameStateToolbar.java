@@ -12,15 +12,13 @@ import net.tmt.gui.elements.ContainerElement;
 import net.tmt.gui.elements.GuiElement;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class GameStateToolbar extends ContainerElement implements ClickListener {
 	private static GameStateToolbar	instance;
 
 	private GameStateToolbar() {
 		super(new Vector2d(0, 200), 32 + 8, 5 * 32 + 5 * 8);
-		setBorderColor(new Color(0, 0, 0, 0));
-		setBackgroundColor(new Color(64, 64, 64, 196));
+		// setBorderColor((Color) ColorUtil.GUI_CYAN_DARK_2);
+		// setBackgroundColor((Color) ColorUtil.GUI_CYAN_DARK_3);
 
 		addButton(new Button(new Vector2d(0, 0 * 32 + 0 * 8), new Sprite("icon_space"), "space"));
 		addButton(new Button(new Vector2d(0, 1 * 32 + 1 * 8), new Sprite("icon_simulator"), "simulator"));

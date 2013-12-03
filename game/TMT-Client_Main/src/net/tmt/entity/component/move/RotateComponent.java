@@ -2,7 +2,6 @@ package net.tmt.entity.component.move;
 
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
-import net.tmt.util.MathUtil;
 
 public class RotateComponent extends Component {
 	public static final String	IS_ROTATE_LEFT		= "IS_ROTATE_LEFT";
@@ -24,10 +23,6 @@ public class RotateComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
-		// if (caller.isSet(ROTATION_ANGLE_MOVE)) {
-		// rotationAngleMove = (double) caller.getValue(ROTATION_ANGLE_MOVE);
-		// }
-
 		if (caller.isSet(ROTATION_SPEED)) {
 			rotationSpeed = (double) caller.getValue(ROTATION_SPEED);
 		}
@@ -40,11 +35,6 @@ public class RotateComponent extends Component {
 		if (caller.isSet(IS_ROTATE_RIGHT) && (boolean) caller.getValue(IS_ROTATE_RIGHT)) {
 			rotate(1, fast, delta);
 		}
-
-
-		// adjust the fastAngle to moveAngle
-		if (!caller.isSet(IS_ROTATE_LEFT) && !caller.isSet(IS_ROTATE_RIGHT))
-			adjustToMoveAngle(delta);
 
 		rotationAngleMove = (rotationAngleMove + 360) % 360;
 		rotationAngleLook = (rotationAngleLook + 360) % 360;
@@ -63,12 +53,6 @@ public class RotateComponent extends Component {
 			rotationAngleLook += neg * rotationSpeed * factor * delta;
 			rotationAngleMove += neg * rotationSpeed * factor * delta;
 		}
-	}
-
-	private void adjustToMoveAngle(final double delta) {
-		int neg = MathUtil.nearestAngle(rotationAngleMove, rotationAngleLook);
-
-		rotationAngleMove += neg * rotationSpeed * delta;
 	}
 
 	@Override

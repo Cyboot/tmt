@@ -25,7 +25,7 @@ public class SpaceGui extends Gui {
 		renderMap(g);
 		renderShipInfo(g);
 		g.setColor(ColorUtil.GUI_CYAN);
-		renderInfoWindow(g);
+		renderDebugWindow(g);
 		gameStateToolbar.render(g);
 	}
 
@@ -72,20 +72,43 @@ public class SpaceGui extends Gui {
 
 	}
 
-	private void renderInfoWindow(final Graphics g) {
-		g.onGui().drawRect(width * 0.75, height * 0.75, width * 0.25, height * 0.25);
+	private void renderDebugWindow(final Graphics g) {
+		final double topY = height * 0.75;
+		final double leftX = width * 0.75;
+		final double padding = 4;
+		final double heightText = 20;
+
+		g.onGui().drawRect(leftX, topY, width * 0.25, height * 0.25);
 
 
 		if (guiManager.isSet(GUI_HOVER)) {
 			String text = (String) guiManager.getValue(GUI_HOVER);
-			g.onGui().drawText(width * 0.75 + 5, height * 0.75, text);
+			g.onGui().drawText(leftX + padding, topY, text);
 		} else {
-			g.onGui().drawText(width * 0.75 + 5, height * 0.75, "InfoView");
+			g.onGui().drawText(leftX + padding, topY, "DebugView");
 		}
-		guiManager.remove(GUI_HOVER);
 
 		if (guiManager.isSet(DEBUG_ENTITY_COUNT)) {
-			g.onGui().drawText(width * 0.75 + 5, height * 0.85, "Entities: " + guiManager.getValue(DEBUG_ENTITY_COUNT));
+			g.onGui().drawText(leftX + padding, topY + heightText * 1,
+					"Entities: " + guiManager.getValue(DEBUG_ENTITY_COUNT));
 		}
+		if (guiManager.isSet(DEBUG_INFO_1)) {
+			g.onGui().drawText(leftX + padding, topY + (heightText * 2), guiManager.getValue(DEBUG_INFO_1) + "");
+		}
+		if (guiManager.isSet(DEBUG_INFO_2)) {
+			g.onGui().drawText(leftX + padding, topY + (heightText * 3), guiManager.getValue(DEBUG_INFO_2) + "");
+		}
+		if (guiManager.isSet(DEBUG_INFO_3)) {
+			g.onGui().drawText(leftX + padding, topY + (heightText * 4), guiManager.getValue(DEBUG_INFO_3) + "");
+		}
+		if (guiManager.isSet(DEBUG_INFO_4)) {
+			g.onGui().drawText(leftX + padding, topY + (heightText * 5), guiManager.getValue(DEBUG_INFO_4) + "");
+		}
+
+		guiManager.remove(GUI_HOVER);
+		guiManager.remove(DEBUG_INFO_1);
+		guiManager.remove(DEBUG_INFO_2);
+		guiManager.remove(DEBUG_INFO_3);
+		guiManager.remove(DEBUG_INFO_4);
 	}
 }

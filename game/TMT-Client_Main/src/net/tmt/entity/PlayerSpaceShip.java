@@ -3,8 +3,8 @@ package net.tmt.entity;
 import net.tmt.entity.component.animation.EngineAnimationComponent;
 import net.tmt.entity.component.animation.JetTrailComponent;
 import net.tmt.entity.component.collision.SimpleHealthComponent;
-import net.tmt.entity.component.move.AcceleratingComponent;
 import net.tmt.entity.component.move.MoveComponent;
+import net.tmt.entity.component.move.PlayerMoveComponent;
 import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.OnHoverComponent;
 import net.tmt.entity.component.other.RocketLauncherComponent;
@@ -31,8 +31,6 @@ import org.lwjgl.util.ReadableColor;
 
 
 public class PlayerSpaceShip extends Entity2D implements Playable {
-	private static double	ACCL			= 50;
-	private static double	FRICTION		= 0.4;
 	private static double	ROTATION_SPEED	= 90;
 
 	private CountdownTimer	timerShoot		= CountdownTimer.createManualResetTimer(0.2);
@@ -44,8 +42,8 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 		setSprite(new Sprite("ship_back_64"));
 
-		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
-		addComponent(new AcceleratingComponent(ACCL, FRICTION));
+		addComponent(new RotateComponent(0, ROTATION_SPEED));
+		addComponent(new PlayerMoveComponent());
 		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
 
 		addComponent(new OnHoverComponent());
@@ -63,6 +61,9 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		updateShoot(caller, delta);
 
 		updateStats(delta);
+
+		// always on fast rotate
+		dispatchValue(RotateComponent.FAST_ROTATE, true);
 
 		super.update(caller, delta);
 		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_HEALTH, getValue(SimpleHealthComponent.HEALTH));
@@ -109,13 +110,10 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 
 		// default speed
 		if (Controls.pressed(Controls.SHIP_BACK_SLOW_ACCL)) {
-			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
+			dispatchValue(PlayerMoveComponent.IS_ACCELERATING, true);
 			dispatchValue(EngineAnimationComponent.ENGINE_2, true);
 			dispatchValue(EngineAnimationComponent.ENGINE_3, true);
 		}
-		if (Controls.pressed(Controls.SHIP_BACK_SLOW_DEACCL))
-			dispatchValue(AcceleratingComponent.IS_DEACCELERATING, true);
-
 
 		// rotating
 		if (Controls.pressed(Controls.SHIP_ROTATE_LEFT)) {
@@ -126,20 +124,14 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 			dispatchValue(EngineAnimationComponent.ENGINE_3, true);
 			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
 		}
-		if (Controls.pressed(Controls.SHIP_FAST_ROTATE))
-			dispatchValue(RotateComponent.FAST_ROTATE, true);
-
 
 		// extra speed
 		if (Controls.wasTyped(Controls.SHIP_MAIN_ENGINE)) {
 			mainEngineToggle = !mainEngineToggle;
 		}
 		if (mainEngineToggle) {
-			dispatchValue(AcceleratingComponent.IS_ACCELERATING, true);
-			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 8);
+			dispatchValue(PlayerMoveComponent.IS_ACCELERATING, true);
 			dispatchValue(EngineAnimationComponent.ENGINE_1, true);
-		} else {
-			dispatchValue(AcceleratingComponent.ACCL_FACTOR, ACCL * 4);
 		}
 
 		// TargetSearch

@@ -107,6 +107,12 @@ public class Vector2d {
 		return distanceTo(0, 0);
 	}
 
+	public Vector2d multiply(final double factor) {
+		x *= factor;
+		y *= factor;
+		return this;
+	}
+
 	/**
 	 * Rotation to up-vector (0 - 2*Pi)
 	 * 

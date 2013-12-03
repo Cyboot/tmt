@@ -37,7 +37,7 @@ public class RenderComponent extends Component {
 			return;
 
 		// only render if its not to far away from screen
-		double dist = caller.getEntityManager().getWorld().getOffsetCentered().distanceTo(pos);
+		double dist = caller.getWorld().getOffsetCentered().distanceTo(pos);
 		if (dist > GameEngine.WIDTH) {
 			return;
 		}

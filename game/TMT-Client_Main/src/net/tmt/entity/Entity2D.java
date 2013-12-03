@@ -9,6 +9,7 @@ import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public abstract class Entity2D implements Renderable {
@@ -29,8 +30,8 @@ public abstract class Entity2D implements Renderable {
 		compDispatcher.addComponent(new RenderComponent.Builder().sprite(null).build());
 	}
 
-	public void update(final EntityManager caller, final double delta) {
-		compDispatcher.update(caller, delta);
+	public void update(final EntityManager caller, final World world, final double delta) {
+		compDispatcher.update(caller, world, delta);
 	}
 
 	public void dispatchValue(final String name, final Object value) {
@@ -115,7 +116,7 @@ public abstract class Entity2D implements Renderable {
 		return owner;
 	}
 
-	protected Sprite getSprite() {
+	public Sprite getSprite() {
 		return sprite;
 	}
 

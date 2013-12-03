@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.Renderable;
-import net.tmt.game.interfaces.Updateable;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.Gui;
 import net.tmt.map.World;
@@ -25,7 +24,7 @@ import net.tmt.util.Vector2d;
  * 
  * @author Tim Schmiedl (Cyboot)
  */
-public class EntityManager implements Updateable, Renderable {
+public class EntityManager implements Renderable {
 	private static final int				GRID_SIZE			= 2048;
 	public static final int					LAYER_0_FAR_BACK	= 0;
 	public static final int					LAYER_1_BACK		= 1;
@@ -38,20 +37,17 @@ public class EntityManager implements Updateable, Renderable {
 
 	private AddRemove						addremove			= new AddRemove();
 	private Collision						collision			= new Collision();
-	private World							world;
 
-	public EntityManager(final World world) {
+	public EntityManager() {
 		// Init Entitymap
 		entityMap.put(LAYER_0_FAR_BACK, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_1_BACK, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_2_MEDIUM, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_3_FRONT, new ArrayList<Entity2D>());
 		entityMap.put(LAYER_4_GUI, new ArrayList<Entity2D>());
-		this.world = world;
 	}
 
-	@Override
-	public void update(final double delta) {
+	public void update(final World world, final double delta) {
 		for (Entry<Integer, List<Entity2D>> entry : entityMap.entrySet()) {
 			Integer key = entry.getKey();
 			List<Entity2D> list = entry.getValue();
@@ -60,7 +56,7 @@ public class EntityManager implements Updateable, Renderable {
 			for (Entity2D e : list) {
 				if (e.isAlive()) {
 					tmp.set(e.getPos());
-					e.update(this, delta);
+					e.update(this, world, delta);
 					if (e.isCollisable())
 						collision.move(tmp, e.getPos(), e);
 				} else {
@@ -132,10 +128,6 @@ public class EntityManager implements Updateable, Renderable {
 			result += list.size();
 
 		return result;
-	}
-
-	public World getWorld() {
-		return world;
 	}
 
 	/**

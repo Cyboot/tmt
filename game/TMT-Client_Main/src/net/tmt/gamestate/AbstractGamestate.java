@@ -1,5 +1,6 @@
 package net.tmt.gamestate;
 
+import net.tmt.game.interfaces.EntityWorldGetter;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.EntityManager;
@@ -9,7 +10,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.map.World;
 import net.tmt.map.WorldMap;
 
-public abstract class AbstractGamestate implements Updateable, Renderable {
+public abstract class AbstractGamestate implements Updateable, Renderable, EntityWorldGetter {
 	public static final int	ACTIVE		= 0;
 	public static final int	PAUSED		= 1;
 	public static final int	BACKGROUND	= 2;
@@ -24,12 +25,8 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 	protected World			world;
 
 	protected AbstractGamestate(final WorldMap worldmap) {
-		world = new World();
-		world.setMap(worldmap);
-		entityManager = new EntityManager(world);
-
-		if (world != null)
-			world.setEntityManager(entityManager);
+		entityManager = new EntityManager();
+		world = new World(entityManager, worldmap);
 	}
 
 	@Override
@@ -99,7 +96,13 @@ public abstract class AbstractGamestate implements Updateable, Renderable {
 		return getClass().getSimpleName() + " #" + id;
 	}
 
+	@Override
 	public World getWorld() {
 		return world;
+	}
+
+	@Override
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 }

@@ -9,13 +9,16 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.animation.KillAnimationComponent;
 import net.tmt.entity.component.other.RenderComponent;
 import net.tmt.game.interfaces.Dispatcher;
+import net.tmt.game.interfaces.EntityWorldGetter;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.map.World;
 
-public class ComponentDispatcher implements Renderable, Dispatcher {
+public class ComponentDispatcher implements Renderable, Dispatcher, EntityWorldGetter {
 	private Entity2D			owner;
 	private EntityManager		entityManager;
+	private World				world;
 
 	private List<Component>		components	= new ArrayList<>();
 
@@ -27,8 +30,9 @@ public class ComponentDispatcher implements Renderable, Dispatcher {
 		this.owner = owner;
 	}
 
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, final World world, final double delta) {
 		entityManager = caller;
+		this.world = world;
 		for (Component c : components)
 			c.update(this, delta);
 	}
@@ -70,8 +74,14 @@ public class ComponentDispatcher implements Renderable, Dispatcher {
 		return owner;
 	}
 
+	@Override
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
 	}
 
 	@SuppressWarnings("unchecked")

@@ -4,6 +4,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -35,8 +36,8 @@ public class BackgroundBody extends Entity2D {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		offset = caller.getWorld().getOffset();
+	public void update(final EntityManager caller, final World world, final double delta) {
+		offset = world.getOffset();
 	}
 
 	@Override

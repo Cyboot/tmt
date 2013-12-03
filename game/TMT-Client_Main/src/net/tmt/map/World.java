@@ -22,13 +22,16 @@ public class World implements Updateable, Renderable {
 	private Entity2D			player;
 	private EntityManager		entityManager;
 
-	public World() {
+	public World(final EntityManager entityManager, final WorldMap map) {
 		// TODO: quick & dirty: Worldoffset
 		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
 		MOVE_DIFF_WIDTH = (GameEngine.WIDTH / 2 - MOVE_MAX_WIDTH) * RATIO;
 
 		MOVE_MAX_HEIGTH = (GameEngine.HEIGHT / 2) * 1 / 50.;
 		MOVE_DIFF_HEIGHT = (GameEngine.HEIGHT / 2 - MOVE_MAX_HEIGTH) * RATIO;
+
+		this.entityManager = entityManager;
+		this.map = map;
 	}
 
 	@Override
@@ -91,10 +94,6 @@ public class World implements Updateable, Renderable {
 		return player;
 	}
 
-	public void setMap(final WorldMap m) {
-		map = m;
-	}
-
 	public WorldMap getMap() {
 		return map;
 	}
@@ -116,9 +115,5 @@ public class World implements Updateable, Renderable {
 		}
 
 		return freeToBuild;
-	}
-
-	public void setEntityManager(final EntityManager entityManager) {
-		this.entityManager = entityManager;
 	}
 }

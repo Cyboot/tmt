@@ -46,7 +46,7 @@ public class GameStateToolbar extends ContainerElement implements ClickListener 
 		GameManager gameManager = GameManager.getInstance();
 
 		if (caller.getTitle() != "planet")
-			gameManager.pause(gameManager.getActiveGamestate());
+			gameManager.pauseActiveGame();
 
 		switch (caller.getTitle()) {
 		case "space":

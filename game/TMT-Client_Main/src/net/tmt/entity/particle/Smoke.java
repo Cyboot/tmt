@@ -6,6 +6,7 @@ import net.tmt.entity.component.other.RenderComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -35,8 +36,8 @@ public class Smoke extends Particle {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, World world, final double delta) {
+		super.update(caller, world, delta);
 
 		dispatchValue(Component.ROTATION_ANGLE_LOOK, (double) getValue(Component.ROTATION_ANGLE_LOOK) + rotationSpeed * delta
 				* reverseRotation);

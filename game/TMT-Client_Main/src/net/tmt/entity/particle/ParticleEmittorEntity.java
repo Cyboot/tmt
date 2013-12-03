@@ -2,6 +2,7 @@ package net.tmt.entity.particle;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -23,8 +24,8 @@ public class ParticleEmittorEntity extends Entity2D {
 
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, World world, final double delta) {
+		super.update(caller, world, delta);
 
 		timerParticle.setIntervall(0.25);
 		if (timerParticle.isTimeUp(delta)) {

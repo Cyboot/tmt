@@ -2,6 +2,7 @@ package net.tmt.entity.animation;
 
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
@@ -19,8 +20,8 @@ public class DestroyAnimation extends Animation {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, World world, final double delta) {
+		super.update(caller, world, delta);
 
 		if (timerAnimation.isTimeUp(delta)) {
 			radius += 3;

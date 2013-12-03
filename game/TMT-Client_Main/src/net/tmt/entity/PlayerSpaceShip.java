@@ -21,6 +21,7 @@ import net.tmt.gfx.Sprite;
 import net.tmt.global.achievments.Achievments;
 import net.tmt.global.stats.Stats;
 import net.tmt.gui.SpaceGui;
+import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -56,7 +57,7 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, World world, final double delta) {
 		updateInput();
 		updateShoot(caller, delta);
 
@@ -65,7 +66,7 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		// always on fast rotate
 		dispatchValue(RotateComponent.FAST_ROTATE, true);
 
-		super.update(caller, delta);
+		super.update(caller, world, delta);
 		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_HEALTH, getValue(SimpleHealthComponent.HEALTH));
 		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_SPEED, getValue(MoveComponent.SPEED));
 	}

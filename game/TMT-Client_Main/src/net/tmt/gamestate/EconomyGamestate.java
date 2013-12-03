@@ -22,7 +22,7 @@ public class EconomyGamestate extends AbstractGamestate {
 	@Override
 	public void update(final double delta) {
 		world.update(delta);
-		entityManager.update(delta);
+		entityManager.update(world, delta);
 
 		switch (inputState) {
 		case NEUTRAL:
@@ -86,7 +86,7 @@ public class EconomyGamestate extends AbstractGamestate {
 			break;
 		case CONSTRUCTING:
 			// render the currently constructing Building under curser
-			buildingToConstruct.render(g);
+			g.onGui().drawSprite(buildingToConstruct.getPos(), buildingToConstruct.getSprite());
 			break;
 		case BULIDING_SELECTED:
 			// display building information (already done in update() )

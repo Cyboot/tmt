@@ -39,7 +39,7 @@ public class PlanetGamestate extends AbstractGamestate {
 	public void update(final double delta) {
 		world.update(delta);
 
-		entityManager.update(delta);
+		entityManager.update(world, delta);
 	}
 
 	@Override

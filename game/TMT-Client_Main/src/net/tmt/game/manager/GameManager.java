@@ -66,7 +66,7 @@ public class GameManager implements Updateable, Renderable {
 		for (AbstractGamestate a : backgroundGamestates)
 			a.update(delta);
 
-		missionManager.update(delta);
+		missionManager.update(activeGamestate.getEntityManager(), activeGamestate.getWorld(), delta);
 		guiManager.update(delta);
 	}
 
@@ -117,6 +117,13 @@ public class GameManager implements Updateable, Renderable {
 	public void startNew(final AbstractGamestate gamestate) {
 		pause(gamestate);
 		resume(gamestate.getId());
+	}
+
+	/**
+	 * pauses the actual Gamestate
+	 */
+	public void pauseActiveGame() {
+		pause(activeGamestate);
 	}
 
 	/**

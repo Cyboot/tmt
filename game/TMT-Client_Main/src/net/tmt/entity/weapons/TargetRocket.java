@@ -4,6 +4,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.move.Move2TargetComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public class TargetRocket extends Rocket {
@@ -21,13 +22,13 @@ public class TargetRocket extends Rocket {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, World world, final double delta) {
 		if (isSet(Move2TargetComponent.TARGET_REACHED) && (boolean) getValue(Move2TargetComponent.TARGET_REACHED))
 			kill();
 
 		if (target != null)
 			dispatchValue(Move2TargetComponent.SET_TARGET, target.getPos());
 
-		super.update(caller, delta);
+		super.update(caller, world, delta);
 	}
 }

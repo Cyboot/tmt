@@ -20,7 +20,7 @@ public class OnHoverComponent extends Component {
 	public void update(final ComponentDispatcher caller, final double delta) {
 		Vector2d mouse2d = Vector2d.tmp1.set(Controls.mouseX(), Controls.mouseY());
 
-		World world = caller.getEntityManager().getWorld();
+		World world = caller.getWorld();
 
 		Vector2d shipAbsolut2d = Vector2d.tmp2.set(pos.x - world.getOffset().x, pos.y - world.getOffset().y);
 

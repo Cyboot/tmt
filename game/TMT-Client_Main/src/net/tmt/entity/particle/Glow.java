@@ -4,6 +4,7 @@ import net.tmt.entity.component.animation.GlowComponent;
 import net.tmt.entity.component.other.RenderComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -28,8 +29,8 @@ public class Glow extends Particle {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, World world, final double delta) {
+		super.update(caller, world, delta);
 		sprite.setHeight(size);
 		sprite.setWidth(size);
 		sprite.setBlendColor((Color) getValue(RenderComponent.BLEND_COLOR));

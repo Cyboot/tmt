@@ -14,6 +14,7 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
@@ -47,7 +48,7 @@ public class Hero extends Entity2D implements Playable {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, World world, final double delta) {
 		// FIXME: MoveComponent's speed is always 0?
 		// context: moving should be set based on current speed instead of
 		// keyboard input
@@ -56,7 +57,7 @@ public class Hero extends Entity2D implements Playable {
 		checkControls(delta);
 		checkHolding();
 		setAnimation();
-		super.update(caller, delta);
+		super.update(caller, world, delta);
 	}
 
 	private void checkControls(final double delta) {

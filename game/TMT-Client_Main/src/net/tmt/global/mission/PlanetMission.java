@@ -36,7 +36,7 @@ public class PlanetMission extends Mission {
 	public void finish(final Medal medal) {
 		super.finish(medal);
 		GameManager gm = GameManager.getInstance();
-		gm.pause(gm.getActiveGamestate());
+		gm.pauseActiveGame();
 
 		// check if PlanetGamestate for this planet already exists (if yes
 		// resume it)

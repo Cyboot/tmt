@@ -3,6 +3,7 @@ package net.tmt.entity.npc;
 import net.tmt.entity.component.other.ShieldComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -33,7 +34,7 @@ public class NPCTransporterShip extends NPCSpaceShip {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, World world, final double delta) {
 		if (timerShield.isTimeUp(delta)) {
 			shieldToggle = !shieldToggle;
 		}
@@ -41,6 +42,6 @@ public class NPCTransporterShip extends NPCSpaceShip {
 		dispatchValue(ShieldComponent.SET_ACTIVE, shieldToggle);
 
 
-		super.update(caller, delta);
+		super.update(caller, world, delta);
 	}
 }

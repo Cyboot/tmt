@@ -4,6 +4,7 @@ import net.tmt.entity.Entity2D;
 import net.tmt.entity.component.collision.CollisionComponent;
 import net.tmt.entity.component.collision.CollisionWithPlayerComponent;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public abstract class Area extends Entity2D {
@@ -15,8 +16,8 @@ public abstract class Area extends Entity2D {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, World world, final double delta) {
+		super.update(caller, world, delta);
 
 		if (isSet(CollisionComponent.IS_COLLISION) && (boolean) getValue(CollisionComponent.IS_COLLISION)) {
 			onCollide();

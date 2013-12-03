@@ -4,20 +4,22 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.tmt.entity.statics.area.Area;
-import net.tmt.game.interfaces.Updateable;
-import net.tmt.game.manager.GameManager;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GuiManager;
-import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.global.mission.Mission.State;
 import net.tmt.gui.Gui;
+import net.tmt.map.World;
 
-public class MissionManager implements Updateable {
+public class MissionManager {
 	private static final MissionManager	instance			= new MissionManager();
 
 	private Mission						activeMission;
 	private Mission						offeredMission;
 
 	private List<Mission>				offeredMissionList	= new CopyOnWriteArrayList<>();
+
+	private MissionManager() {
+	}
 
 	/**
 	 * offer a Mission to the player. The mission will automaticaly expire after
@@ -60,9 +62,8 @@ public class MissionManager implements Updateable {
 		mission.refuse();
 	}
 
-	@Override
-	public void update(final double delta) {
-		updateRegisterArea();
+	public void update(final EntityManager entityManager, final World world, final double delta) {
+		updateRegisterArea(world);
 
 		// update the offered Mission
 		if (offeredMission != null) {
@@ -90,13 +91,12 @@ public class MissionManager implements Updateable {
 		MissionDispatcher.clearValues();
 	}
 
-	private void updateRegisterArea() {
+	private void updateRegisterArea(final World world) {
 		if (tmpAreaList.isEmpty())
 			return;
 
-		AbstractGamestate game = GameManager.getInstance().getActiveGamestate();
 		for (Area ma : tmpAreaList)
-			game.getWorld().addStaticEntity(ma);
+			world.addStaticEntity(ma);
 
 		tmpAreaList.clear();
 	}

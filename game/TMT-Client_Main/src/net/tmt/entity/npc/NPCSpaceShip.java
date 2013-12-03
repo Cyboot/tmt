@@ -7,6 +7,7 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.SpaceMap;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public abstract class NPCSpaceShip extends Entity2D {
@@ -29,13 +30,13 @@ public abstract class NPCSpaceShip extends Entity2D {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, final World world, final double delta) {
 		if ((boolean) getValue(Move2TargetComponent.TARGET_REACHED)) {
-			target = ((SpaceMap) caller.getWorld().getMap()).getNextWaypoint(target);
+			target = ((SpaceMap) world.getMap()).getNextWaypoint(target);
 			dispatchValue(Move2TargetComponent.SET_TARGET, target.getPos());
 		}
 
-		super.update(caller, delta);
+		super.update(caller, world, delta);
 	}
 
 	@Override

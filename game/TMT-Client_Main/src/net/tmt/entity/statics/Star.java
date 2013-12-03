@@ -3,6 +3,7 @@ package net.tmt.entity.statics;
 import net.tmt.entity.Entity2D;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -17,7 +18,7 @@ public class Star extends Entity2D {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
+	public void update(final EntityManager caller, World world, final double delta) {
 	}
 
 	@Override

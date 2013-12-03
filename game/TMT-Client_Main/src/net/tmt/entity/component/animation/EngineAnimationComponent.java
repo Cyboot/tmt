@@ -42,7 +42,7 @@ public class EngineAnimationComponent extends Component {
 		if (mainGlow == null)
 			createMainGlow(caller);
 		mainGlow.dispatchValue(ROTATION_ANGLE_LOOK, caller.getValue(ROTATION_ANGLE_LOOK));
-		mainGlow.update(caller.getEntityManager(), delta);
+		mainGlow.update(caller.getEntityManager(), caller.getWorld(), delta);
 
 		if (caller.isSet(engineNr) && !(boolean) caller.getValue(engineNr))
 			return;

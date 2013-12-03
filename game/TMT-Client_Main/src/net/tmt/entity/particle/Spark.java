@@ -4,6 +4,7 @@ import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -28,8 +29,8 @@ public class Spark extends Particle {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, World world, final double delta) {
+		super.update(caller, world, delta);
 
 		// a little random direction change to make it appear more natural
 		if (Math.random() > 0.85)

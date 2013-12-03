@@ -8,6 +8,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.MissionManager;
 import net.tmt.global.mission.PlanetMission;
 import net.tmt.map.Terrain;
+import net.tmt.map.World;
 import net.tmt.util.PlanetNameUtil;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -49,11 +50,11 @@ public class Planet extends Entity2D {
 	}
 
 	@Override
-	public void update(final EntityManager caller, final double delta) {
-		super.update(caller, delta);
+	public void update(final EntityManager caller, final World world, final double delta) {
+		super.update(caller, world, delta);
 
 		// only render if its not to far away from screen
-		double dist = caller.getWorld().getOffsetCentered().distanceTo(pos);
+		double dist = world.getOffsetCentered().distanceTo(pos);
 		isOnScreen = dist < GameEngine.WIDTH;
 	}
 

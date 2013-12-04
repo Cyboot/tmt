@@ -6,8 +6,8 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.Mission;
-import net.tmt.global.mission.MissionManager;
 import net.tmt.global.mission.Mission.Medal;
+import net.tmt.global.mission.MissionManager;
 import net.tmt.gui.elements.Button;
 import net.tmt.gui.elements.ContainerElement;
 import net.tmt.gui.elements.GuiElement;
@@ -21,11 +21,14 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class MissionOfferView extends ContainerElement implements ClickListener {
-	private Mission	mission;
-	private Label	label_timeleft;
+	private final static int	WIDTH	= 300;
+	private final static int	HEIGHT	= 300;
+
+	private Mission				mission;
+	private Label				label_timeleft;
 
 	public MissionOfferView(final Mission mission) {
-		super(new Vector2d(GameEngine.WIDTH * 0.75, 0), GameEngine.WIDTH * 0.25, GameEngine.HEIGHT * 0.35);
+		super(new Vector2d(GameEngine.WIDTH - WIDTH, 0), WIDTH, HEIGHT);
 
 		this.mission = mission;
 
@@ -38,7 +41,7 @@ public class MissionOfferView extends ContainerElement implements ClickListener 
 			addReward();
 
 
-		setBackgroundColor((Color) ColorUtil.GUI_CYAN_DARK_3);
+		setBackgroundColor((Color) ColorUtil.GUI_CYAN_DARK_30);
 	}
 
 	private void addText() {
@@ -47,7 +50,8 @@ public class MissionOfferView extends ContainerElement implements ClickListener 
 				Fonts.font_18_bold);
 		TextView textview_desc = new TextView(new Vector2d(DEFAULT_PADDING, 25 + DEFAULT_PADDING), width - 2
 				* DEFAULT_PADDING, 30);
-		textview_desc.setFont(Graphics.Fonts.font_14_italic);
+		textview_desc.setFont(Graphics.Fonts.font_14_plain);
+		label_name.setForegroundColor((Color) ColorUtil.GUI_ORANGE);
 		label_timeleft = new Label(new Vector2d(width / 4 + 8, height - 25), "");
 
 		textview_desc.setText(mission.getDesc());
@@ -58,22 +62,23 @@ public class MissionOfferView extends ContainerElement implements ClickListener 
 	}
 
 	private void addReward() {
-		int topY = 100;
+		int topY = 160;
 		int deltaY = 20;
-		double offsetX = DEFAULT_PADDING + 24;
+		double offsetX = 64 + DEFAULT_PADDING;
+		double offsetImgX = offsetX + 24;
 
 		Label label_reward = new Label(new Vector2d(DEFAULT_PADDING, topY), "Rewards:");
-		ImageView img_gold = new ImageView(new Vector2d(DEFAULT_PADDING, topY + 1 * deltaY), new Sprite("medal_gold"));
-		ImageView img_silver = new ImageView(new Vector2d(DEFAULT_PADDING, topY + 2 * deltaY), new Sprite(
-				"medal_silver"));
-		ImageView img_bronze = new ImageView(new Vector2d(DEFAULT_PADDING, topY + 3 * deltaY), new Sprite(
-				"medal_bronze"));
+		label_reward.setForegroundColor((Color) ColorUtil.GUI_ORANGE);
 
-		Label label_gold = new Label(new Vector2d(offsetX, topY + 1 * deltaY), mission.getRewardRP(Medal.GOLD) + "RP"
-				+ "   " + "$" + mission.getRewardMoney(Medal.GOLD));
-		Label label_silver = new Label(new Vector2d(offsetX, topY + 2 * deltaY), mission.getRewardRP(Medal.SILVER)
+		ImageView img_gold = new ImageView(new Vector2d(offsetX, topY + 1 * deltaY), new Sprite("medal_gold"));
+		ImageView img_silver = new ImageView(new Vector2d(offsetX, topY + 2 * deltaY), new Sprite("medal_silver"));
+		ImageView img_bronze = new ImageView(new Vector2d(offsetX, topY + 3 * deltaY), new Sprite("medal_bronze"));
+
+		Label label_gold = new Label(new Vector2d(offsetImgX, topY + 1 * deltaY), mission.getRewardRP(Medal.GOLD)
+				+ "RP" + "   " + "$" + mission.getRewardMoney(Medal.GOLD));
+		Label label_silver = new Label(new Vector2d(offsetImgX, topY + 2 * deltaY), mission.getRewardRP(Medal.SILVER)
 				+ "RP" + "   " + "$" + mission.getRewardMoney(Medal.SILVER));
-		Label label_bronze = new Label(new Vector2d(offsetX, topY + 3 * deltaY), mission.getRewardRP(Medal.BRONZE)
+		Label label_bronze = new Label(new Vector2d(offsetImgX, topY + 3 * deltaY), mission.getRewardRP(Medal.BRONZE)
 				+ "RP" + "   " + "$" + mission.getRewardMoney(Medal.BRONZE));
 
 		addGuiElement(label_gold);
@@ -89,7 +94,7 @@ public class MissionOfferView extends ContainerElement implements ClickListener 
 	@Override
 	public void update(final double delta) {
 		String timeleft = StringFormatter.format(mission.getOfferTimeleft(), 2, 0);
-		label_timeleft.setText("Mission expire in " + timeleft + " s");
+		label_timeleft.setText("Mission expires in " + timeleft + " s");
 
 		super.update(delta);
 	}

@@ -16,9 +16,9 @@ public class ColorUtil {
 
 	// primary Color for Gui
 	public static final ReadableColor	GUI_CYAN			= new Color(0, 150, 200);
-	public static final ReadableColor	GUI_CYAN_DARK_1		= new Color(0, 100, 150);
-	public static final ReadableColor	GUI_CYAN_DARK_2		= new Color(0, 50, 90);
-	public static final ReadableColor	GUI_CYAN_DARK_3		= new Color(0, 30, 50);
+	public static final ReadableColor	GUI_CYAN_DARK_100		= new Color(0, 100, 150);
+	public static final ReadableColor	GUI_CYAN_DARK_50		= new Color(0, 50, 90);
+	public static final ReadableColor	GUI_CYAN_DARK_30		= new Color(0, 30, 50);
 
 	public static final ReadableColor	GUI_ORANGE			= new Color(255, 150, 0);
 	public static final ReadableColor	GUI_ORANGE_BRIGHT	= new Color(255, 200, 100);

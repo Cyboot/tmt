@@ -122,11 +122,11 @@ public class Button extends GuiElement {
 		super.render(g);
 		if (img != null) {
 			if (isMouseClicked)
-				img.setBlendColor(new Color(200, 200, 200, 255));
+				img.setBlendColor(new Color(255, 255, 255, 255));
 			else if (isHover)
-				img.setBlendColor(new Color(150, 150, 150, 255));
+				img.setBlendColor(new Color(200, 200, 200, 255));
 			else
-				img.setBlendColor(new Color(100, 100, 100, 255));
+				img.setBlendColor(new Color(150, 150, 150, 255));
 
 			g.onGui().drawSprite(pos, img);
 		}

@@ -265,7 +265,7 @@ public class Graphics {
 		Font font = null;
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new File("res" + File.separator + "gfx" + File.separator
-					+ "CONTRA__.ttf"));
+					+ "NeogreyRegular.otf"));
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}

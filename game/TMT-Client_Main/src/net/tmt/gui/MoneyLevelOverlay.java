@@ -16,6 +16,8 @@ import org.newdawn.slick.TrueTypeFont;
 
 public class MoneyLevelOverlay extends Gui {
 	private static final int	LEVEL_SIZE			= 96;
+	private Sprite				level_shade			= new Sprite("level_shade", LEVEL_SIZE * 2, LEVEL_SIZE * 2)
+															.setCentered(false).setAlpha(150);
 	private Sprite				level_bg			= new Sprite("level_bg", LEVEL_SIZE, LEVEL_SIZE).setCentered(false);
 	private List<Sprite>		level_part			= new ArrayList<>();
 
@@ -102,17 +104,17 @@ public class MoneyLevelOverlay extends Gui {
 		Vector2d pos = Vector2d.tmp1.set(0, 0);
 
 		// sprite for progress
+		g.onGui().drawSprite(pos, level_shade);
 		g.onGui().drawSprite(pos, level_bg);
 		for (Sprite s : level_part)
 			g.onGui().drawSprite(pos, s);
 
 		// Level Nr
 		g.setFont(Fonts.font_26_bold);
+		int txtWidth = Fonts.font_26_bold.getWidth(RPLevel.getLevel());
 		g.setColor(ColorUtil.GUI_ORANGE);
-		int offset = 8;
-		if (RPLevel.getLevel().length() > 1)
-			offset = 0;
-		g.onGui().drawText(LEVEL_SIZE / 3 + offset, LEVEL_SIZE / 3, RPLevel.getLevel());
+
+		g.onGui().drawText(LEVEL_SIZE / 2 - txtWidth / 2, LEVEL_SIZE / 2 - 10, RPLevel.getLevel());
 
 		// missing RP text
 		if (showMissingRP) {
@@ -123,7 +125,7 @@ public class MoneyLevelOverlay extends Gui {
 			int x = Math.max(0, LEVEL_SIZE / 2 - font.getWidth(text) / 2);
 
 			g.setColor(ColorUtil.GUI_CYAN);
-			g.onGui().drawText(x, LEVEL_SIZE - 3, text);
+			g.onGui().drawText(x, LEVEL_SIZE - 1, text);
 
 			if (blink) {
 				g.setColor(ColorUtil.GUI_ORANGE);

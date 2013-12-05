@@ -1,22 +1,29 @@
 package net.tmt.gui.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
 import org.newdawn.slick.TrueTypeFont;
 
 public class TextView extends GuiElement {
+	private List<String>	textBlockList	= new ArrayList<>();
+	private String			text;
+	private double			padding;
 
-	protected String		text;
-	protected String[]		textBlock;
-	protected TrueTypeFont	font;
+	protected TrueTypeFont	font			= Graphics.Fonts.font_14_plain;
 
 
-	public TextView(final Vector2d pos, final double width, final double height) {
+	public TextView(final Vector2d pos, final double width, final double height, final double padding) {
 		super(pos, width, height);
 
-		// defaults
-		font = Graphics.Fonts.font_14_plain;
+		this.padding = padding;
+	}
+
+	public TextView(final Vector2d pos, final double width, final double height) {
+		this(pos, width, height, DEFAULT_PADDING);
 	}
 
 	public void setFont(final TrueTypeFont font) {
@@ -24,31 +31,55 @@ public class TextView extends GuiElement {
 	}
 
 	protected void setupTextBlock() {
-		int textWidth = font.getWidth(text);
+		textBlockList.clear();
 
-		if (textWidth <= width) {
-			height = font.getHeight();
-			textBlock = new String[] { text };
-		} else {
-			int rows = (int) (textWidth / width) + 1;
-			height = rows * font.getHeight();
-			textBlock = new String[rows];
-			int charsPerLine = (int) (width / font.getWidth("e"));
+		String[] words = text.split(" ");
 
-			for (int i = 0; i < rows; i++) {
-				int maxIndex = Math.min(text.length(), (i * charsPerLine) + charsPerLine);
-				int minIndex = Math.min(text.length(), i * charsPerLine);
-				textBlock[i] = text.substring(minIndex, maxIndex);
+		double currentX = padding;
+		double currentY = padding;
+		String currentLine = "";
+		boolean first = true;
+		for (String w : words) {
+			int wordWidth = 0;
+
+			if (first) {
+				first = false;
+				wordWidth = font.getWidth(w);
+			} else {
+				wordWidth = font.getWidth(" " + w);
+			}
+
+			// check for line end (width) + '\n' newline
+			if (!w.equals("\n") && currentX + wordWidth <= width) {
+				currentLine += w + " ";
+				currentX += wordWidth;
+			} else {
+				// check for box height
+				currentY += font.getHeight();
+				if (currentY + font.getHeight() > height) {
+					// no space for next line
+					currentLine = currentLine.substring(0, Math.max(currentLine.length() - 1, 0));
+					currentLine += "...";
+					break;
+				} else {
+					textBlockList.add(currentLine);
+					if (w.equals("\n"))
+						currentLine = "";
+					else
+						currentLine = w + " ";
+					currentX = wordWidth;
+				}
 			}
 		}
+		textBlockList.add(currentLine);
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
 		g.setFont(font);
-		for (int i = 0; i < textBlock.length; i++)
-			g.onGui().drawText(pos.x, pos.y + font.getHeight() * i, textBlock[i]);
+		for (int i = 0; i < textBlockList.size(); i++)
+			g.onGui().drawText(pos.x + padding, pos.y + font.getHeight() * i + padding, textBlockList.get(i));
 	}
 
 	public void setText(final String text) {

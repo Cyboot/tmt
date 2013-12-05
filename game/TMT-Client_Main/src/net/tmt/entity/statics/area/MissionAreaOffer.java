@@ -4,6 +4,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.MissionManager;
+import net.tmt.util.DebugUtil;
 import net.tmt.util.Vector2d;
 
 public class MissionAreaOffer extends Area {
@@ -23,7 +24,8 @@ public class MissionAreaOffer extends Area {
 		if (MissionManager.getInstance().isMissionActive())
 			return;
 
-		super.render(g);
+		if (DebugUtil.renderCollision)
+			super.render(g);
 	}
 
 	@Override

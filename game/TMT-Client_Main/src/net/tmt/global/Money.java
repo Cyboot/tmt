@@ -1,5 +1,8 @@
 package net.tmt.global;
 
+import net.tmt.util.StringFormatter;
+
+
 public class Money {
 	private static long	money;
 
@@ -22,6 +25,6 @@ public class Money {
 	 * @return
 	 */
 	public static String getMoney() {
-		return String.valueOf(money);
+		return StringFormatter.format(money, 0, 0);
 	}
 }

@@ -7,9 +7,8 @@ import org.newdawn.slick.TrueTypeFont;
 public class Label extends TextView {
 
 	public Label(final Vector2d pos, final String text, final boolean hasBorder) {
-		super(pos, 0, 0);
+		super(pos, 0, 0, 0);
 
-		width = font.getWidth(text);
 		setText(text);
 
 		if (!hasBorder) {
@@ -20,6 +19,7 @@ public class Label extends TextView {
 	@Override
 	public void setText(final String text) {
 		width = font.getWidth(text);
+		height = font.getHeight();
 		super.setText(text);
 	}
 

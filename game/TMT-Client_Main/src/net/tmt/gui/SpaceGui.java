@@ -4,6 +4,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.ColorUtil;
+import net.tmt.util.MathUtil;
 import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 
@@ -64,8 +65,12 @@ public class SpaceGui extends Gui {
 		if (guiManager.isSet(GUI_SHIP_HEALTH))
 			health = StringFormatter.format((double) guiManager.getValue(GUI_SHIP_HEALTH));
 
-		if (guiManager.isSet(GUI_SHIP_SPEED))
-			speed = StringFormatter.format((double) guiManager.getValue(GUI_SHIP_SPEED));
+		if (guiManager.isSet(GUI_SHIP_SPEED)) {
+			int speedInt = (int) (double) guiManager.getValue(GUI_SHIP_SPEED);
+			speedInt = MathUtil.roundTo(speedInt, 10);
+
+			speed = StringFormatter.format(speedInt, 0, 0);
+		}
 
 		g.onGui().drawText(textX, topY + 16, "Health: " + health);
 		g.onGui().drawText(textX, topY + 16 + 16, "Speed:  " + speed);

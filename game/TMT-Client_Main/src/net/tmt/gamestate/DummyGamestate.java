@@ -27,7 +27,7 @@ public class DummyGamestate extends AbstractGamestate {
 		sprite_ship3.rotate(delta * 36);
 
 		if (Controls.pressed(Controls.DEBUG_KEY_3)) {
-			RPLevel.addRP((int) (delta * 800));
+			RPLevel.addRP((int) (delta * 80000));
 		}
 		if (Controls.pressed(Controls.DEBUG_KEY_4)) {
 			Money.addMoney((long) (delta * 81231));

@@ -2,7 +2,7 @@ package net.tmt.entity.component.other;
 
 import net.tmt.entity.component.Component;
 import net.tmt.entity.component.ComponentDispatcher;
-import net.tmt.game.GameEngine;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.DebugUtil;
@@ -37,8 +37,8 @@ public class RenderComponent extends Component {
 			return;
 
 		// only render if its not to far away from screen
-		double dist = caller.getWorld().getOffsetCentered().distanceTo(pos);
-		if (dist > GameEngine.WIDTH * g.getScaleInverse()) {
+		double dist = caller.getWorld().getOffset().distanceTo(pos);
+		if (dist > ZoomManager.getWidthZoomed() * 2) {
 			return;
 		}
 

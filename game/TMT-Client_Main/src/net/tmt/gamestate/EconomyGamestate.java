@@ -7,6 +7,7 @@ import net.tmt.gui.EconomyGui;
 import net.tmt.map.PlanetChunk;
 import net.tmt.map.PlanetMap;
 import net.tmt.map.Terrain;
+import net.tmt.util.Vector2d;
 
 public class EconomyGamestate extends AbstractGamestate {
 	private static EconomyGamestate	instance	= new EconomyGamestate();
@@ -31,9 +32,13 @@ public class EconomyGamestate extends AbstractGamestate {
 
 		case CONSTRUCTING:
 			// update position to mouse curser
-			int chunkSize = world.getMap().getChunkSize();
-			int x = (Controls.mouseX() / chunkSize) * chunkSize + Building.SIZE / 2;
-			int y = (Controls.mouseY() / chunkSize) * chunkSize + Building.SIZE / 2;
+			double chunkSize = world.getMap().getChunkSize();
+			Vector2d posOnWorld = world.getVectorOnWorld(new Vector2d(Controls.mouseX(), Controls.mouseY()));
+
+			double x = posOnWorld.x() / (int) chunkSize * chunkSize;
+			double y = posOnWorld.y() / (int) chunkSize * chunkSize;
+			x += Building.SIZE / 2;
+			y += Building.SIZE / 2;
 
 			buildingToConstruct.getPos().set(x, y);
 
@@ -86,7 +91,7 @@ public class EconomyGamestate extends AbstractGamestate {
 			break;
 		case CONSTRUCTING:
 			// render the currently constructing Building under curser
-			g.onGui().drawSprite(buildingToConstruct.getPos(), buildingToConstruct.getSprite());
+			g.drawSprite(buildingToConstruct.getPos(), buildingToConstruct.getSprite());
 			break;
 		case BULIDING_SELECTED:
 			// display building information (already done in update() )

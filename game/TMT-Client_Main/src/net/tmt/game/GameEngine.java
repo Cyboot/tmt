@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.tmt.game.manager.GameManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gamestate.AbstractGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
@@ -123,6 +124,7 @@ public class GameEngine {
 		Terrain.init();
 		graphics = Graphics.init();
 		gameManager = GameManager.init();
+		ZoomManager.init();
 
 		try {
 			Controllers.create();

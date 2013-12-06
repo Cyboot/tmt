@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.statics.area.MissionAreaAction;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -37,6 +38,7 @@ public class SpaceRaceMission extends Mission {
 		MissionManager missionManager = MissionManager.getInstance();
 		for (MissionAreaAction c : checkPoints)
 			missionManager.registerArea(c);
+		ZoomManager.setFixedZoom(ZoomManager.ZOOM_075);
 	}
 
 	private void setUpCheckpoints(final Vector2d startPoint, final int numberCheckpoints) {
@@ -95,6 +97,7 @@ public class SpaceRaceMission extends Mission {
 					medal = Medal.BRONZE;
 
 				finish(medal);
+				ZoomManager.resetZoom();
 			} else {
 				id++;
 				checkPoints.get(id).setActive(true);

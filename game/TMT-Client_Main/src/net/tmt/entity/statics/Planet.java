@@ -2,8 +2,8 @@ package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.area.MissionAreaOffer;
-import net.tmt.game.GameEngine;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.MissionManager;
 import net.tmt.global.mission.PlanetMission;
@@ -48,8 +48,8 @@ public class Planet extends Entity2D {
 		super.update(caller, world, delta);
 
 		// only render if its not to far away from screen
-		double dist = world.getOffsetCentered().distanceTo(pos);
-		isOnScreen = dist < GameEngine.WIDTH * Graphics.getInstance().getScaleInverse();
+		double dist = world.getOffset().distanceTo(pos);
+		isOnScreen = dist < ZoomManager.getWidthZoomed() * 2;
 	}
 
 	@Override

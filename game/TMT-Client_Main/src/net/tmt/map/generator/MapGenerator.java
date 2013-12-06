@@ -19,7 +19,6 @@ public class MapGenerator {
 
 				if (chunk == null) {
 					map.addChunk(new Coordinate(x, y), ChunkFormer.formChunk(coordTmp, map, entityManager));
-					System.out.println("new Chunk = " + x + " : " + y);
 				}
 			}
 		}

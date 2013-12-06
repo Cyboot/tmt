@@ -2,12 +2,10 @@ package net.tmt.gamestate;
 
 import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.statics.SpaceStation;
-import net.tmt.game.Controls;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
 import net.tmt.map.SpaceMap;
-import net.tmt.util.StringFormatter;
 import net.tmt.util.Vector2d;
 
 public class SpaceGamestate extends AbstractGamestate {
@@ -30,13 +28,6 @@ public class SpaceGamestate extends AbstractGamestate {
 	public void update(final double delta) {
 		world.update(delta);
 		entityManager.update(world, delta);
-
-		Graphics g = Graphics.getInstance();
-		if (Controls.pressed(Controls.DEBUG_KEY_1))
-			g.setScale(g.getScale() * (1 - 1 * delta));
-		if (Controls.pressed(Controls.DEBUG_KEY_2))
-			g.setScale(g.getScale() * (1 + 1 * delta));
-		System.out.println(StringFormatter.format(g.getScale()));
 	}
 
 	@Override

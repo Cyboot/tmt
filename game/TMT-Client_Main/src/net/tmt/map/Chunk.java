@@ -3,6 +3,7 @@ package net.tmt.map;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.ColorUtil;
+import net.tmt.util.DebugUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -52,6 +53,11 @@ public class Chunk implements Renderable {
 	public void render(final Graphics g) {
 		g.setColor(color);
 		g.drawSprite(Vector2d.tmp1.set(getCoord().x * size, getCoord().y * size), terrain.getSprite());
+
+		if (DebugUtil.renderCollision) {
+			g.setColor(Color.YELLOW);
+			g.drawRect(coord.x * size + 4, coord.y * size + 4, size - 8, size - 8);
+		}
 	}
 
 	public Coordinate getCoord() {

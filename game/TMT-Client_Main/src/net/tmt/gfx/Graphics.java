@@ -7,6 +7,7 @@ import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -15,7 +16,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 public class Graphics {
-	private double					scale				= 0.5;
+	private double					scale				= 1;
 	private static final int		DEFAULT_LINE_WIDTH	= 1;
 
 	private float					lineWidth			= DEFAULT_LINE_WIDTH;
@@ -23,7 +24,7 @@ public class Graphics {
 	private TrueTypeFont			font;
 	private boolean					onGui;
 	private org.newdawn.slick.Color	slickColor			= new org.newdawn.slick.Color(0);
-	private Vector2d				offset;
+	private Vector2d				offset				= new Vector2d();
 
 	public void drawSprite(final Vector2d pos, final Sprite sprite) {
 		sprite.getTexture().bind();
@@ -112,7 +113,7 @@ public class Graphics {
 	}
 
 	public void setOffset(final Vector2d offset) {
-		this.offset = offset;
+		this.offset.set(offset).sub(ZoomManager.getWidthZoomed() / 2, ZoomManager.getHeightZoomed() / 2);
 	}
 
 	public void setLineWidth(final int width) {
@@ -256,15 +257,6 @@ public class Graphics {
 	public void setScale(final double scale) {
 		this.scale = scale;
 	}
-
-	public double getScaleInverse() {
-		return 1 / scale;
-	}
-
-	public double getScale() {
-		return scale;
-	}
-
 
 	private static Graphics	instance;
 

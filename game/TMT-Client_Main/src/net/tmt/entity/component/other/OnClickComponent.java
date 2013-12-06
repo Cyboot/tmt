@@ -19,7 +19,7 @@ public class OnClickComponent extends Component {
 
 		World world = caller.getWorld();
 
-		Vector2d shipAbsolut2d = Vector2d.tmp2.set(pos.x - world.getOffset().x, pos.y - world.getOffset().y);
+		Vector2d shipAbsolut2d = world.getVectorOnScreen(pos);
 
 		// bedinung genauer einstellen. radius abhänging von bildgröße
 		if (mouse2d.distanceTo(shipAbsolut2d) < 32 && Controls.wasReleased(Controls.MOUSE_LEFT)) {

@@ -22,7 +22,7 @@ public class OnHoverComponent extends Component {
 
 		World world = caller.getWorld();
 
-		Vector2d shipAbsolut2d = Vector2d.tmp2.set(pos.x - world.getOffset().x, pos.y - world.getOffset().y);
+		Vector2d shipAbsolut2d = world.getVectorOnScreen(pos);
 
 		isHover = false;
 		// bedinung genauer einstellen. radius abhänging von bildgröße

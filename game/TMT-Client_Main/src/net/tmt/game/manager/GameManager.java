@@ -22,6 +22,7 @@ public class GameManager implements Updateable, Renderable {
 	private static GameManager		instance;
 
 	private boolean					dirtyGamestateswitch	= false;
+
 	/** all inactive, but yet not deleted Gamestates */
 	private List<AbstractGamestate>	inactivedGamestates		= new CopyOnWriteArrayList<>();
 	/** all updated, but not visible Gamestates */
@@ -65,6 +66,7 @@ public class GameManager implements Updateable, Renderable {
 
 		for (AbstractGamestate a : backgroundGamestates)
 			a.update(delta);
+		ZoomManager.update(delta);
 
 		missionManager.update(activeGamestate.getEntityManager(), activeGamestate.getWorld(), delta);
 		guiManager.update(delta);
@@ -107,6 +109,7 @@ public class GameManager implements Updateable, Renderable {
 			throw new IllegalArgumentException("Cannot resume Gamestate #" + id + " because it was not paused before!");
 
 		dirtyGamestateswitch = true;
+		ZoomManager.resetZoom();
 	}
 
 	/**

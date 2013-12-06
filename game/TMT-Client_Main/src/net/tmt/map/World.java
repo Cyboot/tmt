@@ -5,31 +5,20 @@ import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.Vector2d;
 
+import org.lwjgl.input.Keyboard;
+
 public class World implements Updateable, Renderable {
-	private static final double	RATIO	= 1.8;
-	private double				MOVE_DIFF_WIDTH;
-	private double				MOVE_DIFF_HEIGHT;
-	private double				MOVE_MAX_WIDTH;
-	private double				MOVE_MAX_HEIGTH;
+	private Vector2d		offset	= new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2);
 
-	private Vector2d			tmp		= new Vector2d();
-	private Vector2d			offset	= new Vector2d();
-
-	private WorldMap			map;
-	private Entity2D			player;
-	private EntityManager		entityManager;
+	private WorldMap		map;
+	private Entity2D		player;
+	private EntityManager	entityManager;
 
 	public World(final EntityManager entityManager, final WorldMap map) {
-		// TODO: quick & dirty: Worldoffset
-		MOVE_MAX_WIDTH = (GameEngine.WIDTH / 2) * 1 / 50.;
-		MOVE_DIFF_WIDTH = (GameEngine.WIDTH / 2 - MOVE_MAX_WIDTH) * RATIO;
-
-		MOVE_MAX_HEIGTH = (GameEngine.HEIGHT / 2) * 1 / 50.;
-		MOVE_DIFF_HEIGHT = (GameEngine.HEIGHT / 2 - MOVE_MAX_HEIGTH) * RATIO;
-
 		this.entityManager = entityManager;
 		this.map = map;
 	}
@@ -39,8 +28,17 @@ public class World implements Updateable, Renderable {
 		if (player != null)
 			centerAroundPlayer(delta * 1000);
 
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+			offset.x -= delta * 500;
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+			offset.x += delta * 500;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+			offset.y += delta * 500;
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP))
+			offset.y -= delta * 500;
+
 		if (map != null)
-			map.update(getOffsetCentered(), entityManager, delta);
+			map.update(offset, entityManager, delta);
 	}
 
 	@Override
@@ -49,41 +47,43 @@ public class World implements Updateable, Renderable {
 			map.render(g);
 	}
 
-	private void centerAroundPlayer(final double delta) {
-		double dx = getOffsetCentered().x - player.getPos().x;
-		double dy = getOffsetCentered().y - player.getPos().y;
 
-		if (dx > MOVE_MAX_WIDTH || dx < -MOVE_MAX_WIDTH) {
-			double dxInner = Math.abs(dx) - MOVE_MAX_WIDTH;
-			double factor = dxInner / MOVE_DIFF_WIDTH;
-			factor = Math.pow(factor, 3);
+	private void centerAroundPlayer(final double delta) {
+		double dx = offset.x - player.getPos().x;
+		double dy = offset.y - player.getPos().y;
+
+		// 1/6 from center --> 1/12 for both sides
+		double factor = 1 / 12.;
+		double BORDER_WIDTH = ZoomManager.getWidthZoomed() * factor;
+		double BORDER_HEIGHT = ZoomManager.getHeightZoomed() * factor;
+
+
+		if (Math.abs(dx) > BORDER_WIDTH) {
+			double movefactor = (Math.abs(dx) - BORDER_WIDTH) / BORDER_WIDTH;
+			movefactor = Math.pow(movefactor, 3);
 
 			if (dx > 0)
-				offset.x -= factor * dxInner * delta;
+				offset.x -= movefactor * delta;
 			else
-				offset.x += factor * dxInner * delta;
+				offset.x += movefactor * delta;
 		}
 
-		if (dy > MOVE_MAX_HEIGTH || dy < -MOVE_MAX_HEIGTH) {
-			double dyInner = Math.abs(dy) - MOVE_MAX_HEIGTH;
-			double factor = dyInner / MOVE_DIFF_HEIGHT;
-			factor = Math.pow(factor, 3);
+		if (Math.abs(dy) > BORDER_HEIGHT) {
+			double movefactor = (Math.abs(dy) - BORDER_HEIGHT) / BORDER_HEIGHT;
+			movefactor = Math.pow(movefactor, 2);
+
+			if (movefactor > 2)
+				System.out.println(movefactor);
 
 			if (dy > 0)
-				offset.y -= factor * dyInner * delta;
+				offset.y -= movefactor * delta;
 			else
-				offset.y += factor * dyInner * delta;
+				offset.y += movefactor * delta;
 		}
 	}
 
 	public Vector2d getOffset() {
 		return offset;
-	}
-
-	public Vector2d getOffsetCentered() {
-		tmp.x = offset.x + GameEngine.WIDTH / 2;
-		tmp.y = offset.y + GameEngine.HEIGHT / 2;
-		return tmp;
 	}
 
 	public void setPlayer(final Entity2D player) {
@@ -96,6 +96,35 @@ public class World implements Updateable, Renderable {
 
 	public WorldMap getMap() {
 		return map;
+	}
+
+	/**
+	 * calculates the corresponding OnScreen-Vector to the given World-Vector
+	 * 
+	 * @param posOnWorld
+	 * @return the Vector on Screen (in pixel)
+	 */
+	public Vector2d getVectorOnScreen(final Vector2d posOnWorld) {
+		Vector2d result = posOnWorld.copy().sub(offset);
+		result.multiply(ZoomManager.getZoom());
+		result.add(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2);
+
+		return result;
+	}
+
+	/**
+	 * calculates the corresponding OnScreen-Vector to the given World-Vector
+	 * 
+	 * @param posOnWorld
+	 * @return the Vector on Screen (in pixel)
+	 */
+	public Vector2d getVectorOnWorld(final Vector2d posOnScreen) {
+		Vector2d result = new Vector2d(-GameEngine.WIDTH / 2, -GameEngine.HEIGHT / 2);
+		result.add(posOnScreen);
+		result.multiply(ZoomManager.getZoomInverse());
+		result.add(offset);
+
+		return result;
 	}
 
 	/**

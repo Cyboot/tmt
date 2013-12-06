@@ -15,6 +15,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 public class Graphics {
+	private double					scale				= 0.5;
 	private static final int		DEFAULT_LINE_WIDTH	= 1;
 
 	private float					lineWidth			= DEFAULT_LINE_WIDTH;
@@ -94,12 +95,11 @@ public class Graphics {
 
 	private void applyOffset() {
 		// ignore offset if onGui == true
-		if (!onGui)
+		if (!onGui) {
+			glScaled(scale, scale, scale);
 			glTranslated(-offset.x, -offset.y, 0);
+		}
 		onGui = false;
-
-		// reset lineWidth to default width
-		// lineWidth = DEFAULT_LINE_WIDTH;
 	}
 
 	public void setColor(final ReadableColor color) {
@@ -253,7 +253,24 @@ public class Graphics {
 	}
 
 
+	public void setScale(final double scale) {
+		this.scale = scale;
+	}
+
+	public double getScaleInverse() {
+		return 1 / scale;
+	}
+
+	public double getScale() {
+		return scale;
+	}
+
+
 	private static Graphics	instance;
+
+	public static Graphics getInstance() {
+		return instance;
+	}
 
 	public static Graphics init() {
 		instance = new Graphics();
@@ -292,10 +309,6 @@ public class Graphics {
 		Fonts.font_default = Fonts.font_12_plain;
 		instance.font = Fonts.font_default;
 
-		return instance;
-	}
-
-	public static Graphics getInstance() {
 		return instance;
 	}
 

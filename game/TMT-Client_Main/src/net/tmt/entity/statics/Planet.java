@@ -37,12 +37,6 @@ public class Planet extends Entity2D {
 		// OfferAreas
 		MissionManager.getInstance()
 				.registerArea(new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 1.2));
-
-		setColor();
-	}
-
-	private void setColor() {
-
 	}
 
 	public int getPlanetId() {
@@ -55,7 +49,7 @@ public class Planet extends Entity2D {
 
 		// only render if its not to far away from screen
 		double dist = world.getOffsetCentered().distanceTo(pos);
-		isOnScreen = dist < GameEngine.WIDTH;
+		isOnScreen = dist < GameEngine.WIDTH * Graphics.getInstance().getScaleInverse();
 	}
 
 	@Override

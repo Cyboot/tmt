@@ -1,12 +1,11 @@
 package net.tmt.gfx;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.tmt.util.Vector2d;
 
-public class Shape implements Iterable<Vector2d> {
+public class Shape {
 	private List<Vector2d>	points	= new ArrayList<>();
 	private boolean			isCentered;
 	private double			rotation;
@@ -82,10 +81,5 @@ public class Shape implements Iterable<Vector2d> {
 
 	public double getScale() {
 		return scale;
-	}
-
-	@Override
-	public Iterator<Vector2d> iterator() {
-		return null;
 	}
 }

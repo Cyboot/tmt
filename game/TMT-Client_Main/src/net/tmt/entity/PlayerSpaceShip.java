@@ -17,6 +17,7 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GuiManager;
+import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.achievments.Achievments;
 import net.tmt.global.stats.Stats;
@@ -57,7 +58,21 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 	}
 
 	@Override
-	public void update(final EntityManager caller, World world, final double delta) {
+	public void render(final Graphics g) {
+		super.render(g);
+
+		// final double TARGET_TIME_TO_CROSS_SCREEN = 10;
+		// double speed = (double) getValue(MoveComponent.SPEED);
+		// double timeToCrossScreen = GameEngine.WIDTH / speed;
+		//
+		// if (timeToCrossScreen < TARGET_TIME_TO_CROSS_SCREEN)
+		// g.setScale(1 / (TARGET_TIME_TO_CROSS_SCREEN / timeToCrossScreen));
+		// else
+		// g.setScale(1);
+	}
+
+	@Override
+	public void update(final EntityManager caller, final World world, final double delta) {
 		updateInput();
 		updateShoot(caller, delta);
 

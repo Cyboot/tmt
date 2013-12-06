@@ -8,8 +8,8 @@ import net.tmt.global.mission.MissionDispatcher.Entry;
 import net.tmt.util.CountdownTimer;
 
 public abstract class Mission implements Updateable {
-	private static final double	DEFAULT_BURNOUT_TIME	= 1;
-	private static final double	DEFAULT_OFFER_TIME		= 150;
+	private static final double	DEFAULT_BURNOUT_TIME	= 10;
+	private static final double	DEFAULT_OFFER_TIME		= 15;
 	private State				state					= State.OFFERED;
 	private String				desc;
 	private String				title;

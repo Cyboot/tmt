@@ -19,6 +19,7 @@ public class SpaceBug extends PlanetCreature {
 
 	@SuppressWarnings("rawtypes")
 	private List<Class>		afraidOf		= new ArrayList<Class>();
+	// TODO: loop through entities and react to afraidOfs in update method
 	private Vector2d		fleeTo			= new Vector2d();
 	private double			saveDistance	= 500;
 	private Hero			hero;
@@ -41,6 +42,12 @@ public class SpaceBug extends PlanetCreature {
 
 	@Override
 	public void update(final EntityManager caller, final World world, final double delta) {
+		fleeingBehaviour(delta);
+
+		super.update(caller, world, delta);
+	}
+
+	private void fleeingBehaviour(final double delta) {
 		if (pos.distanceTo(hero.getPos()) < saveDistance) {
 			Vector2d.tmp1.set(pos);
 			Vector2d.tmp1.sub(hero.getPos());
@@ -61,7 +68,5 @@ public class SpaceBug extends PlanetCreature {
 
 		if (fleeTo != null)
 			dispatchValue(Move2TargetComponent.SET_TARGET, fleeTo);
-
-		super.update(caller, world, delta);
 	}
 }

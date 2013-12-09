@@ -28,6 +28,10 @@ public class AnimatedRenderComponent extends RenderComponent {
 			setSprite(pauseFrame);
 	}
 
+	public void setLoopTime(final double looptime) {
+		timer = new CountdownTimer(looptime);
+	}
+
 	public void resumeAnimation() {
 		paused = false;
 	}

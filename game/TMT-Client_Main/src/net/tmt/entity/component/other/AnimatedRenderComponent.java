@@ -29,7 +29,7 @@ public class AnimatedRenderComponent extends RenderComponent {
 	}
 
 	public void setLoopTime(final double looptime) {
-		timer = new CountdownTimer(looptime);
+		timer.setIntervall(looptime);
 	}
 
 	public void resumeAnimation() {

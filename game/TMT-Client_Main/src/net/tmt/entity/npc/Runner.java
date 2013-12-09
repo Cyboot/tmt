@@ -39,7 +39,7 @@ public class Runner extends PlanetCreature {
 		walkingSprites.add(new Sprite("runner_walking_1"));
 		runningSprites.add(new Sprite("runner_running_0"));
 		runningSprites.add(new Sprite("runner_running_1"));
-		aniRenCom = new AnimatedRenderComponent(walkingSprites, 1);
+		aniRenCom = new AnimatedRenderComponent(walkingSprites, 0.4);
 		addComponent(aniRenCom);
 		ComponentFactory.addDefaultMove(this, 0, normalSpeed, ROTATION_SPEED);
 		addComponent(new Move2TargetComponent(1));
@@ -55,7 +55,7 @@ public class Runner extends PlanetCreature {
 	private void huntingBehaviour(final double delta) {
 		if (pos.distanceTo(hero.getPos()) < sensePreyDistance) {
 			runTo.set(hero.getPos());
-			// runningAnimation();
+			runningAnimation();
 			dispatchValue(MoveComponent.SPEED, normalSpeed * 10);
 		} else {
 			if (changeDir.isTimeUp(delta)) {
@@ -65,7 +65,7 @@ public class Runner extends PlanetCreature {
 				Vector2d.tmp1.add(Vector2d.tmp2);
 				runTo.set(Vector2d.tmp1);
 			}
-			// walkingAnimation();
+			walkingAnimation();
 			dispatchValue(MoveComponent.SPEED, normalSpeed);
 		}
 
@@ -75,12 +75,12 @@ public class Runner extends PlanetCreature {
 
 	private void runningAnimation() {
 		aniRenCom.setAnimationFrames(runningSprites);
-		aniRenCom.setLoopTime(1);
+		aniRenCom.setLoopTime(0.3);
 	}
 
 	private void walkingAnimation() {
 		aniRenCom.setAnimationFrames(walkingSprites);
-		aniRenCom.setLoopTime(1);
+		aniRenCom.setLoopTime(0.4);
 	}
 
 }

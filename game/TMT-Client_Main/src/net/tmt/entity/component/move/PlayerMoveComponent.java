@@ -10,7 +10,7 @@ public class PlayerMoveComponent extends Component {
 	public static final String	ACCL_FACTOR		= "ACCL_FACTOR";
 
 	private static final double	MIN_SPEED		= 15;
-	private static final double	MAX_SPEED		= 550;
+	private static final double	MAX_SPEED		= 5500;
 
 	private Vector2d			dir				= new Vector2d(10, 0);
 

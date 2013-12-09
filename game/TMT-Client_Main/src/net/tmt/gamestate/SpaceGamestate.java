@@ -13,7 +13,7 @@ import net.tmt.util.Vector2d;
 public class SpaceGamestate extends AbstractGamestate {
 	private static SpaceGamestate	instance;
 
-	private PlayerSpaceShip			player	= new PlayerSpaceShip();
+	private PlayerSpaceShip			player	= new PlayerSpaceShip(new Vector2d(62 * 1000, 2000));
 
 	private SpaceGamestate() {
 		super(SpaceMap.getInstance());

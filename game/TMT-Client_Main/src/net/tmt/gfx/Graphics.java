@@ -200,8 +200,9 @@ public class Graphics {
 		else
 			sprite = Textures.circle_fill_16;
 
-		sprite.setWidth(radius);
-		sprite.setHeight(radius);
+		sprite.setCentered(true);
+		sprite.setWidth(radius * 2);
+		sprite.setHeight(radius * 2);
 		sprite.setBlendColor((Color) color);
 
 		drawSprite(Vector2d.tmp1.set(x, y), sprite);

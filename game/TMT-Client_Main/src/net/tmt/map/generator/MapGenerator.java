@@ -7,7 +7,7 @@ import net.tmt.map.WorldMap;
 
 public class MapGenerator {
 
-	public static void generateSpace(final WorldMap map, final EntityManager entityManager) {
+	public static void generateSpaceMap(final WorldMap map, final EntityManager entityManager) {
 		new MapGeneratorSpace().generateSpace(map, entityManager);
 	}
 

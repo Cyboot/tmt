@@ -13,6 +13,7 @@ public class ZoomManager {
 	public static final int		RECOMMENDED_RESOLUTION_WIDTH	= 1600;
 	public static final int		RECOMMENDED_RESOLUTION_HEIGTH	= 900;
 
+	public static final double	ZOOM_001						= 0.01;
 	public static final double	ZOOM_005						= 0.05;
 	public static final double	ZOOM_010						= 0.1;
 	public static final double	ZOOM_025						= 0.25;
@@ -33,6 +34,8 @@ public class ZoomManager {
 	private static double		fixedZoom						= DEFAULT_ZOOM;
 
 	static void update(final double delta) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_0))
+			setFixedZoom(ZOOM_001);
 		if (Keyboard.isKeyDown(Keyboard.KEY_1))
 			setFixedZoom(ZOOM_005);
 		if (Keyboard.isKeyDown(Keyboard.KEY_2))

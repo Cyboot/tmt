@@ -12,7 +12,7 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.input.Keyboard;
 
 public class World implements Updateable, Renderable {
-	private Vector2d		offset	= new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2);
+	private Vector2d		offset	= new Vector2d();
 
 	private WorldMap		map;
 	private Entity2D		player;
@@ -88,6 +88,7 @@ public class World implements Updateable, Renderable {
 
 	public void setPlayer(final Entity2D player) {
 		this.player = player;
+		offset.set(player.getPos());
 	}
 
 	public Entity2D getPlayer() {

@@ -1,11 +1,12 @@
 package net.tmt.gamestate;
 
+import net.tmt.entity.npc.Satellite;
 import net.tmt.game.Controls;
 import net.tmt.gfx.Graphics;
-import net.tmt.gfx.Sprite;
 import net.tmt.global.Money;
 import net.tmt.global.RPLevel;
 import net.tmt.gui.DummyGui;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -13,18 +14,22 @@ import org.lwjgl.util.Color;
 public class DummyGamestate extends AbstractGamestate {
 	private static DummyGamestate	instance;
 
-	private Sprite					sprite_ship3;
 
 	private DummyGamestate() {
 		super(null);
-		sprite_ship3 = new Sprite("ship_round_64");
+		Vector2d center = new Vector2d(500, 300);
+
+
+		entityManager.addEntity(new Satellite(RandomUtil.doubleRange(0, 2 * Math.PI), center, 100));
+		entityManager.addEntity(new Satellite(RandomUtil.doubleRange(0, 2 * Math.PI), center, 200));
+		entityManager.addEntity(new Satellite(RandomUtil.doubleRange(0, 2 * Math.PI), center, 250));
 
 		onResume(-1);
 	}
 
 	@Override
 	public void update(final double delta) {
-		sprite_ship3.rotate(delta * 36);
+		entityManager.update(world, delta);
 
 		if (Controls.pressed(Controls.DEBUG_KEY_3)) {
 			RPLevel.addRP((int) (delta * 80000));
@@ -37,12 +42,13 @@ public class DummyGamestate extends AbstractGamestate {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
+
+		entityManager.render(g);
+
+		g.setColor(Color.YELLOW);
+		g.fillCircle(500, 300, 5);
+
 		guiManager.setGui(DummyGui.class);
-
-		sprite_ship3.setBlendColor(new Color(175, 175, 255, 255));
-
-		g.onGui().drawSprite(new Vector2d(300, 100), sprite_ship3);
-
 	}
 
 	public static DummyGamestate getInstance() {

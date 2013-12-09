@@ -1,6 +1,7 @@
 package net.tmt.map.generator;
 
-import net.tmt.entity.Asteroid;
+import net.tmt.entity.ambient.SpaceRock;
+import net.tmt.entity.npc.Satellite;
 import net.tmt.entity.statics.Planet;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.map.Chunk;
@@ -44,6 +45,16 @@ class ChunkFiller {
 
 		Planet p = new Planet(pos, terrain, 300);
 		entityManager.addEntity(p, EntityManager.LAYER_1_BACK);
+
+		addSatellites(pos, entityManager);
+	}
+
+	private static void addSatellites(final Vector2d pos, final EntityManager entityManager) {
+		for (int i = 0; i < RandomUtil.intRange(1, 10); i++) {
+			Satellite sat = new Satellite(RandomUtil.doubleRange(0, Math.PI * 2), pos, RandomUtil.intRange(500, 1500));
+
+			entityManager.addEntity(sat);
+		}
 	}
 
 	public static void fillAsteroid(final Chunk chunk, final EntityManager entityManager) {
@@ -55,7 +66,7 @@ class ChunkFiller {
 			double deltaX = RandomUtil.doubleRange(-256, 256);
 			double deltaY = RandomUtil.doubleRange(-256, 256);
 
-			entityManager.addEntity(new Asteroid(pos.copy().add(deltaX, deltaY)), EntityManager.LAYER_2_MEDIUM);
+			entityManager.addEntity(new SpaceRock(pos.copy().add(deltaX, deltaY)), EntityManager.LAYER_2_MEDIUM);
 		}
 	}
 

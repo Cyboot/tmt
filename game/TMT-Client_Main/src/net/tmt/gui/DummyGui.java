@@ -29,6 +29,6 @@ public class DummyGui extends Gui {
 	@Override
 	public void render(final Graphics g) {
 		gameStateToolbar.render(g);
-		textview.render(g);
+		// textview.render(g);
 	}
 }

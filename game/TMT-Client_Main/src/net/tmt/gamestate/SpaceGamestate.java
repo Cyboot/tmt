@@ -18,8 +18,8 @@ public class SpaceGamestate extends AbstractGamestate {
 		world.setPlayer(player);
 
 		entityManager.addEntity(player, EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new SpaceStation(new Vector2d(-500, -500), 1));
-		entityManager.addEntity(new SpaceStation(new Vector2d(-500, -800), 2));
+		entityManager.addEntity(new SpaceStation(new Vector2d(-500, -300), 1));
+		entityManager.addEntity(new SpaceStation(new Vector2d(-500, -1200), 2));
 
 		onResume(-1);
 	}

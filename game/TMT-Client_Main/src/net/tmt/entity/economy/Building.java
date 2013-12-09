@@ -7,7 +7,7 @@ import net.tmt.util.Vector2d;
 
 public class Building extends Entity2D {
 
-	public static final int	SIZE	= 64;
+	public static final int	SIZE	= 256;
 
 	public Building(final Vector2d pos) {
 		super(pos);

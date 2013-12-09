@@ -35,8 +35,8 @@ public class Planet extends Entity2D {
 
 		// FIXME: BUG (maybe not here): Planets far away sometimes doesn't have
 		// OfferAreas
-		MissionManager.getInstance()
-				.registerArea(new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 1.2));
+		MissionManager.getInstance().registerArea(
+				new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 2, false));
 	}
 
 	public int getPlanetId() {

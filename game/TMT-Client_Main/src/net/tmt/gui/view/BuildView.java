@@ -1,6 +1,7 @@
 package net.tmt.gui.view;
 
 import net.tmt.entity.economy.Base;
+import net.tmt.entity.economy.Building;
 import net.tmt.entity.economy.Mine;
 import net.tmt.entity.economy.Store;
 import net.tmt.game.interfaces.ClickListener;
@@ -39,20 +40,24 @@ public class BuildView extends ContainerElement implements ClickListener {
 		// Buttons work only if Inputstate is neutral
 		if (game.getInputState() == InputState.NEUTRAL) {
 			game.setInputState(InputState.CONSTRUCTING);
+
+			Building buildingToConstruct = null;
 			switch (caller.getTitle()) {
 			case "icon_base":
 				// TODO: you just can create one base in planet?
-				game.setBuildingToConstruct(new Base(new Vector2d()));
+				buildingToConstruct = new Base(new Vector2d());
 				break;
 			case "icon_mine":
-				game.setBuildingToConstruct(new Mine(new Vector2d()));
+				buildingToConstruct = new Mine(new Vector2d());
 				break;
 			case "icon_store":
-				game.setBuildingToConstruct(new Store(new Vector2d()));
+				buildingToConstruct = new Store(new Vector2d());
 				break;
 			default:
 				break;
 			}
+			buildingToConstruct.getPos().set(Double.MAX_VALUE, Double.MAX_VALUE);
+			game.setBuildingToConstruct(buildingToConstruct);
 		}
 	}
 
@@ -64,7 +69,6 @@ public class BuildView extends ContainerElement implements ClickListener {
 
 		if (guiManager.isSet(Gui.GUI_CLICKED)) {
 			String text = (String) guiManager.getValue(Gui.GUI_CLICKED);
-			// g.onGui().drawText(width * 0.76 + 5, height * 0.97, text);
 			g.onGui().drawText(pos.x, pos.y, text);
 		}
 	}

@@ -17,7 +17,7 @@ public class SpaceStation extends Entity2D {
 	public SpaceStation(final Vector2d pos, final int type) {
 		super(pos);
 
-		addComponent(new MissionOfferComponent(SpaceRaceMission.class, SIZE * 1.2));
+		addComponent(new MissionOfferComponent(SpaceRaceMission.class, SIZE * 3));
 		addComponent(new OnHoverComponent());
 		addComponent(new RotateComponent(0, 3));
 
@@ -33,7 +33,7 @@ public class SpaceStation extends Entity2D {
 
 
 	@Override
-	public void update(final EntityManager caller, World world, final double delta) {
+	public void update(final EntityManager caller, final World world, final double delta) {
 		dispatchValue(RotateComponent.IS_ROTATE_LEFT, true);
 		super.update(caller, world, delta);
 	}

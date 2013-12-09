@@ -7,7 +7,7 @@ public class Base extends Building {
 
 	public Base(final Vector2d pos) {
 		super(pos);
-		setSprite(new Sprite("icon_base"));
+		setSprite(new Sprite("icon_base", Building.SIZE, Building.SIZE));
 	}
 
 }

@@ -3,10 +3,13 @@ package net.tmt.entity.npc;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.tmt.entity.Entity2D;
 import net.tmt.entity.Hero;
 import net.tmt.entity.component.move.Move2TargetComponent;
 import net.tmt.entity.component.move.MoveComponent;
 import net.tmt.entity.component.other.AnimatedRenderComponent;
+import net.tmt.entity.component.other.DropOnDeathComponent;
+import net.tmt.entity.pickups.MoneyBundle;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
@@ -39,7 +42,10 @@ public class SpaceBug extends PlanetCreature {
 		addComponent(new AnimatedRenderComponent(aniSprites, 0.5));
 		ComponentFactory.addDefaultMove(this, 0, normalSpeed, ROTATION_SPEED);
 		addComponent(new Move2TargetComponent(1));
-		ComponentFactory.addDefaultCollision(SpaceBug.class, this, 20, 25);
+		ComponentFactory.addDefaultCollision(SpaceBug.class, this, 20, 1);
+		List<Entity2D> drops = new ArrayList<Entity2D>();
+		drops.add(new MoneyBundle(new Vector2d()));
+		addComponent(new DropOnDeathComponent(drops));
 	}
 
 	@Override

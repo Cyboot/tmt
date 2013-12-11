@@ -25,7 +25,7 @@ public class BackPack extends Entity2D {
 	}
 
 	public void packItem(final Entity2D e) {
-		if (contents.size() <= capacity)
+		if (contents.size() < capacity)
 			contents.add(e);
 	}
 
@@ -39,6 +39,10 @@ public class BackPack extends Entity2D {
 
 	public Entity2D unPackNext() {
 		return contents.remove(contents.size() - 1);
+	}
+
+	public boolean isFull() {
+		return contents.size() == capacity;
 	}
 
 }

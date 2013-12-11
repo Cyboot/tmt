@@ -10,6 +10,7 @@ import net.tmt.entity.component.other.AnimatedRenderComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.global.mission.MissionDispatcher;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
@@ -46,6 +47,12 @@ public class SpaceBug extends PlanetCreature {
 		fleeingBehaviour(delta);
 
 		super.update(caller, world, delta);
+	}
+
+	@Override
+	protected void onKilled() {
+		super.onKilled();
+		MissionDispatcher.dispatch(this, "killed");
 	}
 
 	private void fleeingBehaviour(final double delta) {

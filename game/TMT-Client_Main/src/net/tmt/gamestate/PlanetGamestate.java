@@ -6,8 +6,12 @@ import net.tmt.entity.npc.SpaceBug;
 import net.tmt.entity.pickups.BackPack;
 import net.tmt.entity.pickups.GlowingStuff;
 import net.tmt.entity.statics.Planet;
+import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
+import net.tmt.global.mission.BugMission;
+import net.tmt.global.mission.Mission;
+import net.tmt.global.mission.MissionManager;
 import net.tmt.gui.PlanetGui;
 import net.tmt.map.PlanetMap;
 import net.tmt.util.ColorUtil;
@@ -40,6 +44,13 @@ public class PlanetGamestate extends AbstractGamestate {
 		}
 		Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340, GameEngine.HEIGHT / 2 - 340), 100, hero);
 		entityManager.addEntity(rnr);
+
+		MissionManager missionManager = MissionManager.getInstance();
+
+		Mission bugMission = new BugMission();
+		MissionAreaOffer missionArea = new MissionAreaOffer(new Vector2d(), bugMission, 128);
+
+		missionManager.registerArea(missionArea);
 	}
 
 	@Override

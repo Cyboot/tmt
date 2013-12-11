@@ -42,6 +42,13 @@ public class ComponentFactory {
 		entity.addComponent(new KillAnimationComponent());
 	}
 
+	public static void addDefaultCollision(final Class ignoredClass, final Entity2D entity, final double radius,
+			final double health) {
+		entity.addComponent(new CollisionComponent(ignoredClass, radius));
+		entity.addComponent(new SimpleHealthComponent(health));
+		entity.addComponent(new KillAnimationComponent());
+	}
+
 	/**
 	 * {@link ComponentFactory#addDefaultCollision(Entity2D, double, double, Entity2D)}
 	 * 

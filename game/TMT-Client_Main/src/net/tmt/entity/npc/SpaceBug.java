@@ -38,6 +38,7 @@ public class SpaceBug extends PlanetCreature {
 		addComponent(new AnimatedRenderComponent(aniSprites, 0.5));
 		ComponentFactory.addDefaultMove(this, 0, normalSpeed, ROTATION_SPEED);
 		addComponent(new Move2TargetComponent(1));
+		ComponentFactory.addDefaultCollision(SpaceBug.class, this, 20, 25);
 	}
 
 	@Override

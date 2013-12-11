@@ -17,6 +17,7 @@ public class CollisionComponent extends Component {
 
 	private double				radius;
 	private Entity2D			ignoredEntity;
+	private Class				ignoredClass;
 	private Class<?>			collidableEntity	= null;
 	private boolean				isCollision;
 	private List<Entity2D>		collisonEntities	= new ArrayList<>();
@@ -24,6 +25,11 @@ public class CollisionComponent extends Component {
 	public CollisionComponent(final double radius, final Entity2D ignoredEntity) {
 		this.radius = radius;
 		this.ignoredEntity = ignoredEntity;
+	}
+
+	public CollisionComponent(final Class ignoredClass, final double radius) {
+		this.radius = radius;
+		this.ignoredClass = ignoredClass;
 	}
 
 	public CollisionComponent(final double radius) {
@@ -62,6 +68,8 @@ public class CollisionComponent extends Component {
 					continue;
 				// don't collide with ignored entity
 				if (collidableEntity == null && e == ignoredEntity)
+					continue;
+				if (collidableEntity == null && e.getClass() == ignoredClass)
 					continue;
 
 				double radius2 = e.getCollisionComponent().getRadius();

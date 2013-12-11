@@ -3,7 +3,6 @@ package net.tmt.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.tmt.entity.component.collision.CollisionComponent;
 import net.tmt.entity.component.move.MoveComponent;
 import net.tmt.entity.component.move.RotateComponent;
 import net.tmt.entity.component.other.AnimatedRenderComponent;
@@ -44,11 +43,11 @@ public class Hero extends Entity2D implements Playable {
 		aniRenCom.setPauseFrame(new Sprite("hero_stand"));
 		addComponent(aniRenCom);
 		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
-		addComponent(new CollisionComponent(10));
+		ComponentFactory.addDefaultCollision(this, 10, 9999);
 	}
 
 	@Override
-	public void update(final EntityManager caller, World world, final double delta) {
+	public void update(final EntityManager caller, final World world, final double delta) {
 		// FIXME: MoveComponent's speed is always 0?
 		// context: moving should be set based on current speed instead of
 		// keyboard input

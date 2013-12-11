@@ -11,6 +11,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gui.PlanetGui;
 import net.tmt.map.PlanetMap;
 import net.tmt.util.ColorUtil;
+import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class PlanetGamestate extends AbstractGamestate {
@@ -31,8 +32,12 @@ public class PlanetGamestate extends AbstractGamestate {
 		entityManager.addEntity(bp);
 		GlowingStuff gs = new GlowingStuff(new Vector2d(GameEngine.WIDTH / 2 - 140, GameEngine.HEIGHT / 2 - 140));
 		entityManager.addEntity(gs);
-		SpaceBug sb = new SpaceBug(new Vector2d(GameEngine.WIDTH / 2 + 140, GameEngine.HEIGHT / 2 + 140), 100, hero);
-		entityManager.addEntity(sb);
+		for (int i = 0; i < 20; i++) {
+			int x = RandomUtil.intRange(-250, 250);
+			int y = RandomUtil.intRange(-250, 250);
+			SpaceBug sb = new SpaceBug(new Vector2d(GameEngine.WIDTH / 2 + x, GameEngine.HEIGHT / 2 + y), 100, hero);
+			entityManager.addEntity(sb);
+		}
 		Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340, GameEngine.HEIGHT / 2 - 340), 100, hero);
 		entityManager.addEntity(rnr);
 	}

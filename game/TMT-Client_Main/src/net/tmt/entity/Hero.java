@@ -95,7 +95,7 @@ public class Hero extends Entity2D implements Playable {
 			if (e instanceof BackPack)
 				bp = (BackPack) e;
 		}
-		if (bp == null)
+		if (bp == null || bp.isFull())
 			return;
 		bp.packItem(holding);
 		holding.getComponent(PickUpComponent.class).getPacked();
@@ -163,6 +163,10 @@ public class Hero extends Entity2D implements Playable {
 
 	public void wear(final Entity2D e) {
 		wearing.add(e);
+	}
+
+	public boolean holdsSomething() {
+		return !(holding == null);
 	}
 
 	private void checkHolding() {

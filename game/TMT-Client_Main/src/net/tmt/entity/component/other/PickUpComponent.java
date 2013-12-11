@@ -85,11 +85,14 @@ public class PickUpComponent extends Component {
 					for (Entity2D e : ce) {
 						// TODO: maybe implement an AbleToPickUp interface
 						if (e instanceof Hero) {
-							itemHolder = e;
-							if (wearable)
-								((Hero) e).wear(caller.getOwner());
-							else
-								((Hero) e).hold(caller.getOwner());
+							Hero h = (Hero) e;
+							if (!h.holdsSomething()) {
+								itemHolder = e;
+								if (wearable)
+									((Hero) e).wear(caller.getOwner());
+								else
+									((Hero) e).hold(caller.getOwner());
+							}
 						}
 					}
 				}

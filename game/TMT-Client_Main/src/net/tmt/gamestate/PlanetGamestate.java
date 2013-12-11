@@ -1,10 +1,10 @@
 package net.tmt.gamestate;
 
 import net.tmt.entity.Hero;
-import net.tmt.entity.npc.Runner;
 import net.tmt.entity.npc.SpaceBug;
 import net.tmt.entity.pickups.BackPack;
 import net.tmt.entity.pickups.GlowingStuff;
+import net.tmt.entity.pickups.MoneyBundle;
 import net.tmt.entity.statics.Planet;
 import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.game.GameEngine;
@@ -42,8 +42,11 @@ public class PlanetGamestate extends AbstractGamestate {
 			SpaceBug sb = new SpaceBug(new Vector2d(GameEngine.WIDTH / 2 + x, GameEngine.HEIGHT / 2 + y), 100, hero);
 			entityManager.addEntity(sb);
 		}
-		Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340, GameEngine.HEIGHT / 2 - 340), 100, hero);
-		entityManager.addEntity(rnr);
+		// Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340,
+		// GameEngine.HEIGHT / 2 - 340), 100, hero);
+		// entityManager.addEntity(rnr);
+		MoneyBundle mb = new MoneyBundle(new Vector2d(GameEngine.WIDTH / 2 - 340, GameEngine.HEIGHT / 2 - 340));
+		entityManager.addEntity(mb);
 
 		MissionManager missionManager = MissionManager.getInstance();
 

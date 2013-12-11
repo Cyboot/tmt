@@ -7,6 +7,7 @@ import net.tmt.entity.pickups.BackPack;
 import net.tmt.entity.pickups.GlowingStuff;
 import net.tmt.entity.statics.Planet;
 import net.tmt.entity.statics.area.MissionAreaOffer;
+import net.tmt.entity.weapons.Weapon;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.BugMission;
@@ -35,7 +36,9 @@ public class PlanetGamestate extends AbstractGamestate {
 		BackPack bp = new BackPack(new Vector2d(GameEngine.WIDTH / 2 - 40, GameEngine.HEIGHT / 2 - 40));
 		entityManager.addEntity(bp);
 		GlowingStuff gs = new GlowingStuff(new Vector2d(GameEngine.WIDTH / 2 - 140, GameEngine.HEIGHT / 2 - 140));
+		Weapon weapon = new Weapon(new Vector2d(GameEngine.WIDTH / 2 - 120, GameEngine.HEIGHT / 2 - 120));
 		entityManager.addEntity(gs);
+		entityManager.addEntity(weapon);
 		for (int i = 0; i < 20; i++) {
 			int x = RandomUtil.intRange(-250, 250);
 			int y = RandomUtil.intRange(-250, 250);

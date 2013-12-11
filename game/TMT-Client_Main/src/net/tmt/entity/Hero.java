@@ -11,6 +11,7 @@ import net.tmt.entity.pickups.BackPack;
 import net.tmt.game.Controls;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
+import net.tmt.game.interfaces.UserableByHolder;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
@@ -31,6 +32,7 @@ public class Hero extends Entity2D implements Playable {
 	private CountdownTimer			sprintingTimer		= CountdownTimer.createManualResetTimer(5);
 	private CountdownTimer			catchBreathTimer	= CountdownTimer.createManualResetTimer(15);
 	private CountdownTimer			uppackThrowTimer	= CountdownTimer.createManualResetTimer(0.2);
+
 
 	public Hero(final Vector2d pos) {
 		super(pos);
@@ -84,6 +86,19 @@ public class Hero extends Entity2D implements Playable {
 			packHoldingItem();
 		if (Controls.pressed(Controls.HERO_UNPACK))
 			unpackItem(delta);
+
+
+		if (Controls.pressed(Controls.MOUSE_RIGHT)) {
+			if (holding != null && holding instanceof UserableByHolder) {
+				((UserableByHolder) holding).action2();
+			}
+		}
+
+		if (Controls.pressed(Controls.MOUSE_MIDDLE)) {
+			if (holding != null && holding instanceof UserableByHolder) {
+				((UserableByHolder) holding).action3();
+			}
+		}
 
 	}
 
@@ -159,6 +174,7 @@ public class Hero extends Entity2D implements Playable {
 
 	public void hold(final Entity2D e) {
 		holding = e;
+
 	}
 
 	public void wear(final Entity2D e) {

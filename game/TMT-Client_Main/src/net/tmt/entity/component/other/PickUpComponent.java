@@ -13,10 +13,12 @@ import net.tmt.util.Vector2d;
 
 public class PickUpComponent extends Component {
 
-	private Entity2D		itemHolder;
-	private Vector2d		relativePos;
-	private boolean			wearable;
-	private CountdownTimer	thrownTimer	= CountdownTimer.createManualResetTimer(1.5);
+	public static final String	ITEM_HOLDER	= "ITEM_HOLDER";
+
+	private Entity2D			itemHolder;
+	private Vector2d			relativePos;
+	private boolean				wearable;
+	private CountdownTimer		thrownTimer	= CountdownTimer.createManualResetTimer(1.5);
 
 	public PickUpComponent(final Vector2d relativePos, final boolean wearable) {
 		this.relativePos = relativePos;
@@ -32,6 +34,8 @@ public class PickUpComponent extends Component {
 		} else {
 			updatePosition(caller);
 		}
+
+		caller.dispatch(ITEM_HOLDER, itemHolder);
 	}
 
 	private RenderComponent getRenderer() {

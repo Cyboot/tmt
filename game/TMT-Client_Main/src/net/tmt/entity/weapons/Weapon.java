@@ -8,16 +8,18 @@ import net.tmt.game.interfaces.UserableByHolder;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
+import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
 
 public class Weapon extends Entity2D implements UserableByHolder {
 
+	CountdownTimer	timerShoot			= new CountdownTimer(0.4);
 
-	boolean	isAction1Performed	= false;
-	boolean	isAction2Performed	= false;
-	boolean	isAction3Performed	= false;
+	boolean			isAction1Performed	= false;
+	boolean			isAction2Performed	= false;
+	boolean			isAction3Performed	= false;
 
 	public Weapon(final Vector2d pos) {
 		super(pos);
@@ -34,9 +36,11 @@ public class Weapon extends Entity2D implements UserableByHolder {
 		if (isAction1Performed) {
 
 		}
-		if (isAction2Performed) {
+		if (timerShoot.isTimeUp(delta) && isAction2Performed) {
+
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					Color.CYAN, (Entity2D) getValue(PickUpComponent.ITEM_HOLDER)));
+
 
 		}
 		if (isAction3Performed) {

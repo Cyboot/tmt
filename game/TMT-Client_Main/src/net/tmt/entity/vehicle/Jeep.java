@@ -3,7 +3,9 @@ package net.tmt.entity.vehicle;
 import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.game.Controls;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
+import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
 public class Jeep extends Vehicle {
@@ -20,13 +22,19 @@ public class Jeep extends Vehicle {
 	}
 
 	@Override
+	public void update(final EntityManager caller, final World world, final double delta) {
+		dispatchValue(MoveComponent.SPEED, speed);
+		super.update(caller, world, delta);
+		speed *= 1 - friction * delta;
+	}
+
+	@Override
 	protected void onDrive(final double delta) {
 		if (Controls.pressed(Controls.HERO_UP)) {
-			speed += 250 * delta;
+			speed += 350 * delta;
 		} else if (Controls.pressed(Controls.HERO_DOWN)) {
-			speed -= 250 * delta;
-		} else
-			speed *= 1 - friction * delta;
+			speed -= 350 * delta;
+		}
 
 		if (speed > MAX_SPEED)
 			speed = MAX_SPEED;
@@ -40,6 +48,5 @@ public class Jeep extends Vehicle {
 			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
 		}
 
-		dispatchValue(MoveComponent.SPEED, speed);
 	}
 }

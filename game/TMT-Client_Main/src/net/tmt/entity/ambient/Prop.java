@@ -16,7 +16,7 @@ import net.tmt.util.Vector2d;
  */
 public class Prop extends Entity2D {
 	public static enum Type {
-		SPACEROCK, SUN, NEBULA, DEBRIS;
+		SPACEROCK, SUN, NEBULA, DEBRIS, TREE, DECAL;
 	}
 
 	private boolean	rotateLeft;
@@ -45,15 +45,16 @@ public class Prop extends Entity2D {
 	}
 
 
-	public static Entity2D createPropGeneric(final Vector2d pos, final Sprite sprite) {
+	public static Prop createPropGeneric(final Vector2d pos, final Sprite sprite) {
 		Prop result = new Prop(pos);
 		result.setSprite(sprite);
 		return result;
 	}
 
-	public static Entity2D createProp(final Type type, final Vector2d pos) {
+	public static Prop createProp(final Type type, final Vector2d pos) {
 		Prop result = new Prop(pos);
 
+		int size = 0;
 		switch (type) {
 		case SPACEROCK:
 			result.setSprite(new Sprite("spacerock_64"));
@@ -68,6 +69,14 @@ public class Prop extends Entity2D {
 			break;
 		case DEBRIS:
 			result.setSprite(new Sprite("debris_default"));
+			break;
+		case TREE:
+			size = RandomUtil.intRange(32, 128);
+			result.setSprite(new Sprite("tree_1", size, size));
+			break;
+		case DECAL:
+			size = RandomUtil.intRange(32, 128);
+			result.setSprite(new Sprite("decal_sand_1", size, size));
 			break;
 		default:
 			break;

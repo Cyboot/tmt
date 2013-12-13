@@ -55,12 +55,12 @@ public class World implements Updateable, Renderable {
 		// 1/6 from center --> 1/12 for both sides
 		double factor = 1 / 12.;
 		double BORDER_WIDTH = ZoomManager.getWidthZoomed() * factor;
-		double BORDER_HEIGHT = ZoomManager.getHeightZoomed() * factor;
+		double BORDER_HEIGHT = ZoomManager.getHeightZoomed() * factor * GameEngine.HEIGHT / GameEngine.WIDTH;
 
 
 		if (Math.abs(dx) > BORDER_WIDTH) {
 			double movefactor = (Math.abs(dx) - BORDER_WIDTH) / BORDER_WIDTH;
-			movefactor = Math.pow(movefactor, 3);
+			movefactor = Math.min(Math.pow(movefactor, 3), 3);
 
 			if (dx > 0)
 				offset.x -= movefactor * delta;
@@ -70,10 +70,7 @@ public class World implements Updateable, Renderable {
 
 		if (Math.abs(dy) > BORDER_HEIGHT) {
 			double movefactor = (Math.abs(dy) - BORDER_HEIGHT) / BORDER_HEIGHT;
-			movefactor = Math.pow(movefactor, 2);
-
-			if (movefactor > 2)
-				System.out.println(movefactor);
+			movefactor = Math.min(Math.pow(movefactor, 3), 3);
 
 			if (dy > 0)
 				offset.y -= movefactor * delta;

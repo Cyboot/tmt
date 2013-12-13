@@ -11,6 +11,7 @@ import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.entity.vehicle.Jeep;
 import net.tmt.entity.weapons.Weapon;
 import net.tmt.game.GameEngine;
+import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.BugMission;
 import net.tmt.global.mission.EnterSpaceMission;
@@ -30,7 +31,7 @@ public class PlanetGamestate extends AbstractGamestate {
 	public PlanetGamestate(final Planet planet) {
 		super(new PlanetMap(planet));
 		setPlayer(hero);
-		entityManager.addEntity(hero);
+		entityManager.addEntity(hero, EntityManager.LAYER_3_FRONT);
 		this.planet = planet;
 
 		// DEBUG: debug items
@@ -96,6 +97,9 @@ public class PlanetGamestate extends AbstractGamestate {
 		MissionAreaOffer missionArea = new MissionAreaOffer(landingVehicle.getPos().copy(), spaceMission, 128);
 
 		missionManager.registerArea(missionArea);
+
+		if (hero != null)
+			hero.getPos().set(landingVehicle.getPos());
 	}
 
 	public Planet getPlanet() {

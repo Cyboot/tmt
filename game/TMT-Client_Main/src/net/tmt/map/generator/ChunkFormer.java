@@ -1,13 +1,15 @@
 package net.tmt.map.generator;
 
+import net.tmt.entity.ambient.Prop;
+import net.tmt.entity.ambient.Prop.Type;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
 import net.tmt.map.PlanetChunk;
 import net.tmt.map.PlanetMap;
-import net.tmt.map.Terrain;
 import net.tmt.map.WorldMap;
 import net.tmt.util.RandomUtil;
+import net.tmt.util.Vector2d;
 
 class ChunkFormer {
 
@@ -25,32 +27,38 @@ class ChunkFormer {
 		RandomUtil.setSeed(coord.hashCode() ^ map.hashCode());
 
 		PlanetChunk chunk = null;
-		if (RandomUtil.randBoolean(0.75)) {
-			chunk = new PlanetChunk(coord, map.getBaseTerrain(), map.getChunkSize());
-		} else {
-			int chance = RandomUtil.intRange(0, 5);
-			switch (chance) {
-			case 0:
-				chunk = new PlanetChunk(coord, Terrain.PLANET_GRASS, map.getChunkSize());
-				break;
-			case 1:
-				chunk = new PlanetChunk(coord, Terrain.PLANET_WATER, map.getChunkSize());
-				break;
-			case 2:
-				chunk = new PlanetChunk(coord, Terrain.PLANET_DESERT, map.getChunkSize());
-				break;
-			case 3:
-				chunk = new PlanetChunk(coord, Terrain.PLANET_SNOW, map.getChunkSize());
-				break;
-			case 4:
-				chunk = new PlanetChunk(coord, Terrain.PLANET_FOREST, map.getChunkSize());
-				break;
-			case 5:
-				chunk = new PlanetChunk(coord, Terrain.PLANET_SWAMP, map.getChunkSize());
-				break;
-			}
-		}
+		chunk = new PlanetChunk(coord, map.getBaseTerrain(), map.getChunkSize());
+
+		addTrees(chunk, entityManager, map.getChunkSize());
+		addDecals(chunk, entityManager, map.getChunkSize());
+
 		return chunk;
+	}
+
+	private static void addDecals(final PlanetChunk chunk, final EntityManager entityManager, final int chunkSize) {
+		Vector2d centerPos = chunk.getCoord().center2pos(chunkSize);
+		for (int i = 0; i < RandomUtil.intRange(0, 2); i++) {
+
+			Vector2d pos = centerPos.copy();
+			pos.x += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
+			pos.y += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
+
+			Prop decal = Prop.createProp(Type.DECAL, pos);
+			entityManager.addEntity(decal, EntityManager.LAYER_1_BACK);
+		}
+	}
+
+	private static void addTrees(final Chunk chunk, final EntityManager entityManager, final int chunkSize) {
+		Vector2d centerPos = chunk.getCoord().center2pos(chunkSize);
+		for (int i = 0; i < RandomUtil.intRange(0, 2); i++) {
+
+			Vector2d pos = centerPos.copy();
+			pos.x += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
+			pos.y += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
+
+			Prop tree = Prop.createProp(Type.TREE, pos);
+			entityManager.addEntity(tree);
+		}
 	}
 
 }

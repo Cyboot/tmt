@@ -229,7 +229,7 @@ public class Graphics {
 		glPushMatrix();
 		{
 			applyOffset();
-			font.drawString((float) x, (float) y, text, slickColor);
+			font.drawString((int) x, (int) y, text, slickColor);
 		}
 		glPopMatrix();
 	}

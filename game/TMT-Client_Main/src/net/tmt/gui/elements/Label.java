@@ -5,9 +5,10 @@ import net.tmt.util.Vector2d;
 import org.newdawn.slick.TrueTypeFont;
 
 public class Label extends TextView {
+	private static final int	PADDING	= 2;
 
 	public Label(final Vector2d pos, final String text, final boolean hasBorder) {
-		super(pos, 0, 0, 0);
+		super(pos, 0, 0, PADDING);
 
 		setText(text);
 
@@ -18,8 +19,8 @@ public class Label extends TextView {
 
 	@Override
 	public void setText(final String text) {
-		width = font.getWidth(text);
-		height = font.getHeight();
+		width = font.getWidth(text) + PADDING;
+		height = font.getHeight() + PADDING;
 		super.setText(text);
 	}
 

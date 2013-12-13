@@ -40,7 +40,7 @@ public class CountdownTimer {
 	 *         next call)
 	 */
 	public double getTimeleftRatio() {
-		return timer / timeleftIntervall;
+		return 1 - timer / timeleftIntervall;
 	}
 
 	/**

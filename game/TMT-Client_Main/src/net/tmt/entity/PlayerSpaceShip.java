@@ -45,7 +45,7 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		setSprite(new Sprite("ship_back_64"));
 
 		addComponent(new RotateComponent(0, ROTATION_SPEED));
-		addComponent(new PlayerMoveComponent());
+		addComponent(new PlayerMoveComponent(450, 0.4, 2500));
 		addComponent(new ShieldComponent(80, ShieldComponent.COLOR_YELLOW));
 
 		addComponent(new OnHoverComponent());

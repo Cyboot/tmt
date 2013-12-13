@@ -55,6 +55,7 @@ public class Prop extends Entity2D {
 		Prop result = new Prop(pos);
 
 		int size = 0;
+		double rotation = 0;
 		switch (type) {
 		case SPACEROCK:
 			result.setSprite(new Sprite("spacerock_64"));
@@ -72,11 +73,12 @@ public class Prop extends Entity2D {
 			break;
 		case TREE:
 			size = RandomUtil.intRange(32, 128);
-			result.setSprite(new Sprite("tree_1", size, size));
+			result.setSprite(new Sprite("tree_3", size, size));
 			break;
 		case DECAL:
 			size = RandomUtil.intRange(32, 128);
-			result.setSprite(new Sprite("decal_sand_1", size, size));
+			rotation = RandomUtil.doubleRange(0, 360);
+			result.setSprite(new Sprite("decal_sand_1", size, size).setRotation(rotation));
 			break;
 		default:
 			break;

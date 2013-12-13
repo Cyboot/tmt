@@ -45,7 +45,7 @@ public class Hero extends Entity2D implements Playable {
 		aniRenCom.setPauseFrame(new Sprite("hero_stand"));
 		addComponent(aniRenCom);
 		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
-		ComponentFactory.addDefaultCollision(this, 10, 9999);
+		ComponentFactory.addDefaultCollision(this, 10, 999999);
 	}
 
 	@Override

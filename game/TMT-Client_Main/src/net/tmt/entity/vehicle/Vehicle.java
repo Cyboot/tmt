@@ -7,28 +7,40 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
+import net.tmt.game.manager.GuiManager;
+import net.tmt.gui.elements.Label;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
-public abstract class Vehicle extends Entity2D implements Playable {
-	private static final double	ROTATION_SPEED	= 90;
+public abstract class Vehicle extends Entity2D {
+	private static final double	DEFAULT_ROTATION_SPEED	= 90;
+
+	protected boolean			isControlled;
 	private EnterRange			enterRange;
-	private boolean				isInRange		= false;
-	private boolean				isControlled;
+	private boolean				isInRange				= false;
 	private Entity2D			player;
 
-	public Vehicle(final Vector2d pos, final double size) {
+	public Vehicle(final Vector2d pos, final double size, final double rotationSpeed) {
 		super(pos);
 
-		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
-		ComponentFactory.addDefaultCollision(this, size, 9999);
-		enterRange = new EnterRange(getPos(), size * 1.5);
+		ComponentFactory.addDefaultMove(this, 0, 0, rotationSpeed);
+		ComponentFactory.addDefaultCollision(this, size / 2, 9999);
+		enterRange = new EnterRange(getPos(), size * 1.1);
+	}
+
+	public Vehicle(final Vector2d pos, final int size) {
+		this(pos, size, DEFAULT_ROTATION_SPEED);
 	}
 
 	@Override
 	public void update(final EntityManager caller, final World world, final double delta) {
 		isInRange = false;
 		enterRange.update(caller, world, delta);
+		if (isInRange && !isControlled) {
+			GuiManager.getInstance()
+					.setTooltip(Label.createTooltip(world.getVectorOnScreen(pos), "Press 'E' to Enter"));
+		}
+
 
 		if (isControlled) {
 			onDrive(delta);
@@ -55,8 +67,9 @@ public abstract class Vehicle extends Entity2D implements Playable {
 		System.out.println("exit vehicle");
 
 		((Playable) player).enableControls();
-		disableControls();
+		isControlled = false;
 		player = null;
+		onExitVehicle();
 	}
 
 	private void enterVehicle(final Entity2D player) {
@@ -64,17 +77,14 @@ public abstract class Vehicle extends Entity2D implements Playable {
 
 		((Playable) player).disableControls();
 		this.player = player;
-		enableControls();
-	}
-
-	@Override
-	public void disableControls() {
-		isControlled = false;
-	}
-
-	@Override
-	public void enableControls() {
 		isControlled = true;
+		onEnterVehicle(player);
+	}
+
+	protected void onExitVehicle() {
+	}
+
+	protected void onEnterVehicle(final Entity2D player2) {
 	}
 
 	private class EnterRange extends Area {

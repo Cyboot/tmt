@@ -8,6 +8,8 @@ import net.tmt.entity.pickups.GlowingStuff;
 import net.tmt.entity.pickups.MoneyBundle;
 import net.tmt.entity.statics.Planet;
 import net.tmt.entity.statics.area.MissionAreaOffer;
+import net.tmt.entity.vehicle.Boat;
+import net.tmt.entity.vehicle.Helicopter;
 import net.tmt.entity.vehicle.Jeep;
 import net.tmt.entity.weapons.Weapon;
 import net.tmt.game.GameEngine;
@@ -47,7 +49,9 @@ public class PlanetGamestate extends AbstractGamestate {
 			SpaceBug sb = new SpaceBug(new Vector2d(GameEngine.WIDTH / 2 + x, GameEngine.HEIGHT / 2 + y), 100, hero);
 			entityManager.addEntity(sb);
 		}
-		entityManager.addEntity(new Jeep(new Vector2d(300, 300)));
+		entityManager.addEntity(new Jeep(new Vector2d(300, 300)), EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(new Boat(new Vector2d(300, -300)), EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(new Helicopter(new Vector2d(-300, -300)), EntityManager.LAYER_3_FRONT);
 
 		// Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340,
 		// GameEngine.HEIGHT / 2 - 340), 100, hero);

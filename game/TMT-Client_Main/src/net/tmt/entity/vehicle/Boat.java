@@ -6,19 +6,18 @@ import net.tmt.game.Controls;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
-public class Jeep extends Vehicle {
-	private static final int	SIZE		= 64;
+public class Boat extends Vehicle {
+	private static final int	SIZE		= 128;
 	private static final double	MAX_SPEED	= 500;
 	private static final double	ACCL		= 250;
 
-	public Jeep(final Vector2d pos) {
+	public Boat(final Vector2d pos) {
 		super(pos, SIZE);
-		setSprite(new Sprite("jeep", SIZE, SIZE));
+		setSprite(new Sprite("boat", SIZE, SIZE));
 
-		AcceleratingComponent component = new AcceleratingComponent(ACCL, 0.8, MAX_SPEED, true);
+		AcceleratingComponent component = new AcceleratingComponent(ACCL, 0.3, MAX_SPEED, true);
 		addComponent(component);
 	}
-
 
 	@Override
 	protected void onDrive(final double delta) {

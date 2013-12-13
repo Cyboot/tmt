@@ -7,7 +7,7 @@ import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.MissionManager;
-import net.tmt.global.mission.PlanetMission;
+import net.tmt.global.mission.EnterPlanetMission;
 import net.tmt.map.Terrain;
 import net.tmt.map.World;
 import net.tmt.util.PlanetNameUtil;
@@ -39,7 +39,7 @@ public class Planet extends Entity2D {
 		// FIXME: BUG (maybe not here): Planets far away sometimes doesn't have
 		// OfferAreas
 		MissionManager.getInstance().registerArea(
-				new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 2, false));
+				new MissionAreaOffer(getPos(), new EnterPlanetMission(this), radius * 2, false));
 	}
 
 	@Override

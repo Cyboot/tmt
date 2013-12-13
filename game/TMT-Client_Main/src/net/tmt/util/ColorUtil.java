@@ -9,10 +9,13 @@ public class ColorUtil {
 	public static final ReadableColor	BLACK_ALPHA_100		= ColorUtil.blackAlpha(100);
 	public static final ReadableColor	BLACK_ALPHA_150		= ColorUtil.blackAlpha(150);
 	public static final ReadableColor	BLACK_ALPHA_200		= ColorUtil.blackAlpha(200);
+	public static final ReadableColor	BLACK_ALPHA_255		= ColorUtil.blackAlpha(255);
 	public static final ReadableColor	WHITE_ALPHA_50		= ColorUtil.whiteAlpha(50);
 	public static final ReadableColor	WHITE_ALPHA_100		= ColorUtil.whiteAlpha(100);
 	public static final ReadableColor	WHITE_ALPHA_150		= ColorUtil.whiteAlpha(150);
 	public static final ReadableColor	WHITE_ALPHA_200		= ColorUtil.whiteAlpha(200);
+	public static final ReadableColor	WHITE_ALPHA_255		= ColorUtil.whiteAlpha(255);
+
 
 	// primary Color for Gui
 	public static final ReadableColor	GUI_CYAN			= new Color(0, 150, 200);

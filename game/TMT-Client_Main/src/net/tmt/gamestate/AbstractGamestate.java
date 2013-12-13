@@ -1,5 +1,6 @@
 package net.tmt.gamestate;
 
+import net.tmt.entity.Entity2D;
 import net.tmt.game.interfaces.EntityWorldGetter;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.interfaces.Updateable;
@@ -19,6 +20,7 @@ public abstract class AbstractGamestate implements Updateable, Renderable, Entit
 	private int				id			= currentID++;
 	private int				state;
 
+	private Entity2D		player;
 	protected EntityManager	entityManager;
 	protected GameManager	gameManager	= GameManager.getInstance();
 	protected GuiManager	guiManager	= GuiManager.getInstance();
@@ -104,5 +106,15 @@ public abstract class AbstractGamestate implements Updateable, Renderable, Entit
 	@Override
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	public Entity2D getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(final Entity2D player) {
+		this.player = player;
+		if (world != null)
+			world.setPlayer(player);
 	}
 }

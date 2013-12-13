@@ -70,7 +70,7 @@ class MapGeneratorSpace {
 			for (int x = 0; x < MAX_X; x++) {
 				strBuilder.append(charMap[x][y]);
 			}
-			System.out.println(" " + strBuilder.toString());
+			// System.out.println(" " + strBuilder.toString());
 		}
 	}
 

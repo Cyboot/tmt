@@ -2,6 +2,8 @@ package net.tmt.entity.statics.area;
 
 import net.tmt.entity.component.animation.GlowComponent;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.GameManager;
+import net.tmt.gamestate.SpaceGamestate;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.Mission;
@@ -27,7 +29,12 @@ public class MissionAreaOffer extends Area {
 				setSprite(new Sprite("mission_offer_512", (int) radius * 2, (int) radius * 2));
 			else
 				setSprite(new Sprite("mission_offer_128", (int) radius * 2, (int) radius * 2));
-			addComponent(new GlowComponent((Color) ColorUtil.WHITE_ALPHA_100, (Color) ColorUtil.WHITE_ALPHA_50, 1.5));
+
+			if (GameManager.getInstance().getActiveGamestate() instanceof SpaceGamestate)
+				addComponent(new GlowComponent((Color) ColorUtil.WHITE_ALPHA_100, (Color) ColorUtil.WHITE_ALPHA_50, 1.5));
+			else
+				addComponent(new GlowComponent((Color) ColorUtil.WHITE_ALPHA_200, (Color) ColorUtil.WHITE_ALPHA_150,
+						1.5));
 		}
 	}
 

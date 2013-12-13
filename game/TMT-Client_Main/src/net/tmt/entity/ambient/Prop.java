@@ -45,6 +45,12 @@ public class Prop extends Entity2D {
 	}
 
 
+	public static Entity2D createPropGeneric(final Vector2d pos, final Sprite sprite) {
+		Prop result = new Prop(pos);
+		result.setSprite(sprite);
+		return result;
+	}
+
 	public static Entity2D createProp(final Type type, final Vector2d pos) {
 		Prop result = new Prop(pos);
 

@@ -6,6 +6,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.global.Money;
 import net.tmt.global.RPLevel;
 import net.tmt.gui.DummyGui;
+import net.tmt.map.SpaceMap;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -16,7 +17,7 @@ public class DummyGamestate extends AbstractGamestate {
 
 
 	private DummyGamestate() {
-		super(null);
+		super(new SpaceMap());
 		Vector2d center = new Vector2d(500, 300);
 
 

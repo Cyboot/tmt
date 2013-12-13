@@ -59,7 +59,7 @@ public class GameStateToolbar extends ContainerElement implements ClickListener 
 			gameManager.resume(SimulatorGamestate.getInstance().getId());
 			break;
 		case "planet":
-			System.out.println("not working yet");
+			System.out.println("not working");
 			break;
 		case "economy":
 			gameManager.resume(EconomyGamestate.getInstance().getId());

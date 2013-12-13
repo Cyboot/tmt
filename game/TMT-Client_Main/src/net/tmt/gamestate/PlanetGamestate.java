@@ -1,5 +1,6 @@
 package net.tmt.gamestate;
 
+import net.tmt.entity.Entity2D;
 import net.tmt.entity.Hero;
 import net.tmt.entity.npc.SpaceBug;
 import net.tmt.entity.pickups.BackPack;
@@ -11,6 +12,7 @@ import net.tmt.entity.weapons.Weapon;
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.BugMission;
+import net.tmt.global.mission.EnterSpaceMission;
 import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.MissionManager;
 import net.tmt.gui.PlanetGui;
@@ -22,15 +24,14 @@ import net.tmt.util.Vector2d;
 public class PlanetGamestate extends AbstractGamestate {
 	private Planet	planet;
 
-	private Hero	hero;
+	private Hero	hero	= new Hero(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 
 	public PlanetGamestate(final Planet planet) {
 		super(new PlanetMap(planet));
+		setPlayer(hero);
+		entityManager.addEntity(hero);
 		this.planet = planet;
 
-		hero = new Hero(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
-		world.setPlayer(hero);
-		entityManager.addEntity(hero);
 
 		// DEBUG: debug items
 		BackPack bp = new BackPack(new Vector2d(GameEngine.WIDTH / 2 - 40, GameEngine.HEIGHT / 2 - 40));
@@ -54,7 +55,7 @@ public class PlanetGamestate extends AbstractGamestate {
 		MissionManager missionManager = MissionManager.getInstance();
 
 		Mission bugMission = new BugMission();
-		MissionAreaOffer missionArea = new MissionAreaOffer(new Vector2d(), bugMission, 128);
+		MissionAreaOffer missionArea = new MissionAreaOffer(new Vector2d(200, 200), bugMission, 128);
 
 		missionManager.registerArea(missionArea);
 	}
@@ -77,6 +78,22 @@ public class PlanetGamestate extends AbstractGamestate {
 		g.onGui().fillRect(0, 0, GameEngine.WIDTH, GameEngine.HEIGHT);
 
 		entityManager.render(g);
+	}
+
+	/**
+	 * set the landing Vehicle, it will be displayed in PlanetMap and will be
+	 * the way back to space
+	 * 
+	 * @param landingVehicle
+	 */
+	public void setLandingVehicle(final Entity2D landingVehicle) {
+		entityManager.addEntity(landingVehicle);
+
+		MissionManager missionManager = MissionManager.getInstance();
+		Mission spaceMission = new EnterSpaceMission();
+		MissionAreaOffer missionArea = new MissionAreaOffer(landingVehicle.getPos().copy(), spaceMission, 128);
+
+		missionManager.registerArea(missionArea);
 	}
 
 	public Planet getPlanet() {

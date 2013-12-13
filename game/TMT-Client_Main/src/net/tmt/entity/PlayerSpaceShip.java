@@ -12,7 +12,6 @@ import net.tmt.entity.component.other.ShieldComponent;
 import net.tmt.entity.component.other.TargetSearchComponent;
 import net.tmt.entity.weapons.LaserShoot;
 import net.tmt.game.Controls;
-import net.tmt.game.GameEngine;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
@@ -40,8 +39,8 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 	private boolean			shieldToggle;
 	private boolean			mainEngineToggle;
 
-	public PlayerSpaceShip() {
-		super(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
+	public PlayerSpaceShip(final Vector2d pos) {
+		super(pos);
 		setSprite(new Sprite("ship_back_64"));
 
 		addComponent(new RotateComponent(0, ROTATION_SPEED));

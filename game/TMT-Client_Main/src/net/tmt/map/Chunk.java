@@ -2,60 +2,53 @@ package net.tmt.map;
 
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.gfx.Graphics;
-import net.tmt.util.ColorUtil;
 import net.tmt.util.DebugUtil;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
-
 
 public class Chunk implements Renderable {
-	public Terrain			terrain;
-	public int				size;
-	private Coordinate		coord;
+	public Terrain		terrain;
+	public int			size;
+	private Coordinate	coord;
 
-	private ReadableColor	color;
-	private boolean			empty;
+	private boolean		empty;
 
 	public Chunk(final Coordinate coord, final Terrain terrain, final int size) {
 		this.coord = new Coordinate(coord.x, coord.y);
 		this.terrain = terrain;
-
-		switch (terrain) {
-		case SPACE_VOID:
-			color = Color.WHITE;
-			break;
-		case SPACE_NEBULA:
-			color = Color.BLUE;
-			break;
-		case SPACE_ASTEROIDS_BELT:
-			color = Color.RED;
-			break;
-		case SPACE_ASTEROIDS_FLOATING:
-			color = Color.ORANGE;
-			break;
-		case SPACE_PLANET:
-			color = Color.GREEN;
-			break;
-		case SPACE_DEBRIS:
-			color = Color.PURPLE;
-			break;
-		default:
-			color = ColorUtil.TRANSPARENT;
-		}
-
 		this.size = size;
 	}
 
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(color);
 		g.drawSprite(Vector2d.tmp1.set(getCoord().x * size, getCoord().y * size), terrain.getSprite());
 
 		if (DebugUtil.renderCollision) {
-			g.setColor(Color.YELLOW);
+			switch (terrain) {
+			case SPACE_ASTEROID:
+				g.setColor(Color.GREY);
+				break;
+			case SPACE_SUN:
+				g.setColor(Color.YELLOW);
+				break;
+			case SPACE_BLACKHOLE:
+				g.setColor(Color.DKGREY);
+				break;
+			case SPACE_DEBRIS:
+				g.setColor(Color.ORANGE);
+				break;
+			case SPACE_MINEFIELD:
+				g.setColor(Color.RED);
+				break;
+			case SPACE_NEBULA:
+				g.setColor(Color.GREEN);
+				break;
+			default:
+				g.setColor(Color.YELLOW);
+				break;
+			}
 			g.drawRect(coord.x * size + 4, coord.y * size + 4, size - 8, size - 8);
 		}
 	}
@@ -64,6 +57,9 @@ public class Chunk implements Renderable {
 		return coord;
 	}
 
+	public Terrain getTerrain() {
+		return terrain;
+	}
 
 	public boolean freeToBuild() {
 		return empty;

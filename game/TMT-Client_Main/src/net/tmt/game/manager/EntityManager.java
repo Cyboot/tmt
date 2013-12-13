@@ -26,6 +26,8 @@ import net.tmt.util.Vector2d;
  */
 public class EntityManager implements Renderable {
 	private static final int				GRID_SIZE			= 2048;
+
+
 	public static final int					LAYER_0_FAR_BACK	= 0;
 	public static final int					LAYER_1_BACK		= 1;
 	public static final int					LAYER_2_MEDIUM		= 2;				// default
@@ -37,6 +39,11 @@ public class EntityManager implements Renderable {
 
 	private AddRemove						addremove			= new AddRemove();
 	private Collision						collision			= new Collision();
+	private Vector2d						worldOffset;
+
+	private double							renderDistance;
+	private double							updateDistance;
+	private int								visibleEntities;
 
 	public EntityManager() {
 		// Init Entitymap
@@ -48,12 +55,24 @@ public class EntityManager implements Renderable {
 	}
 
 	public void update(final World world, final double delta) {
+		worldOffset = world.getOffset().copy();
+
+		double w = ZoomManager.getWidthZoomed();
+		double h = ZoomManager.getHeightZoomed();
+		renderDistance = Math.sqrt(w * w + h * h) + 512;
+		updateDistance = Math.max(world.getMap().getChunkSize() * 5, renderDistance * 2);
+
 		for (Entry<Integer, List<Entity2D>> entry : entityMap.entrySet()) {
 			Integer key = entry.getKey();
 			List<Entity2D> list = entry.getValue();
 
 			Vector2d tmp = new Vector2d();
 			for (Entity2D e : list) {
+				// don't update entities far way
+				Vector2d pos = e.getPos();
+				if (pos.distanceTo(worldOffset) > updateDistance)
+					continue;
+
 				if (e.isAlive()) {
 					tmp.set(e.getPos());
 					e.update(this, world, delta);
@@ -69,11 +88,13 @@ public class EntityManager implements Renderable {
 
 	@Override
 	public void render(final Graphics g) {
+		visibleEntities = 0;
 		renderLayer(LAYER_0_FAR_BACK, g);
 		renderLayer(LAYER_1_BACK, g);
 		renderLayer(LAYER_2_MEDIUM, g);
 		renderLayer(LAYER_3_FRONT, g);
 		renderLayer(LAYER_4_GUI, g);
+		GuiManager.getInstance().dispatch(Gui.DEBUG_INFO_4, "Visible Entities: " + visibleEntities);
 
 		// manages the addition and removal of entities
 		// must be called here in end of render() to make sure entitiy.update()
@@ -83,7 +104,13 @@ public class EntityManager implements Renderable {
 
 	private void renderLayer(final int layer, final Graphics g) {
 		for (Entity2D e : entityMap.get(layer)) {
+			// don't render entities far way
+			Vector2d pos = e.getPos();
+			if (pos.distanceTo(worldOffset) > renderDistance)
+				continue;
+
 			e.render(g);
+			visibleEntities++;
 		}
 	}
 

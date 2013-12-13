@@ -9,7 +9,7 @@ public class RandomUtil {
 	 * the seed for the Space and Planetmaps (working like in Minecraft). same
 	 * seed produces the same maps every time
 	 */
-	public static final int	SEED	= 13;
+	public static final int	SEED	= 42;
 
 	private static Random	random	= new Random(SEED);
 
@@ -62,7 +62,7 @@ public class RandomUtil {
 	public static void setSeed(final int seed) {
 		messageDigest.update(String.valueOf(seed).getBytes());
 		int hashedSeed = new String(messageDigest.digest()).hashCode();
-		random.setSeed(hashedSeed);
+		random.setSeed(hashedSeed ^ SEED);
 	}
 
 	public static MessageDigest	messageDigest;

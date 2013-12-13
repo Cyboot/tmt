@@ -1,7 +1,9 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.game.GameEngine;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
@@ -12,9 +14,13 @@ public class BackgroundBody extends Entity2D {
 	private Sprite		sprite;
 
 	private Vector2d	offset;
+	private double		imageSize;
+	private int			backgroundFactor;
 
-	public BackgroundBody(final Vector2d pos) {
+	public BackgroundBody(final Vector2d pos, final int backgroundFactor) {
 		super(pos);
+
+		this.backgroundFactor = backgroundFactor;
 
 		switch (RandomUtil.intRange(0, 3)) {
 		case 0:
@@ -31,6 +37,7 @@ public class BackgroundBody extends Entity2D {
 			break;
 		}
 		sprite.setAlpha(75);
+		imageSize = sprite.getWidth();
 
 		removeAllComponents();
 	}
@@ -42,9 +49,17 @@ public class BackgroundBody extends Entity2D {
 
 	@Override
 	public void render(final Graphics g) {
-		double x = pos.x - offset.x;
-		double y = pos.y - offset.y;
+		double dx = pos.x - offset.x;
+		double dy = pos.y - offset.y;
+		dx /= backgroundFactor * ZoomManager.getZoomInverse();
+		dy /= backgroundFactor * ZoomManager.getZoomInverse();
 
-		g.onGui().drawSprite(Vector2d.tmp1.set(x / 16, y / 16), sprite);
+		double x = GameEngine.WIDTH / 2 + dx;
+		double y = GameEngine.HEIGHT / 2 + dy;
+
+		sprite.setWidth(ZoomManager.getZoom() * imageSize);
+		sprite.setHeight(ZoomManager.getZoom() * imageSize);
+
+		g.onGui().drawSprite(Vector2d.tmp1.set(x, y), sprite);
 	}
 }

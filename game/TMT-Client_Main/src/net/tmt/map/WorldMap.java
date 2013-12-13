@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
@@ -17,8 +18,10 @@ public abstract class WorldMap implements Renderable {
 
 	private Vector2d					rederOffset;
 	private int							chunkSize;
-	protected Map<Coordinate, Chunk>	chunkMap	= new HashMap<Coordinate, Chunk>();
 	private Terrain						baseTerrain;
+
+	protected Map<Coordinate, Chunk>	chunkMap	= new HashMap<Coordinate, Chunk>();
+
 
 	public void update(final Vector2d offset, final EntityManager entityManager, final double delta) {
 		rederOffset = offset;
@@ -32,8 +35,10 @@ public abstract class WorldMap implements Renderable {
 		Coordinate coord = Coordinate.tmp0.set(rederOffset, chunkSize);
 		Coordinate check = Coordinate.tmp1;
 
-		for (int x = coord.x - renderRadius; x <= coord.x + renderRadius; x++) {
-			for (int y = coord.y - renderRadius; y <= coord.y + renderRadius; y++) {
+		int width = (ZoomManager.getWidthZoomed() / chunkSize / 2) + 1;
+		int heigth = (ZoomManager.getHeightZoomed() / chunkSize / 2) + 1;
+		for (int x = coord.x - width; x <= coord.x + width; x++) {
+			for (int y = coord.y - heigth; y <= coord.y + heigth; y++) {
 				check.set(x, y);
 				if (chunkMap.get(check) != null) {
 					chunkMap.get(check).render(g);
@@ -78,7 +83,7 @@ public abstract class WorldMap implements Renderable {
 
 		if (chunkSize == SpaceMap.CHUNK_SIZE) {
 			preloadRadius = 3;
-			renderRadius = 1;
+			renderRadius = 5;
 		} else if (chunkSize == PlanetMap.CHUNK_SIZE) {
 			preloadRadius = 15;
 			renderRadius = 10;

@@ -28,4 +28,11 @@ public class MoveCircleComponent extends Component {
 		if (angle > 2 * Math.PI)
 			angle -= 2 * Math.PI;
 	}
+
+	@Override
+	public void initialDispatch(final ComponentDispatcher caller) {
+		super.initialDispatch(caller);
+
+		update(null, 0);
+	}
 }

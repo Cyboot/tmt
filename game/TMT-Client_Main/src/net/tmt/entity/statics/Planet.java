@@ -1,6 +1,7 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.component.move.MoveCircleComponent;
 import net.tmt.entity.statics.area.MissionAreaOffer;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.ZoomManager;
@@ -16,31 +17,29 @@ import net.tmt.util.Vector2d;
 import org.lwjgl.util.Color;
 
 public class Planet extends Entity2D {
-	private static int	currID		= 0;
+	private static final double	SPEED		= 100;
 
-	private String		name;
+	private String				name;
 
-	private boolean		isOnScreen	= true;
-	private int			planetId;
-	private int			radius;
-	private Terrain		baseTerrain;
+	private boolean				isOnScreen	= true;
+	private int					radius;
+	private Terrain				baseTerrain;
 
 
-	public Planet(final Vector2d pos, final Terrain baseTerrain, final int radius) {
-		super(pos);
-		planetId = currID++;
+	public Planet(final Terrain baseTerrain, final int radius, final Vector2d sunPos, final double angle,
+			final double distanceFromSun) {
+		super(new Vector2d());
+
 		this.radius = radius;
 		this.baseTerrain = baseTerrain;
 		name = PlanetNameUtil.getPlanetName(pos.hashCode() + RandomUtil.SEED);
+
+		addComponent(new MoveCircleComponent(angle, sunPos, distanceFromSun, SPEED));
 
 		// FIXME: BUG (maybe not here): Planets far away sometimes doesn't have
 		// OfferAreas
 		MissionManager.getInstance().registerArea(
 				new MissionAreaOffer(getPos(), new PlanetMission(this), radius * 2, false));
-	}
-
-	public int getPlanetId() {
-		return planetId;
 	}
 
 	@Override
@@ -82,8 +81,8 @@ public class Planet extends Entity2D {
 		default:
 			break;
 		}
-		g.drawSprite(pos, baseTerrain.getSprite());
-		g.drawCircle(pos.x, pos.y, radius);
+		g.fillCircle(pos.x, pos.y, radius);
+		// g.drawSprite(pos, baseTerrain.getSprite());
 	}
 
 	public int getRadius() {

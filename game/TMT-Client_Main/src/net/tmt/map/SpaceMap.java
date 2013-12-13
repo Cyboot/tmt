@@ -1,20 +1,24 @@
 package net.tmt.map;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.tmt.entity.Entity2D;
-import net.tmt.entity.statics.Waypoint;
-import net.tmt.util.RandomUtil;
+import net.tmt.game.manager.EntityManager;
+import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
-
 
 public class SpaceMap extends WorldMap {
 	public static final int	CHUNK_SIZE	= 2048;
-
 	private static SpaceMap	instance	= null;
 
-	private List<Waypoint>	waypoints	= new ArrayList<>();
+	private boolean			isInit		= false;
+
+	@Override
+	public void update(final Vector2d offset, final EntityManager entityManager, final double delta) {
+		if (!isInit) {
+			MapGenerator.generateSpaceMap(this, entityManager);
+			isInit = true;
+		}
+
+		super.update(offset, entityManager, delta);
+	}
 
 	public static SpaceMap getInstance() {
 		if (instance == null)
@@ -22,34 +26,8 @@ public class SpaceMap extends WorldMap {
 		return instance;
 	}
 
-
 	public SpaceMap() {
 		setChunkSize(CHUNK_SIZE);
 
-		// DEBUG: debug stuff
-		addWaypoint(new Waypoint(new Vector2d(200, 800)));
-		addWaypoint(new Waypoint(new Vector2d(700, 400)));
-		addWaypoint(new Waypoint(new Vector2d(1300, 800)));
-		addWaypoint(new Waypoint(new Vector2d(1400, 200)));
-		addWaypoint(new Waypoint(new Vector2d(500, 100)));
-	}
-
-	private void addWaypoint(final Waypoint waypoint) {
-		waypoints.add(waypoint);
-	}
-
-	/**
-	 * get the next waypoint in list (looping)
-	 * 
-	 * @param waypoint
-	 *            current waypoint
-	 * @return
-	 */
-	public Entity2D getNextWaypoint(final Entity2D waypoint) {
-		int indexOf = 0;
-		indexOf = waypoint == null ? RandomUtil.intRange(-1, waypoints.size() - 1) : waypoints.indexOf(waypoint);
-		indexOf = ++indexOf % waypoints.size();
-
-		return waypoints.get(indexOf);
 	}
 }

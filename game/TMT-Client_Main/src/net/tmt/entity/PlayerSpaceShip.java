@@ -16,7 +16,6 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GuiManager;
-import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.achievments.Achievments;
 import net.tmt.global.stats.Stats;
@@ -39,6 +38,8 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 	private boolean			shieldToggle;
 	private boolean			mainEngineToggle;
 
+	private boolean			isControlled	= true;
+
 	public PlayerSpaceShip(final Vector2d pos) {
 		super(pos);
 		setSprite(new Sprite("ship_back_64"));
@@ -57,23 +58,11 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 	}
 
 	@Override
-	public void render(final Graphics g) {
-		super.render(g);
-
-		// final double TARGET_TIME_TO_CROSS_SCREEN = 10;
-		// double speed = (double) getValue(MoveComponent.SPEED);
-		// double timeToCrossScreen = GameEngine.WIDTH / speed;
-		//
-		// if (timeToCrossScreen < TARGET_TIME_TO_CROSS_SCREEN)
-		// g.setScale(1 / (TARGET_TIME_TO_CROSS_SCREEN / timeToCrossScreen));
-		// else
-		// g.setScale(1);
-	}
-
-	@Override
 	public void update(final EntityManager caller, final World world, final double delta) {
-		updateInput();
-		updateShoot(caller, delta);
+		if (isControlled) {
+			updateInput();
+			updateShoot(caller, delta);
+		}
 
 		updateStats(delta);
 
@@ -156,5 +145,15 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		if (Controls.wasTyped(Controls.WEAPON_PRIMARY)) {
 			dispatchValue(RocketLauncherComponent.LAUNCH_TYPE_1, true);
 		}
+	}
+
+	@Override
+	public void disableControls() {
+		isControlled = false;
+	}
+
+	@Override
+	public void enableControls() {
+		isControlled = true;
 	}
 }

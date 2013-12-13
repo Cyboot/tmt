@@ -13,6 +13,7 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.interfaces.UserableByHolder;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
@@ -27,11 +28,10 @@ public class Hero extends Entity2D implements Playable {
 	private boolean					catchingBreath		= false;
 	private Entity2D				holding;
 	private List<Entity2D>			wearing				= new ArrayList<Entity2D>();
-	private boolean					movingF				= false;
-	private boolean					movingB				= false;
 	private CountdownTimer			sprintingTimer		= CountdownTimer.createManualResetTimer(5);
 	private CountdownTimer			catchBreathTimer	= CountdownTimer.createManualResetTimer(15);
 	private CountdownTimer			uppackThrowTimer	= CountdownTimer.createManualResetTimer(0.2);
+	private boolean					isControlled		= true;
 
 
 	public Hero(final Vector2d pos) {
@@ -50,28 +50,31 @@ public class Hero extends Entity2D implements Playable {
 
 	@Override
 	public void update(final EntityManager caller, final World world, final double delta) {
-		// FIXME: MoveComponent's speed is always 0?
-		// context: moving should be set based on current speed instead of
-		// keyboard input
-		double s = ((double) getValue(MoveComponent.SPEED));
-
-		checkControls(delta);
-		checkHolding();
+		if (isControlled) {
+			checkControls(delta);
+			checkHolding();
+		}
 		setAnimation();
 		super.update(caller, world, delta);
 	}
 
+	@Override
+	public void render(final Graphics g) {
+		// DEBUG: don't render hero if not controlled
+		if (isControlled)
+			super.render(g);
+	}
+
 	private void checkControls(final double delta) {
-		movingF = true;
-		movingB = true;
+		dispatchValue(MoveComponent.SPEED, 0.);
+
 		if (Controls.pressed(Controls.HERO_UP))
 			dispatchValue(MoveComponent.SPEED, speed);
-		else
-			movingF = false;
+
 		if (Controls.pressed(Controls.HERO_DOWN))
 			dispatchValue(MoveComponent.SPEED, -speed);
-		else
-			movingB = false;
+
+
 		if (Controls.pressed(Controls.HERO_LEFT))
 			dispatchValue(RotateComponent.IS_ROTATE_LEFT, true);
 		if (Controls.pressed(Controls.HERO_RIGHT))
@@ -142,7 +145,9 @@ public class Hero extends Entity2D implements Playable {
 	}
 
 	private void setAnimation() {
-		if (movingF || movingB)
+		double s = ((double) getValue(MoveComponent.SPEED));
+
+		if (s != 0)
 			aniRenCom.resumeAnimation();
 		else
 			aniRenCom.pauseAnimation();
@@ -199,6 +204,16 @@ public class Hero extends Entity2D implements Playable {
 			aniRenCom.setAnimationFrames(aniSprites);
 			aniRenCom.setPauseFrame(new Sprite("hero_stand"));
 		}
+	}
+
+	@Override
+	public void disableControls() {
+		isControlled = false;
+	}
+
+	@Override
+	public void enableControls() {
+		isControlled = true;
 	}
 
 }

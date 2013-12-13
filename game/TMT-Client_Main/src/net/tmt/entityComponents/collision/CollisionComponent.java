@@ -17,7 +17,7 @@ public class CollisionComponent extends Component {
 
 	private double				radius;
 	private Entity2D			ignoredEntity;
-	private Class				ignoredClass;
+	private Class<?>			ignoredClass;
 	private Class<?>			collidableEntity	= null;
 	private boolean				isCollision;
 	private List<Entity2D>		collisonEntities	= new ArrayList<>();
@@ -27,7 +27,7 @@ public class CollisionComponent extends Component {
 		this.ignoredEntity = ignoredEntity;
 	}
 
-	public CollisionComponent(final Class ignoredClass, final double radius) {
+	public CollisionComponent(final Class<?> ignoredClass, final double radius) {
 		this.radius = radius;
 		this.ignoredClass = ignoredClass;
 	}
@@ -58,32 +58,46 @@ public class CollisionComponent extends Component {
 
 		for (List<Entity2D> entities : entityList) {
 			for (Entity2D e : entities) {
-				// don't collide with yourself
-				if (e == owner || owner == e.getOwner())
-					continue;
-				// don't collide with other entities that the collidableEntity
-				// (if
-				// is set)
-				if (collidableEntity != null && !collidableEntity.isInstance(e))
-					continue;
-				// don't collide with ignored entity
-				if (collidableEntity == null && e == ignoredEntity)
-					continue;
-				if (collidableEntity == null && e.getClass() == ignoredClass)
-					continue;
+				// only collide with relevant Entities
+				if (checkEntityForCollision(e)) {
+					double radius2 = e.getCollisionComponent().getRadius();
 
-				double radius2 = e.getCollisionComponent().getRadius();
-
-				double dist = pos.distanceTo(e.getPos());
-				if (dist < radius2 + radius) {
-					isCollision = true;
-					collisonEntities.add(e);
+					double dist = pos.distanceTo(e.getPos());
+					if (dist < radius2 + radius) {
+						isCollision = true;
+						collisonEntities.add(e);
+					}
 				}
 			}
 		}
 
 		caller.dispatch(IS_COLLISION, isCollision);
 		caller.dispatch(COLLISION_ENTITIES, collisonEntities);
+	}
+
+	/**
+	 * check if the given Entity is relevant for collision
+	 * 
+	 * @param e
+	 * @return true if Entity is relevant for collision, false otherwise
+	 */
+	private boolean checkEntityForCollision(final Entity2D e) {
+		// don't collide with yourself
+		if (e == owner || owner == e.getOwner())
+			return false;
+		// don't collide with other entities that the collidableEntity
+		// (if
+		// is set)
+		if (collidableEntity != null && !collidableEntity.isInstance(e))
+			return false;
+		// don't collide with ignored entity
+		if (collidableEntity == null && e == ignoredEntity)
+			return false;
+		// dont't collide with Entities-Instances of ignoredClass
+		if (ignoredClass != null && ignoredClass.isInstance(e))
+			return false;
+
+		return true;
 	}
 
 	public double getRadius() {

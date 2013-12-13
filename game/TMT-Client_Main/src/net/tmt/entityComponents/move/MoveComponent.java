@@ -6,13 +6,13 @@ import net.tmt.util.Vector2d;
 
 
 public class MoveComponent extends Component {
-	public static final String	SPEED	= "SPEED";
-	public static final String	MOVE_DIR		= "DIR";
+	public static final String	SPEED		= "SPEED";
+	public static final String	MOVE_DIR	= "DIR";
 
 	private double				rotationAngle;
 
 	private double				speed;
-	private Vector2d			dir		= new Vector2d();
+	private Vector2d			dir			= new Vector2d();
 
 	public MoveComponent(final double speed, final double rotationAngle) {
 		this(speed);
@@ -40,6 +40,7 @@ public class MoveComponent extends Component {
 		dir.y = -Math.cos(Math.toRadians(rotationAngle)) * speed * delta;
 
 		caller.dispatch(MOVE_DIR, dir);
+		caller.dispatch(SPEED, speed);
 		pos.add(dir);
 	}
 

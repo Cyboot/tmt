@@ -1,9 +1,9 @@
 package net.tmt.entity.weapons;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.collision.CollisionComponent;
-import net.tmt.entity.component.move.MoveComponent;
-import net.tmt.entity.component.other.PickUpComponent;
+import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.move.MoveComponent;
+import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.game.interfaces.UserableByHolder;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;

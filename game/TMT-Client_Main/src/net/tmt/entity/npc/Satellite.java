@@ -1,7 +1,7 @@
 package net.tmt.entity.npc;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.move.MoveCircleComponent;
+import net.tmt.entityComponents.move.MoveCircleComponent;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 

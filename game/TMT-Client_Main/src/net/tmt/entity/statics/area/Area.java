@@ -1,8 +1,8 @@
 package net.tmt.entity.statics.area;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.collision.CollisionComponent;
-import net.tmt.entity.component.collision.CollisionWithPlayerComponent;
+import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.collision.CollisionWithPlayerComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;

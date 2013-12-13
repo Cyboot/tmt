@@ -1,12 +1,12 @@
 package net.tmt.game.factory;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.animation.EngineAnimationComponent;
-import net.tmt.entity.component.animation.KillAnimationComponent;
-import net.tmt.entity.component.collision.CollisionComponent;
-import net.tmt.entity.component.collision.SimpleHealthComponent;
-import net.tmt.entity.component.move.MoveComponent;
-import net.tmt.entity.component.move.RotateComponent;
+import net.tmt.entityComponents.animation.EngineAnimationComponent;
+import net.tmt.entityComponents.animation.KillAnimationComponent;
+import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.collision.SimpleHealthComponent;
+import net.tmt.entityComponents.move.MoveComponent;
+import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.util.Vector2d;
 
 public class ComponentFactory {

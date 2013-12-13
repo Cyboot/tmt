@@ -1,7 +1,7 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.other.OnHoverComponent;
+import net.tmt.entityComponents.other.OnHoverComponent;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 

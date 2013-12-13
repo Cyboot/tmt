@@ -1,8 +1,8 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.move.MoveCircleComponent;
 import net.tmt.entity.statics.area.MissionAreaOffer;
+import net.tmt.entityComponents.move.MoveCircleComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;

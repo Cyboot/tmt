@@ -1,9 +1,9 @@
 package net.tmt.entity.statics;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.move.RotateComponent;
-import net.tmt.entity.component.other.MissionOfferComponent;
-import net.tmt.entity.component.other.OnHoverComponent;
+import net.tmt.entityComponents.move.RotateComponent;
+import net.tmt.entityComponents.other.MissionOfferComponent;
+import net.tmt.entityComponents.other.OnHoverComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.SpaceRaceMission;

@@ -3,11 +3,11 @@ package net.tmt.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.tmt.entity.component.move.MoveComponent;
-import net.tmt.entity.component.move.RotateComponent;
-import net.tmt.entity.component.other.AnimatedRenderComponent;
-import net.tmt.entity.component.other.PickUpComponent;
 import net.tmt.entity.pickups.BackPack;
+import net.tmt.entityComponents.move.MoveComponent;
+import net.tmt.entityComponents.move.RotateComponent;
+import net.tmt.entityComponents.other.AnimatedRenderComponent;
+import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;

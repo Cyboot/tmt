@@ -1,16 +1,16 @@
 package net.tmt.entity;
 
-import net.tmt.entity.component.animation.EngineAnimationComponent;
-import net.tmt.entity.component.animation.JetTrailComponent;
-import net.tmt.entity.component.collision.SimpleHealthComponent;
-import net.tmt.entity.component.move.MoveComponent;
-import net.tmt.entity.component.move.PlayerMoveComponent;
-import net.tmt.entity.component.move.RotateComponent;
-import net.tmt.entity.component.other.OnHoverComponent;
-import net.tmt.entity.component.other.RocketLauncherComponent;
-import net.tmt.entity.component.other.ShieldComponent;
-import net.tmt.entity.component.other.TargetSearchComponent;
 import net.tmt.entity.weapons.LaserShoot;
+import net.tmt.entityComponents.animation.EngineAnimationComponent;
+import net.tmt.entityComponents.animation.JetTrailComponent;
+import net.tmt.entityComponents.collision.SimpleHealthComponent;
+import net.tmt.entityComponents.move.MoveComponent;
+import net.tmt.entityComponents.move.PlayerMoveComponent;
+import net.tmt.entityComponents.move.RotateComponent;
+import net.tmt.entityComponents.other.OnHoverComponent;
+import net.tmt.entityComponents.other.RocketLauncherComponent;
+import net.tmt.entityComponents.other.ShieldComponent;
+import net.tmt.entityComponents.other.TargetSearchComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;

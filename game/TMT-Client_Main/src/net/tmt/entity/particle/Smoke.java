@@ -1,8 +1,8 @@
 package net.tmt.entity.particle;
 
-import net.tmt.entity.component.Component;
-import net.tmt.entity.component.animation.GlowComponent;
-import net.tmt.entity.component.other.RenderComponent;
+import net.tmt.entityComponents.Component;
+import net.tmt.entityComponents.animation.GlowComponent;
+import net.tmt.entityComponents.other.RenderComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;

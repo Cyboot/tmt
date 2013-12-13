@@ -1,7 +1,7 @@
 package net.tmt.entity.weapons;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.move.Move2TargetComponent;
+import net.tmt.entityComponents.move.Move2TargetComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;

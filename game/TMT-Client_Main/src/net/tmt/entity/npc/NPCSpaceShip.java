@@ -1,8 +1,8 @@
 package net.tmt.entity.npc;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.move.Move2TargetComponent;
-import net.tmt.entity.component.other.OnHoverComponent;
+import net.tmt.entityComponents.move.Move2TargetComponent;
+import net.tmt.entityComponents.other.OnHoverComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;

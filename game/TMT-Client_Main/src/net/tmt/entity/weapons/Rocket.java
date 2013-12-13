@@ -1,9 +1,9 @@
 package net.tmt.entity.weapons;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.collision.CollisionComponent;
-import net.tmt.entity.component.collision.SimpleHealthComponent;
-import net.tmt.entity.component.other.DecayComponent;
+import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.collision.SimpleHealthComponent;
+import net.tmt.entityComponents.other.DecayComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.util.Vector2d;
 

@@ -1,6 +1,6 @@
 package net.tmt.entity.particle;
 
-import net.tmt.entity.component.move.RotateComponent;
+import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;

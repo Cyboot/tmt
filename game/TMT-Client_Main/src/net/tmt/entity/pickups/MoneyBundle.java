@@ -1,8 +1,8 @@
 package net.tmt.entity.pickups;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.collision.CollisionComponent;
-import net.tmt.entity.component.other.PickUpComponent;
+import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 

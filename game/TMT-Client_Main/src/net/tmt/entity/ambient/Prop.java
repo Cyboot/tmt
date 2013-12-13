@@ -1,7 +1,7 @@
 package net.tmt.entity.ambient;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.move.RotateComponent;
+import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;

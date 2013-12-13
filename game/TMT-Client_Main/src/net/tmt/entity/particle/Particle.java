@@ -1,7 +1,7 @@
 package net.tmt.entity.particle;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.component.other.DecayComponent;
+import net.tmt.entityComponents.other.DecayComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.util.Vector2d;
 

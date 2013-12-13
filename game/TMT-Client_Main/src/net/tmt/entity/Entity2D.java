@@ -1,10 +1,10 @@
 package net.tmt.entity;
 
-import net.tmt.entity.component.Component;
-import net.tmt.entity.component.ComponentDispatcher;
-import net.tmt.entity.component.animation.KillAnimationComponent;
-import net.tmt.entity.component.collision.CollisionComponent;
-import net.tmt.entity.component.other.RenderComponent;
+import net.tmt.entityComponents.Component;
+import net.tmt.entityComponents.ComponentDispatcher;
+import net.tmt.entityComponents.animation.KillAnimationComponent;
+import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.other.RenderComponent;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;

@@ -1,6 +1,6 @@
 package net.tmt.entity.statics.area;
 
-import net.tmt.entity.component.animation.GlowComponent;
+import net.tmt.entityComponents.animation.GlowComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.gamestate.SpaceGamestate;

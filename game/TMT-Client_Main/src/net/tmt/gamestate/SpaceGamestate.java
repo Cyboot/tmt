@@ -2,11 +2,13 @@ package net.tmt.gamestate;
 
 import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.statics.BackgroundBody;
+import net.tmt.entity.statics.Planet;
 import net.tmt.entity.statics.SpaceStation;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gui.SpaceGui;
 import net.tmt.map.SpaceMap;
+import net.tmt.map.Terrain;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -32,6 +34,9 @@ public class SpaceGamestate extends AbstractGamestate {
 							new Vector2d(RandomUtil.doubleRange(MIN, MAX), RandomUtil.doubleRange(MIN, MAX)), 32),
 					EntityManager.LAYER_0_FAR_BACK);
 		}
+
+		// DEBUG: Planet on Player position
+		entityManager.addEntity(new Planet(Terrain.PLANET_GRASS, 300, new Vector2d(62 * 1000, 2000), 0, 0.1));
 
 		onResume(-1);
 	}

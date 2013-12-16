@@ -16,6 +16,8 @@ public class MissionManager {
 	private Mission						activeMission;
 	private Mission						offeredMission;
 
+	private boolean						isMissionOffered	= false;
+
 	private List<Mission>				offeredMissionList	= new CopyOnWriteArrayList<>();
 
 	private MissionManager() {
@@ -39,6 +41,7 @@ public class MissionManager {
 			offeredMission = mission;
 			mission.offer();
 			offeredMissionList.add(mission);
+			isMissionOffered = true;
 		}
 	}
 
@@ -56,10 +59,12 @@ public class MissionManager {
 		offeredMissionList.remove(mission);
 		activeMission = mission;
 		mission.start();
+		isMissionOffered = false;
 	}
 
 	public void refuseMission(final Mission mission) {
 		mission.refuse();
+		isMissionOffered = false;
 	}
 
 	public void update(final EntityManager entityManager, final World world, final double delta) {
@@ -123,5 +128,14 @@ public class MissionManager {
 	 */
 	public boolean isMissionActive() {
 		return activeMission != null;
+	}
+
+	/**
+	 * check if a mission is offerd by player
+	 * 
+	 * @return
+	 */
+	public boolean isMissionOffered() {
+		return isMissionOffered;
 	}
 }

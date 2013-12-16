@@ -40,23 +40,24 @@ public class Weapon extends Entity2D implements UserableByHolder {
 		if (isAction1Performed && !Controls.pressed(Controls.MOUSE_LEFT)) {
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					Color.ORANGE, (Entity2D) getValue(PickUpComponent.ITEM_HOLDER)));
-			isAction1Performed = false;
 			setSprite(new Sprite("ak47_fire"));
 			isSpriteChanged = true;
+			isAction1Performed = false;
 		}
 		if (timerShoot.isTimeUp(delta) && isAction2Performed) {
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					Color.CYAN, (Entity2D) getValue(PickUpComponent.ITEM_HOLDER)));
-			isAction2Performed = false;
 			setSprite(new Sprite("ak47_fire"));
 			isSpriteChanged = true;
+			isAction2Performed = false;
 		}
 
 		if (isAction3Performed) {
-			isAction3Performed = false;
 			setSprite(new Sprite("ak47_fire"));
 			isSpriteChanged = true;
+			isAction3Performed = false;
 		}
+
 
 	}
 

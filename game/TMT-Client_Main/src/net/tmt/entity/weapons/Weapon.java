@@ -18,13 +18,13 @@ import org.lwjgl.util.Color;
 
 public class Weapon extends Entity2D implements UserableByHolder {
 
-	CountdownTimer	timerShoot			= new CountdownTimer(0.2);
+	protected CountdownTimer	timerShoot			= new CountdownTimer(0.2);
 
-	boolean			isAction1Performed	= false;
-	boolean			isAction2Performed	= false;
-	boolean			isAction3Performed	= false;
+	protected boolean			isAction1Performed	= false;
+	protected boolean			isAction2Performed	= false;
+	protected boolean			isAction3Performed	= false;
 
-	boolean			isSpriteChanged		= false;
+	protected boolean			hasSpriteChanged	= false;
 
 	public Weapon(final Vector2d pos) {
 		super(pos);
@@ -42,20 +42,20 @@ public class Weapon extends Entity2D implements UserableByHolder {
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					Color.ORANGE, (Entity2D) getValue(PickUpComponent.ITEM_HOLDER)));
 			setSprite(new Sprite("ak47_fire"));
-			isSpriteChanged = true;
+			hasSpriteChanged = true;
 			isAction1Performed = false;
 		}
 		if (timerShoot.isTimeUp(delta) && isAction2Performed) {
 			caller.addEntity(new LaserShoot(pos.copy(), (double) getValue(MoveComponent.ROTATION_ANGLE_LOOK),
 					Color.CYAN, (Entity2D) getValue(PickUpComponent.ITEM_HOLDER)));
 			setSprite(new Sprite("ak47_fire"));
-			isSpriteChanged = true;
+			hasSpriteChanged = true;
 			isAction2Performed = false;
 		}
 
 		if (isAction3Performed) {
 			setSprite(new Sprite("ak47_fire"));
-			isSpriteChanged = true;
+			hasSpriteChanged = true;
 			isAction3Performed = false;
 		}
 
@@ -65,9 +65,9 @@ public class Weapon extends Entity2D implements UserableByHolder {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
-		if (isSpriteChanged) {
+		if (hasSpriteChanged) {
 			setSprite(new Sprite("ak47"));
-			isSpriteChanged = false;
+			hasSpriteChanged = false;
 		}
 	}
 

@@ -16,7 +16,6 @@ import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
-import net.tmt.global.mission.MissionManager;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
@@ -92,21 +91,19 @@ public class Hero extends Entity2D implements Playable {
 		if (Controls.pressed(Controls.HERO_UNPACK))
 			unpackItem(delta);
 
-		if (!MissionManager.getInstance().isMissionOffered()) {
-			if (Controls.pressed(Controls.MOUSE_LEFT) && !Controls.pressed(Controls.MOUSE_RIGHT)) {
-				if (holding != null && holding instanceof UserableByHolder) {
-					((UserableByHolder) holding).action1();
-				}
+		if (Controls.pressed(Controls.MOUSE_LEFT) && !Controls.pressed(Controls.MOUSE_RIGHT)) {
+			if (holding != null && holding instanceof UserableByHolder) {
+				((UserableByHolder) holding).action1();
 			}
-			if (Controls.pressed(Controls.MOUSE_RIGHT) && !Controls.pressed(Controls.MOUSE_LEFT)) {
-				if (holding != null && holding instanceof UserableByHolder) {
-					((UserableByHolder) holding).action2();
-				}
+		}
+		if (Controls.pressed(Controls.MOUSE_RIGHT) && !Controls.pressed(Controls.MOUSE_LEFT)) {
+			if (holding != null && holding instanceof UserableByHolder) {
+				((UserableByHolder) holding).action2();
 			}
-			if (Controls.pressed(Controls.MOUSE_MIDDLE)) {
-				if (holding != null && holding instanceof UserableByHolder) {
-					((UserableByHolder) holding).action3();
-				}
+		}
+		if (Controls.pressed(Controls.MOUSE_MIDDLE)) {
+			if (holding != null && holding instanceof UserableByHolder) {
+				((UserableByHolder) holding).action3();
 			}
 		}
 	}

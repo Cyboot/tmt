@@ -13,6 +13,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.achievments.Achievments;
 import net.tmt.global.stats.Stats;
+import net.tmt.main.LoaderTimer;
 import net.tmt.map.Terrain;
 import net.tmt.util.ConfigUtil;
 import net.tmt.util.CountdownTimer;
@@ -85,6 +86,7 @@ public class GameEngine {
 	}
 
 	private void initConfig() {
+		LoaderTimer.start("GameEngine - config");
 		try {
 			String cfg = "res" + File.separator + "cfg" + File.separator + "controls.cfg";
 			String cfgGamepad = "res" + File.separator + "cfg" + File.separator + "controls_gamepad.cfg";
@@ -106,6 +108,7 @@ public class GameEngine {
 		}
 		WIDTH = ConfigUtil.getInt("display.width");
 		HEIGHT = ConfigUtil.getInt("display.height");
+		LoaderTimer.stop("GameEngine - config");
 	}
 
 	private void update(final double delta) {
@@ -113,6 +116,7 @@ public class GameEngine {
 	}
 
 	private void initNonGL() {
+		LoaderTimer.start("GameEngine - nonGL");
 		try {
 			Sprite.init();
 		} catch (IOException e) {
@@ -138,9 +142,11 @@ public class GameEngine {
 			DebugUtil.setUser(ConfigUtil.getString("debug.User"));
 		} catch (Exception e) {
 		}
+		LoaderTimer.stop("GameEngine - nonGL");
 	}
 
 	private void initGL() throws LWJGLException {
+		LoaderTimer.start("GameEngine - GL");
 		Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 		Display.setLocation(ConfigUtil.getInt("display.offsetX"), ConfigUtil.getInt("display.offsetY"));
 		Display.setVSyncEnabled(true);
@@ -155,6 +161,7 @@ public class GameEngine {
 		glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glClearColor(0, 0, 0, 0);
+		LoaderTimer.stop("GameEngine - GL");
 	}
 
 	private void render() {

@@ -10,8 +10,6 @@ import net.tmt.map.SpaceMap;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
-import org.lwjgl.util.Color;
-
 public class DummyGamestate extends AbstractGamestate {
 	private static DummyGamestate	instance;
 
@@ -45,10 +43,6 @@ public class DummyGamestate extends AbstractGamestate {
 		super.render(g);
 
 		entityManager.render(g);
-
-		g.setColor(Color.YELLOW);
-		g.fillCircle(500, 300, 5);
-
 		guiManager.setGui(DummyGui.class);
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Graphics.Fonts;
+import net.tmt.gfx.Graphics.Fonts.Style;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.Money;
 import net.tmt.global.RPLevel;
@@ -83,12 +84,12 @@ public class MoneyLevelOverlay extends Gui {
 		renderLevel(g);
 		renderMoney(g);
 
-		g.setFont(Fonts.font_default);
+		g.setFont(Fonts.defaultFont);
 	}
 
 
 	private void renderMoney(final Graphics g) {
-		TrueTypeFont font = Fonts.font_26_bold;
+		TrueTypeFont font = Fonts.get(26, Style.BOLD);
 		g.setFont(font);
 
 		String text = Money.getMoney();
@@ -110,15 +111,15 @@ public class MoneyLevelOverlay extends Gui {
 			g.onGui().drawSprite(pos, s);
 
 		// Level Nr
-		g.setFont(Fonts.font_26_bold);
-		int txtWidth = Fonts.font_26_bold.getWidth(RPLevel.getLevel());
+		g.setFont(Fonts.get(26, Style.BOLD));
+		int txtWidth = Fonts.get(26, Style.BOLD).getWidth(RPLevel.getLevel());
 		g.setColor(ColorUtil.GUI_ORANGE);
 
 		g.onGui().drawText(LEVEL_SIZE / 2 - txtWidth / 2, LEVEL_SIZE / 2 - 10, RPLevel.getLevel());
 
 		// missing RP text
 		if (showMissingRP) {
-			TrueTypeFont font = Fonts.font_12_plain;
+			TrueTypeFont font = Fonts.get(12, Style.PLAIN);
 			g.setFont(font);
 
 			String text = lastRP + " / " + RPLevel.getRPtarget();

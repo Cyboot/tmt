@@ -1,6 +1,7 @@
 package net.tmt.map.generator;
 
 import net.tmt.game.manager.EntityManager;
+import net.tmt.main.LoaderTimer;
 import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
 import net.tmt.map.WorldMap;
@@ -8,7 +9,9 @@ import net.tmt.map.WorldMap;
 public class MapGenerator {
 
 	public static void generateSpaceMap(final WorldMap map, final EntityManager entityManager) {
+		LoaderTimer.start("Map");
 		new MapGeneratorSpace().generateSpace(map, entityManager);
+		LoaderTimer.stop("Map");
 	}
 
 	public static void generateAround(final Coordinate coord, final WorldMap map, final EntityManager entityManager,

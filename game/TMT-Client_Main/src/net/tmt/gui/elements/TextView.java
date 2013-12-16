@@ -13,7 +13,7 @@ public class TextView extends GuiElement {
 	private String			text;
 	private double			padding;
 
-	protected TrueTypeFont	font			= Graphics.Fonts.font_14_plain;
+	protected TrueTypeFont	font			= Graphics.Fonts.get(14);
 
 
 	public TextView(final Vector2d pos, final double width, final double height, final double padding) {

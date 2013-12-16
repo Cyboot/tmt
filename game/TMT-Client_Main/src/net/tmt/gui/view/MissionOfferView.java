@@ -4,6 +4,7 @@ import net.tmt.game.GameEngine;
 import net.tmt.game.interfaces.ClickListener;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Graphics.Fonts;
+import net.tmt.gfx.Graphics.Fonts.Style;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.Mission.Medal;
@@ -49,11 +50,11 @@ public class MissionOfferView extends ContainerElement implements ClickListener 
 		final double topYDesc = 25;
 
 		// title, desc and timeleft
-		Label label_name = new Label(new Vector2d(DEFAULT_PADDING, DEFAULT_PADDING), mission.getTitle(),
-				Fonts.font_18_bold);
+		Label label_name = new Label(new Vector2d(DEFAULT_PADDING, DEFAULT_PADDING), mission.getTitle(), Fonts.get(18,
+				Style.BOLD));
 		TextView textview_desc = new TextView(new Vector2d(0, topYDesc), width - 2 * DEFAULT_PADDING, topYRewards
 				- topYDesc);
-		textview_desc.setFont(Graphics.Fonts.font_14_plain);
+		textview_desc.setFont(Graphics.Fonts.get(14));
 		label_name.setForegroundColor((Color) ColorUtil.GUI_ORANGE);
 		label_timeleft = new Label(new Vector2d(width / 4 + 8, height - 25), "");
 

@@ -95,7 +95,13 @@ public class Hero extends Entity2D implements Playable {
 			unpackItem(delta);
 
 
-		if (Controls.pressed(Controls.MOUSE_RIGHT)) {
+		if (Controls.pressed(Controls.MOUSE_LEFT) && !Controls.pressed(Controls.MOUSE_RIGHT)) {
+			if (holding != null && holding instanceof UserableByHolder) {
+				((UserableByHolder) holding).action1();
+			}
+		}
+
+		if (Controls.pressed(Controls.MOUSE_RIGHT) && !Controls.pressed(Controls.MOUSE_LEFT)) {
 			if (holding != null && holding instanceof UserableByHolder) {
 				((UserableByHolder) holding).action2();
 			}

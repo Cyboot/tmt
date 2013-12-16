@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.tmt.main.LoaderTimer;
+
 import org.lwjgl.util.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -79,6 +81,8 @@ public class Sprite {
 	 * @throws IOException
 	 */
 	public static void init() throws IOException {
+		LoaderTimer.start("Sprites");
+
 		File folder = new File("res" + File.separator + "img");
 
 		for (final File file : folder.listFiles()) {
@@ -87,6 +91,7 @@ public class Sprite {
 				textureMap.put(file.getName(), TextureLoader.getTexture("PNG", fileIN));
 			}
 		}
+		LoaderTimer.stop("Sprites");
 	}
 
 	public double getRotation() {

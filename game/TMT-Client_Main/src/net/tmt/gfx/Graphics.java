@@ -6,8 +6,11 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.tmt.game.manager.ZoomManager;
+import net.tmt.main.LoaderTimer;
 import net.tmt.util.Vector2d;
 
 import org.lwjgl.util.Color;
@@ -266,67 +269,57 @@ public class Graphics {
 	}
 
 	public static Graphics init() {
+		LoaderTimer.start("Graphics");
 		instance = new Graphics();
 		Textures.rect = new Sprite("white").setCentered(false);
 		Textures.whiteTexture = Textures.rect.getTexture();
 		Textures.circle_fill_16 = new Sprite("circle_16").setCentered(false);
 		Textures.circle_fill_256 = new Sprite("circle_256").setCentered(false);
 
-		Font font = null;
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new File("res" + File.separator + "gfx" + File.separator
-					+ "NeogreyRegular.otf"));
+			Fonts.awtFont = Font.createFont(Font.TRUETYPE_FONT, new File("res" + File.separator + "gfx"
+					+ File.separator + "NeogreyRegular.otf"));
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}
-		Fonts.font_12_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 12), true);
-		Fonts.font_12_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 12), true);
-		Fonts.font_12_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 12), true);
+		Fonts.defaultFont = Fonts.get(12);
+		instance.font = Fonts.defaultFont;
 
-		Fonts.font_14_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 14), true);
-		Fonts.font_14_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 14), true);
-		Fonts.font_14_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 14), true);
-
-		Fonts.font_16_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 16), true);
-		Fonts.font_16_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 16), true);
-		Fonts.font_16_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 16), true);
-
-		Fonts.font_18_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 18), true);
-		Fonts.font_18_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 18), true);
-		Fonts.font_18_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 18), true);
-
-		Fonts.font_26_italic = new TrueTypeFont(font.deriveFont(Font.ITALIC, 26), true);
-		Fonts.font_26_plain = new TrueTypeFont(font.deriveFont(Font.PLAIN, 26), true);
-		Fonts.font_26_bold = new TrueTypeFont(font.deriveFont(Font.BOLD, 26), true);
-
-		Fonts.font_default = Fonts.font_12_plain;
-		instance.font = Fonts.font_default;
-
+		LoaderTimer.stop("Graphics");
 		return instance;
 	}
 
 	public static class Fonts {
-		public static TrueTypeFont	font_default;
+		private static Font							awtFont;
+		private static Map<Integer, TrueTypeFont>	fontMap	= new HashMap<>();
 
-		public static TrueTypeFont	font_12_plain;
-		public static TrueTypeFont	font_12_bold;
-		public static TrueTypeFont	font_12_italic;
 
-		public static TrueTypeFont	font_14_plain;
-		public static TrueTypeFont	font_14_bold;
-		public static TrueTypeFont	font_14_italic;
+		public static TrueTypeFont					defaultFont;
 
-		public static TrueTypeFont	font_16_plain;
-		public static TrueTypeFont	font_16_bold;
-		public static TrueTypeFont	font_16_italic;
+		public enum Style {
+			PLAIN(Font.PLAIN), BOLD(Font.BOLD), ITALIC(Font.ITALIC);
+			private int	value;
 
-		public static TrueTypeFont	font_18_plain;
-		public static TrueTypeFont	font_18_bold;
-		public static TrueTypeFont	font_18_italic;
+			private Style(final int value) {
+				this.value = value;
+			}
+		}
 
-		public static TrueTypeFont	font_26_plain;
-		public static TrueTypeFont	font_26_bold;
-		public static TrueTypeFont	font_26_italic;
+		public static TrueTypeFont get(final int size) {
+			return get(size, Style.PLAIN);
+		}
+
+		public static TrueTypeFont get(final int size, final Style style) {
+			int key = (style.value << 16) | size;
+			TrueTypeFont font = fontMap.get(key);
+
+			if (font == null) {
+				font = new TrueTypeFont(awtFont.deriveFont(style.value, size), true);
+				fontMap.put(key, font);
+			}
+
+			return font;
+		}
 	}
 
 	private static class Textures {

@@ -14,7 +14,7 @@ public class PlanetGui extends Gui {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(ColorUtil.GUI_CYAN);
-		g.setFont(Fonts.font_14_plain);
+		g.setFont(Fonts.get(14));
 		renderMap(g);
 		g.setColor(ColorUtil.GUI_CYAN);
 		renderInfoWindow(g);

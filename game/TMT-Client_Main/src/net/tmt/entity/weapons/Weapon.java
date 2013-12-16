@@ -1,6 +1,7 @@
 package net.tmt.entity.weapons;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.entity.bullets.LaserShoot;
 import net.tmt.entityComponents.collision.CollisionComponent;
 import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.other.PickUpComponent;

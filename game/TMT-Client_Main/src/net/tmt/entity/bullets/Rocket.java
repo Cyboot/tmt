@@ -1,4 +1,4 @@
-package net.tmt.entity.weapons;
+package net.tmt.entity.bullets;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entityComponents.collision.CollisionComponent;

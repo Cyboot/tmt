@@ -1,7 +1,7 @@
 package net.tmt.entityComponents.other;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.weapons.TargetRocket;
+import net.tmt.entity.bullets.TargetRocket;
 import net.tmt.entityComponents.Component;
 import net.tmt.entityComponents.ComponentDispatcher;
 import net.tmt.global.achievments.Achievments;

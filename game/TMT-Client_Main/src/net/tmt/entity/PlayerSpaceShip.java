@@ -1,6 +1,6 @@
 package net.tmt.entity;
 
-import net.tmt.entity.weapons.LaserShoot;
+import net.tmt.entity.bullets.LaserShoot;
 import net.tmt.entityComponents.animation.EngineAnimationComponent;
 import net.tmt.entityComponents.animation.JetTrailComponent;
 import net.tmt.entityComponents.collision.SimpleHealthComponent;

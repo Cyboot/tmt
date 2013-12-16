@@ -78,7 +78,26 @@ public class Prop extends Entity2D {
 		case DECAL:
 			size = RandomUtil.intRange(32, 128);
 			rotation = RandomUtil.doubleRange(0, 360);
-			result.setSprite(new Sprite("decal_sand_1", size, size).setRotation(rotation));
+
+			String sprite = "";
+			switch (RandomUtil.intRange(0, 4)) {
+			case 0:
+				sprite = "decal_mountain_1";
+				break;
+			case 1:
+				sprite = "decal_mountain_2";
+				break;
+			case 2:
+				sprite = "decal_sand_1";
+				break;
+			case 3:
+				sprite = "decal_swamp_1";
+				break;
+			case 4:
+				sprite = "decal_swamp_2";
+				break;
+			}
+			result.setSprite(new Sprite(sprite, size, size).setRotation(rotation));
 			break;
 		default:
 			break;

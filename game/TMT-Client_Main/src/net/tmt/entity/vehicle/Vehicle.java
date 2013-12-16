@@ -2,15 +2,20 @@ package net.tmt.entity.vehicle;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.area.Area;
+import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.game.manager.GuiManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gui.elements.Label;
 import net.tmt.map.World;
+import net.tmt.util.ColorUtil;
 import net.tmt.util.Vector2d;
+
+import org.lwjgl.util.Color;
 
 public abstract class Vehicle extends Entity2D {
 	private static final double	DEFAULT_ROTATION_SPEED	= 90;
@@ -37,8 +42,11 @@ public abstract class Vehicle extends Entity2D {
 		isInRange = false;
 		enterRange.update(caller, world, delta);
 		if (isInRange && !isControlled) {
-			GuiManager.getInstance()
-					.setTooltip(Label.createTooltip(world.getVectorOnScreen(pos), "Press 'E' to Enter"));
+			Label tooltipp = new Label(world.getVectorOnScreen(pos), "Press 'E' to Enter");
+			tooltipp.setBackgroundColor((Color) ColorUtil.BLACK_ALPHA_50);
+			tooltipp.setForegroundColor((Color) ColorUtil.GUI_ORANGE);
+
+			GuiManager.getInstance().setTooltip(tooltipp);
 		}
 
 
@@ -59,6 +67,8 @@ public abstract class Vehicle extends Entity2D {
 		}
 
 		super.update(caller, world, delta);
+		if (isControlled)
+			ZoomManager.setFreeZoomBySpeed((double) getValue(MoveComponent.SPEED));
 	}
 
 	protected abstract void onDrive(double delta);

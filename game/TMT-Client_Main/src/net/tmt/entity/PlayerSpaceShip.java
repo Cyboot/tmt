@@ -16,6 +16,7 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GuiManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.global.achievments.Achievments;
 import net.tmt.global.stats.Stats;
@@ -76,6 +77,8 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 
 	private void updateStats(final double delta) {
 		double speed = (double) getValue(MoveComponent.SPEED);
+
+		ZoomManager.setFreeZoomBySpeed(speed);
 
 		if (speed > 500)
 			Achievments.achiev(Achievments.Space.SPEED_500);

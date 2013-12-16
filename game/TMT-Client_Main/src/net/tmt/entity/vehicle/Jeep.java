@@ -8,7 +8,7 @@ import net.tmt.util.Vector2d;
 
 public class Jeep extends Vehicle {
 	private static final int	SIZE		= 64;
-	private static final double	MAX_SPEED	= 500;
+	private static final double	MAX_SPEED	= 350;
 	private static final double	ACCL		= 250;
 
 	public Jeep(final Vector2d pos) {

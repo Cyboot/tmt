@@ -13,6 +13,7 @@ import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.interfaces.UserableByHolder;
 import net.tmt.game.manager.EntityManager;
+import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
@@ -56,6 +57,9 @@ public class Hero extends Entity2D implements Playable {
 		}
 		setAnimation();
 		super.update(caller, world, delta);
+
+		if (isControlled)
+			ZoomManager.setFreeZoomBySpeed((double) getValue(MoveComponent.SPEED));
 	}
 
 	@Override

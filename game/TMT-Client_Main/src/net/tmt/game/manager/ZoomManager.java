@@ -2,6 +2,7 @@ package net.tmt.game.manager;
 
 import net.tmt.game.GameEngine;
 import net.tmt.gfx.Graphics;
+import net.tmt.util.CountdownTimer;
 
 import org.lwjgl.input.Keyboard;
 
@@ -25,13 +26,14 @@ public class ZoomManager {
 	public static final double	ZOOM_400						= 4;
 
 	private static final double	ZOOM_SPEED						= 1;
-	private static final double	MIN_ZOOM_DIFF					= 0.95;
+	private static final double	MIN_ZOOM_DIFF					= 0.99;
 	private static final double	DEFAULT_ZOOM					= 1;
 
 	private static double		windowZoomFactor				= 1;
 	private static boolean		isFixed							= false;
 	private static double		zoom							= DEFAULT_ZOOM;
 	private static double		fixedZoom						= DEFAULT_ZOOM;
+
 
 	static void update(final double delta) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_0))
@@ -51,6 +53,9 @@ public class ZoomManager {
 		if (Keyboard.isKeyDown(Keyboard.KEY_7))
 			setFixedZoom(ZOOM_400);
 
+		if (!isFixed)
+			FreeZoom.update(delta);
+
 		if (zoom != fixedZoom) {
 			adjustZoom(delta);
 		}
@@ -63,10 +68,12 @@ public class ZoomManager {
 	 * @param delta
 	 */
 	private static void adjustZoom(final double delta) {
+		double zoomSpeed = isFixed ? ZOOM_SPEED : ZOOM_SPEED / 6;
+
 		if (fixedZoom < zoom) {
-			zoom *= 1 - ZOOM_SPEED * delta;
+			zoom *= 1 - zoomSpeed * delta;
 		} else {
-			zoom *= 1 + ZOOM_SPEED * delta;
+			zoom *= 1 + zoomSpeed * delta;
 		}
 		if (Math.min(fixedZoom / zoom, zoom / fixedZoom) > MIN_ZOOM_DIFF)
 			zoom = fixedZoom;
@@ -128,5 +135,65 @@ public class ZoomManager {
 				(double) GameEngine.HEIGHT / RECOMMENDED_RESOLUTION_HEIGTH);
 		zoom = windowZoomFactor;
 		fixedZoom = windowZoomFactor;
+	}
+
+	public static void setFreeZoomBySpeed(final double speed) {
+		// ignore freeZoom if zoom is fixed
+		if (isFixed)
+			return;
+
+		FreeZoom.setFreeZoomBySpeed(speed);
+	}
+
+	private static class FreeZoom {
+		private static double			ZONE_1			= 150;
+		private static double			ZONE_2			= 450;
+		private static double			ZONE_3			= 2000;
+		private static double			ZONE_4			= 4000;
+		private static double			ZONE_5			= 10000;
+
+		private static double			DELAY_ZOOM_OUT	= 1;
+		private static double			DELAY_ZOOM_IN	= 1.5;
+
+
+		private static double			currentFactor	= 1;
+		private static double			targetFactor	= 1;
+		private static CountdownTimer	timer			= CountdownTimer.createManualResetTimer(1.5);
+
+		public static void setFreeZoomBySpeed(final double speed) {
+			double factor = 0;
+
+			if (speed > ZONE_5)
+				factor = 0.15;
+			else if (speed > ZONE_4)
+				factor = 0.20;
+			else if (speed > ZONE_3)
+				factor = 0.25;
+			else if (speed > ZONE_2)
+				factor = 0.40;
+			else if (speed > ZONE_1)
+				factor = 0.75;
+			else
+				factor = 1;
+
+			if (factor != targetFactor) {
+				if (factor < targetFactor)
+					timer.setIntervall(DELAY_ZOOM_OUT);
+				else
+					timer.setIntervall(DELAY_ZOOM_IN);
+
+				targetFactor = factor;
+				timer.reset();
+			}
+			System.out.println(factor);
+		}
+
+		public static void update(final double delta) {
+			if (timer.isTimeUp(delta)) {
+				currentFactor = targetFactor;
+			}
+
+			fixedZoom = (DEFAULT_ZOOM * currentFactor) * windowZoomFactor;
+		}
 	}
 }

@@ -14,6 +14,8 @@ public class BackPack extends Entity2D {
 	private static int		DEFAULT_CAPACITY	= 10;
 
 	private List<Entity2D>	contents			= new ArrayList<Entity2D>();
+
+
 	private int				capacity			= DEFAULT_CAPACITY;
 
 	public BackPack(final Vector2d pos) {
@@ -45,4 +47,7 @@ public class BackPack extends Entity2D {
 		return contents.size() == capacity;
 	}
 
+	public List<Entity2D> getContents() {
+		return contents;
+	}
 }

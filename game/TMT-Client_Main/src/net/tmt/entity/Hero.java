@@ -189,6 +189,10 @@ public class Hero extends Entity2D implements Playable {
 		wearing.add(e);
 	}
 
+	public List<Entity2D> getWearing() {
+		return wearing;
+	}
+
 	public boolean holdsSomething() {
 		return !(holding == null);
 	}

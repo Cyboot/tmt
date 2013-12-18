@@ -3,6 +3,10 @@ package net.tmt.util;
 
 import java.text.DecimalFormat;
 
+import net.tmt.game.manager.CollisionsManager;
+
+import org.jbox2d.common.Vec2;
+
 public class Vector2d {
 	/** Use this static Vector for temporary usage */
 	public static Vector2d	tmp1	= new Vector2d();
@@ -169,6 +173,10 @@ public class Vector2d {
 		return result.normalize();
 	}
 
+	public static Vector2d fromVec2(final Vec2 vec2) {
+		return new Vector2d(vec2.x * CollisionsManager.PIXEL_PER_METER, vec2.y * CollisionsManager.PIXEL_PER_METER);
+	}
+
 	public static Vector2d randomNormalized() {
 		double x = Math.random() * 2 - 1;
 		double y = Math.random() * 2 - 1;
@@ -187,8 +195,19 @@ public class Vector2d {
 		return add(-x, -y);
 	}
 
+	public Vec2 toVec2() {
+		return new Vec2((float) (x / CollisionsManager.PIXEL_PER_METER),
+				(float) (y / CollisionsManager.PIXEL_PER_METER));
+	}
+
+
 	@Override
 	public int hashCode() {
 		return (int) x << 16 | ((int) y & 0x0000FFFF);
+	}
+
+	public void setFromVec2(final Vec2 vec2) {
+		x = vec2.x * CollisionsManager.PIXEL_PER_METER;
+		y = vec2.y * CollisionsManager.PIXEL_PER_METER;
 	}
 }

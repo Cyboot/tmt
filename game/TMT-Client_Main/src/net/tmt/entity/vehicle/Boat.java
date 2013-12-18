@@ -3,6 +3,7 @@ package net.tmt.entity.vehicle;
 import net.tmt.entityComponents.move.AcceleratingComponent;
 import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.game.Controls;
+import net.tmt.game.manager.CollisionsManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
@@ -11,8 +12,8 @@ public class Boat extends Vehicle {
 	private static final double	MAX_SPEED	= 750;
 	private static final double	ACCL		= 250;
 
-	public Boat(final Vector2d pos) {
-		super(pos, SIZE);
+	public Boat(final Vector2d pos, final CollisionsManager collisionsManager) {
+		super(pos, SIZE, collisionsManager);
 		setSprite(new Sprite("boat", SIZE, SIZE));
 
 		AcceleratingComponent component = new AcceleratingComponent(ACCL, 0.3, MAX_SPEED, true);

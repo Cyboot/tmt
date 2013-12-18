@@ -27,10 +27,9 @@ import net.tmt.util.Vector2d;
 public class EntityManager implements Renderable {
 	private static final int				GRID_SIZE			= 2048;
 
-
 	public static final int					LAYER_0_FAR_BACK	= 0;
 	public static final int					LAYER_1_BACK		= 1;
-	public static final int					LAYER_2_MEDIUM		= 2;				// default
+	public static final int					LAYER_2_MEDIUM		= 2;						// default
 	public static final int					LAYER_3_FRONT		= 3;
 	public static final int					LAYER_4_GUI			= 4;
 
@@ -44,6 +43,7 @@ public class EntityManager implements Renderable {
 	private double							renderDistance;
 	private double							updateDistance;
 	private int								visibleEntities;
+	private CollisionsManager				collisionsManager	= new CollisionsManager();
 
 	public EntityManager() {
 		// Init Entitymap
@@ -83,6 +83,8 @@ public class EntityManager implements Renderable {
 				}
 			}
 		}
+		collisionsManager.update(delta);
+
 		GuiManager.getInstance().dispatch(Gui.DEBUG_ENTITY_COUNT, getEntityCount());
 	}
 
@@ -131,6 +133,10 @@ public class EntityManager implements Renderable {
 	 */
 	public void addEntity(final Entity2D entity, final int layer) {
 		addremove.add(entity, layer);
+	}
+
+	public CollisionsManager getCollisionsManager() {
+		return collisionsManager;
 	}
 
 	public List<List<Entity2D>> getCollidableEntities(final Vector2d v) {

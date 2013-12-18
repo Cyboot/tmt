@@ -25,7 +25,7 @@ public class Chunk implements Renderable {
 	public void render(final Graphics g) {
 		g.drawSprite(Vector2d.tmp1.set(getCoord().x * size, getCoord().y * size), terrain.getSprite());
 
-		if (DebugUtil.renderCollision) {
+		if (DebugUtil.renderChunkBorder) {
 			switch (terrain) {
 			case SPACE_ASTEROID:
 				g.setColor(Color.GREY);

@@ -185,7 +185,6 @@ public class ZoomManager {
 				targetFactor = factor;
 				timer.reset();
 			}
-			System.out.println(factor);
 		}
 
 		public static void update(final double delta) {

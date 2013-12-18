@@ -6,6 +6,8 @@ import net.tmt.entity.statics.Planet;
 import net.tmt.entity.statics.SpaceStation;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.global.mission.EnterPlanetMission;
+import net.tmt.global.mission.MissionManager;
 import net.tmt.gui.SpaceGui;
 import net.tmt.map.SpaceMap;
 import net.tmt.map.Terrain;
@@ -36,7 +38,9 @@ public class SpaceGamestate extends AbstractGamestate {
 		}
 
 		// DEBUG: Planet on Player position
-		entityManager.addEntity(new Planet(Terrain.PLANET_GRASS, 300, new Vector2d(62 * 1000, 2000), 0, 0.1));
+		Planet debugPlanet = new Planet(Terrain.PLANET_GRASS, 300, new Vector2d(62 * 1000, 0), 0, 0.1);
+		entityManager.addEntity(debugPlanet);
+		MissionManager.getInstance().offerMission(new EnterPlanetMission(debugPlanet));
 
 		onResume(-1);
 	}

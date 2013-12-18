@@ -3,9 +3,10 @@ package net.tmt.entity.vehicle;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.statics.area.Area;
 import net.tmt.entityComponents.move.MoveComponent;
+import net.tmt.entityComponents.move.PhysicsComponent.Builder;
 import net.tmt.game.Controls;
-import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
+import net.tmt.game.manager.CollisionsManager;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.game.manager.GuiManager;
@@ -25,16 +26,22 @@ public abstract class Vehicle extends Entity2D {
 	private boolean				isInRange				= false;
 	private Entity2D			player;
 
-	public Vehicle(final Vector2d pos, final double size, final double rotationSpeed) {
+	public Vehicle(final Vector2d pos, final double size, final double rotationSpeed,
+			final CollisionsManager collisionsManager) {
 		super(pos);
 
-		ComponentFactory.addDefaultMove(this, 0, 0, rotationSpeed);
-		ComponentFactory.addDefaultCollision(this, size / 2, 9999);
+		// ComponentFactory.addDefaultMove(this, 0, 0, rotationSpeed);
+		// ComponentFactory.addDefaultCollision(this, size / 2, 9999);
+		Builder builder = new Builder(collisionsManager, pos);
+		builder.circleShape((float) (size / 2 / CollisionsManager.PIXEL_PER_METER));
+		builder.density(1);
+		addComponent(builder.create());
+
 		enterRange = new EnterRange(getPos(), size * 1.1);
 	}
 
-	public Vehicle(final Vector2d pos, final int size) {
-		this(pos, size, DEFAULT_ROTATION_SPEED);
+	public Vehicle(final Vector2d pos, final int size, final CollisionsManager collisionsManager) {
+		this(pos, size, DEFAULT_ROTATION_SPEED, collisionsManager);
 	}
 
 	@Override

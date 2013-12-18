@@ -157,24 +157,19 @@ public class Graphics {
 		drawSprite(Vector2d.tmp1.set(x, y), sprite);
 	}
 
-	public void drawCircle(final double centerX, final double centerY, final double radius) {
-		// TODO better performance for cicles
-		applyColor();
-		int sides = 32;
+	public void drawCircle(final double x, final double y, final double radius) {
+		Sprite sprite;
+		if (radius > 16)
+			sprite = Textures.circle_256;
+		else
+			sprite = Textures.circle_16;
 
-		glPushMatrix();
-		{
-			applyOffset();
-			glTranslated(centerX, centerY, 0);
-			glBegin(GL_LINE_LOOP);
-			for (int a = 0; a < 360; a += 360 / sides) {
-				double heading = Math.toRadians(a);
+		sprite.setCentered(true);
+		sprite.setWidth(radius * 2);
+		sprite.setHeight(radius * 2);
+		sprite.setBlendColor((Color) color);
 
-				glVertex2d(Math.cos(heading) * radius, Math.sin(heading) * radius);
-			}
-			glEnd();
-		}
-		glPopMatrix();
+		drawSprite(Vector2d.tmp1.set(x, y), sprite);
 	}
 
 	public void drawLine(final double x1, final double y1, final double x2, final double y2) {
@@ -273,8 +268,10 @@ public class Graphics {
 		instance = new Graphics();
 		Textures.rect = new Sprite("white").setCentered(false);
 		Textures.whiteTexture = Textures.rect.getTexture();
-		Textures.circle_fill_16 = new Sprite("circle_16").setCentered(false);
-		Textures.circle_fill_256 = new Sprite("circle_256").setCentered(false);
+		Textures.circle_16 = new Sprite("circle_16").setCentered(false);
+		Textures.circle_256 = new Sprite("circle_256").setCentered(false);
+		Textures.circle_fill_16 = new Sprite("circle_fill_16").setCentered(false);
+		Textures.circle_fill_256 = new Sprite("circle_fill_256").setCentered(false);
 
 		try {
 			Fonts.awtFont = Font.createFont(Font.TRUETYPE_FONT, new File("res" + File.separator + "gfx"
@@ -327,5 +324,7 @@ public class Graphics {
 		public static Sprite	rect;
 		public static Sprite	circle_fill_16;
 		public static Sprite	circle_fill_256;
+		public static Sprite	circle_16;
+		public static Sprite	circle_256;
 	}
 }

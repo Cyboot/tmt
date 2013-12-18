@@ -5,15 +5,16 @@ import java.util.List;
 
 import net.tmt.entity.pickups.BackPack;
 import net.tmt.entityComponents.move.MoveComponent;
+import net.tmt.entityComponents.move.PhysicsComponent;
+import net.tmt.entityComponents.move.PhysicsComponent.Builder;
 import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.entityComponents.other.AnimatedRenderComponent;
 import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.game.Controls;
-import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.interfaces.UserableByHolder;
+import net.tmt.game.manager.CollisionsManager;
 import net.tmt.game.manager.EntityManager;
-import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
@@ -35,7 +36,7 @@ public class Hero extends Entity2D implements Playable {
 	private boolean					isControlled		= true;
 
 
-	public Hero(final Vector2d pos) {
+	public Hero(final CollisionsManager collisionsManager, final Vector2d pos) {
 		super(pos);
 		catchBreathTimer.setTimer(-1);
 		removeAllComponents();
@@ -45,8 +46,14 @@ public class Hero extends Entity2D implements Playable {
 		aniRenCom = new AnimatedRenderComponent(aniSprites, 0.25);
 		aniRenCom.setPauseFrame(new Sprite("hero_stand"));
 		addComponent(aniRenCom);
-		ComponentFactory.addDefaultMove(this, 0, 0, ROTATION_SPEED);
-		ComponentFactory.addDefaultCollision(this, 10, 999999);
+
+		// addComponent(new RotateComponent(0, ROTATION_SPEED));
+		Builder builder = new Builder(collisionsManager, pos);
+		builder.circleShape(16 / CollisionsManager.PIXEL_PER_METER);
+		builder.accl(20).maxSpeed(10).minSpeed(3).friction(3).density(0.1f);
+
+		PhysicsComponent physicsComponent = builder.create();
+		addComponent(physicsComponent);
 	}
 
 	@Override
@@ -57,9 +64,6 @@ public class Hero extends Entity2D implements Playable {
 		}
 		setAnimation();
 		super.update(caller, world, delta);
-
-		if (isControlled)
-			ZoomManager.setFreeZoomBySpeed((double) getValue(MoveComponent.SPEED));
 	}
 
 	@Override
@@ -70,12 +74,12 @@ public class Hero extends Entity2D implements Playable {
 	}
 
 	private void checkControls(final double delta) {
-		dispatchValue(MoveComponent.SPEED, 0.);
+		// dispatchValue(MoveComponent.SPEED, 0.);
 
 		if (Controls.pressed(Controls.HERO_UP))
-			dispatchValue(MoveComponent.SPEED, speed);
+			dispatchValue(PhysicsComponent.PHYS_ACCELERATING, true);
 		if (Controls.pressed(Controls.HERO_DOWN))
-			dispatchValue(MoveComponent.SPEED, -speed);
+			dispatchValue(PhysicsComponent.PHYS_ACCELERATING_REVERSE, true);
 		if (Controls.pressed(Controls.HERO_LEFT))
 			dispatchValue(RotateComponent.IS_ROTATE_LEFT, true);
 		if (Controls.pressed(Controls.HERO_RIGHT))

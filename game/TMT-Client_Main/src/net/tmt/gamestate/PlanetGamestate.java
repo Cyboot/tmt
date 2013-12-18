@@ -2,6 +2,7 @@ package net.tmt.gamestate;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.Hero;
+import net.tmt.entity.ambient.Ball;
 import net.tmt.entity.ambient.Prop;
 import net.tmt.entity.ambient.Prop.Type;
 import net.tmt.entity.npc.SpaceBug;
@@ -30,10 +31,11 @@ import net.tmt.util.Vector2d;
 public class PlanetGamestate extends AbstractGamestate {
 	private Planet	planet;
 
-	private Hero	hero	= new Hero(new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
+	private Hero	hero;
 
 	public PlanetGamestate(final Planet planet) {
 		super(new PlanetMap(planet));
+		hero = new Hero(entityManager.getCollisionsManager(), new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 		setPlayer(hero);
 		entityManager.addEntity(hero, EntityManager.LAYER_3_FRONT);
 		this.planet = planet;
@@ -51,11 +53,18 @@ public class PlanetGamestate extends AbstractGamestate {
 			SpaceBug sb = new SpaceBug(new Vector2d(GameEngine.WIDTH / 2 + x, GameEngine.HEIGHT / 2 + y), 100, hero);
 			entityManager.addEntity(sb);
 		}
+		for (int i = 0; i < 50; i++)
+			entityManager.addEntity(new Ball(new Vector2d(RandomUtil.doubleRange(-500, 500), RandomUtil.doubleRange(
+					-500, 500)), entityManager.getCollisionsManager()));
+
 		entityManager.addEntity(Prop.createProp(Type.BUILDING_1, new Vector2d(500, -500)));
 		entityManager.addEntity(Prop.createProp(Type.ANNO_BUILDING, new Vector2d(-500, -500)));
-		entityManager.addEntity(new Jeep(new Vector2d(300, 300)), EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Boat(new Vector2d(300, -300)), EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Helicopter(new Vector2d(-300, -300)), EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(new Jeep(new Vector2d(300, 300), entityManager.getCollisionsManager()),
+				EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(new Boat(new Vector2d(300, -300), entityManager.getCollisionsManager()),
+				EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(new Helicopter(new Vector2d(-300, -300), entityManager.getCollisionsManager()),
+				EntityManager.LAYER_3_FRONT);
 
 		// Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340,
 		// GameEngine.HEIGHT / 2 - 340), 100, hero);

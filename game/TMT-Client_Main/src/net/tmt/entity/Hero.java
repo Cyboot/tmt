@@ -19,6 +19,7 @@ import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
+import net.tmt.util.MathUtil;
 import net.tmt.util.Vector2d;
 
 public class Hero extends Entity2D implements Playable {
@@ -47,8 +48,8 @@ public class Hero extends Entity2D implements Playable {
 
 		// addComponent(new RotateComponent(0, ROTATION_SPEED));
 		Builder builder = new Builder(collisionsManager, pos);
-		builder.circleShape(16 / CollisionManager.PIXEL_PER_METER);
-		builder.accl(25).maxSpeed(10).friction(2).density(0.1f);
+		builder.circleShape(MathUtil.toBox2d(12));
+		builder.accl(25).maxSpeed(10).friction(5).density(0.1f).setCategory(CollisionManager.CATEGORY_PLAYABLE);
 
 		PhysicsComponent physicsComponent = builder.create();
 		addComponent(physicsComponent);
@@ -59,6 +60,9 @@ public class Hero extends Entity2D implements Playable {
 		if (isControlled) {
 			checkControls(delta);
 			checkHolding();
+		} else {
+			// disable physics if not controlled
+			dispatchValue(PhysicsComponent.DISABLE, true);
 		}
 		setAnimation();
 		super.update(caller, world, delta);

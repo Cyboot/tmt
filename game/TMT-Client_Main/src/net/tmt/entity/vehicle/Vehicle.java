@@ -1,14 +1,12 @@
 package net.tmt.entity.vehicle;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.statics.area.Area;
 import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.move.PhysicsComponent.Builder;
 import net.tmt.game.Controls;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.manager.CollisionManager;
 import net.tmt.game.manager.EntityManager;
-import net.tmt.game.manager.GameManager;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.game.manager.ZoomManager;
 import net.tmt.gui.elements.Label;
@@ -25,7 +23,6 @@ public abstract class Vehicle extends Entity2D {
 	private static final double	DEFAULT_ROTATION_SPEED	= 90;
 
 	protected boolean			isControlled;
-	private EnterRange			enterRange;
 	private boolean				isInRange				= false;
 	private Entity2D			player;
 
@@ -36,14 +33,9 @@ public abstract class Vehicle extends Entity2D {
 		super(pos);
 		this.size = size;
 
-		// ComponentFactory.addDefaultMove(this, 0, 0, rotationSpeed);
-		// ComponentFactory.addDefaultCollision(this, size / 2, 9999);
-		Builder builder = new Builder(collisionsManager, pos);
-		builder.setShape(getCollisionShape());
-		builder.density(1);
-		addComponent(builder.create());
-
-		enterRange = new EnterRange(getPos(), size * 1.1);
+		Builder builderSensor = new Builder(collisionsManager, this.pos);
+		builderSensor.makeSensor(CollisionManager.CATEGORY_PLAYABLE).circleShape(MathUtil.toBox2d(size * 1.5));
+		addComponent(builderSensor.create());
 	}
 
 	public Vehicle(final Vector2d pos, final int size, final CollisionManager collisionsManager) {
@@ -63,10 +55,9 @@ public abstract class Vehicle extends Entity2D {
 
 	@Override
 	public void update(final EntityManager caller, final World world, final double delta) {
-		isInRange = false;
-		enterRange.update(caller, world, delta);
+		isInRange = getSensorEntity() instanceof Playable;
 		if (isInRange && !isControlled) {
-			Label tooltipp = new Label(world.getVectorOnScreen(pos), "Press 'E' to Enter");
+			Label tooltipp = new Label(world.getVectorOnScreen(pos), "Press  \"E\"  to enter");
 			tooltipp.setBackgroundColor((Color) ColorUtil.BLACK_ALPHA_50);
 			tooltipp.setForegroundColor((Color) ColorUtil.GUI_ORANGE);
 
@@ -86,7 +77,7 @@ public abstract class Vehicle extends Entity2D {
 		}
 
 		if (isInRange && Controls.wasReleased(Controls.HERO_USE)) {
-			Entity2D player = GameManager.getInstance().getActiveGamestate().getPlayer();
+			Entity2D player = getSensorEntity();
 			enterVehicle(player);
 		}
 
@@ -119,16 +110,5 @@ public abstract class Vehicle extends Entity2D {
 	}
 
 	protected void onEnterVehicle(final Entity2D player2) {
-	}
-
-	private class EnterRange extends Area {
-		public EnterRange(final Vector2d pos, final double radius) {
-			super(pos, radius);
-		}
-
-		@Override
-		protected void onCollide() {
-			isInRange = true;
-		}
 	}
 }

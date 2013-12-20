@@ -59,7 +59,7 @@ public class PlanetGamestate extends AbstractGamestate {
 
 		entityManager.addEntity(Prop.createProp(Type.BUILDING_1, new Vector2d(500, -500),
 				entityManager.getCollisionManager()));
-		entityManager.addEntity(new Jeep(new Vector2d(300, 300), entityManager.getCollisionManager()),
+		entityManager.addEntity(new Jeep(new Vector2d(380, 250), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
 		entityManager.addEntity(new Boat(new Vector2d(300, -300), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);

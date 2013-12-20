@@ -25,6 +25,7 @@ public abstract class Entity2D implements Renderable {
 
 	private ComponentDispatcher	compDispatcher		= new ComponentDispatcher(this);
 	private Sprite				sprite;
+	private Entity2D			sensorEntity;
 
 	public Entity2D(final Vector2d pos) {
 		id = currentID++;
@@ -70,6 +71,22 @@ public abstract class Entity2D implements Renderable {
 	protected void onKilled() {
 		if (hasOnKillComponent) {
 			compDispatcher.onKilled();
+		}
+	}
+
+	protected Entity2D getSensorEntity() {
+		return sensorEntity;
+	}
+
+	public void triggerSensor(final Entity2D touchingEntity, final boolean beginContact) {
+		if (beginContact) {
+			// ignore entity if sensorentity is already != null
+			if (sensorEntity == null)
+				sensorEntity = touchingEntity;
+		} else {
+			// delete sensorEntity if it stops touching
+			if (sensorEntity == touchingEntity)
+				sensorEntity = null;
 		}
 	}
 

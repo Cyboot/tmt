@@ -1,56 +1,42 @@
 package net.tmt.entityComponents.other;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.tmt.entityComponents.ComponentDispatcher;
-import net.tmt.gfx.Sprite;
-import net.tmt.util.CountdownTimer;
+import net.tmt.util.SpriteAnimation;
 
 public class AnimatedRenderComponent extends RenderComponent {
 
-	private List<Sprite>	sprites	= new ArrayList<Sprite>();
-	private Sprite			pauseFrame;
-	private int				currSpriteIndex;
-	private CountdownTimer	timer;
-	private boolean			paused	= false;
+	private Map<String, SpriteAnimation>	animationMap	= new HashMap<String, SpriteAnimation>();
+	private String							currAnimation;
 
-	public AnimatedRenderComponent(final List<Sprite> sprites, final double looptime) {
-		setSprite(sprites.get(0));
-		this.sprites = sprites;
-		this.timer = new CountdownTimer(looptime);
-		this.currSpriteIndex = 0;
+	public AnimatedRenderComponent(final Map<String, SpriteAnimation> animationMap, final String initialAnimation) {
+		this.animationMap = animationMap;
+		this.currAnimation = initialAnimation;
+		setSprite(animationMap.get(currAnimation).getFrame(0));
 	}
 
-	public void pauseAnimation() {
-		paused = true;
-		if (pauseFrame != null)
-			setSprite(pauseFrame);
+	public void pauseCurrentAnimation() {
+		animationMap.get(currAnimation).pause();
 	}
 
-	public void setLoopTime(final double looptime) {
-		timer.setIntervall(looptime);
+	public void resumeCurrentAnimation() {
+		animationMap.get(currAnimation).resume();
 	}
 
-	public void resumeAnimation() {
-		paused = false;
+	public void setAnimationMap(final Map<String, SpriteAnimation> animationMap) {
+		this.animationMap = animationMap;
 	}
 
-	public void setPauseFrame(final Sprite pauseFrame) {
-		this.pauseFrame = pauseFrame;
-	}
-
-	public void setAnimationFrames(final List<Sprite> sprites) {
-		this.sprites = sprites;
+	public void changeAnimation(final String key) {
+		currAnimation = key;
 	}
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
 		super.update(caller, delta);
-		if (timer.isTimeUp(delta) && !paused) {
-			setSprite(sprites.get(currSpriteIndex));
-			currSpriteIndex = (currSpriteIndex + 1) % sprites.size();
-		}
+		setSprite(animationMap.get(currAnimation).getFrame(delta));
 	}
 
 }

@@ -6,7 +6,7 @@ import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.move.PhysicsComponent.Builder;
 import net.tmt.game.Controls;
 import net.tmt.game.interfaces.Playable;
-import net.tmt.game.manager.CollisionsManager;
+import net.tmt.game.manager.CollisionManager;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.game.manager.GuiManager;
@@ -14,8 +14,11 @@ import net.tmt.game.manager.ZoomManager;
 import net.tmt.gui.elements.Label;
 import net.tmt.map.World;
 import net.tmt.util.ColorUtil;
+import net.tmt.util.MathUtil;
 import net.tmt.util.Vector2d;
 
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
 import org.lwjgl.util.Color;
 
 public abstract class Vehicle extends Entity2D {
@@ -26,22 +29,36 @@ public abstract class Vehicle extends Entity2D {
 	private boolean				isInRange				= false;
 	private Entity2D			player;
 
+	private double				size;
+
 	public Vehicle(final Vector2d pos, final double size, final double rotationSpeed,
-			final CollisionsManager collisionsManager) {
+			final CollisionManager collisionsManager) {
 		super(pos);
+		this.size = size;
 
 		// ComponentFactory.addDefaultMove(this, 0, 0, rotationSpeed);
 		// ComponentFactory.addDefaultCollision(this, size / 2, 9999);
 		Builder builder = new Builder(collisionsManager, pos);
-		builder.circleShape((float) (size / 2 / CollisionsManager.PIXEL_PER_METER));
+		builder.setShape(getCollisionShape());
 		builder.density(1);
 		addComponent(builder.create());
 
 		enterRange = new EnterRange(getPos(), size * 1.1);
 	}
 
-	public Vehicle(final Vector2d pos, final int size, final CollisionsManager collisionsManager) {
+	public Vehicle(final Vector2d pos, final int size, final CollisionManager collisionsManager) {
 		this(pos, size, DEFAULT_ROTATION_SPEED, collisionsManager);
+	}
+
+	@Override
+	protected Shape getCollisionShape() {
+		float width = MathUtil.toBox2d(size / 2);
+		float height = MathUtil.toBox2d(size / 2);
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(width, height);
+
+		return shape;
 	}
 
 	@Override

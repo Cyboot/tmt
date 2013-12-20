@@ -43,7 +43,7 @@ public class EntityManager implements Renderable {
 	private double							renderDistance;
 	private double							updateDistance;
 	private int								visibleEntities;
-	private CollisionsManager				collisionsManager	= new CollisionsManager();
+	private CollisionManager				collisionManager	= new CollisionManager();
 
 	public EntityManager() {
 		// Init Entitymap
@@ -83,7 +83,7 @@ public class EntityManager implements Renderable {
 				}
 			}
 		}
-		collisionsManager.update(delta);
+		collisionManager.update(delta);
 
 		GuiManager.getInstance().dispatch(Gui.DEBUG_ENTITY_COUNT, getEntityCount());
 	}
@@ -135,8 +135,8 @@ public class EntityManager implements Renderable {
 		addremove.add(entity, layer);
 	}
 
-	public CollisionsManager getCollisionsManager() {
-		return collisionsManager;
+	public CollisionManager getCollisionManager() {
+		return collisionManager;
 	}
 
 	public List<List<Entity2D>> getCollidableEntities(final Vector2d v) {

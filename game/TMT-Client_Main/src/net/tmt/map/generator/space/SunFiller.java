@@ -30,7 +30,7 @@ public class SunFiller implements ChunkFiller {
 	}
 
 	private void addSun(final Vector2d center) {
-		entityManager.addEntity(Prop.createProp(Type.SUN, center.copy()), EntityManager.LAYER_1_BACK);
+		entityManager.addEntity(Prop.createProp(Type.SUN, center.copy(), entityManager.getCollisionManager()), EntityManager.LAYER_1_BACK);
 	}
 
 	private void addPlanet(final Vector2d star, final double radiusFactor, final int count) {

@@ -82,6 +82,7 @@ public class Graphics {
 			glTranslated(pos.x, pos.y, 0);
 			glTranslated(-shapeOffset.x, -shapeOffset.y, 0);
 			glScaled(shape.getScale(), shape.getScale(), 1);
+			glRotated(shape.getRotation(), 0, 0, 1);
 			{
 				glBegin(GL_LINE_STRIP);
 				{

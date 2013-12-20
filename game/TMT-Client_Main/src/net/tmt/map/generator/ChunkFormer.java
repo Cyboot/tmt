@@ -43,7 +43,7 @@ class ChunkFormer {
 			pos.x += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
 			pos.y += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
 
-			Prop decal = Prop.createProp(Type.DECAL, pos);
+			Prop decal = Prop.createProp(Type.DECAL, pos, entityManager.getCollisionManager());
 			entityManager.addEntity(decal, EntityManager.LAYER_1_BACK);
 		}
 	}
@@ -56,7 +56,7 @@ class ChunkFormer {
 			pos.x += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
 			pos.y += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
 
-			Prop tree = Prop.createProp(Type.TREE, pos);
+			Prop tree = Prop.createProp(Type.TREE, pos, entityManager.getCollisionManager());
 			entityManager.addEntity(tree);
 		}
 	}

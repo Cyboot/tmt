@@ -12,11 +12,13 @@ import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
 import net.tmt.util.Vector2d;
 
+import org.jbox2d.collision.shapes.Shape;
+
 public abstract class Entity2D implements Renderable {
 	private static long			currentID			= 1;
 	private long				id;
 	private boolean				isAlive				= true;
-	CollisionComponent			collisionComponent;
+	private CollisionComponent	collisionComponent;
 	private boolean				hasOnKillComponent	= false;
 	protected Vector2d			pos;
 	protected Entity2D			owner;
@@ -124,5 +126,9 @@ public abstract class Entity2D implements Renderable {
 	public String toString() {
 		String str = getClass().getSimpleName() + " #" + id + " (" + pos.toString() + ")";
 		return str;
+	}
+
+	protected Shape getCollisionShape() {
+		return null;
 	}
 }

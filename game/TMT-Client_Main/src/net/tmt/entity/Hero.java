@@ -13,7 +13,7 @@ import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.game.Controls;
 import net.tmt.game.interfaces.Playable;
 import net.tmt.game.interfaces.UserableByHolder;
-import net.tmt.game.manager.CollisionsManager;
+import net.tmt.game.manager.CollisionManager;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
@@ -23,8 +23,6 @@ import net.tmt.util.Vector2d;
 
 public class Hero extends Entity2D implements Playable {
 
-	private double					speed				= 128;
-	private final double			ROTATION_SPEED		= 180;
 	private AnimatedRenderComponent	aniRenCom;
 	private boolean					sprinting			= false;
 	private boolean					catchingBreath		= false;
@@ -36,7 +34,7 @@ public class Hero extends Entity2D implements Playable {
 	private boolean					isControlled		= true;
 
 
-	public Hero(final CollisionsManager collisionsManager, final Vector2d pos) {
+	public Hero(final CollisionManager collisionsManager, final Vector2d pos) {
 		super(pos);
 		catchBreathTimer.setTimer(-1);
 		removeAllComponents();
@@ -49,8 +47,8 @@ public class Hero extends Entity2D implements Playable {
 
 		// addComponent(new RotateComponent(0, ROTATION_SPEED));
 		Builder builder = new Builder(collisionsManager, pos);
-		builder.circleShape(16 / CollisionsManager.PIXEL_PER_METER);
-		builder.accl(20).maxSpeed(10).minSpeed(3).friction(3).density(0.1f);
+		builder.circleShape(16 / CollisionManager.PIXEL_PER_METER);
+		builder.accl(25).maxSpeed(10).friction(2).density(0.1f);
 
 		PhysicsComponent physicsComponent = builder.create();
 		addComponent(physicsComponent);
@@ -86,10 +84,10 @@ public class Hero extends Entity2D implements Playable {
 			dispatchValue(RotateComponent.IS_ROTATE_RIGHT, true);
 		if (Controls.pressed(Controls.HERO_SPRINT)) {
 			chekSprinting(delta);
+			dispatchValue(PhysicsComponent.PHYS_ACCL_FACTOR, 2.);
 		} else {
 			notSprinting();
 		}
-		speed = (sprinting ? 256 : 128);
 		if (Controls.pressed(Controls.HERO_PACK))
 			packHoldingItem();
 		if (Controls.pressed(Controls.HERO_UNPACK))
@@ -152,9 +150,9 @@ public class Hero extends Entity2D implements Playable {
 	}
 
 	private void setAnimation() {
-		double s = ((double) getValue(MoveComponent.SPEED));
+		double speed = ((double) getValue(MoveComponent.SPEED));
 
-		if (s != 0)
+		if (speed >= 3)
 			aniRenCom.resumeAnimation();
 		else
 			aniRenCom.pauseAnimation();

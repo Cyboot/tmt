@@ -2,14 +2,14 @@ package net.tmt.entity.ambient;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entityComponents.move.PhysicsComponent.Builder;
-import net.tmt.game.manager.CollisionsManager;
+import net.tmt.game.manager.CollisionManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class Ball extends Entity2D {
 
-	public Ball(final Vector2d pos, final CollisionsManager collisionsManager) {
+	public Ball(final Vector2d pos, final CollisionManager collisionsManager) {
 		super(pos);
 
 		int size = 0;
@@ -27,7 +27,7 @@ public class Ball extends Entity2D {
 		setSprite(new Sprite("ball", size, size));
 
 		Builder builder = new Builder(collisionsManager, pos);
-		builder.circleShape(size / 2 / CollisionsManager.PIXEL_PER_METER);
+		builder.circleShape(size / 2 / CollisionManager.PIXEL_PER_METER);
 		builder.density(0.1f);
 		addComponent(builder.create());
 	}

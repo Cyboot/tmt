@@ -9,7 +9,7 @@ public class Shape {
 	private List<Vector2d>	points	= new ArrayList<>();
 	private boolean			isCentered;
 	private double			rotation;
-	private double			scale;
+	private double			scale	= 1;
 
 	public void addPoint(final Vector2d point) {
 		points.add(point);

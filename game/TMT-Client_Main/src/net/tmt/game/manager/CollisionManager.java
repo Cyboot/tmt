@@ -7,12 +7,12 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
-public class CollisionsManager implements Updateable {
+public class CollisionManager implements Updateable {
 	public static float	PIXEL_PER_METER	= 10;
 
 	private World		physWorld;
 
-	public CollisionsManager() {
+	public CollisionManager() {
 		physWorld = new World(new Vec2());
 	}
 

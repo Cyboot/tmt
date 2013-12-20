@@ -1,5 +1,7 @@
 package net.tmt.util;
 
+import net.tmt.game.manager.CollisionManager;
+
 public class MathUtil {
 
 	/**
@@ -48,4 +50,25 @@ public class MathUtil {
 	public static int clamp(final int value, final int min, final int max) {
 		return Math.max(Math.min(value, max), min);
 	}
+
+	/**
+	 * convert world position to box2d position
+	 * 
+	 * @param pos
+	 * @return
+	 */
+	public static float toBox2d(final double pos) {
+		return (float) (pos / CollisionManager.PIXEL_PER_METER);
+	}
+
+	/**
+	 * convert box2d position to world position
+	 * 
+	 * @param pos
+	 * @return
+	 */
+	public static float fromBox2d(final float box2d) {
+		return box2d * CollisionManager.PIXEL_PER_METER;
+	}
+
 }

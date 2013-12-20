@@ -1,11 +1,14 @@
 package net.tmt.entity.ambient;
 
 import net.tmt.entity.Entity2D;
+import net.tmt.entityComponents.move.PhysicsComponent.Builder;
 import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.game.factory.ComponentFactory;
+import net.tmt.game.manager.CollisionManager;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
+import net.tmt.util.MathUtil;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
@@ -25,8 +28,18 @@ public class Prop extends Entity2D {
 		super(pos);
 	}
 
-	private void addCollision() {
-		ComponentFactory.addDefaultCollision(this, getSprite().getWidth() / 2, 50);
+	private void addStaticCollisionRect(final CollisionManager collisionsManager, final float width,
+			final float height, final float density) {
+		Builder builder = new Builder(collisionsManager, pos);
+		builder.rectShape(width, height).density(density).makeStatic();
+		addComponent(builder.create());
+	}
+
+	private void addStaticCollisionCircle(final CollisionManager collisionsManager, final float radius,
+			final float density) {
+		Builder builder = new Builder(collisionsManager, pos);
+		builder.circleShape(radius).density(density).makeStatic();
+		addComponent(builder.create());
 	}
 
 	private void addMove(final double rotation, final double speed, final double rotationSpeed, final boolean rotateLeft) {
@@ -51,7 +64,8 @@ public class Prop extends Entity2D {
 		return result;
 	}
 
-	public static Prop createProp(final Type type, final Vector2d pos) {
+
+	public static Prop createProp(final Type type, final Vector2d pos, final CollisionManager collMng) {
 		Prop result = new Prop(pos);
 
 		int size = 0;
@@ -59,7 +73,7 @@ public class Prop extends Entity2D {
 		switch (type) {
 		case SPACEROCK:
 			result.setSprite(new Sprite("spacerock_64"));
-			result.addCollision();
+			result.addStaticCollisionCircle(collMng, MathUtil.toBox2d(64 / 2), 2);
 			result.addMove(0, 10, RandomUtil.intRange(1, 20), RandomUtil.randBoolean());
 			break;
 		case SUN:
@@ -75,10 +89,12 @@ public class Prop extends Entity2D {
 			result.setSprite(new Sprite("anno_building"));
 			break;
 		case BUILDING_1:
+			result.addStaticCollisionRect(collMng, MathUtil.toBox2d(512), MathUtil.toBox2d(512), 2);
 			result.setSprite(new Sprite("building_1"));
 			break;
 		case TREE:
 			size = RandomUtil.intRange(32, 128);
+			result.addStaticCollisionCircle(collMng, MathUtil.toBox2d(size / 2), 2);
 			result.setSprite(new Sprite("tree_3", size, size));
 			break;
 		case DECAL:

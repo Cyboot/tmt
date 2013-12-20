@@ -5,7 +5,7 @@ import net.tmt.entityComponents.move.AcceleratingComponent;
 import net.tmt.entityComponents.move.PlayerMoveComponent;
 import net.tmt.entityComponents.move.RotateComponent;
 import net.tmt.game.Controls;
-import net.tmt.game.manager.CollisionsManager;
+import net.tmt.game.manager.CollisionManager;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Sprite;
@@ -24,7 +24,7 @@ public class Helicopter extends Vehicle {
 	private CountdownTimer		timerRotorAccl		= CountdownTimer.createManualResetTimer(1.5);
 	private Sprite				rotor;
 
-	public Helicopter(final Vector2d pos, final CollisionsManager collisionsManager) {
+	public Helicopter(final Vector2d pos, final CollisionManager collisionsManager) {
 		super(pos, SIZE, ROTATION_SPEED, collisionsManager);
 		setSprite(new Sprite("helicopter", SIZE, SIZE));
 		rotor = new Sprite("helicopter_rotor", SIZE, SIZE);

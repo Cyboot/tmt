@@ -2,12 +2,13 @@ package net.tmt.entityComponents.move;
 
 import net.tmt.entityComponents.Component;
 import net.tmt.entityComponents.ComponentDispatcher;
-import net.tmt.game.manager.CollisionsManager;
+import net.tmt.game.manager.CollisionManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.util.DebugUtil;
 import net.tmt.util.Vector2d;
 
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -26,15 +27,20 @@ public class PhysicsComponent extends Component {
 
 	private Vec2				acclVector					= new Vec2();
 	private float				accl;
+	private float				acclFactor;
 	private float				speed;
 	private float				maxSpeed;
-	private float				minSpeed;
 
 	private PhysicsComponent() {
 	}
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
+		if (caller.isSet(PHYS_ACCL_FACTOR)) {
+			acclFactor = (float) ((double) caller.getValue(PHYS_ACCL_FACTOR));
+		} else
+			acclFactor = 1;
+
 		if (caller.isSet(PHYS_ACCELERATING) || caller.isSet(PHYS_ACCELERATING_REVERSE)) {
 			handleAccl(caller, 0, delta);
 		}
@@ -46,11 +52,12 @@ public class PhysicsComponent extends Component {
 			body.applyAngularImpulse(.5f);
 		}
 
-		body.setAngularDamping(10);
+		// body.setAngularDamping(10f);
 
 		caller.dispatch(ROTATION_ANGLE_LOOK, Math.toDegrees(body.getAngle()));
 		caller.dispatch(RotateComponent.ROTATION_ANGLE_MOVE, Math.toDegrees(body.getAngle()));
 
+		// check MIN/MAX speed
 		checkSpeed();
 
 		caller.dispatch(MoveComponent.SPEED, (double) speed);
@@ -63,7 +70,22 @@ public class PhysicsComponent extends Component {
 
 			Shape shape = body.getFixtureList().getShape();
 			if (shape instanceof CircleShape) {
-				g.drawCircle(pos.x, pos.y, shape.getRadius() * CollisionsManager.PIXEL_PER_METER);
+				g.drawCircle(pos.x, pos.y, shape.getRadius() * CollisionManager.PIXEL_PER_METER);
+			}
+
+			if (shape instanceof PolygonShape) {
+				Vec2[] vertices = ((PolygonShape) shape).getVertices();
+
+				net.tmt.gfx.Shape renderShape = new net.tmt.gfx.Shape();
+				int index = 0;
+				for (Vec2 vec2 : vertices) {
+					if (index++ > 3)
+						break;
+					renderShape.addPoint(Vector2d.fromVec2(vec2));
+				}
+				renderShape.setRotation(Math.toDegrees(body.getAngle()));
+
+				g.drawShape(pos, renderShape);
 			}
 		}
 	}
@@ -73,14 +95,9 @@ public class PhysicsComponent extends Component {
 		speed = velocity.length();
 
 		// check MaxSpeed
-		if (speed > maxSpeed) {
+		if (speed > maxSpeed * acclFactor) {
 			velocity.normalize();
-			velocity.mulLocal(maxSpeed);
-		}
-
-		// check MinSpeed
-		if (speed < minSpeed) {
-			velocity.set(0, 0);
+			velocity.mulLocal(maxSpeed * acclFactor);
 		}
 
 		body.setLinearVelocity(velocity);
@@ -91,9 +108,9 @@ public class PhysicsComponent extends Component {
 		int neg = caller.isSet(PHYS_ACCELERATING_REVERSE) ? -1 : 1;
 		double lookAngleRad = Math.toRadians((double) caller.getValue(ROTATION_ANGLE_LOOK) + rotation);
 
-		acclVector.x = (float) (Math.sin(lookAngleRad) * neg * accl);
-		acclVector.y = (float) (-Math.cos(lookAngleRad) * neg * accl);
-		acclVector.mulLocal(accl);
+		acclVector.x = (float) (Math.sin(lookAngleRad) * neg);
+		acclVector.y = (float) (-Math.cos(lookAngleRad) * neg);
+		acclVector.mulLocal(accl * acclFactor);
 
 		body.applyForceToCenter(acclVector);
 	}
@@ -112,9 +129,8 @@ public class PhysicsComponent extends Component {
 	public static class Builder {
 		private static float		DEFAULT_ACCL		= 10;	// delta m/s
 		private static float		DEFAULT_MAX_SPEED	= 50;	// m/s
-		private static final float	MIN_SPEED			= 0.1f;
 
-		private CollisionsManager	collisionsManager;
+		private CollisionManager	collisionsManager;
 
 		private Vec2				physPos;
 		private Shape				shape;
@@ -123,7 +139,7 @@ public class PhysicsComponent extends Component {
 
 		private PhysicsComponent	result;
 
-		public Builder(final CollisionsManager collisionsManager, final Vector2d pos) {
+		public Builder(final CollisionManager collisionsManager, final Vector2d pos) {
 			this.collisionsManager = collisionsManager;
 			physPos = pos.toVec2();
 
@@ -131,13 +147,12 @@ public class PhysicsComponent extends Component {
 			result = new PhysicsComponent();
 			result.accl = DEFAULT_ACCL;
 			result.maxSpeed = DEFAULT_MAX_SPEED;
-			result.minSpeed = MIN_SPEED;
 
 			// default BodyDef
 			bodyDef = new BodyDef();
 			bodyDef.position = physPos;
 			bodyDef.type = BodyType.DYNAMIC;
-			bodyDef.angularDamping = 0.5f;
+			bodyDef.angularDamping = 1f;
 			bodyDef.linearDamping = 0.5f;
 
 			// default FixtureDef
@@ -146,9 +161,46 @@ public class PhysicsComponent extends Component {
 			fixtureDef.restitution = 0.1f;
 		}
 
+		/**
+		 * Rectangular Collisionshape, centered around position
+		 * 
+		 * @param height
+		 * @param width
+		 * @return
+		 */
+		public Builder rectShape(final float width, final float height) {
+			shape = new PolygonShape();
+			((PolygonShape) shape).setAsBox(width / 2, height / 2);
+			return this;
+		}
+
+		/**
+		 * set the CollisionShape to the given shape
+		 * 
+		 * @param shape
+		 * @return
+		 */
+		public Builder setShape(final Shape shape) {
+			this.shape = shape;
+			return this;
+		}
+
+		/**
+		 * Cicle Collisionshape, centered around position
+		 * 
+		 * @param radius
+		 * @return
+		 */
 		public Builder circleShape(final float radius) {
 			shape = new CircleShape();
 			shape.setRadius(radius);
+			return this;
+		}
+
+		public Builder solid(final boolean solid) {
+			if (!solid) {
+				fixtureDef.isSensor = true;
+			}
 			return this;
 		}
 
@@ -167,11 +219,6 @@ public class PhysicsComponent extends Component {
 			return this;
 		}
 
-		public Builder minSpeed(final float minSpeed) {
-			result.minSpeed = minSpeed;
-			return this;
-		}
-
 		public PhysicsComponent create() {
 			World physWorld = collisionsManager.getWorld();
 
@@ -184,6 +231,7 @@ public class PhysicsComponent extends Component {
 
 		public Builder friction(final float friction) {
 			bodyDef.linearDamping = friction;
+			bodyDef.angularDamping = friction * 2;
 			return this;
 		}
 

@@ -35,7 +35,7 @@ public class PlanetGamestate extends AbstractGamestate {
 
 	public PlanetGamestate(final Planet planet) {
 		super(new PlanetMap(planet));
-		hero = new Hero(entityManager.getCollisionsManager(), new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
+		hero = new Hero(entityManager.getCollisionManager(), new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
 		setPlayer(hero);
 		entityManager.addEntity(hero, EntityManager.LAYER_3_FRONT);
 		this.planet = planet;
@@ -55,15 +55,15 @@ public class PlanetGamestate extends AbstractGamestate {
 		}
 		for (int i = 0; i < 50; i++)
 			entityManager.addEntity(new Ball(new Vector2d(RandomUtil.doubleRange(-500, 500), RandomUtil.doubleRange(
-					-500, 500)), entityManager.getCollisionsManager()));
+					-500, 500)), entityManager.getCollisionManager()));
 
-		entityManager.addEntity(Prop.createProp(Type.BUILDING_1, new Vector2d(500, -500)));
-		entityManager.addEntity(Prop.createProp(Type.ANNO_BUILDING, new Vector2d(-500, -500)));
-		entityManager.addEntity(new Jeep(new Vector2d(300, 300), entityManager.getCollisionsManager()),
+		entityManager.addEntity(Prop.createProp(Type.BUILDING_1, new Vector2d(500, -500),
+				entityManager.getCollisionManager()));
+		entityManager.addEntity(new Jeep(new Vector2d(300, 300), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Boat(new Vector2d(300, -300), entityManager.getCollisionsManager()),
+		entityManager.addEntity(new Boat(new Vector2d(300, -300), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Helicopter(new Vector2d(-300, -300), entityManager.getCollisionsManager()),
+		entityManager.addEntity(new Helicopter(new Vector2d(-300, -300), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
 
 		// Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340,

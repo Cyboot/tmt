@@ -1,7 +1,9 @@
 package net.tmt.entity.npc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.Hero;
@@ -12,11 +14,11 @@ import net.tmt.entityComponents.other.AnimatedRenderComponent;
 import net.tmt.entityComponents.other.DropOnDeathComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
-import net.tmt.gfx.Sprite;
 import net.tmt.global.mission.MissionDispatcher;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
+import net.tmt.util.SpriteAnimation;
 import net.tmt.util.Vector2d;
 
 public class SpaceBug extends PlanetCreature {
@@ -36,10 +38,10 @@ public class SpaceBug extends PlanetCreature {
 		this.hero = hero;
 		afraidOf.add(Hero.class);
 		removeAllComponents();
-		List<Sprite> aniSprites = new ArrayList<Sprite>();
-		aniSprites.add(new Sprite("spacebug_0"));
-		aniSprites.add(new Sprite("spacebug_1"));
-		addComponent(new AnimatedRenderComponent(aniSprites, 0.5));
+		Map<String, SpriteAnimation> aniMap = new HashMap<String, SpriteAnimation>();
+		SpriteAnimation bug = new SpriteAnimation(new String[] { "spacebug_0", "spacebug_1" }, 0.5);
+		aniMap.put("bug", bug);
+		addComponent(new AnimatedRenderComponent(aniMap, "bug"));
 		ComponentFactory.addDefaultMove(this, 0, normalSpeed, ROTATION_SPEED);
 		addComponent(new Move2TargetComponent(1));
 		ComponentFactory.addDefaultCollision(SpaceBug.class, this, 20, 1);

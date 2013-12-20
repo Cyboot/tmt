@@ -1,7 +1,9 @@
 package net.tmt.entity.npc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.tmt.entity.Hero;
 import net.tmt.entityComponents.move.Move2TargetComponent;
@@ -9,10 +11,10 @@ import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.other.AnimatedRenderComponent;
 import net.tmt.game.factory.ComponentFactory;
 import net.tmt.game.manager.EntityManager;
-import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.RandomUtil;
+import net.tmt.util.SpriteAnimation;
 import net.tmt.util.Vector2d;
 
 public class Runner extends PlanetCreature {
@@ -27,19 +29,18 @@ public class Runner extends PlanetCreature {
 	private Vector2d				runTo				= new Vector2d();
 	private CountdownTimer			changeDir			= new CountdownTimer(15);
 	private AnimatedRenderComponent	aniRenCom;
-	private List<Sprite>			walkingSprites		= new ArrayList<Sprite>();
-	private List<Sprite>			runningSprites		= new ArrayList<Sprite>();
 
 	public Runner(final Vector2d pos, final double health, final Hero hero) {
 		super(pos, health);
 		this.hero = hero;
 		hunts.add(Hero.class);
 		removeAllComponents();
-		walkingSprites.add(new Sprite("runner_walking_0"));
-		walkingSprites.add(new Sprite("runner_walking_1"));
-		runningSprites.add(new Sprite("runner_running_0"));
-		runningSprites.add(new Sprite("runner_running_1"));
-		aniRenCom = new AnimatedRenderComponent(walkingSprites, 0.4);
+		Map<String, SpriteAnimation> aniMap = new HashMap<String, SpriteAnimation>();
+		SpriteAnimation walk = new SpriteAnimation(new String[] { "runner_walking_0", "runner_walking_1" }, 0.3);
+		SpriteAnimation run = new SpriteAnimation(new String[] { "runner_running_0", "runner_running_1" }, 0.4);
+		aniMap.put("walk", walk);
+		aniMap.put("run", run);
+		aniRenCom = new AnimatedRenderComponent(aniMap, "walk");
 		addComponent(aniRenCom);
 		ComponentFactory.addDefaultMove(this, 0, normalSpeed, ROTATION_SPEED);
 		addComponent(new Move2TargetComponent(1));
@@ -55,7 +56,7 @@ public class Runner extends PlanetCreature {
 	private void huntingBehaviour(final double delta) {
 		if (pos.distanceTo(hero.getPos()) < sensePreyDistance) {
 			runTo.set(hero.getPos());
-			runningAnimation();
+			aniRenCom.changeAnimation("run");
 			dispatchValue(MoveComponent.SPEED, normalSpeed * 10);
 		} else {
 			if (changeDir.isTimeUp(delta)) {
@@ -65,22 +66,12 @@ public class Runner extends PlanetCreature {
 				Vector2d.tmp1.add(Vector2d.tmp2);
 				runTo.set(Vector2d.tmp1);
 			}
-			walkingAnimation();
+			aniRenCom.changeAnimation("walk");
 			dispatchValue(MoveComponent.SPEED, normalSpeed);
 		}
 
 		if (runTo != null)
 			dispatchValue(Move2TargetComponent.SET_TARGET, runTo);
-	}
-
-	private void runningAnimation() {
-		aniRenCom.setAnimationFrames(runningSprites);
-		aniRenCom.setLoopTime(0.3);
-	}
-
-	private void walkingAnimation() {
-		aniRenCom.setAnimationFrames(walkingSprites);
-		aniRenCom.setLoopTime(0.4);
 	}
 
 }

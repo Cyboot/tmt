@@ -1,7 +1,9 @@
 package net.tmt.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.tmt.entity.pickups.BackPack;
 import net.tmt.entityComponents.move.MoveComponent;
@@ -16,10 +18,10 @@ import net.tmt.game.interfaces.UserableByHolder;
 import net.tmt.game.manager.CollisionManager;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
-import net.tmt.gfx.Sprite;
 import net.tmt.map.World;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.MathUtil;
+import net.tmt.util.SpriteAnimation;
 import net.tmt.util.Vector2d;
 
 public class Hero extends Entity2D implements Playable {
@@ -39,11 +41,16 @@ public class Hero extends Entity2D implements Playable {
 		super(pos);
 		catchBreathTimer.setTimer(-1);
 		removeAllComponents();
-		List<Sprite> aniSprites = new ArrayList<Sprite>();
-		aniSprites.add(new Sprite("hero_walk_0"));
-		aniSprites.add(new Sprite("hero_walk_1"));
-		aniRenCom = new AnimatedRenderComponent(aniSprites, 0.25);
-		aniRenCom.setPauseFrame(new Sprite("hero_stand"));
+		Map<String, SpriteAnimation> aniMap = new HashMap<String, SpriteAnimation>();
+		SpriteAnimation walk = new SpriteAnimation(new String[] { "hero_walk_0", "hero_walk_1" }, 0.25);
+		SpriteAnimation walk_hold = new SpriteAnimation(new String[] { "hero_walk_hold_0", "hero_walk_hold_1" }, 0.25);
+		SpriteAnimation stand = new SpriteAnimation(new String[] { "hero_stand" }, Float.MAX_VALUE);
+		SpriteAnimation stand_hold = new SpriteAnimation(new String[] { "hero_stand_hold" }, Float.MAX_VALUE);
+		aniMap.put("walk", walk);
+		aniMap.put("walk_hold", walk_hold);
+		aniMap.put("stand", stand);
+		aniMap.put("stand_hold", stand_hold);
+		aniRenCom = new AnimatedRenderComponent(aniMap, "stand");
 		addComponent(aniRenCom);
 
 		// addComponent(new RotateComponent(0, ROTATION_SPEED));
@@ -59,7 +66,6 @@ public class Hero extends Entity2D implements Playable {
 	public void update(final EntityManager caller, final World world, final double delta) {
 		if (isControlled) {
 			checkControls(delta);
-			checkHolding();
 		} else {
 			// disable physics if not controlled
 			dispatchValue(PhysicsComponent.DISABLE, true);
@@ -155,11 +161,10 @@ public class Hero extends Entity2D implements Playable {
 
 	private void setAnimation() {
 		double speed = ((double) getValue(MoveComponent.SPEED));
-
-		if (speed >= 3)
-			aniRenCom.resumeAnimation();
-		else
-			aniRenCom.pauseAnimation();
+		String ws, h;
+		ws = (speed > 3 ? "walk" : "stand");
+		h = (holding != null ? "_hold" : "");
+		aniRenCom.changeAnimation(ws + h);
 	}
 
 	private void chekSprinting(final double delta) {
@@ -201,22 +206,6 @@ public class Hero extends Entity2D implements Playable {
 
 	public boolean holdsSomething() {
 		return !(holding == null);
-	}
-
-	private void checkHolding() {
-		if (holding != null) {
-			List<Sprite> aniSprites = new ArrayList<Sprite>();
-			aniSprites.add(new Sprite("hero_walk_hold_0"));
-			aniSprites.add(new Sprite("hero_walk_hold_1"));
-			aniRenCom.setAnimationFrames(aniSprites);
-			aniRenCom.setPauseFrame(new Sprite("hero_stand_hold"));
-		} else {
-			List<Sprite> aniSprites = new ArrayList<Sprite>();
-			aniSprites.add(new Sprite("hero_walk_0"));
-			aniSprites.add(new Sprite("hero_walk_1"));
-			aniRenCom.setAnimationFrames(aniSprites);
-			aniRenCom.setPauseFrame(new Sprite("hero_stand"));
-		}
 	}
 
 	@Override

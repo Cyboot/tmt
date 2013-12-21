@@ -7,6 +7,7 @@ import net.tmt.map.Chunk;
 import net.tmt.map.Coordinate;
 import net.tmt.map.PlanetChunk;
 import net.tmt.map.PlanetMap;
+import net.tmt.map.Terrain;
 import net.tmt.map.WorldMap;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -27,12 +28,25 @@ class ChunkFormer {
 		RandomUtil.setSeed(coord.hashCode() ^ map.hashCode());
 
 		PlanetChunk chunk = null;
-		chunk = new PlanetChunk(coord, map.getBaseTerrain(), map.getChunkSize());
+		if (Math.abs(coord.x) < 3 && Math.abs(coord.y) < 3) {
+			chunk = new PlanetChunk(coord, Terrain.PLANET_ASPHALT, map.getChunkSize());
+			if (RandomUtil.randBoolean(0.3)) {
+				addBuilding(chunk, entityManager, map.getChunkSize());
+			}
+		} else {
+			chunk = new PlanetChunk(coord, map.getBaseTerrain(), map.getChunkSize());
+			addTrees(chunk, entityManager, map.getChunkSize());
+			addDecals(chunk, entityManager, map.getChunkSize());
+		}
 
-		addTrees(chunk, entityManager, map.getChunkSize());
-		addDecals(chunk, entityManager, map.getChunkSize());
 
 		return chunk;
+	}
+
+	private static void addBuilding(final PlanetChunk chunk, final EntityManager entityManager, final int chunkSize) {
+		Vector2d centerPos = chunk.getCoord().center2pos(chunkSize);
+		Prop building = Prop.createProp(Type.BUILDING_1, centerPos, entityManager.getCollisionManager());
+		entityManager.addEntity(building);
 	}
 
 	private static void addDecals(final PlanetChunk chunk, final EntityManager entityManager, final int chunkSize) {

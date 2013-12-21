@@ -3,8 +3,6 @@ package net.tmt.gamestate;
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.Hero;
 import net.tmt.entity.ambient.Ball;
-import net.tmt.entity.ambient.Prop;
-import net.tmt.entity.ambient.Prop.Type;
 import net.tmt.entity.npc.SpaceBug;
 import net.tmt.entity.pickups.BackPack;
 import net.tmt.entity.pickups.GlowingStuff;
@@ -57,8 +55,6 @@ public class PlanetGamestate extends AbstractGamestate {
 			entityManager.addEntity(new Ball(new Vector2d(RandomUtil.doubleRange(-500, 500), RandomUtil.doubleRange(
 					-500, 500)), entityManager.getCollisionManager()));
 
-		entityManager.addEntity(Prop.createProp(Type.BUILDING_1, new Vector2d(500, -500),
-				entityManager.getCollisionManager()));
 		entityManager.addEntity(new Jeep(new Vector2d(380, 250), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
 		entityManager.addEntity(new Boat(new Vector2d(300, -300), entityManager.getCollisionManager()),

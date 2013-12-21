@@ -5,7 +5,7 @@ import net.tmt.entity.statics.Planet;
 
 public class PlanetMap extends WorldMap {
 	private int				uniqueId;
-	public static final int	CHUNK_SIZE	= 256;
+	public static final int	CHUNK_SIZE	= 512;
 
 	public PlanetMap(final Terrain baseTerrain, final int uniqueId) {
 		setChunkSize(CHUNK_SIZE);

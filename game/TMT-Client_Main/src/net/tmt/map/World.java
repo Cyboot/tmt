@@ -53,7 +53,7 @@ public class World implements Updateable, Renderable {
 		double dy = offset.y - player.getPos().y;
 
 		// 1/6 from center --> 1/12 for both sides
-		double factor = 1 / 12.;
+		double factor = 1 / 16.;
 		double BORDER_WIDTH = ZoomManager.getWidthZoomed() * factor;
 		double BORDER_HEIGHT = ZoomManager.getHeightZoomed() * factor * GameEngine.HEIGHT / GameEngine.WIDTH;
 

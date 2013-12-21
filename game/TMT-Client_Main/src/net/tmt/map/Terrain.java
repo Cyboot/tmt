@@ -11,19 +11,26 @@ public enum Terrain {
 	SPACE_NEBULA("space_void"), //
 	SPACE_BLACKHOLE("space_void"), //
 
-	PLANET_MOUNTAIN("planet_mountain"), //
-	PLANET_GRASS("planet_grass"), //
-	PLANET_WATER("planet_water"), //
-	PLANET_DESERT("planet_desert"), //
-	PLANET_SNOW("planet_snow"), //
-	PLANET_FOREST("planet_forest"), //
-	PLANET_SWAMP("planet_swamp"); //
+	PLANET_MOUNTAIN("planet_mountain", PlanetMap.CHUNK_SIZE), //
+	PLANET_ASPHALT("asphalt", PlanetMap.CHUNK_SIZE), //
+	PLANET_GRASS("planet_grass", PlanetMap.CHUNK_SIZE), //
+	PLANET_WATER("planet_water", PlanetMap.CHUNK_SIZE), //
+	PLANET_DESERT("planet_desert", PlanetMap.CHUNK_SIZE), //
+	PLANET_SNOW("planet_snow", PlanetMap.CHUNK_SIZE), //
+	PLANET_FOREST("planet_forest", PlanetMap.CHUNK_SIZE), //
+	PLANET_SWAMP("planet_swamp", PlanetMap.CHUNK_SIZE); //
 
 	private Sprite	sprite;
 	private String	str;
+	private int		size;
 
 	private Terrain(final String fileSprite) {
 		str = fileSprite;
+	}
+
+	private Terrain(final String fileSprite, final int size) {
+		str = fileSprite;
+		this.size = size;
 	}
 
 	public Sprite getSprite() {
@@ -31,7 +38,13 @@ public enum Terrain {
 	}
 
 	public static void init() {
-		for (Terrain t : Terrain.values())
+		for (Terrain t : Terrain.values()) {
 			t.sprite = new Sprite(t.str).setCentered(false);
+			if (t.size != 0) {
+				t.sprite.setHeight(t.size);
+				t.sprite.setWidth(t.size);
+			}
+
+		}
 	}
 }

@@ -7,7 +7,6 @@ import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.ZoomManager;
 import net.tmt.gfx.Graphics;
-import net.tmt.map.generator.MapGenerator;
 import net.tmt.util.Vector2d;
 
 
@@ -27,7 +26,6 @@ public abstract class WorldMap implements Renderable {
 		rederOffset = offset;
 
 		// generate new Terrain if needed
-		MapGenerator.generateAround(new Coordinate(offset, chunkSize), this, entityManager, preloadRadius);
 	}
 
 	@Override
@@ -59,8 +57,7 @@ public abstract class WorldMap implements Renderable {
 	 * @return if Entity was added successfull
 	 */
 	public boolean chunkFreeToBuild(final Vector2d pos, final EntityManager entityManager) {
-		Coordinate coord = new Coordinate(pos, this.chunkSize);
-		MapGenerator.generateAround(coord, this, entityManager, 0);
+		// Coordinate coord = new Coordinate(pos, this.chunkSize);
 
 		return true;
 		// return chunkMap.get(coord).freeToBuild();

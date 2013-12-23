@@ -58,7 +58,9 @@ public class World implements Updateable, Renderable {
 		double BORDER_HEIGHT = ZoomManager.getHeightZoomed() * factor * GameEngine.HEIGHT / GameEngine.WIDTH;
 
 
-		if (Math.abs(dx) > BORDER_WIDTH) {
+		if (Math.abs(dx) > BORDER_WIDTH * 3) {
+			offset.x = player.getPos().x;
+		} else if (Math.abs(dx) > BORDER_WIDTH) {
 			double movefactor = (Math.abs(dx) - BORDER_WIDTH) / BORDER_WIDTH;
 			movefactor = Math.min(Math.pow(movefactor, 3), 3);
 
@@ -68,7 +70,9 @@ public class World implements Updateable, Renderable {
 				offset.x += movefactor * delta;
 		}
 
-		if (Math.abs(dy) > BORDER_HEIGHT) {
+		if (Math.abs(dy) > BORDER_WIDTH * 3) {
+			offset.y = player.getPos().y;
+		} else if (Math.abs(dy) > BORDER_HEIGHT) {
 			double movefactor = (Math.abs(dy) - BORDER_HEIGHT) / BORDER_HEIGHT;
 			movefactor = Math.min(Math.pow(movefactor, 3), 3);
 

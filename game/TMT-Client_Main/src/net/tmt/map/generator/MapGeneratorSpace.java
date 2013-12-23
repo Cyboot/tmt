@@ -41,7 +41,7 @@ class MapGeneratorSpace {
 	private WorldMap			map;
 	private EntityManager		entityManager;
 
-	public void generateSpace(final WorldMap worldMap, final EntityManager entityManager) {
+	public void generate(final WorldMap worldMap, final EntityManager entityManager) {
 		this.map = worldMap;
 		this.entityManager = entityManager;
 

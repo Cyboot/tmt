@@ -31,9 +31,9 @@ class ChunkFormer {
 		if (Math.abs(coord.x) < 3 && Math.abs(coord.y) < 3) {
 			chunk = new PlanetChunk(coord, Terrain.PLANET_ASPHALT, map.getChunkSize());
 			RandomUtil.setSeed(coord.hashCode() ^ map.hashCode());
-			if (RandomUtil.randBoolean(0.3)) {
-				addBuilding(chunk, entityManager, map.getChunkSize());
-			}
+			// if (RandomUtil.randBoolean(0.3)) {
+			// addBuilding(chunk, entityManager, map.getChunkSize());
+			// }
 		} else {
 			chunk = new PlanetChunk(coord, map.getBaseTerrain(), map.getChunkSize());
 			addTrees(chunk, entityManager, map.getChunkSize());

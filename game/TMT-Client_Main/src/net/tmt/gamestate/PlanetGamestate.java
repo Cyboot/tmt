@@ -22,56 +22,60 @@ import net.tmt.global.mission.Mission;
 import net.tmt.global.mission.MissionManager;
 import net.tmt.gui.PlanetGui;
 import net.tmt.map.PlanetMap;
+import net.tmt.map.generator.MapGeneratorPlanet;
 import net.tmt.util.ColorUtil;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
 
 public class PlanetGamestate extends AbstractGamestate {
-	private Planet	planet;
+	// centered x,y in the map
+	public static final int	X	= MapGeneratorPlanet.MAX_X / 2 * PlanetMap.CHUNK_SIZE;
+	public static final int	Y	= MapGeneratorPlanet.MAX_Y / 2 * PlanetMap.CHUNK_SIZE;
 
-	private Hero	hero;
+	private Planet			planet;
+	private Hero			hero;
 
 	public PlanetGamestate(final Planet planet) {
 		super(new PlanetMap(planet));
-		hero = new Hero(entityManager.getCollisionManager(), new Vector2d(GameEngine.WIDTH / 2, GameEngine.HEIGHT / 2));
+		hero = new Hero(entityManager.getCollisionManager(), new Vector2d(X, Y));
 		setPlayer(hero);
 		entityManager.addEntity(hero, EntityManager.LAYER_3_FRONT);
 		this.planet = planet;
 
 		// DEBUG: debug items
-		BackPack bp = new BackPack(new Vector2d(GameEngine.WIDTH / 2 - 40, GameEngine.HEIGHT / 2 - 40));
+		BackPack bp = new BackPack(new Vector2d(X - 40, Y - 40));
 		entityManager.addEntity(bp);
-		GlowingStuff gs = new GlowingStuff(new Vector2d(GameEngine.WIDTH / 2 - 140, GameEngine.HEIGHT / 2 - 140));
-		Weapon weapon = new Weapon(new Vector2d(GameEngine.WIDTH / 2 - 120, GameEngine.HEIGHT / 2 - 120));
+		GlowingStuff gs = new GlowingStuff(new Vector2d(X - 140, Y - 140));
+		Weapon weapon = new Weapon(new Vector2d(X - 120, Y - 120));
 		entityManager.addEntity(gs);
 		entityManager.addEntity(weapon);
 		for (int i = 0; i < 20; i++) {
 			int x = RandomUtil.intRange(-250, 250);
 			int y = RandomUtil.intRange(-250, 250);
-			SpaceBug sb = new SpaceBug(new Vector2d(GameEngine.WIDTH / 2 + x, GameEngine.HEIGHT / 2 + y), 100, hero);
+			SpaceBug sb = new SpaceBug(new Vector2d(X + x, Y + y), 100, hero);
 			entityManager.addEntity(sb);
 		}
 		for (int i = 0; i < 50; i++)
-			entityManager.addEntity(new Ball(new Vector2d(RandomUtil.doubleRange(-500, 500), RandomUtil.doubleRange(
-					-500, 500)), entityManager.getCollisionManager()));
+			entityManager.addEntity(new Ball(new Vector2d(RandomUtil.doubleRange(-500 + X, 500 + Y), RandomUtil
+					.doubleRange(-500 + X, 500 + Y)), entityManager.getCollisionManager()));
 
-		entityManager.addEntity(new Jeep(new Vector2d(380, 250), entityManager.getCollisionManager()),
+		entityManager.addEntity(new Jeep(new Vector2d(380 + X, 250 + Y), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Boat(new Vector2d(300, -300), entityManager.getCollisionManager()),
+		entityManager.addEntity(new Boat(new Vector2d(300 + X, -300 + Y), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Helicopter(new Vector2d(-300, -300), entityManager.getCollisionManager()),
+		entityManager.addEntity(new Helicopter(new Vector2d(-300 + X, -300 + Y), entityManager.getCollisionManager()),
 				EntityManager.LAYER_3_FRONT);
 
-		// Runner rnr = new Runner(new Vector2d(GameEngine.WIDTH / 2 - 340,
-		// GameEngine.HEIGHT / 2 - 340), 100, hero);
+		// Runner rnr = new Runner(new Vector2d(X - 340,
+		// Y - 340), 100, hero);
 		// entityManager.addEntity(rnr);
-		MoneyBundle mb = new MoneyBundle(new Vector2d(GameEngine.WIDTH / 2 - 340, GameEngine.HEIGHT / 2 - 340));
+		MoneyBundle mb = new MoneyBundle(new Vector2d(X - 340, Y - 340));
 		entityManager.addEntity(mb);
 
 		MissionManager missionManager = MissionManager.getInstance();
 
 		Mission bugMission = new BugMission();
-		MissionAreaOffer missionArea = new MissionAreaOffer(new Vector2d(200, 200), bugMission, 128);
+		MissionAreaOffer missionArea = new MissionAreaOffer(new Vector2d(200 + X, 200 + Y), bugMission, 128);
 
 		missionManager.registerArea(missionArea);
 	}
@@ -103,6 +107,7 @@ public class PlanetGamestate extends AbstractGamestate {
 	 * @param landingVehicle
 	 */
 	public void setLandingVehicle(final Entity2D landingVehicle) {
+		landingVehicle.getPos().set(X, Y);
 		entityManager.addEntity(landingVehicle);
 
 		MissionManager missionManager = MissionManager.getInstance();

@@ -10,7 +10,13 @@ public class MapGenerator {
 
 	public static void generateSpaceMap(final WorldMap map, final EntityManager entityManager) {
 		LoaderTimer.start("Map");
-		new MapGeneratorSpace().generateSpace(map, entityManager);
+		new MapGeneratorSpace().generate(map, entityManager);
+		LoaderTimer.stop("Map");
+	}
+
+	public static void generatePlanetMap(final WorldMap map, final EntityManager entityManager) {
+		LoaderTimer.start("Map");
+		new MapGeneratorPlanet(map.getBaseTerrain()).generate(map, entityManager);
 		LoaderTimer.stop("Map");
 	}
 

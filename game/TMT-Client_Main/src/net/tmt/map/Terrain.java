@@ -13,6 +13,9 @@ public enum Terrain {
 
 	PLANET_MOUNTAIN("planet_mountain", PlanetMap.CHUNK_SIZE), //
 	PLANET_ASPHALT("asphalt", PlanetMap.CHUNK_SIZE), //
+	PLANET_ASPHALT_STREET("asphalt_street", PlanetMap.CHUNK_SIZE), //
+	PLANET_ASPHALT_STREET_90("asphalt_street_90", PlanetMap.CHUNK_SIZE), //
+	PLANET_ASPHALT_STREET_INTERSECT("asphalt_street_intersect", PlanetMap.CHUNK_SIZE), //
 	PLANET_GRASS("planet_grass", PlanetMap.CHUNK_SIZE), //
 	PLANET_WATER("planet_water", PlanetMap.CHUNK_SIZE), //
 	PLANET_DESERT("planet_desert", PlanetMap.CHUNK_SIZE), //

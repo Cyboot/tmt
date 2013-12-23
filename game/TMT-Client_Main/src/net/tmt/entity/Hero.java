@@ -25,6 +25,7 @@ import net.tmt.util.SpriteAnimation;
 import net.tmt.util.Vector2d;
 
 public class Hero extends Entity2D implements Playable {
+	private static final double		ROTATION_SPEED		= 180;
 
 	private AnimatedRenderComponent	aniRenCom;
 	private boolean					sprinting			= false;
@@ -54,9 +55,10 @@ public class Hero extends Entity2D implements Playable {
 		addComponent(aniRenCom);
 
 		// addComponent(new RotateComponent(0, ROTATION_SPEED));
-		Builder builder = new Builder(collisionsManager, pos);
+		Builder builder = new Builder(collisionsManager, pos, true);
 		builder.circleShape(MathUtil.toBox2d(12));
-		builder.accl(25).maxSpeed(10).friction(5).density(0.1f).setCategory(CollisionManager.CATEGORY_PLAYABLE);
+		builder.accl(25).maxSpeed(10).friction(5).rotationSpeed(ROTATION_SPEED).density(0.1f)
+				.setCategory(CollisionManager.CATEGORY_PLAYABLE);
 
 		PhysicsComponent physicsComponent = builder.create();
 		addComponent(physicsComponent);

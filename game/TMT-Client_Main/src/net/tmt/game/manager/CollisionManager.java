@@ -27,14 +27,6 @@ public class CollisionManager implements Updateable {
 	@Override
 	public void update(final double delta) {
 		physWorld.step((float) delta, 8, 3);
-
-		// Body body = physWorld.getBodyList();
-		// while (body != null) {
-		// Entity2D entity = (Entity2D) body.getUserData();
-		// entity.getPos().setFromVec2(body.getPosition());
-		//
-		// body = body.getNext();
-		// }
 	}
 
 	public World getWorld() {

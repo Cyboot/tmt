@@ -33,7 +33,7 @@ public abstract class Vehicle extends Entity2D {
 		super(pos);
 		this.size = size;
 
-		Builder builderSensor = new Builder(collisionsManager, this.pos);
+		Builder builderSensor = new Builder(collisionsManager, this.pos, false);
 		builderSensor.makeSensor(CollisionManager.CATEGORY_PLAYABLE).circleShape(MathUtil.toBox2d(size * 1.5));
 		addComponent(builderSensor.create());
 	}

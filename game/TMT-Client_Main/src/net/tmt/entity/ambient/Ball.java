@@ -26,7 +26,7 @@ public class Ball extends Entity2D {
 		}
 		setSprite(new Sprite("ball", size, size));
 
-		Builder builder = new Builder(collisionsManager, pos);
+		Builder builder = new Builder(collisionsManager, pos, false);
 		builder.circleShape(size / 2 / CollisionManager.PIXEL_PER_METER);
 		builder.density(0.1f);
 		addComponent(builder.create());

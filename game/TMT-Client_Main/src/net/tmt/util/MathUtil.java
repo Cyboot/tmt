@@ -71,4 +71,25 @@ public class MathUtil {
 		return box2d * CollisionManager.PIXEL_PER_METER;
 	}
 
+	/**
+	 * get the difference in angle from the two given angle
+	 * 
+	 * @param angle1
+	 *            in radian
+	 * @param angle2
+	 *            in radian
+	 * @return
+	 */
+	public static double angleDiff(double angle1, double angle2) {
+		if (angle1 > Math.PI)
+			angle1 -= Math.PI * 2;
+		if (angle2 > Math.PI)
+			angle2 -= Math.PI * 2;
+
+		double value = Math.abs(angle1 - angle2);
+		if (value > Math.PI)
+			return Math.PI * 2 - value;
+		else
+			return value;
+	}
 }

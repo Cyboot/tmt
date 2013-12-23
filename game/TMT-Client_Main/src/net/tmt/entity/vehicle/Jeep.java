@@ -9,9 +9,11 @@ import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
 
 public class Jeep extends Vehicle {
-	private static final int	SIZE	= 64;
+	private static final int	SIZE			= 64;
 
-	private static final float	ACCL	= 5000;
+	private static final double	ROTATION_SPEED	= 90;
+	private static final float	ACCL			= 5000;
+
 
 	public Jeep(final Vector2d pos, final CollisionManager collisionsManager) {
 		super(pos, SIZE, collisionsManager);
@@ -21,8 +23,8 @@ public class Jeep extends Vehicle {
 		// 0.8, MAX_SPEED, true);
 		// addComponent(component);
 
-		Builder builder = new Builder(collisionsManager, this.pos);
-		builder.setShape(getCollisionShape()).density(2.5f).accl(ACCL).friction(1);
+		Builder builder = new Builder(collisionsManager, this.pos, true);
+		builder.setShape(getCollisionShape()).density(2.5f).rotationSpeed(ROTATION_SPEED).accl(ACCL).friction(1);
 		addComponent(builder.create());
 	}
 

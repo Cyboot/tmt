@@ -24,16 +24,19 @@ public class PhysicsComponent extends Component {
 	public static final String	PHYS_ACCELERATING_REVERSE	= "PHYS_ACCELERATING_REVERSE";
 	public static final String	PHYS_ACCL_FACTOR			= "PHYS_ACCL_FACTOR";
 
-	private Body				body;
+	protected Body				body;
 
-	private Vec2				acclVector					= new Vec2();
-	private float				accl;
-	private float				acclFactor;
-	private float				speed;
-	private float				maxSpeed;
-	private boolean				isSensor					= false;
+	protected Vec2				acclVector					= new Vec2();
+	protected float				accl;
+	protected float				acclFactor;
+	protected float				speed;
+	protected float				maxSpeed;
+	protected boolean			isSensor					= false;
 
-	private PhysicsComponent() {
+	protected float				frictionRotation;
+	protected float				frictionLinear;
+
+	protected PhysicsComponent() {
 	}
 
 	@Override
@@ -58,10 +61,10 @@ public class PhysicsComponent extends Component {
 		}
 
 		if (caller.isSet(RotateComponent.IS_ROTATE_LEFT)) {
-			body.applyAngularImpulse(-accl / 50);
+			body.applyAngularImpulse(-accl / 20);
 		}
 		if (caller.isSet(RotateComponent.IS_ROTATE_RIGHT)) {
-			body.applyAngularImpulse(accl / 50);
+			body.applyAngularImpulse(accl / 20);
 		}
 
 		caller.dispatch(ROTATION_ANGLE_LOOK, Math.toDegrees(body.getAngle()));
@@ -149,12 +152,15 @@ public class PhysicsComponent extends Component {
 
 		private PhysicsComponent	result;
 
-		public Builder(final CollisionManager collisionsManager, final Vector2d pos) {
+		public Builder(final CollisionManager collisionsManager, final Vector2d pos, final boolean fixedRotation) {
 			this.collisionsManager = collisionsManager;
 			physPos = pos.toVec2();
 
 			// default values
-			result = new PhysicsComponent();
+			if (fixedRotation)
+				result = new PhysicsComponentFixedRotation();
+			else
+				result = new PhysicsComponent();
 			result.accl = DEFAULT_ACCL;
 			result.maxSpeed = DEFAULT_MAX_SPEED;
 
@@ -239,8 +245,24 @@ public class PhysicsComponent extends Component {
 			return this;
 		}
 
+		/**
+		 * fixed rotationSpeed, <b> onyl possible for
+		 * {@link PhysicsComponentFixedRotation}</b>
+		 * 
+		 * @param rotionSpeed
+		 *            in degree/s (°/s)
+		 * @return
+		 */
+		public Builder rotationSpeed(final double rotionSpeed) {
+			if (result instanceof PhysicsComponentFixedRotation)
+				((PhysicsComponentFixedRotation) result).rotationSpeed = (float) Math.toRadians(rotionSpeed);
+			return this;
+		}
+
 		public Builder friction(final float friction) {
+			result.frictionLinear = friction;
 			bodyDef.linearDamping = friction;
+			result.frictionRotation = friction * 2;
 			bodyDef.angularDamping = friction * 2;
 			return this;
 		}

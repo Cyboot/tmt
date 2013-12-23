@@ -30,14 +30,14 @@ public class Prop extends Entity2D {
 
 	private void addStaticCollisionRect(final CollisionManager collisionsManager, final float width,
 			final float height, final float density) {
-		Builder builder = new Builder(collisionsManager, pos);
+		Builder builder = new Builder(collisionsManager, pos, false);
 		builder.rectShape(width, height).density(density).makeStatic();
 		addComponent(builder.create());
 	}
 
 	private void addStaticCollisionCircle(final CollisionManager collisionsManager, final float radius,
 			final float density) {
-		Builder builder = new Builder(collisionsManager, pos);
+		Builder builder = new Builder(collisionsManager, pos, false);
 		builder.circleShape(radius).density(density).makeStatic();
 		addComponent(builder.create());
 	}

@@ -1,12 +1,8 @@
 package net.tmt.entityComponents.other;
 
-import java.util.List;
-
 import net.tmt.entity.Entity2D;
-import net.tmt.entity.Hero;
 import net.tmt.entityComponents.Component;
 import net.tmt.entityComponents.ComponentDispatcher;
-import net.tmt.entityComponents.collision.CollisionComponent;
 import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.util.CountdownTimer;
 import net.tmt.util.Vector2d;
@@ -79,29 +75,32 @@ public class PickUpComponent extends Component {
 	}
 
 	private void checkPickUp(final ComponentDispatcher caller) {
-		CollisionComponent cc = caller.getComponent(CollisionComponent.class);
-		if (cc != null) {
-			Object isCollision = caller.getValue(CollisionComponent.IS_COLLISION);
-			if (isCollision != CollisionComponent.IS_COLLISION && isCollision != null) {
-				Object ceo = caller.getValue(CollisionComponent.COLLISION_ENTITIES);
-				if (ceo != CollisionComponent.COLLISION_ENTITIES && ceo != null) {
-					List<Entity2D> ce = (List<Entity2D>) ceo;
-					for (Entity2D e : ce) {
-						// TODO: maybe implement an AbleToPickUp interface
-						if (e instanceof Hero) {
-							Hero h = (Hero) e;
-							if (!h.holdsSomething()) {
-								itemHolder = e;
-								if (wearable)
-									((Hero) e).wear(caller.getOwner());
-								else
-									((Hero) e).hold(caller.getOwner());
-							}
-						}
-					}
-				}
-			}
-		}
+		// CollisionComponent cc =
+		// caller.getComponent(CollisionComponent.class);
+		// if (cc != null) {
+		// Object isCollision =
+		// caller.getValue(CollisionComponent.IS_COLLISION);
+		// if (isCollision != CollisionComponent.IS_COLLISION && isCollision !=
+		// null) {
+		// Object ceo = caller.getValue(CollisionComponent.COLLISION_ENTITIES);
+		// if (ceo != CollisionComponent.COLLISION_ENTITIES && ceo != null) {
+		// List<Entity2D> ce = (List<Entity2D>) ceo;
+		// for (Entity2D e : ce) {
+		// // TODO: maybe implement an AbleToPickUp interface
+		// if (e instanceof Hero) {
+		// Hero h = (Hero) e;
+		// if (!h.holdsSomething()) {
+		// itemHolder = e;
+		// if (wearable)
+		// ((Hero) e).wear(caller.getOwner());
+		// else
+		// ((Hero) e).hold(caller.getOwner());
+		// }
+		// }
+		// }
+		// }
+		// }
+		// }
 	}
 
 	public Entity2D getHolder() {

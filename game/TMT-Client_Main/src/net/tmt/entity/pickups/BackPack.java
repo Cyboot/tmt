@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tmt.entity.Entity2D;
-import net.tmt.entityComponents.collision.CollisionComponent;
 import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.gfx.Sprite;
 import net.tmt.util.Vector2d;
@@ -23,7 +22,6 @@ public class BackPack extends Entity2D {
 		Sprite s = new Sprite("backpack");
 		setSprite(s);
 		addComponent(new PickUpComponent(new Vector2d(0, 0), true));
-		addComponent(new CollisionComponent(10));
 	}
 
 	public void packItem(final Entity2D e) {

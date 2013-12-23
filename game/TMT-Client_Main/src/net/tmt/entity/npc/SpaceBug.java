@@ -44,7 +44,6 @@ public class SpaceBug extends PlanetCreature {
 		addComponent(new AnimatedRenderComponent(aniMap, "bug"));
 		ComponentFactory.addDefaultMove(this, 0, normalSpeed, ROTATION_SPEED);
 		addComponent(new Move2TargetComponent(1));
-		ComponentFactory.addDefaultCollision(SpaceBug.class, this, 20, 1);
 		List<Entity2D> drops = new ArrayList<Entity2D>();
 		drops.add(new MoneyBundle(new Vector2d()));
 		addComponent(new DropOnDeathComponent(drops));

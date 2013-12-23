@@ -41,6 +41,8 @@ public class PhysicsComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
+		body.setActive(true);
+
 		// a sensors position must be set to the entities position, not the
 		// other way round (like default case)
 		if (isSensor || caller.isSet(DISABLE)) {
@@ -281,5 +283,9 @@ public class PhysicsComponent extends Component {
 
 			return result;
 		}
+	}
+
+	public void disable() {
+		body.setActive(false);
 	}
 }

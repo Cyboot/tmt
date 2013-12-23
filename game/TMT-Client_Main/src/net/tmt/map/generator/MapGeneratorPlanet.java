@@ -86,7 +86,7 @@ public class MapGeneratorPlanet {
 
 				Prop prop = Prop.createProp(Type.BUILDING_1, coord.center2pos(map.getChunkSize()),
 						entityManager.getCollisionManager());
-				entityManager.addEntity(prop, EntityManager.LAYER_1_BACK);
+				entityManager.addEntity(prop.setPosZ(25));
 
 				charMap[pos.x()][pos.y()] = '.';
 			}

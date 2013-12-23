@@ -4,7 +4,6 @@ import net.tmt.entity.PlayerSpaceShip;
 import net.tmt.entity.statics.BackgroundBody;
 import net.tmt.entity.statics.Planet;
 import net.tmt.entity.statics.SpaceStation;
-import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.EnterPlanetMission;
 import net.tmt.global.mission.MissionManager;
@@ -23,7 +22,7 @@ public class SpaceGamestate extends AbstractGamestate {
 		super(SpaceMap.getInstance());
 		setPlayer(player);
 
-		entityManager.addEntity(player, EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(player.setPosZ(10));
 		entityManager.addEntity(new SpaceStation(new Vector2d(-500, -300), 1));
 		entityManager.addEntity(new SpaceStation(new Vector2d(-500, -1200), 2));
 
@@ -31,10 +30,8 @@ public class SpaceGamestate extends AbstractGamestate {
 		double MIN = -MAX;
 		RandomUtil.setSeed(123);
 		for (int i = 0; i < 25; i++) {
-			entityManager.addEntity(
-					new BackgroundBody(
-							new Vector2d(RandomUtil.doubleRange(MIN, MAX), RandomUtil.doubleRange(MIN, MAX)), 32),
-					EntityManager.LAYER_0_FAR_BACK);
+			entityManager.addEntity(new BackgroundBody(new Vector2d(RandomUtil.doubleRange(MIN, MAX), RandomUtil
+					.doubleRange(MIN, MAX)), 32).setPosZ(0));
 		}
 
 		// DEBUG: Planet on Player position

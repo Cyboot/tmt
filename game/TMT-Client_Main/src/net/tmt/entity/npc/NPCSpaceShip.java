@@ -24,7 +24,6 @@ public abstract class NPCSpaceShip extends Entity2D {
 		addComponent(new Move2TargetComponent());
 		addComponent(new OnHoverComponent());
 
-		ComponentFactory.addDefaultCollision(this, radius, 100);
 		dispatchValue(Move2TargetComponent.TARGET_REACHED, true);
 	}
 

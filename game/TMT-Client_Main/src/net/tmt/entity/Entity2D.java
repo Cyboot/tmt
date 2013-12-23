@@ -2,8 +2,7 @@ package net.tmt.entity;
 
 import net.tmt.entityComponents.Component;
 import net.tmt.entityComponents.ComponentDispatcher;
-import net.tmt.entityComponents.animation.KillAnimationComponent;
-import net.tmt.entityComponents.collision.CollisionComponent;
+import net.tmt.entityComponents.move.PhysicsComponent;
 import net.tmt.entityComponents.other.RenderComponent;
 import net.tmt.game.interfaces.Renderable;
 import net.tmt.game.manager.EntityManager;
@@ -15,17 +14,21 @@ import net.tmt.util.Vector2d;
 import org.jbox2d.collision.shapes.Shape;
 
 public abstract class Entity2D implements Renderable {
-	private static long			currentID			= 1;
+	private static long			currentID		= 1;
+
 	private long				id;
-	private boolean				isAlive				= true;
-	private CollisionComponent	collisionComponent;
-	private boolean				hasOnKillComponent	= false;
+	private boolean				isAlive			= true;
+
 	protected Vector2d			pos;
+	private int					posZ			= 1;
 	protected Entity2D			owner;
 
-	private ComponentDispatcher	compDispatcher		= new ComponentDispatcher(this);
+	private ComponentDispatcher	compDispatcher	= new ComponentDispatcher(this);
 	private Sprite				sprite;
 	private Entity2D			sensorEntity;
+
+	private PhysicsComponent	physicsComponent;
+
 
 	public Entity2D(final Vector2d pos) {
 		id = currentID++;
@@ -42,10 +45,8 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	public void addComponent(final Component component) {
-		if (component instanceof CollisionComponent)
-			collisionComponent = (CollisionComponent) component;
-		if (component instanceof KillAnimationComponent)
-			hasOnKillComponent = true;
+		if (component instanceof PhysicsComponent)
+			physicsComponent = (PhysicsComponent) component;
 
 		compDispatcher.addComponent(component);
 	}
@@ -69,9 +70,7 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	protected void onKilled() {
-		if (hasOnKillComponent) {
-			compDispatcher.onKilled();
-		}
+		compDispatcher.onKilled();
 	}
 
 	protected Entity2D getSensorEntity() {
@@ -103,8 +102,6 @@ public abstract class Entity2D implements Renderable {
 	 */
 	protected void removeAllComponents() {
 		compDispatcher = new ComponentDispatcher(this);
-		collisionComponent = null;
-		hasOnKillComponent = false;
 	}
 
 	public void setSprite(final Sprite sprite) {
@@ -115,12 +112,14 @@ public abstract class Entity2D implements Renderable {
 		}
 	}
 
-	public boolean isCollisable() {
-		return collisionComponent != null;
-	}
-
-	public CollisionComponent getCollisionComponent() {
-		return collisionComponent;
+	/**
+	 * called if entities update()-Method was not called (because its to far
+	 * away)
+	 */
+	public void disabledUpdate() {
+		if (physicsComponent != null) {
+			physicsComponent.disable();
+		}
 	}
 
 	public <T extends Component> T getComponent(final Class<T> clazz) {
@@ -147,5 +146,25 @@ public abstract class Entity2D implements Renderable {
 
 	protected Shape getCollisionShape() {
 		return null;
+	}
+
+	public int getZ() {
+		return posZ;
+	}
+
+	/**
+	 * set the "Height", important for render order<br>
+	 * <b>0 - 0m (bottom)</b>
+	 * 
+	 * @param posZ
+	 * @return
+	 */
+	public Entity2D setPosZ(final int posZ) {
+		if (posZ < 0 || posZ >= EntityManager.LAYER_COUNT)
+			throw new IllegalArgumentException("the given Height '" + posZ + "' is not between 0 and "
+					+ EntityManager.LAYER_COUNT);
+
+		this.posZ = posZ;
+		return this;
 	}
 }

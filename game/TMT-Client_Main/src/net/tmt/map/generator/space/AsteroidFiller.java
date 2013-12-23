@@ -20,7 +20,7 @@ public class AsteroidFiller implements ChunkFiller {
 			double deltaY = RandomUtil.doubleRange(-256, 256);
 
 			entityManager.addEntity(Prop.createProp(Type.SPACEROCK, pos.copy().add(deltaX, deltaY),
-					entityManager.getCollisionManager()), EntityManager.LAYER_2_MEDIUM);
+					entityManager.getCollisionManager()).setPosZ(0));
 		}
 	}
 }

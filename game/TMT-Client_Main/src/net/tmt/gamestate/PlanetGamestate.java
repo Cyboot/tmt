@@ -14,7 +14,6 @@ import net.tmt.entity.vehicle.Helicopter;
 import net.tmt.entity.vehicle.Jeep;
 import net.tmt.entity.weapons.Weapon;
 import net.tmt.game.GameEngine;
-import net.tmt.game.manager.EntityManager;
 import net.tmt.gfx.Graphics;
 import net.tmt.global.mission.BugMission;
 import net.tmt.global.mission.EnterSpaceMission;
@@ -39,7 +38,7 @@ public class PlanetGamestate extends AbstractGamestate {
 		super(new PlanetMap(planet));
 		hero = new Hero(entityManager.getCollisionManager(), new Vector2d(X, Y));
 		setPlayer(hero);
-		entityManager.addEntity(hero, EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(hero.setPosZ(2));
 		this.planet = planet;
 
 		// DEBUG: debug items
@@ -59,12 +58,12 @@ public class PlanetGamestate extends AbstractGamestate {
 			entityManager.addEntity(new Ball(new Vector2d(RandomUtil.doubleRange(-500 + X, 500 + Y), RandomUtil
 					.doubleRange(-500 + X, 500 + Y)), entityManager.getCollisionManager()));
 
-		entityManager.addEntity(new Jeep(new Vector2d(380 + X, 250 + Y), entityManager.getCollisionManager()),
-				EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Boat(new Vector2d(300 + X, -300 + Y), entityManager.getCollisionManager()),
-				EntityManager.LAYER_3_FRONT);
-		entityManager.addEntity(new Helicopter(new Vector2d(-300 + X, -300 + Y), entityManager.getCollisionManager()),
-				EntityManager.LAYER_3_FRONT);
+		entityManager.addEntity(new Jeep(new Vector2d(380 + X, 250 + Y), entityManager.getCollisionManager())
+				.setPosZ(4));
+		entityManager.addEntity(new Boat(new Vector2d(300 + X, -300 + Y), entityManager.getCollisionManager())
+				.setPosZ(5));
+		entityManager.addEntity(new Helicopter(new Vector2d(-300 + X, -300 + Y), entityManager.getCollisionManager())
+				.setPosZ(7));
 
 		// Runner rnr = new Runner(new Vector2d(X - 340,
 		// Y - 340), 100, hero);

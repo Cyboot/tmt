@@ -6,7 +6,6 @@ import java.util.List;
 import net.tmt.entity.Entity2D;
 import net.tmt.entityComponents.Component;
 import net.tmt.entityComponents.ComponentDispatcher;
-import net.tmt.entityComponents.collision.SimpleHealthComponent;
 import net.tmt.game.manager.EntityManager;
 import net.tmt.util.RandomUtil;
 import net.tmt.util.Vector2d;
@@ -21,9 +20,9 @@ public class DropOnDeathComponent extends Component {
 
 	@Override
 	public void update(final ComponentDispatcher caller, final double delta) {
-		SimpleHealthComponent shc = caller.getComponent(SimpleHealthComponent.class);
-		if (shc != null && caller.isSet(SimpleHealthComponent.HEALTH)) {
-			double health = (double) caller.getValue(SimpleHealthComponent.HEALTH);
+		HealthComponent shc = caller.getComponent(HealthComponent.class);
+		if (shc != null && caller.isSet(HealthComponent.HEALTH)) {
+			double health = (double) caller.getValue(HealthComponent.HEALTH);
 			if (health <= 0) {
 				drop(caller);
 			}

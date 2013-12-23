@@ -3,10 +3,10 @@ package net.tmt.entity;
 import net.tmt.entity.bullets.LaserShoot;
 import net.tmt.entityComponents.animation.EngineAnimationComponent;
 import net.tmt.entityComponents.animation.JetTrailComponent;
-import net.tmt.entityComponents.collision.SimpleHealthComponent;
 import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.move.PlayerMoveComponent;
 import net.tmt.entityComponents.move.RotateComponent;
+import net.tmt.entityComponents.other.HealthComponent;
 import net.tmt.entityComponents.other.OnHoverComponent;
 import net.tmt.entityComponents.other.RocketLauncherComponent;
 import net.tmt.entityComponents.other.ShieldComponent;
@@ -53,9 +53,9 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		addComponent(new JetTrailComponent());
 		addComponent(new TargetSearchComponent());
 		addComponent(new RocketLauncherComponent());
+		addComponent(new HealthComponent(100));
 
 		ComponentFactory.add3EngineAnimation(this, new Vector2d(1, 24), new Vector2d(-16, 20), new Vector2d(16, 20));
-		ComponentFactory.addDefaultCollision(this, 32, 1000000);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class PlayerSpaceShip extends Entity2D implements Playable {
 		dispatchValue(RotateComponent.FAST_ROTATE, true);
 
 		super.update(caller, world, delta);
-		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_HEALTH, getValue(SimpleHealthComponent.HEALTH));
+		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_HEALTH, getValue(HealthComponent.HEALTH));
 		GuiManager.getInstance().dispatch(SpaceGui.GUI_SHIP_SPEED, getValue(MoveComponent.SPEED));
 	}
 

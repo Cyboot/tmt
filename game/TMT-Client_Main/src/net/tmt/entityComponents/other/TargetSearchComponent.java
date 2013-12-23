@@ -43,7 +43,8 @@ public class TargetSearchComponent extends Component {
 	public void update(final ComponentDispatcher caller, final double delta) {
 		isLocked = false;
 		if (target == null || caller.isSet(CHANGE_TARGET)) {
-			searchTarget(caller.getEntityManager().getCollidableEntities(pos));
+			// TODO: find targets
+			// searchTarget(null);
 		} else {
 			calcFocus(caller);
 

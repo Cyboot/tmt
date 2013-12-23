@@ -15,7 +15,6 @@ public class PlanetCreature extends Entity2D {
 		super(pos);
 		this.health = health;
 		ComponentFactory.addDefaultMove(this, 0, 0, rotationSpeed);
-		ComponentFactory.addDefaultCollision(this, 10, this.health);
 		setSprite(MISSING_SPRITE);
 	}
 

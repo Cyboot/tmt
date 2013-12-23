@@ -26,7 +26,7 @@ public class GrassFiller implements ChunkFiller {
 			pos.y += RandomUtil.doubleRange(-chunkSize / 2, chunkSize / 2);
 
 			Prop decal = Prop.createProp(Type.DECAL, pos, entityManager.getCollisionManager());
-			entityManager.addEntity(decal, EntityManager.LAYER_1_BACK);
+			entityManager.addEntity(decal.setPosZ(0));
 		}
 	}
 

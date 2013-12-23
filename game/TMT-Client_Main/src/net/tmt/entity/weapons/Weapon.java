@@ -2,7 +2,6 @@ package net.tmt.entity.weapons;
 
 import net.tmt.entity.Entity2D;
 import net.tmt.entity.bullets.LaserShoot;
-import net.tmt.entityComponents.collision.CollisionComponent;
 import net.tmt.entityComponents.move.MoveComponent;
 import net.tmt.entityComponents.other.PickUpComponent;
 import net.tmt.game.Controls;
@@ -28,7 +27,6 @@ public class Weapon extends Entity2D implements UserableByHolder {
 
 	public Weapon(final Vector2d pos) {
 		super(pos);
-		addComponent(new CollisionComponent(10));
 		addComponent(new PickUpComponent(new Vector2d(3, -15), false));
 		setSprite(new Sprite("ak47"));
 	}

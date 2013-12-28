@@ -91,6 +91,7 @@ public class Prop extends Entity2D {
 		case BUILDING_1:
 			result.addStaticCollisionRect(collMng, MathUtil.toBox2d(512), MathUtil.toBox2d(512), 2);
 			result.setSprite(new Sprite("building_1").setRotation(rotation));
+			result.setPosZ(25);
 			break;
 		case TREE:
 			size = RandomUtil.intRange(32, 128);

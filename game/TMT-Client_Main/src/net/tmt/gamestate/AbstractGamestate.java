@@ -8,6 +8,7 @@ import net.tmt.game.manager.EntityManager;
 import net.tmt.game.manager.GameManager;
 import net.tmt.game.manager.GuiManager;
 import net.tmt.gfx.Graphics;
+import net.tmt.gui.Gui;
 import net.tmt.map.World;
 import net.tmt.map.WorldMap;
 
@@ -25,6 +26,7 @@ public abstract class AbstractGamestate implements Updateable, Renderable, Entit
 	protected GameManager	gameManager	= GameManager.getInstance();
 	protected GuiManager	guiManager	= GuiManager.getInstance();
 	protected World			world;
+	private Gui				gui;
 
 	protected AbstractGamestate(final WorldMap worldmap) {
 		entityManager = new EntityManager();
@@ -116,5 +118,13 @@ public abstract class AbstractGamestate implements Updateable, Renderable, Entit
 		this.player = player;
 		if (world != null)
 			world.setPlayer(player);
+	}
+
+	public Gui getGui() {
+		return gui;
+	}
+
+	public void setGui(Gui gui) {
+		this.gui = gui;
 	}
 }

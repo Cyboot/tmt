@@ -1,7 +1,5 @@
 package net.tmt.map.generator;
 
-import java.util.List;
-
 import net.tmt.entity.ambient.Prop;
 import net.tmt.entity.ambient.Prop.Type;
 import net.tmt.game.manager.EntityManager;
@@ -86,7 +84,7 @@ public class MapGeneratorPlanet {
 
 				Prop prop = Prop.createProp(Type.BUILDING_1, coord.center2pos(map.getChunkSize()),
 						entityManager.getCollisionManager());
-				entityManager.addEntity(prop.setPosZ(25));
+				entityManager.addEntity(prop);
 
 				charMap[pos.x()][pos.y()] = '.';
 			}
@@ -132,14 +130,5 @@ public class MapGeneratorPlanet {
 		Chunk chunk = new Chunk(coord, terrain, map.getChunkSize());
 
 		map.addChunk(coord, chunk);
-	}
-
-	private boolean checkInvalidDistance(final Vector2d toAdd, final List<Vector2d> list, final double minDistance) {
-		for (Vector2d v : list) {
-			if (v.distanceTo(toAdd) < minDistance)
-				return true;
-		}
-
-		return false;
 	}
 }

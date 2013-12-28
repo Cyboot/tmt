@@ -9,15 +9,15 @@ import net.tmt.map.WorldMap;
 public class MapGenerator {
 
 	public static void generateSpaceMap(final WorldMap map, final EntityManager entityManager) {
-		LoaderTimer.start("Map");
+		LoaderTimer.start("SpaceMap");
 		new MapGeneratorSpace().generate(map, entityManager);
-		LoaderTimer.stop("Map");
+		LoaderTimer.stop("SpaceMap");
 	}
 
 	public static void generatePlanetMap(final WorldMap map, final EntityManager entityManager) {
-		LoaderTimer.start("Map");
+		LoaderTimer.start("PlanetMap");
 		new MapGeneratorPlanet(map.getBaseTerrain()).generate(map, entityManager);
-		LoaderTimer.stop("Map");
+		LoaderTimer.stop("PlanetMap");
 	}
 
 	public static void generateAround(final Coordinate coord, final WorldMap map, final EntityManager entityManager,

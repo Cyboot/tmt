@@ -15,9 +15,7 @@ import net.tmt.gui.EconomyGui;
 import net.tmt.gui.Gui;
 import net.tmt.gui.MissionOverlay;
 import net.tmt.gui.MoneyLevelOverlay;
-import net.tmt.gui.PlanetGui;
 import net.tmt.gui.SimulatorGui;
-import net.tmt.gui.SpaceGui;
 import net.tmt.gui.elements.Label;
 
 public class GuiManager implements Updateable, Renderable, Dispatcher {
@@ -37,9 +35,7 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 		instance.overlayGui.add(new MissionOverlay());
 		instance.overlayGui.add(new MoneyLevelOverlay());
 		instance.overlayGui.add(new AchievmentOverlay());
-		instance.guiList.add(new SpaceGui());
 		instance.guiList.add(new SimulatorGui());
-		instance.guiList.add(new PlanetGui());
 		instance.guiList.add(new EconomyGui());
 		instance.guiList.add(new DummyGui());
 
@@ -66,6 +62,11 @@ public class GuiManager implements Updateable, Renderable, Dispatcher {
 			tooltip = null;
 		}
 	}
+
+	public void setGui(final Gui gui) {
+		activeGui = gui;
+	}
+
 
 	public void setGui(final Class<? extends Gui> gui) {
 		for (Gui g : guiList) {

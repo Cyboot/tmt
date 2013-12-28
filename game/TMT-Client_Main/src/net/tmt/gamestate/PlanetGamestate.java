@@ -34,8 +34,10 @@ public class PlanetGamestate extends AbstractGamestate {
 	private Planet			planet;
 	private Hero			hero;
 
+
 	public PlanetGamestate(final Planet planet) {
 		super(new PlanetMap(planet));
+		setGui(new PlanetGui(world));
 		hero = new Hero(entityManager.getCollisionManager(), new Vector2d(X, Y));
 		setPlayer(hero);
 		entityManager.addEntity(hero.setPosZ(2));
@@ -89,7 +91,7 @@ public class PlanetGamestate extends AbstractGamestate {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
-		guiManager.setGui(PlanetGui.class);
+		guiManager.setGui(getGui());
 		world.render(g);
 
 		// Blend color, so hero and other entities are more noticable

@@ -3,6 +3,8 @@ package net.tmt.gui;
 import net.tmt.gfx.Graphics;
 import net.tmt.gfx.Graphics.Fonts;
 import net.tmt.gfx.Sprite;
+import net.tmt.gui.view.MiniMapView;
+import net.tmt.map.World;
 import net.tmt.util.ColorUtil;
 import net.tmt.util.MathUtil;
 import net.tmt.util.StringFormatter;
@@ -13,9 +15,15 @@ public class SpaceGui extends Gui {
 	public static final String	GUI_SHIP_SPEED	= "GUI_SHIP_SPEED";
 
 	private Sprite				shipSchema		= new Sprite("schema_ship_back_64", 128, 128).setCentered(false);
+	private MiniMapView			miniMapView;
+
+	public SpaceGui(final World world) {
+		miniMapView = new MiniMapView(world, 50);
+	}
 
 	@Override
 	public void update(final double delta) {
+		miniMapView.update(delta);
 		gameStateToolbar.update(delta);
 	}
 
@@ -23,26 +31,11 @@ public class SpaceGui extends Gui {
 	public void render(final Graphics g) {
 		g.setColor(ColorUtil.GUI_CYAN);
 		g.setFont(Fonts.get(14));
-		renderMap(g);
+		miniMapView.render(g);
 		renderShipInfo(g);
 		g.setColor(ColorUtil.GUI_CYAN);
 		renderDebugWindow(g);
 		gameStateToolbar.render(g);
-	}
-
-	private void renderMap(final Graphics g) {
-		final double topY = height * 0.71;
-		final double heightTab = 25;
-		final double widthTab = 50;
-		final double padding = 4;
-
-		g.onGui().drawRect(0 * widthTab, topY, widthTab, heightTab);
-		g.onGui().drawText(0 * widthTab + padding, topY + padding, "Map");
-
-		g.onGui().drawRect(1 * widthTab, topY, widthTab, heightTab);
-		g.onGui().drawText(1 * widthTab + padding, topY + padding, "Chat");
-		g.onGui().drawRect(0, topY + heightTab, width * 0.25, height - topY - heightTab);
-
 	}
 
 	private void renderShipInfo(final Graphics g) {

@@ -116,7 +116,7 @@ public abstract class Entity2D implements Renderable {
 	 * called if entities update()-Method was not called (because its to far
 	 * away)
 	 */
-	public void disabledUpdate() {
+	public void disabledUpdate(final double delta) {
 		if (physicsComponent != null) {
 			physicsComponent.disable();
 		}
@@ -153,8 +153,9 @@ public abstract class Entity2D implements Renderable {
 	}
 
 	/**
-	 * set the "Height", important for render order<br>
-	 * <b>0 - 0m (bottom)</b>
+	 * set the "Height", important for render order:<br>
+	 * <b>0</b> - 0m (bottom)<br>
+	 * <b>127</b> - 127m (max)
 	 * 
 	 * @param posZ
 	 * @return

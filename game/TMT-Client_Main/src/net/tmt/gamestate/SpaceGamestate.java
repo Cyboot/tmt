@@ -20,6 +20,7 @@ public class SpaceGamestate extends AbstractGamestate {
 
 	private SpaceGamestate() {
 		super(SpaceMap.getInstance());
+		setGui(new SpaceGui(world));
 		setPlayer(player);
 
 		entityManager.addEntity(player.setPosZ(10));
@@ -51,7 +52,7 @@ public class SpaceGamestate extends AbstractGamestate {
 	@Override
 	public void render(final Graphics g) {
 		super.render(g);
-		guiManager.setGui(SpaceGui.class);
+		guiManager.setGui(getGui());
 
 		world.render(g);
 		entityManager.render(g);

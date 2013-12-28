@@ -43,8 +43,6 @@ public class MiniMapView extends ContainerElement {
 		double dy = (world.getOffset().y % map.getChunkSize()) / map.getChunkSize();
 		dy *= chunkSizeonMiniMap;
 
-		System.out.println(dy);
-
 		Coordinate coord = Coordinate.tmp0;
 		for (int x = 0; x < chunksPerMap + 1; x++) {
 			for (int y = 0; y < chunksPerMap + 1; y++) {
